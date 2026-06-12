@@ -295,6 +295,10 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .sgp-pay{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:11px 13px;font-size:13px;color:#78350f;margin-top:8px}
 .sgp-pay button{background:#16a34a;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-weight:700;cursor:pointer;font-size:11px}
 
+.sim-stage{position:relative}
+.sim-pb{position:absolute;top:0;left:0;right:0;background:linear-gradient(180deg,rgba(15,61,26,.96),rgba(15,61,26,.5));color:#eaffea;font-size:12px;font-weight:600;padding:6px 12px;font-family:-apple-system,Segoe UI,sans-serif}
+.sim-pbig{position:absolute;top:38px;left:0;right:0;text-align:center;font-size:30px;font-weight:900;letter-spacing:2px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.85);font-family:-apple-system,Segoe UI,sans-serif;pointer-events:none}
+.sim-pbig.hr{color:#fb7185}.sim-pbig.hit{color:#86efac}.sim-pbig.k{color:#cbd5e1}.sim-pbig.bb{color:#93c5fd}.sim-pbig.out{color:#e2e8f0}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -1380,7 +1384,7 @@ function renderGameSim(){
     +'<button class="sim-btn" onclick="simPlay()">▶ Run Projection</button>'
     +'<button class="sim-btn reset" onclick="simDraw()">Reset</button>'
     +'<span style="font-size:10px;color:#64748b">'+conf.length+' game'+(conf.length>1?'s':'')+' with confirmed lineups</span></div>'
-    +'<div id="simStadium"></div><div id="simConsensus"></div>'
+    +'<div class="sim-stage"><div id="simStadium"></div><div id="simPlayBanner" class="sim-pb"></div><div id="simPlayBig" class="sim-pbig"></div></div><div id="simConsensus"></div>'
     +'<div id="simBoard"></div><div class="pbp" id="simPbp"></div>'
     +'<div id="simBox"></div><div class="tally" id="simTally"></div>'
     +'<div class="sim-note">2,000 simulations drive the consensus; one representative game is played out batter-by-batter using the confirmed order. Each hitter’s real K%/BB%/power is matched against the pitcher, the park’s true dimensions skew home runs by pull side, the bullpen (ERA + recent workload) takes the 7th, and extra innings settle every tie.</div>'
@@ -1391,50 +1395,60 @@ function simCard(){ const gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[]; return gc[+
 function clampS(x,a,b){return Math.max(a,Math.min(b,x));}
 function simDraw(){
   const c=simCard(); if(!c) return;
-  $('simStadium').innerHTML=stadiumSVG(c);
+  $('simStadium').innerHTML=stadiumSVG(c); if($('simPlayBanner'))$('simPlayBanner').textContent=esc(c.away_sp.team)+' @ '+esc(c.home_sp.team)+(c.venue?' · '+esc(c.venue):''); if($('simPlayBig'))$('simPlayBig').textContent='';
   drawBoard(c,null); $('simConsensus').innerHTML=''; $('simBox').innerHTML=''; $('simTally').innerHTML='';
   $('simPbp').innerHTML='<span class="k">Press ▶ Run Projection to play out '+esc(c.away_sp.team)+' @ '+esc(c.home_sp.team)+' at '+esc(c.venue||'the park')+'…</span>';
 }
+function simPlayInfo(line){ const txt=line.replace(/<[^>]+>/g,'').trim(); if(line.indexOf('class=\"inn\"')>=0) return {big:'',desc:txt.replace('▸','').trim(),cls:'inn'}; let big='',cls='out'; if(/HOMERS/.test(txt)){big='HOME RUN';cls='hr';} else if(/strikes out/.test(txt)){big='STRIKEOUT';cls='k';} else if(/doubles/.test(txt)){big='DOUBLE';cls='hit';} else if(/singles/.test(txt)){big='SINGLE';cls='hit';} else if(/walks/.test(txt)){big='WALK';cls='bb';} else if(/grounds out/.test(txt)){big='GROUNDOUT';cls='out';} else if(/flies out/.test(txt)){big='FLY OUT';cls='out';} return {big,desc:txt,cls}; }
 function stadiumSVG(c){
   const d=c.park_dims||{lf:330,cf:404,rf:330,lf_wall:8,rf_wall:8};
-  const hc=simHomeColor(c); const sc=v=>v/2.05; const hp=[200,255];
-  const lfX=hp[0]-Math.sin(0.785)*sc(d.lf), lfY=hp[1]-Math.cos(0.785)*sc(d.lf);
-  const rfX=hp[0]+Math.sin(0.785)*sc(d.rf), rfY=hp[1]-Math.cos(0.785)*sc(d.rf);
-  const cfX=hp[0], cfY=hp[1]-sc(d.cf);
-  const wallCol=z=>z>=20?'#15803d':z>=12?'#22c55e':'#e2e8f0';
+  const HP=[200,248]; const sc=v=>v*0.30;
+  const aL=0.86, aR=0.86;
+  const lf=[HP[0]-Math.sin(aL)*sc(d.lf), HP[1]-Math.cos(aL)*sc(d.lf)];
+  const rf=[HP[0]+Math.sin(aR)*sc(d.rf), HP[1]-Math.cos(aR)*sc(d.rf)];
+  const cf=[HP[0], HP[1]-sc(d.cf)];
+  const wall='M'+lf[0].toFixed(0)+' '+lf[1].toFixed(0)+' Q'+cf[0]+' '+(cf[1]-14).toFixed(0)+' '+rf[0].toFixed(0)+' '+rf[1].toFixed(0);
+  const field='M'+HP[0]+' '+HP[1]+' L'+lf[0].toFixed(0)+' '+lf[1].toFixed(0)+' Q'+cf[0]+' '+(cf[1]-14).toFixed(0)+' '+rf[0].toFixed(0)+' '+rf[1].toFixed(0)+' Z';
+  // mowing stripes clipped to field
+  let stripes=''; const top=cf[1]-14, h=(HP[1]-top)/9;
+  for(let i=0;i<9;i++){ stripes+='<rect x="0" y="'+(top+i*h).toFixed(0)+'" width="400" height="'+(h+1).toFixed(0)+'" fill="'+(i%2?'#3aa14a':'#2f8a3c')+'"/>'; }
+  // infield (skinned dirt) — brown diamond from home; grass diamond inside leaves base paths
+  const b=34;
+  const f1=[HP[0]+b,HP[1]-b], s2=[HP[0],HP[1]-2*b], t3=[HP[0]-b,HP[1]-b];
+  const dia=(p)=>p[0]+' '+p[1];
+  const dirt='M'+dia(HP)+' L'+dia(f1)+' L'+dia(s2)+' L'+dia(t3)+' Z';
+  const gi=8; // grass inset
+  const g1=[HP[0]+b-gi,HP[1]-b], gs=[HP[0],HP[1]-2*b+gi], g3=[HP[0]-b+gi,HP[1]-b], gh=[HP[0],HP[1]-gi];
+  const igrass='M'+dia(gh)+' L'+dia(g1)+' L'+dia(gs)+' L'+dia(g3)+' Z';
+  // infield dirt cutout arc behind 2B
+  const cut='M'+(HP[0]-b-6)+' '+(HP[1]-b)+' Q'+HP[0]+' '+(HP[1]-2*b-22)+' '+(HP[0]+b+6)+' '+(HP[1]-b);
+  const base=(p)=>'<rect x="'+(p[0]-3)+'" y="'+(p[1]-3)+'" width="6" height="6" fill="#fff" transform="rotate(45 '+p[0]+' '+p[1]+')"/>';
+  const hot=(c.temp!=null&&c.temp>=86); const hc=simHomeColor(c);
   const zones=c.wind_zones||[]; const arr=z=>z==='out'?'⬆':z==='in'?'⬇':'⬌';
-  const wpos=[[58,86],[200,52],[342,86]];
-  const hot=(c.temp!=null&&c.temp>=86);
-  let wind=''; zones.forEach((z,i)=>{ const p=wpos[i]||wpos[0]; wind+='<text x="'+p[0]+'" y="'+p[1]+'" font-size="19" fill="#7dd3fc" text-anchor="middle">'+arr(z.dir)+'</text><text x="'+p[0]+'" y="'+(p[1]+12)+'" font-size="9" fill="#94a3b8" text-anchor="middle">'+z.zone+' '+z.mph+'</text>'; });
-  const mid=hp[1]-sc((d.lf+d.cf+d.rf)/3)*0.55;
-  return '<svg viewBox="0 0 400 280" style="width:100%;height:250px;background:linear-gradient(#0a1834,#13315c 50%,#0b1220);border-radius:12px">'
-    +'<defs><radialGradient id="grass" cx="50%" cy="100%" r="90%"><stop offset="0%" stop-color="#3a9c40"/><stop offset="100%" stop-color="#1e6b27"/></radialGradient></defs>'
-    +(hot?'<circle cx="362" cy="32" r="15" fill="#ffd23f"><animate attributeName="r" values="14;17;14" dur="1.4s" repeatCount="indefinite"/></circle>':'<circle cx="362" cy="32" r="13" fill="#ffe88a"/>')
-    // grandstand
-    +'<path d="M'+(lfX-14)+' '+(lfY-2)+' A'+(sc(d.cf)+16)+' '+(sc(d.cf)+16)+' 0 0 1 '+(rfX+14)+' '+(rfY-2)+' L'+rfX+' '+rfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 0 '+lfX+' '+lfY+' Z" fill="#1f2937" opacity=".85"/>'
-    // field
-    +'<path d="M'+hp[0]+' '+hp[1]+' L'+lfX+' '+lfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+rfX+' '+rfY+' Z" fill="url(#grass)" stroke="#8a5a2b" stroke-width="3"/>'
-    // warning track
-    +'<path d="M'+lfX+' '+lfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+rfX+' '+rfY+'" fill="none" stroke="#b06a3b" stroke-width="5" opacity=".5"/>'
-    // walls colored by height
-    +'<path d="M'+lfX+' '+lfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+cfX+' '+cfY+'" fill="none" stroke="'+wallCol(d.lf_wall)+'" stroke-width="3.5"/>'
-    +'<path d="M'+cfX+' '+cfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+rfX+' '+rfY+'" fill="none" stroke="'+wallCol(d.rf_wall)+'" stroke-width="3.5"/>'
-    // infield
-    +'<circle cx="'+hp[0]+'" cy="'+(hp[1]-50)+'" r="46" fill="#6b8f3a" opacity=".55"/>'
-    +'<rect x="'+(hp[0]-26)+'" y="'+(hp[1]-52)+'" width="52" height="52" fill="#c08948" transform="rotate(45 '+hp[0]+' '+(hp[1]-26)+')"/>'
-    +'<circle cx="'+hp[0]+'" cy="'+(hp[1]-26)+'" r="6" fill="#c08948"/>'
-    +'<rect x="'+(hp[0]-3)+'" y="'+(hp[1]-4)+'" width="6" height="5" fill="#fff"/>'
-    // foul lines
-    +'<path d="M'+hp[0]+' '+hp[1]+' L'+lfX+' '+lfY+'" stroke="#fff" stroke-width="1" opacity=".55"/><path d="M'+hp[0]+' '+hp[1]+' L'+rfX+' '+rfY+'" stroke="#fff" stroke-width="1" opacity=".55"/>'
-    +'<text x="'+(lfX-2)+'" y="'+(lfY-3)+'" font-size="10" fill="#fff" text-anchor="end" font-weight="700">'+d.lf+'</text>'
-    +'<text x="'+cfX+'" y="'+(cfY-4)+'" font-size="10" fill="#fff" text-anchor="middle" font-weight="700">'+d.cf+'</text>'
-    +'<text x="'+(rfX+2)+'" y="'+(rfY-3)+'" font-size="10" fill="#fff" font-weight="700">'+d.rf+'</text>'
+  const wpos=[[lf[0]+14,lf[1]-2],[cf[0],cf[1]-4],[rf[0]-14,rf[1]-2]];
+  let wind=''; zones.forEach((z,i)=>{ const p=wpos[i]||wpos[0]; wind+='<text x="'+p[0].toFixed(0)+'" y="'+p[1].toFixed(0)+'" font-size="13" fill="#bff" text-anchor="middle" opacity=".85">'+arr(z.dir)+'</text>'; });
+  return '<svg viewBox="0 0 400 260" style="width:100%;height:250px;display:block;background:#0a1420">'
+    +'<defs><clipPath id="fld"><path d="'+field+'"/></clipPath></defs>'
+    +'<rect width="400" height="260" fill="#0a1420"/>'
+    +'<path d="'+field+'" fill="#2f8a3c"/>'
+    +'<g clip-path="url(#fld)">'+stripes+'</g>'
+    +'<path d="'+wall+'" fill="none" stroke="#caa46a" stroke-width="7" clip-path="url(#fld)" opacity=".8"/>'   // warning track
+    +'<path d="'+wall+'" fill="none" stroke="'+hc+'" stroke-width="3"/>'                                       // wall (home color)
+    +'<line x1="'+HP[0]+'" y1="'+HP[1]+'" x2="'+lf[0].toFixed(0)+'" y2="'+lf[1].toFixed(0)+'" stroke="#fff" stroke-width="1.5" opacity=".7"/>'
+    +'<line x1="'+HP[0]+'" y1="'+HP[1]+'" x2="'+rf[0].toFixed(0)+'" y2="'+rf[1].toFixed(0)+'" stroke="#fff" stroke-width="1.5" opacity=".7"/>'
+    +'<line x1="'+lf[0].toFixed(0)+'" y1="'+lf[1].toFixed(0)+'" x2="'+lf[0].toFixed(0)+'" y2="'+(lf[1]-20).toFixed(0)+'" stroke="#fde047" stroke-width="2.5"/>'   // foul poles
+    +'<line x1="'+rf[0].toFixed(0)+'" y1="'+rf[1].toFixed(0)+'" x2="'+rf[0].toFixed(0)+'" y2="'+(rf[1]-20).toFixed(0)+'" stroke="#fde047" stroke-width="2.5"/>'
+    +'<path d="'+cut+'" fill="none" stroke="#c2884a" stroke-width="12" opacity=".55"/>'                         // infield dirt arc
+    +'<path d="'+dirt+'" fill="#c2884a"/>'                                                                       // infield dirt
+    +'<path d="'+igrass+'" fill="#379640"/>'                                                                     // infield grass
+    +'<circle cx="'+HP[0]+'" cy="'+(HP[1]-b).toFixed(0)+'" r="7" fill="#c2884a"/>'                               // mound
+    +base(f1)+base(s2)+base(t3)
+    +'<path d="M'+(HP[0]-3)+' '+(HP[1])+' L'+HP[0]+' '+(HP[1]-4)+' L'+(HP[0]+3)+' '+HP[1]+' L'+HP[0]+' '+(HP[1]+2)+' Z" fill="#fff"/>'  // home plate
+    +'<text x="'+lf[0].toFixed(0)+'" y="'+(lf[1]-23).toFixed(0)+'" font-size="9" fill="#fff" text-anchor="middle" opacity=".8">'+d.lf+'</text>'
+    +'<text x="'+cf[0]+'" y="'+(cf[1]-16).toFixed(0)+'" font-size="9" fill="#fff" text-anchor="middle" opacity=".8">'+d.cf+'</text>'
+    +'<text x="'+rf[0].toFixed(0)+'" y="'+(rf[1]-23).toFixed(0)+'" font-size="9" fill="#fff" text-anchor="middle" opacity=".8">'+d.rf+'</text>'
     +wind
-    // park banner with home color
-    +'<rect x="0" y="0" width="400" height="22" fill="'+hc+'" opacity=".92"/>'
-    +'<text x="8" y="15" font-size="12" fill="#fff" font-weight="800">'+esc(c.venue||'')+'</text>'
-    +'<text x="392" y="15" font-size="11" fill="#fff" text-anchor="end" font-weight="700">'+esc(c.away_sp.team)+' @ '+esc(c.home_sp.team)+(c.temp!=null?' · '+c.temp+'°F':'')+'</text>'
-    +((d.lf_wall>=20||d.rf_wall>=20)?'<text x="8" y="274" font-size="9" fill="#22c55e">green = tall wall (HR-suppressing)</text>':'')
+    +(hot?'<circle cx="372" cy="20" r="11" fill="#ffd23f"/>':'')
     +'</svg>';
 }
 function pullHR(dims,side){ const dist=side==='L'?dims.rf:dims.lf; const wall=side==='L'?dims.rf_wall:dims.lf_wall; return clampS(Math.pow(330/dist,1.5)*Math.pow(8/Math.max(6,wall),0.35),0.55,1.7); }
@@ -1528,7 +1542,7 @@ function simPlay(){
     +'</div></div>';
   drawBoard(c,{innings:rep.innings,aR:rep.aR,hR:rep.hR,aH:rep.ta.H1+rep.ta.H2+rep.ta.HR,hH:rep.th.H1+rep.th.H2+rep.th.HR});
   const log=rep.log; const pbp=$('simPbp'); pbp.innerHTML=''; let k=0;
-  const iv=setInterval(function(){ if(k>=log.length){clearInterval(iv); pbp.innerHTML+='<div class="inn">FINAL — '+esc(at)+' '+rep.aR+', '+esc(ht)+' '+rep.hR+'</div>'; pbp.scrollTop=pbp.scrollHeight; $('simBox').innerHTML='<div class="boxwrap"><div class="boxhdr">BOX SCORE — Representative Game</div><div class="boxgrid">'+boxTable(at,c.away_bat,rep.boxA,'#38bdf8')+boxTable(ht,c.home_bat,rep.boxH,'#fbbf24')+'</div></div>'; return;} const isInn=log[k].indexOf('class="inn"')>=0; pbp.innerHTML+=log[k]+(isInn?'':'<br>'); pbp.scrollTop=pbp.scrollHeight; k++; }, 130);
+  const iv=setInterval(function(){ if(k>=log.length){clearInterval(iv); const fb=$('simPlayBanner'); if(fb)fb.textContent='FINAL — '+at+' '+rep.aR+', '+ht+' '+rep.hR; const bg2=$('simPlayBig'); if(bg2)bg2.textContent=''; pbp.innerHTML+='<div class="inn">FINAL — '+esc(at)+' '+rep.aR+', '+esc(ht)+' '+rep.hR+'</div>'; pbp.scrollTop=pbp.scrollHeight; $('simBox').innerHTML='<div class="boxwrap"><div class="boxhdr">BOX SCORE — Representative Game</div><div class="boxgrid">'+boxTable(at,c.away_bat,rep.boxA,'#38bdf8')+boxTable(ht,c.home_bat,rep.boxH,'#fbbf24')+'</div></div>'; return;} const isInn=log[k].indexOf('class="inn"')>=0; pbp.innerHTML+=log[k]+(isInn?'':'<br>'); pbp.scrollTop=pbp.scrollHeight; const pi=simPlayInfo(log[k]); const pbE=$('simPlayBanner'),bgE=$('simPlayBig'); if(pbE)pbE.textContent=pi.desc; if(bgE){ if(pi.cls==='inn'){bgE.textContent='';} else {bgE.textContent=pi.big;bgE.className='sim-pbig '+pi.cls;} } k++; }, 320);
   const T=(l,v)=>'<div><div class="v">'+v+'</div><div class="l">'+l+'</div></div>';
   $('simTally').innerHTML=T('Win '+esc(at),awP+'%')+T('Win '+esc(ht),hwP+'%')+T('K (rep)',rep.ta.K+rep.th.K)+T('Hits (rep)',(rep.ta.H1+rep.ta.H2+rep.ta.HR)+(rep.th.H1+rep.th.H2+rep.th.HR))+T('HR (rep)',rep.ta.HR+rep.th.HR)+T('P(Over)',ovP+'%')+T('NRFI%',nzP+'%');
 }
