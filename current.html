@@ -325,14 +325,14 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 
 <div class="kpi" id="kpis"></div>
 
+<h2>🧩 Build Your Own Parlay</h2>
+<div id="customParlay"></div>
+
 <h2>Yesterday's Recap</h2>
 <div id="recapSection"></div>
 
 <h2>★ Star-Out Status (R26)</h2>
 <div id="starOutSection"></div>
-
-<h2>🧩 Build Your Own Parlay</h2>
-<div id="customParlay"></div>
 
 <h2>Games — Tap to Expand</h2>
 <div id="gamesAccordion"></div>
@@ -1399,7 +1399,7 @@ function renderGamesAccordion(){
     +propsBlock(c)+'</div>').join('')+'</div>';
 }
 
-var SIM_OPEN=['Games — Tap to Expand','Top Parlay — Most Confident (SGP-aware)','🎮 Game Simulator','Game Simulator'];
+var SIM_OPEN=['Build Your Own Parlay','Games — Tap to Expand','Top Parlay — Most Confident (SGP-aware)','🎮 Game Simulator','Game Simulator'];
 function makeCollapsible(){
   const cont=document.querySelector('.wrap')||document.body;
   const hs=[...cont.querySelectorAll('h2')];
