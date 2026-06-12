@@ -1402,53 +1402,52 @@ function simDraw(){
 function simPlayInfo(line){ const txt=line.replace(/<[^>]+>/g,'').trim(); if(line.indexOf('class=\"inn\"')>=0) return {big:'',desc:txt.replace('▸','').trim(),cls:'inn'}; let big='',cls='out'; if(/HOMERS/.test(txt)){big='HOME RUN';cls='hr';} else if(/strikes out/.test(txt)){big='STRIKEOUT';cls='k';} else if(/doubles/.test(txt)){big='DOUBLE';cls='hit';} else if(/singles/.test(txt)){big='SINGLE';cls='hit';} else if(/walks/.test(txt)){big='WALK';cls='bb';} else if(/grounds out/.test(txt)){big='GROUNDOUT';cls='out';} else if(/flies out/.test(txt)){big='FLY OUT';cls='out';} return {big,desc:txt,cls}; }
 function stadiumSVG(c){
   const d=c.park_dims||{lf:330,cf:404,rf:330,lf_wall:8,rf_wall:8};
-  const HP=[200,248]; const sc=v=>v*0.30;
-  const aL=0.86, aR=0.86;
-  const lf=[HP[0]-Math.sin(aL)*sc(d.lf), HP[1]-Math.cos(aL)*sc(d.lf)];
-  const rf=[HP[0]+Math.sin(aR)*sc(d.rf), HP[1]-Math.cos(aR)*sc(d.rf)];
-  const cf=[HP[0], HP[1]-sc(d.cf)];
-  const wall='M'+lf[0].toFixed(0)+' '+lf[1].toFixed(0)+' Q'+cf[0]+' '+(cf[1]-14).toFixed(0)+' '+rf[0].toFixed(0)+' '+rf[1].toFixed(0);
-  const field='M'+HP[0]+' '+HP[1]+' L'+lf[0].toFixed(0)+' '+lf[1].toFixed(0)+' Q'+cf[0]+' '+(cf[1]-14).toFixed(0)+' '+rf[0].toFixed(0)+' '+rf[1].toFixed(0)+' Z';
-  // mowing stripes clipped to field
-  let stripes=''; const top=cf[1]-14, h=(HP[1]-top)/9;
-  for(let i=0;i<9;i++){ stripes+='<rect x="0" y="'+(top+i*h).toFixed(0)+'" width="400" height="'+(h+1).toFixed(0)+'" fill="'+(i%2?'#3aa14a':'#2f8a3c')+'"/>'; }
-  // infield (skinned dirt) — brown diamond from home; grass diamond inside leaves base paths
-  const b=34;
+  const HP=[200,250];
+  // frame-filling corners, mild skew by park dimensions
+  let lf=[40+(d.lf-330)*0.18, 70+(d.lf-330)*0.10];
+  let rf=[360-(d.rf-330)*0.18, 70+(d.rf-330)*0.10];
+  let cf=[200, 26+(d.cf-404)*0.10];
+  const X=p=>p[0].toFixed(0), Y=p=>p[1].toFixed(0);
+  const wall='M'+X(lf)+' '+Y(lf)+' Q'+cf[0]+' '+(cf[1]-16).toFixed(0)+' '+X(rf)+' '+Y(rf);
+  const field='M'+HP[0]+' '+HP[1]+' L'+X(lf)+' '+Y(lf)+' Q'+cf[0]+' '+(cf[1]-16).toFixed(0)+' '+X(rf)+' '+Y(rf)+' Z';
+  let stripes=''; const top=cf[1]-16, h=(HP[1]-top)/10;
+  for(let i=0;i<10;i++){ stripes+='<rect x="0" y="'+(top+i*h).toFixed(0)+'" width="400" height="'+(h+1).toFixed(0)+'" fill="'+(i%2?'#3aa14a':'#2f8a3c')+'"/>'; }
+  // infield (bigger, skinned dirt)
+  const b=54;
   const f1=[HP[0]+b,HP[1]-b], s2=[HP[0],HP[1]-2*b], t3=[HP[0]-b,HP[1]-b];
-  const dia=(p)=>p[0]+' '+p[1];
-  const dirt='M'+dia(HP)+' L'+dia(f1)+' L'+dia(s2)+' L'+dia(t3)+' Z';
-  const gi=8; // grass inset
+  const P=p=>p[0]+' '+p[1];
+  const dirt='M'+P(HP)+' L'+P(f1)+' L'+P(s2)+' L'+P(t3)+' Z';
+  const gi=12;
   const g1=[HP[0]+b-gi,HP[1]-b], gs=[HP[0],HP[1]-2*b+gi], g3=[HP[0]-b+gi,HP[1]-b], gh=[HP[0],HP[1]-gi];
-  const igrass='M'+dia(gh)+' L'+dia(g1)+' L'+dia(gs)+' L'+dia(g3)+' Z';
-  // infield dirt cutout arc behind 2B
-  const cut='M'+(HP[0]-b-6)+' '+(HP[1]-b)+' Q'+HP[0]+' '+(HP[1]-2*b-22)+' '+(HP[0]+b+6)+' '+(HP[1]-b);
-  const base=(p)=>'<rect x="'+(p[0]-3)+'" y="'+(p[1]-3)+'" width="6" height="6" fill="#fff" transform="rotate(45 '+p[0]+' '+p[1]+')"/>';
+  const igrass='M'+P(gh)+' L'+P(g1)+' L'+P(gs)+' L'+P(g3)+' Z';
+  const cut='M'+(HP[0]-b-12)+' '+(HP[1]-b)+' Q'+HP[0]+' '+(HP[1]-2*b-34)+' '+(HP[0]+b+12)+' '+(HP[1]-b);
+  const base=p=>'<rect x="'+(p[0]-4)+'" y="'+(p[1]-4)+'" width="8" height="8" fill="#fff" transform="rotate(45 '+p[0]+' '+p[1]+')"/>';
   const hot=(c.temp!=null&&c.temp>=86); const hc=simHomeColor(c);
   const zones=c.wind_zones||[]; const arr=z=>z==='out'?'⬆':z==='in'?'⬇':'⬌';
-  const wpos=[[lf[0]+14,lf[1]-2],[cf[0],cf[1]-4],[rf[0]-14,rf[1]-2]];
-  let wind=''; zones.forEach((z,i)=>{ const p=wpos[i]||wpos[0]; wind+='<text x="'+p[0].toFixed(0)+'" y="'+p[1].toFixed(0)+'" font-size="13" fill="#bff" text-anchor="middle" opacity=".85">'+arr(z.dir)+'</text>'; });
-  return '<svg viewBox="0 0 400 260" style="width:100%;height:250px;display:block;background:#0a1420">'
-    +'<defs><clipPath id="fld"><path d="'+field+'"/></clipPath></defs>'
-    +'<rect width="400" height="260" fill="#0a1420"/>'
+  const wpos=[[lf[0]+18,lf[1]+4],[cf[0],cf[1]-2],[rf[0]-18,rf[1]+4]];
+  let wind=''; zones.forEach((z,i)=>{ const p=wpos[i]||wpos[0]; wind+='<text x="'+p[0].toFixed(0)+'" y="'+p[1].toFixed(0)+'" font-size="15" fill="#cffafe" text-anchor="middle" opacity=".9">'+arr(z.dir)+'</text>'; });
+  return '<svg viewBox="0 0 400 256" style="width:100%;height:250px;display:block;background:#0b1726">'
+    +'<defs><clipPath id="fld"><path d="'+field+'"/></clipPath>'
+    +'<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#13315c"/><stop offset="1" stop-color="#0b1726"/></linearGradient></defs>'
+    +'<rect width="400" height="256" fill="url(#sky)"/>'
     +'<path d="'+field+'" fill="#2f8a3c"/>'
     +'<g clip-path="url(#fld)">'+stripes+'</g>'
-    +'<path d="'+wall+'" fill="none" stroke="#caa46a" stroke-width="7" clip-path="url(#fld)" opacity=".8"/>'   // warning track
-    +'<path d="'+wall+'" fill="none" stroke="'+hc+'" stroke-width="3"/>'                                       // wall (home color)
-    +'<line x1="'+HP[0]+'" y1="'+HP[1]+'" x2="'+lf[0].toFixed(0)+'" y2="'+lf[1].toFixed(0)+'" stroke="#fff" stroke-width="1.5" opacity=".7"/>'
-    +'<line x1="'+HP[0]+'" y1="'+HP[1]+'" x2="'+rf[0].toFixed(0)+'" y2="'+rf[1].toFixed(0)+'" stroke="#fff" stroke-width="1.5" opacity=".7"/>'
-    +'<line x1="'+lf[0].toFixed(0)+'" y1="'+lf[1].toFixed(0)+'" x2="'+lf[0].toFixed(0)+'" y2="'+(lf[1]-20).toFixed(0)+'" stroke="#fde047" stroke-width="2.5"/>'   // foul poles
-    +'<line x1="'+rf[0].toFixed(0)+'" y1="'+rf[1].toFixed(0)+'" x2="'+rf[0].toFixed(0)+'" y2="'+(rf[1]-20).toFixed(0)+'" stroke="#fde047" stroke-width="2.5"/>'
-    +'<path d="'+cut+'" fill="none" stroke="#c2884a" stroke-width="12" opacity=".55"/>'                         // infield dirt arc
-    +'<path d="'+dirt+'" fill="#c2884a"/>'                                                                       // infield dirt
-    +'<path d="'+igrass+'" fill="#379640"/>'                                                                     // infield grass
-    +'<circle cx="'+HP[0]+'" cy="'+(HP[1]-b).toFixed(0)+'" r="7" fill="#c2884a"/>'                               // mound
+    +'<path d="'+wall+'" fill="none" stroke="#caa46a" stroke-width="9" clip-path="url(#fld)" opacity=".75"/>'
+    +'<path d="'+wall+'" fill="none" stroke="'+hc+'" stroke-width="4"/>'
+    +'<line x1="'+HP[0]+'" y1="'+HP[1]+'" x2="'+X(lf)+'" y2="'+Y(lf)+'" stroke="#fff" stroke-width="1.5" opacity=".65"/>'
+    +'<line x1="'+HP[0]+'" y1="'+HP[1]+'" x2="'+X(rf)+'" y2="'+Y(rf)+'" stroke="#fff" stroke-width="1.5" opacity=".65"/>'
+    +'<line x1="'+X(lf)+'" y1="'+Y(lf)+'" x2="'+X(lf)+'" y2="'+(lf[1]-24).toFixed(0)+'" stroke="#fde047" stroke-width="3"/>'
+    +'<line x1="'+X(rf)+'" y1="'+Y(rf)+'" x2="'+X(rf)+'" y2="'+(rf[1]-24).toFixed(0)+'" stroke="#fde047" stroke-width="3"/>'
+    +'<path d="'+cut+'" fill="none" stroke="#c2884a" stroke-width="16" opacity=".5"/>'
+    +'<path d="'+dirt+'" fill="#c2884a"/>'
+    +'<path d="'+igrass+'" fill="#379640"/>'
+    +'<circle cx="'+HP[0]+'" cy="'+(HP[1]-b).toFixed(0)+'" r="9" fill="#c2884a"/>'
     +base(f1)+base(s2)+base(t3)
-    +'<path d="M'+(HP[0]-3)+' '+(HP[1])+' L'+HP[0]+' '+(HP[1]-4)+' L'+(HP[0]+3)+' '+HP[1]+' L'+HP[0]+' '+(HP[1]+2)+' Z" fill="#fff"/>'  // home plate
-    +'<text x="'+lf[0].toFixed(0)+'" y="'+(lf[1]-23).toFixed(0)+'" font-size="9" fill="#fff" text-anchor="middle" opacity=".8">'+d.lf+'</text>'
-    +'<text x="'+cf[0]+'" y="'+(cf[1]-16).toFixed(0)+'" font-size="9" fill="#fff" text-anchor="middle" opacity=".8">'+d.cf+'</text>'
-    +'<text x="'+rf[0].toFixed(0)+'" y="'+(rf[1]-23).toFixed(0)+'" font-size="9" fill="#fff" text-anchor="middle" opacity=".8">'+d.rf+'</text>'
-    +wind
-    +(hot?'<circle cx="372" cy="20" r="11" fill="#ffd23f"/>':'')
+    +'<path d="M'+(HP[0]-4)+' '+HP[1]+' L'+HP[0]+' '+(HP[1]-5)+' L'+(HP[0]+4)+' '+HP[1]+' L'+HP[0]+' '+(HP[1]+3)+' Z" fill="#fff"/>'
+    +'<text x="'+X(lf)+'" y="'+(lf[1]-28).toFixed(0)+'" font-size="10" fill="#fff" text-anchor="middle" opacity=".85">'+d.lf+'</text>'
+    +'<text x="'+cf[0]+'" y="'+(cf[1]-20).toFixed(0)+'" font-size="10" fill="#fff" text-anchor="middle" opacity=".85">'+d.cf+'</text>'
+    +'<text x="'+X(rf)+'" y="'+(rf[1]-28).toFixed(0)+'" font-size="10" fill="#fff" text-anchor="middle" opacity=".85">'+d.rf+'</text>'
+    +wind+(hot?'<circle cx="376" cy="18" r="11" fill="#ffd23f"/>':'')
     +'</svg>';
 }
 function pullHR(dims,side){ const dist=side==='L'?dims.rf:dims.lf; const wall=side==='L'?dims.rf_wall:dims.lf_wall; return clampS(Math.pow(330/dist,1.5)*Math.pow(8/Math.max(6,wall),0.35),0.55,1.7); }
