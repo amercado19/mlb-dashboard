@@ -245,6 +245,11 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .tally div{background:#0b1220;border:1px solid #1e293b;border-radius:8px;padding:6px 2px}
 .tally .v{font-size:16px;font-weight:800;color:#fff}.tally .l{font-size:8px;color:#94a3b8;text-transform:uppercase}
 .sim-note{font-size:10px;color:#64748b;margin-top:8px}
+.boxscore{flex:1;min-width:280px;border-collapse:collapse;font-size:11px;color:#e2e8f0;font-family:'Courier New',monospace}
+.boxscore th,.boxscore td{padding:2px 5px;text-align:center;border-bottom:1px solid #1e293b}
+.boxscore th{color:#94a3b8;font-size:9px;text-transform:uppercase}
+.boxscore .tot{font-weight:800;color:#fde047;border-top:2px solid #334155}
+
 
 </style>
 </head>
@@ -1213,18 +1218,22 @@ function renderStarOut(){
   el.innerHTML='<div class="hrface">'+so.map(p=>'<div class="starcard"><img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_120,q_auto:best/v1/people/'+p.playerId+'/headshot/67/current" alt=""><div class="nm">'+esc(p.name)+'</div><div class="tm">'+esc(p.team)+' OUT</div></div>').join('')+'</div>';
 }
 
+function simHomeColor(c){ try{ const id=IDBYABBR[c.home_sp.team]; const t=TEAMS[id]; return t?t[1]:'#1e5631'; }catch(e){ return '#1e5631'; } }
 function renderGameSim(){
   const el=$('gameSimSection'); if(!el) return;
   const gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[];
+  const conf=gc.map((c,i)=>[i,c]).filter(x=>x[1].lineups_official);
   if(!gc.length){ el.innerHTML='<div class="empty">No games to simulate.</div>'; return; }
+  if(!conf.length){ el.innerHTML='<div class="sim-wrap"><div class="empty" style="background:#1f1600;color:#e8b040;border-color:#4a3500">⚠ No confirmed lineups yet — the simulator unlocks per game when official lineups post (~4h before first pitch). Check back closer to game time.</div></div>'; return; }
   el.innerHTML='<div class="sim-wrap">'
-    +'<div class="sim-bar"><select id="simSel">'+gc.map((c,i)=>'<option value="'+i+'">'+esc(c.game)+' · '+esc(c.venue||'')+'</option>').join('')+'</select>'
+    +'<div class="sim-bar"><select id="simSel">'+conf.map(([i,c])=>'<option value="'+i+'">'+esc(c.game)+' · '+esc(c.venue||'')+'</option>').join('')+'</select>'
     +'<button class="sim-btn" onclick="simPlay()">▶ Run Projection</button>'
-    +'<button class="sim-btn reset" onclick="simDraw()">Reset</button></div>'
-    +'<div id="simStadium"></div><div id="simGate"></div><div id="simConsensus"></div>'
-    +'<div id="simBoard"></div><div id="simPerf"></div>'
-    +'<div class="pbp" id="simPbp"></div><div class="tally" id="simTally"></div>'
-    +'<div class="sim-note">2,000 model simulations for the consensus, plus one representative play-by-play using the confirmed batting order. Each batter’s real K%/BB%/power is blended with the opposing SP, the park’s true dimensions skew home runs by pull side, the bullpen (weighted by ERA + recent workload) takes the 7th, and extra innings play out until someone wins. Confirmed lineups only.</div>'
+    +'<button class="sim-btn reset" onclick="simDraw()">Reset</button>'
+    +'<span style="font-size:10px;color:#64748b">'+conf.length+' game'+(conf.length>1?'s':'')+' with confirmed lineups</span></div>'
+    +'<div id="simStadium"></div><div id="simConsensus"></div>'
+    +'<div id="simBoard"></div><div class="pbp" id="simPbp"></div>'
+    +'<div id="simBox"></div><div class="tally" id="simTally"></div>'
+    +'<div class="sim-note">2,000 simulations drive the consensus; one representative game is played out batter-by-batter using the confirmed order. Each hitter’s real K%/BB%/power is matched against the pitcher, the park’s true dimensions skew home runs by pull side, the bullpen (ERA + recent workload) takes the 7th, and extra innings settle every tie.</div>'
     +'</div>';
   $('simSel').onchange=simDraw; simDraw();
 }
@@ -1233,37 +1242,49 @@ function clampS(x,a,b){return Math.max(a,Math.min(b,x));}
 function simDraw(){
   const c=simCard(); if(!c) return;
   $('simStadium').innerHTML=stadiumSVG(c);
-  drawBoard(c,null); $('simConsensus').innerHTML=''; $('simPerf').innerHTML=''; $('simTally').innerHTML='';
-  if(!c.lineups_official){ $('simGate').innerHTML='<div class="empty" style="background:#1f1600;color:#e8b040;border-color:#4a3500">⚠ Confirmed lineups required for batter-by-batter simulation — official lineups post ~4h before first pitch. ('+esc(c.away_sp.team)+' @ '+esc(c.home_sp.team)+')</div>'; $('simPbp').innerHTML=''; }
-  else { $('simGate').innerHTML=''; $('simPbp').innerHTML='<span class="k">Press ▶ Run Projection to simulate '+esc(c.away_sp.team)+' @ '+esc(c.home_sp.team)+' batter-by-batter…</span>'; }
+  drawBoard(c,null); $('simConsensus').innerHTML=''; $('simBox').innerHTML=''; $('simTally').innerHTML='';
+  $('simPbp').innerHTML='<span class="k">Press ▶ Run Projection to play out '+esc(c.away_sp.team)+' @ '+esc(c.home_sp.team)+' at '+esc(c.venue||'the park')+'…</span>';
 }
 function stadiumSVG(c){
   const d=c.park_dims||{lf:330,cf:404,rf:330,lf_wall:8,rf_wall:8};
-  // map distances to a fan; home plate at (200,250), scale so cf~ top
-  const sc=v=>v/2.0;                       // feet → px
-  const hp=[200,250];
+  const hc=simHomeColor(c); const sc=v=>v/2.05; const hp=[200,255];
   const lfX=hp[0]-Math.sin(0.785)*sc(d.lf), lfY=hp[1]-Math.cos(0.785)*sc(d.lf);
   const rfX=hp[0]+Math.sin(0.785)*sc(d.rf), rfY=hp[1]-Math.cos(0.785)*sc(d.rf);
   const cfX=hp[0], cfY=hp[1]-sc(d.cf);
-  const wallCol=z=>z>=20?'#16a34a':z>=12?'#22c55e':'#e2e8f0';
+  const wallCol=z=>z>=20?'#15803d':z>=12?'#22c55e':'#e2e8f0';
   const zones=c.wind_zones||[]; const arr=z=>z==='out'?'⬆':z==='in'?'⬇':'⬌';
-  const wpos=[[60,70],[200,40],[340,70]];
+  const wpos=[[58,86],[200,52],[342,86]];
   const hot=(c.temp!=null&&c.temp>=86);
-  let wind='';
-  zones.forEach((z,i)=>{ const p=wpos[i]||wpos[0]; wind+='<text x="'+p[0]+'" y="'+p[1]+'" font-size="20" fill="#7dd3fc" text-anchor="middle">'+arr(z.dir)+'</text><text x="'+p[0]+'" y="'+(p[1]+12)+'" font-size="9" fill="#94a3b8" text-anchor="middle">'+z.zone+' '+z.mph+'</text>'; });
-  return '<svg viewBox="0 0 400 270" style="width:100%;height:240px;background:linear-gradient(#0b1d3a,#13315c 45%,#0b1220);border-radius:12px">'
-    +(hot?'<circle cx="360" cy="34" r="16" fill="#ffd23f"><animate attributeName="r" values="15;18;15" dur="1.4s" repeatCount="indefinite"/></circle>':'<circle cx="360" cy="34" r="14" fill="#ffe88a"/>')
-    +'<path d="M'+hp[0]+' '+hp[1]+' L'+lfX+' '+lfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+rfX+' '+rfY+' Z" fill="#2e7d32" stroke="#1b5e20"/>'
-    +'<path d="M'+lfX+' '+lfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+cfX+' '+cfY+'" fill="none" stroke="'+wallCol(d.lf_wall)+'" stroke-width="3"/>'
-    +'<path d="M'+cfX+' '+cfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+rfX+' '+rfY+'" fill="none" stroke="'+wallCol(d.rf_wall)+'" stroke-width="3"/>'
-    +'<path d="M'+hp[0]+' '+hp[1]+' L'+lfX+' '+lfY+'" stroke="#cbd5e1" stroke-width="1" opacity=".6"/><path d="M'+hp[0]+' '+hp[1]+' L'+rfX+' '+rfY+'" stroke="#cbd5e1" stroke-width="1" opacity=".6"/>'
-    +'<rect x="'+(hp[0]-22)+'" y="'+(hp[1]-44)+'" width="44" height="44" fill="#b06a3b" transform="rotate(45 '+hp[0]+' '+(hp[1]-22)+')"/>'
-    +'<text x="'+(lfX-2)+'" y="'+(lfY-3)+'" font-size="10" fill="#fff" text-anchor="end">'+d.lf+'</text>'
-    +'<text x="'+cfX+'" y="'+(cfY-4)+'" font-size="10" fill="#fff" text-anchor="middle">'+d.cf+'</text>'
-    +'<text x="'+(rfX+2)+'" y="'+(rfY-3)+'" font-size="10" fill="#fff">'+d.rf+'</text>'
+  let wind=''; zones.forEach((z,i)=>{ const p=wpos[i]||wpos[0]; wind+='<text x="'+p[0]+'" y="'+p[1]+'" font-size="19" fill="#7dd3fc" text-anchor="middle">'+arr(z.dir)+'</text><text x="'+p[0]+'" y="'+(p[1]+12)+'" font-size="9" fill="#94a3b8" text-anchor="middle">'+z.zone+' '+z.mph+'</text>'; });
+  const mid=hp[1]-sc((d.lf+d.cf+d.rf)/3)*0.55;
+  return '<svg viewBox="0 0 400 280" style="width:100%;height:250px;background:linear-gradient(#0a1834,#13315c 50%,#0b1220);border-radius:12px">'
+    +'<defs><radialGradient id="grass" cx="50%" cy="100%" r="90%"><stop offset="0%" stop-color="#3a9c40"/><stop offset="100%" stop-color="#1e6b27"/></radialGradient></defs>'
+    +(hot?'<circle cx="362" cy="32" r="15" fill="#ffd23f"><animate attributeName="r" values="14;17;14" dur="1.4s" repeatCount="indefinite"/></circle>':'<circle cx="362" cy="32" r="13" fill="#ffe88a"/>')
+    // grandstand
+    +'<path d="M'+(lfX-14)+' '+(lfY-2)+' A'+(sc(d.cf)+16)+' '+(sc(d.cf)+16)+' 0 0 1 '+(rfX+14)+' '+(rfY-2)+' L'+rfX+' '+rfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 0 '+lfX+' '+lfY+' Z" fill="#1f2937" opacity=".85"/>'
+    // field
+    +'<path d="M'+hp[0]+' '+hp[1]+' L'+lfX+' '+lfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+rfX+' '+rfY+' Z" fill="url(#grass)" stroke="#8a5a2b" stroke-width="3"/>'
+    // warning track
+    +'<path d="M'+lfX+' '+lfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+rfX+' '+rfY+'" fill="none" stroke="#b06a3b" stroke-width="5" opacity=".5"/>'
+    // walls colored by height
+    +'<path d="M'+lfX+' '+lfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+cfX+' '+cfY+'" fill="none" stroke="'+wallCol(d.lf_wall)+'" stroke-width="3.5"/>'
+    +'<path d="M'+cfX+' '+cfY+' A'+sc(d.cf)+' '+sc(d.cf)+' 0 0 1 '+rfX+' '+rfY+'" fill="none" stroke="'+wallCol(d.rf_wall)+'" stroke-width="3.5"/>'
+    // infield
+    +'<circle cx="'+hp[0]+'" cy="'+(hp[1]-50)+'" r="46" fill="#6b8f3a" opacity=".55"/>'
+    +'<rect x="'+(hp[0]-26)+'" y="'+(hp[1]-52)+'" width="52" height="52" fill="#c08948" transform="rotate(45 '+hp[0]+' '+(hp[1]-26)+')"/>'
+    +'<circle cx="'+hp[0]+'" cy="'+(hp[1]-26)+'" r="6" fill="#c08948"/>'
+    +'<rect x="'+(hp[0]-3)+'" y="'+(hp[1]-4)+'" width="6" height="5" fill="#fff"/>'
+    // foul lines
+    +'<path d="M'+hp[0]+' '+hp[1]+' L'+lfX+' '+lfY+'" stroke="#fff" stroke-width="1" opacity=".55"/><path d="M'+hp[0]+' '+hp[1]+' L'+rfX+' '+rfY+'" stroke="#fff" stroke-width="1" opacity=".55"/>'
+    +'<text x="'+(lfX-2)+'" y="'+(lfY-3)+'" font-size="10" fill="#fff" text-anchor="end" font-weight="700">'+d.lf+'</text>'
+    +'<text x="'+cfX+'" y="'+(cfY-4)+'" font-size="10" fill="#fff" text-anchor="middle" font-weight="700">'+d.cf+'</text>'
+    +'<text x="'+(rfX+2)+'" y="'+(rfY-3)+'" font-size="10" fill="#fff" font-weight="700">'+d.rf+'</text>'
     +wind
-    +'<text x="10" y="18" font-size="11" fill="#cbd5e1" font-weight="700">'+esc(c.away_sp.team)+' @ '+esc(c.home_sp.team)+(c.temp!=null?' · '+c.temp+'°F':'')+'</text>'
-    +(d.lf_wall>=20||d.rf_wall>=20?'<text x="10" y="262" font-size="9" fill="#22c55e">green wall = tall (HR-suppressing)</text>':'')
+    // park banner with home color
+    +'<rect x="0" y="0" width="400" height="22" fill="'+hc+'" opacity=".92"/>'
+    +'<text x="8" y="15" font-size="12" fill="#fff" font-weight="800">'+esc(c.venue||'')+'</text>'
+    +'<text x="392" y="15" font-size="11" fill="#fff" text-anchor="end" font-weight="700">'+esc(c.away_sp.team)+' @ '+esc(c.home_sp.team)+(c.temp!=null?' · '+c.temp+'°F':'')+'</text>'
+    +((d.lf_wall>=20||d.rf_wall>=20)?'<text x="8" y="274" font-size="9" fill="#22c55e">green = tall wall (HR-suppressing)</text>':'')
     +'</svg>';
 }
 function pullHR(dims,side){ const dist=side==='L'?dims.rf:dims.lf; const wall=side==='L'?dims.rf_wall:dims.lf_wall; return clampS(Math.pow(330/dist,1.5)*Math.pow(8/Math.max(6,wall),0.35),0.55,1.7); }
@@ -1282,58 +1303,68 @@ function batterPA(b,ctx){
 function ctxFor(c,defenseSide,inning){
   const late=inning>=7; const sp=defenseSide==='home'?c.home_sp:c.away_sp;
   const pen=defenseSide==='home'?c.home_pen:c.away_pen; const penIp=defenseSide==='home'?c.home_pen_ip:c.away_pen_ip;
-  let fatigue=1.0;
-  if(late&&penIp!=null) fatigue=1+clampS((penIp-5)/12,0,0.30);  // tired pen → more contact
+  let fatigue=1.0; if(late&&penIp!=null) fatigue=1+clampS((penIp-5)/12,0,0.30);
   const xera=late?(pen||4.3):(sp.xera||sp.era||4.3);
   return {q:clampS(xera/4.10,0.6,1.7)*(late?fatigue:1), k9:late?8.0:(sp.k9||8.3), fatigue:late?(2-fatigue):1, hrMult:c._hrBase, dims:c.park_dims||{lf:330,cf:330,rf:330,lf_wall:8,rf_wall:8}};
 }
-function simHalf(bat,start,ctx,log,team){
+function bx(box,nm){ if(box&&!box[nm])box[nm]={name:nm,ab:0,r:0,h:0,rbi:0,bb:0,k:0,hr:0}; return box?box[nm]:null; }
+function scoreAdv(bases,n){ let scored=[]; for(let b=2;b>=0;b--){ if(bases[b]){ if(b+n>=3){scored.push(bases[b]);bases[b]=null;} else {bases[b+n]=bases[b];bases[b]=null;} } } return scored; }
+function simHalf(bat,start,ctx,log,team,box){
   let outs=0,bases=[null,null,null],runs=0,idx=start,pa=0; const t={K:0,GO:0,FO:0,BB:0,H1:0,H2:0,HR:0};
-  while(outs<3&&pa<18){ const b=bat[idx%bat.length]; idx++; pa++; const o=batterPA(b,ctx); const nm=b.name||('Batter '+((idx)%9+1)); const ord=(idx-1)%bat.length+1;
-    if(o==='K'){t.K++;outs++; if(log)log.push('<span class="k">'+ord+'. '+esc(nm)+' strikes out</span>'); continue;}
-    if(o==='GO'){t.GO++;outs++; const sc=advance(bases,1,false); runs+=sc; if(log)log.push('<span class="k">'+ord+'. '+esc(nm)+' grounds out</span>'); continue;}
-    if(o==='FO'){t.FO++;outs++; if(log)log.push('<span class="k">'+ord+'. '+esc(nm)+' flies out</span>'); continue;}
-    if(o==='BB'){t.BB++; const sc=walk(bases); runs+=sc; if(log)log.push('<span style="color:#cbd5e1">'+ord+'. '+esc(nm)+' walks</span>'); continue;}
-    if(o==='HR'){const on=bases.filter(x=>x).length; bases=[null,null,null]; runs+=on+1; t.HR++; if(log)log.push('<span class="hr">'+ord+'. '+esc(nm)+' HOMERS'+(on?' ('+(on+1)+'-run)':' (solo)')+'</span>'); continue;}
-    if(o==='2B'){const sc=advance(bases,2,true); bases[1]={}; runs+=sc; t.H2++; if(log)log.push('<span class="hit">'+ord+'. '+esc(nm)+' doubles</span>'); continue;}
-    const sc=advance(bases,1,true); bases[0]={}; runs+=sc; t.H1++; if(log)log.push('<span class="hit">'+ord+'. '+esc(nm)+' singles</span>');
+  while(outs<3&&pa<18){ const b=bat[idx%bat.length]; idx++; pa++; const ord=(idx-1)%bat.length+1; const nm=b.name||('Batter '+ord); const e=bx(box,nm); const o=batterPA(b,ctx);
+    function credit(scored,batterScores){ runs+=scored.length+(batterScores?1:0); if(e){ e.rbi+=scored.length+(batterScores?1:0); if(batterScores)e.r++; } if(box){ scored.forEach(rn=>{ if(box[rn])box[rn].r++; }); } }
+    if(o==='K'){t.K++;outs++; if(e){e.ab++;e.k++;} if(log)log.push('<span class="k">'+ord+'. '+esc(nm)+' strikes out</span>'); continue;}
+    if(o==='GO'){t.GO++;outs++; if(e)e.ab++; let sc=[]; if(bases[2]){sc=[bases[2]];bases[2]=null;} const adv=scoreAdv(bases,1); credit(sc,false); if(log)log.push('<span class="k">'+ord+'. '+esc(nm)+' grounds out'+(sc.length?', run scores':'')+'</span>'); continue;}
+    if(o==='FO'){t.FO++;outs++; if(e)e.ab++; if(log)log.push('<span class="k">'+ord+'. '+esc(nm)+' flies out</span>'); continue;}
+    if(o==='BB'){t.BB++; if(e)e.bb++;
+      if(bases[0]){ if(bases[1]){ if(bases[2]){ runs++; if(box&&box[bases[2]])box[bases[2]].r++; if(e)e.rbi++; bases[2]=bases[1]; bases[1]=bases[0]; } else { bases[2]=bases[1]; bases[1]=bases[0]; } } else { bases[1]=bases[0]; } }
+      bases[0]=nm;
+      if(log)log.push('<span style="color:#cbd5e1">'+ord+'. '+esc(nm)+' walks</span>'); continue;}
+    if(o==='HR'){const occ=bases.filter(x=>x); bases=[null,null,null]; if(e){e.ab++;e.h++;e.hr++;} t.HR++; credit(occ,true); if(log)log.push('<span class="hr">'+ord+'. '+esc(nm)+' HOMERS'+(occ.length?' ('+(occ.length+1)+'-run)':' (solo)')+'</span>'); continue;}
+    if(o==='2B'){const sc=scoreAdv(bases,2); if(e){e.ab++;e.h++;} credit(sc,false); bases[1]=nm; t.H2++; if(log)log.push('<span class="hit">'+ord+'. '+esc(nm)+' doubles'+(sc.length?', '+sc.length+' in':'')+'</span>'); continue;}
+    const sc=scoreAdv(bases,1); if(e){e.ab++;e.h++;} credit(sc,false); bases[0]=nm; t.H1++; if(log)log.push('<span class="hit">'+ord+'. '+esc(nm)+' singles'+(sc.length?', '+sc.length+' in':'')+'</span>');
   }
   return {runs,t,next:idx};
 }
-function advance(bases,n,batterReaches){ let sc=0; for(let b=2;b>=0;b--){ if(bases[b]){ const nb=b+n+(batterReaches?0:0); if(b+n>=3){sc++;bases[b]=null;} else {bases[b+n]={};bases[b]=null;} } } return sc; }
-function walk(bases){ if(bases[0]&&bases[1]&&bases[2])return 1; if(bases[0]&&bases[1]){bases[2]={};return 0;} if(bases[0]){bases[1]={};return 0;} return 0; }
 function simGame(c,collect){
-  const ab=c.away_bat&&c.away_bat.length?c.away_bat:Array.from({length:9},(_,i)=>({order:i+1})); 
+  const ab=c.away_bat&&c.away_bat.length?c.away_bat:Array.from({length:9},(_,i)=>({order:i+1}));
   const hb=c.home_bat&&c.home_bat.length?c.home_bat:Array.from({length:9},(_,i)=>({order:i+1}));
-  let aR=0,hR=0,ai=0,hi=0,innings=[],log=collect?[]:null; const ta={K:0,GO:0,FO:0,BB:0,H1:0,H2:0,HR:0},th={K:0,GO:0,FO:0,BB:0,H1:0,H2:0,HR:0};
-  function half(inning,bat,start,defSide,team){ if(log)log.push('<div class="inn">▸ '+(defSide==='home'?'Top':'Bot')+' '+inning+' — '+esc(team)+' batting</div>'); const r=simHalf(bat,start,ctxFor(c,defSide,inning),log,team); for(const k in r.t)(defSide==='home'?ta:th)[k]+=r.t[k]; return r; }
+  let aR=0,hR=0,ai=0,hi=0,innings=[],log=collect?[]:null; const boxA=collect?{}:null, boxH=collect?{}:null;
+  const ta={K:0,GO:0,FO:0,BB:0,H1:0,H2:0,HR:0},th={K:0,GO:0,FO:0,BB:0,H1:0,H2:0,HR:0};
+  function half(inning,bat,start,defSide,team,box){ if(log)log.push('<div class="inn">▸ '+(defSide==='home'?'Top':'Bottom')+' '+inning+' — '+esc(team)+' batting</div>'); const r=simHalf(bat,start,ctxFor(c,defSide,inning),log,team,box); for(const k in r.t)(defSide==='home'?ta:th)[k]+=r.t[k]; return r; }
   let inning=1;
   for(;inning<=9;inning++){
-    const a=half(inning,ab,ai,'home',c.away_sp.team); aR+=a.runs; ai=a.next; innings.push([a.runs,null]);
-    if(inning===9&&hR>aR){ innings[inning-1][1]=0; break; } // home already winning, no bottom 9
-    const h=half(inning,hb,hi,'away',c.home_sp.team); hR+=h.runs; hi=h.next; innings[inning-1][1]=h.runs;
+    const a=half(inning,ab,ai,'home',c.away_sp.team,boxA); aR+=a.runs; ai=a.next; innings.push([a.runs,null]);
+    if(inning===9&&hR>aR){ innings[inning-1][1]=0; break; }
+    const h=half(inning,hb,hi,'away',c.home_sp.team,boxH); hR+=h.runs; hi=h.next; innings[inning-1][1]=h.runs;
   }
-  // extras until a winner — full bullpen game, never a tie
   let xi=9;
-  while(aR===hR&&xi<25){ xi++; const a=half(xi,ab,ai,'home',c.away_sp.team); aR+=a.runs; ai=a.next; const h=half(xi,hb,hi,'away',c.home_sp.team); hR+=h.runs; hi=h.next; innings.push([a.runs,h.runs]); }
-  if(aR===hR){ // ultra-rare deadlock: walk-off to the stronger projected offense
-    if((c.home_runs||4.3)>=(c.away_runs||4.3)){ hR++; innings[innings.length-1][1]+=1; } else { aR++; innings[innings.length-1][0]+=1; }
-    if(log)log.push('<div class="inn">Walk-off in the '+innings.length+'th — no ties allowed</div>'); }
+  while(aR===hR&&xi<25){ xi++; const a=half(xi,ab,ai,'home',c.away_sp.team,boxA); aR+=a.runs; ai=a.next; const h=half(xi,hb,hi,'away',c.home_sp.team,boxH); hR+=h.runs; hi=h.next; innings.push([a.runs,h.runs]); }
+  if(aR===hR){ if((c.home_runs||4.3)>=(c.away_runs||4.3)){hR++;innings[innings.length-1][1]+=1;}else{aR++;innings[innings.length-1][0]+=1;} if(log)log.push('<div class="inn">Walk-off in the '+innings.length+'th — no ties allowed</div>'); }
   const first0=(innings[0][0]||0)+(innings[0][1]||0)===0;
-  return {aR,hR,innings,first0,log,ta,th};
+  return {aR,hR,innings,first0,log,ta,th,boxA,boxH};
+}
+function boxTable(team,bat,box){
+  if(!box) return '';
+  const rows=(bat||[]).map(b=>box[b.name]).filter(Boolean);
+  if(!rows.length) return '';
+  const hd='<tr><th style="text-align:left">'+esc(team)+'</th><th>AB</th><th>R</th><th>H</th><th>RBI</th><th>BB</th><th>K</th><th>HR</th></tr>';
+  const body=rows.map((r,i)=>'<tr><td style="text-align:left">'+(i+1)+'. '+esc(r.name)+'</td><td>'+r.ab+'</td><td>'+r.r+'</td><td>'+r.h+'</td><td>'+r.rbi+'</td><td>'+r.bb+'</td><td>'+r.k+'</td><td>'+r.hr+'</td></tr>').join('');
+  const tot=rows.reduce((a,r)=>({ab:a.ab+r.ab,r:a.r+r.r,h:a.h+r.h,rbi:a.rbi+r.rbi,bb:a.bb+r.bb,k:a.k+r.k,hr:a.hr+r.hr}),{ab:0,r:0,h:0,rbi:0,bb:0,k:0,hr:0});
+  const tr='<tr class="tot"><td style="text-align:left">Totals</td><td>'+tot.ab+'</td><td>'+tot.r+'</td><td>'+tot.h+'</td><td>'+tot.rbi+'</td><td>'+tot.bb+'</td><td>'+tot.k+'</td><td>'+tot.hr+'</td></tr>';
+  return '<table class="boxscore">'+hd+body+tr+'</table>';
 }
 function simPlay(){
   const c=simCard(); if(!c) return;
   if(!c.lineups_official){ simDraw(); return; }
   if(c.away_sp.tbd||c.home_sp.tbd){ $('simPbp').innerHTML='<span class="k">Can’t simulate — a starter is TBD.</span>'; return; }
   c._hrBase=(function(){let f=(c.park_hr||8)/8;const z=c.wind_zones||[];const out=z.filter(x=>x.dir==='out').reduce((a,x)=>a+x.mph,0);const inw=z.filter(x=>x.dir==='in').reduce((a,x)=>a+x.mph,0);f*=1+(out-inw)*0.012;if(c.temp>=88)f*=1.08;else if(c.temp!=null&&c.temp<55)f*=0.9;return clampS(f,0.6,1.7);})();
-  const N=2000; let aw=0,hw=0,sa=0,sh=0,over=0,nz=0; const sims=[];
-  for(let n=0;n<N;n++){ const g=simGame(c,false); sims.push([g.aR,g.hR]); sa+=g.aR; sh+=g.hR; if(g.aR>g.hR)aw++;else hw++; if(g.aR+g.hR>(c.line||8.5))over++; if(g.first0)nz++; }
+  const N=2000; let aw=0,hw=0,sa=0,sh=0,over=0,nz=0;
+  for(let n=0;n<N;n++){ const g=simGame(c,false); sa+=g.aR; sh+=g.hR; if(g.aR>g.hR)aw++;else hw++; if(g.aR+g.hR>(c.line||8.5))over++; if(g.first0)nz++; }
   const expA=sa/N,expH=sh/N,ra=Math.round(expA),rh=Math.round(expH);
   const awP=Math.round(100*aw/N),hwP=Math.round(100*hw/N),ovP=Math.round(100*over/N),nzP=Math.round(100*nz/N);
   const at=c.away_sp.team,ht=c.home_sp.team;
-  // one representative play-by-play game near the expected score
-  let rep=null,best=1e9; for(let tries=0;tries<60;tries++){ const g=simGame(c,true); const dd=Math.abs(g.aR-ra)+Math.abs(g.hR-rh); if(dd<best){best=dd;rep=g;} if(dd<=1)break; }
+  let rep=null,best=1e9; for(let tr=0;tr<70;tr++){ const g=simGame(c,true); const dd=Math.abs(g.aR-ra)+Math.abs(g.hR-rh); if(dd<best){best=dd;rep=g;} if(dd<=1)break; }
   const chip=(l,v,col)=>'<span class="recap-chip">'+l+' <b style="color:'+(col||'#fde047')+'">'+v+'</b></span>';
   const nrfi=((MODEL_DATA.nrfi||[]).find(x=>x.gamePk===c.gamePk)||{});
   $('simConsensus').innerHTML='<div class="recap-box" style="background:#0b1220;border-color:#1e293b;color:#e2e8f0"><div style="font-weight:800;margin-bottom:6px;color:#fde047">MODEL CONSENSUS · '+N+' sims</div><div class="recap-row">'
@@ -1343,18 +1374,16 @@ function simPlay(){
     +chip('P(Over)',ovP+'%',ovP>=55?'#4ade80':'#94a3b8')
     +chip('1st scoreless',nzP+'%','#4ade80')
     +chip('NRFI call',nrfi.tier?esc(nrfi.tier.replace('_',' ')):'—','#a5b4fc')
-    +(c.away_pen_ip!=null?chip('Pen IP L2 '+esc(at),c.away_pen_ip,'#fca5a5'):'')
-    +(c.home_pen_ip!=null?chip('Pen IP L2 '+esc(ht),c.home_pen_ip,'#fca5a5'):'')
+    +(c.away_pen_ip!=null?chip('Pen IP L2 '+esc(at),c.away_pen_ip,'#fca5a5'):'')+(c.home_pen_ip!=null?chip('Pen IP L2 '+esc(ht),c.home_pen_ip,'#fca5a5'):'')
     +'</div></div>';
   drawBoard(c,{innings:rep.innings,aR:rep.aR,hR:rep.hR,aH:rep.ta.H1+rep.ta.H2+rep.ta.HR,hH:rep.th.H1+rep.th.H2+rep.th.HR});
   const log=rep.log; const pbp=$('simPbp'); pbp.innerHTML=''; let k=0;
-  const iv=setInterval(function(){ if(k>=log.length){clearInterval(iv); pbp.innerHTML+='<div class="inn">FINAL — '+esc(at)+' '+rep.aR+', '+esc(ht)+' '+rep.hR+'</div>'; pbp.scrollTop=pbp.scrollHeight; return;} const isInn=log[k].indexOf('class="inn"')>=0; pbp.innerHTML+=log[k]+(isInn?'':'<br>'); pbp.scrollTop=pbp.scrollHeight; k++; },45);
+  const iv=setInterval(function(){ if(k>=log.length){clearInterval(iv); pbp.innerHTML+='<div class="inn">FINAL — '+esc(at)+' '+rep.aR+', '+esc(ht)+' '+rep.hR+'</div>'; pbp.scrollTop=pbp.scrollHeight; $('simBox').innerHTML='<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px">'+boxTable(at,c.away_bat,rep.boxA)+boxTable(ht,c.home_bat,rep.boxH)+'</div>'; return;} const isInn=log[k].indexOf('class="inn"')>=0; pbp.innerHTML+=log[k]+(isInn?'':'<br>'); pbp.scrollTop=pbp.scrollHeight; k++; }, 130);
   const T=(l,v)=>'<div><div class="v">'+v+'</div><div class="l">'+l+'</div></div>';
   $('simTally').innerHTML=T('Win '+esc(at),awP+'%')+T('Win '+esc(ht),hwP+'%')+T('K (rep)',rep.ta.K+rep.th.K)+T('Hits (rep)',(rep.ta.H1+rep.ta.H2+rep.ta.HR)+(rep.th.H1+rep.th.H2+rep.th.HR))+T('HR (rep)',rep.ta.HR+rep.th.HR)+T('P(Over)',ovP+'%')+T('NRFI%',nzP+'%');
 }
 function drawBoard(c,res){
-  const ni=res&&res.innings?res.innings.length:9;
-  let cols=Math.max(9,ni);
+  const ni=res&&res.innings?res.innings.length:9; let cols=Math.max(9,ni);
   let hd='<div class="hd"></div>'; for(let i=1;i<=cols;i++)hd+='<div class="hd">'+i+'</div>'; hd+='<div class="hd">R</div><div class="hd">H</div>';
   function row(team,arr,R,H,idx){ let cells='<div class="tm">'+esc(team)+'</div>'; for(let i=0;i<cols;i++){cells+='<div>'+(arr&&arr[i]&&arr[i][idx]!=null?arr[i][idx]:'·')+'</div>';} cells+='<div class="rt">'+(R!=null?R:'·')+'</div><div>'+(H!=null?H:'·')+'</div>'; return cells; }
   $('simBoard').innerHTML='<div class="scoreboard" style="grid-template-columns:auto repeat('+cols+',1fr) auto auto">'+hd+row(c.away_sp.team,res?res.innings:null,res?res.aR:null,res?res.aH:null,0)+row(c.home_sp.team,res?res.innings:null,res?res.hR:null,res?res.hH:null,1)+'</div>';
