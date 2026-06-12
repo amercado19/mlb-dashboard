@@ -127,6 +127,7 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .sptag.ELITE{background:#dcfce7;color:#15803d}.sptag.GOOD{background:#d1fae5;color:#059669}
 .sptag.AVG{background:#fef9c3;color:#a16207}.sptag.BELOWAVG{background:#fee2e2;color:#b91c1c}
 .sptag.POOR{background:#fecaca;color:#991b1b}.sptag.TBD{background:#f1f5f9;color:#64748b;border:1px dashed #cbd5e1}
+.lt.hrr{background:#fce7f3;color:#be185d}.lt.spr{background:#e0e7ff;color:#4338ca}.lt.b2{background:#cffafe;color:#0e7490}
 .spspl{display:flex;gap:4px}
 .spv{font-size:11px;font-family:monospace;font-weight:800;padding:1px 5px;border-radius:6px;background:#f8fafc}
 .spv .l{font-size:8px;color:#8b5cf6;font-weight:700}.spv .r{font-size:8px;color:#3b82f6;font-weight:700}
@@ -202,7 +203,7 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 
 <div class="kpi" id="kpis"></div>
 
-<h2>Top Parlay — 8-Leg Board</h2>
+<h2>Top Parlay — Diversified Board</h2>
 <div id="topParlaySection"></div>
 <h2>Section 4 — Model Parlay Suggestions</h2>
 <div id="parlaySection"></div>
@@ -672,14 +673,16 @@ function renderTopParlay(){
     if (l.betType === 'ml') live = liveGames[l.gamePk] ? ' ' + mlLiveCell({gamePk:l.gamePk, pickSide:l.pickSide}) : '';
     else if (l.betType === 'over') live = ' ' + overLive(l.gamePk, l.line || 8.5);
     else if (l.playerId) live = ' ' + propLive({playerId:l.playerId, gamePk:l.gamePk, betType:l.betType}, l.betType === 'hr' ? 'hr' : 'hit');
-    const cls = l.betType === 'ml' ? 'ml' : l.betType === 'over' ? 'over' : l.betType === 'hr' ? 'hr' : (/2B/i.test(l.betType) ? 'b2' : 'hit');
-    const lbl = l.betType === 'ml' ? 'ML' : l.betType === 'over' ? 'OVER' : l.betType === 'hr' ? 'HR' : (/2B/i.test(l.betType) ? '2B+' : 'HIT');
+    const LBL = {ml:'ML', over:'OVER', under:'UNDER', hr:'HR', hit:'1+H', '2tb':'2+TB', hrr:'2+HRR', spread:'SPREAD', '2b':'2B+'};
+    const CLS = {ml:'ml', over:'over', under:'over', hr:'hr', hit:'hit', '2tb':'b2', hrr:'hrr', spread:'spr', '2b':'b2'};
+    const cls = CLS[l.betType] || 'hit';
+    const lbl = LBL[l.betType] || l.betType.toUpperCase();
     return '<li><span class="lt ' + cls + '">' + lbl + '</span>' + esc(l.desc) + (l.prob ? ' <span class="mono">(' + Math.round(l.prob*100) + '%)</span>' : '') + live + '</li>';
   }).join('');
   $('topParlaySection').innerHTML = '<div id="topParlay">'
     + '<div class="tph">' + esc(tp.name || 'Top 8-Leg Board') + '<span class="prob">win prob ≈ ' + (prob*100).toFixed(1) + '% · fair ' + decToAm(1/prob) + '</span></div>'
     + '<ol>' + legs + '</ol>'
-    + '<div style="display:flex;align-items:center;gap:10px;margin-top:8px"><button onclick="addTopToSlip()">Add all 8 to my slip</button><span class="note">' + esc(tp.note||'') + '</span></div>'
+    + '<div style="display:flex;align-items:center;gap:10px;margin-top:8px"><button onclick="addTopToSlip()">Add all ' + (tp.legs||[]).length + ' to my slip</button><span class="note">' + esc(tp.note||'') + '</span></div>'
     + '</div>';
 }
 function addTopToSlip(){
