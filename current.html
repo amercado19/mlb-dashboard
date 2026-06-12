@@ -242,6 +242,40 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .sim-note{font-size:10px;color:#5b7da3;margin-top:10px;line-height:1.6}
 
 
+.col-h{cursor:pointer;user-select:none;transition:.1s}
+.col-h:hover{opacity:.8}
+.col-caret{color:#cf9b52;font-size:13px}
+.ga-card{border:1px solid #e2e8f0;border-radius:12px;margin-bottom:8px;overflow:hidden;background:#fff}
+.ga-head{padding:11px 14px;cursor:pointer;display:flex;gap:10px;align-items:flex-start;user-select:none}
+.ga-head:hover{background:#f8fafc}
+.ga-head .caret{color:#0ea5e9;font-weight:800;font-size:13px;margin-top:2px}
+.ga-mu{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ga-time{font-size:10px;color:#94a3b8;font-weight:600}
+.ga-1l{font-size:11px;color:#475569;margin-top:3px}
+.ga-body{border-top:1px solid #f1f5f9;padding:12px 14px;background:#fbfcfe}
+.ga-grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){.ga-grid2{grid-template-columns:1fr}}
+.ga-sec{grid-column:auto}
+.ga-sec:last-child{grid-column:1/-1}
+.ga-h{font-size:11px;font-weight:800;color:#334155;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.ga-h.ga-toggle{cursor:pointer;color:#0369a1}
+.ga-sp{padding:4px 0;font-size:12px}
+.ga-sp+.ga-sp{border-top:1px solid #f1f5f9}
+.ga-hand{font-size:9px;font-weight:800;padding:1px 5px;border-radius:5px;margin-right:5px}
+.ga-hand.R{background:#dbeafe;color:#1e40af}.ga-hand.L{background:#ede9fe;color:#6d28d9}.ga-hand.T{background:#f1f5f9;color:#64748b}
+.ga-spx{font-size:10px;color:#64748b;margin-left:2px}
+.gtag{font-size:8px;font-weight:800;padding:1px 5px;border-radius:10px}
+.gtag.ELITE{background:#dcfce7;color:#15803d}.gtag.GOOD{background:#d1fae5;color:#059669}.gtag.AVG{background:#fef9c3;color:#a16207}.gtag.BELOWAVG{background:#fee2e2;color:#b91c1c}.gtag.POOR{background:#fecaca;color:#991b1b}.gtag.TBD{background:#f1f5f9;color:#64748b}
+.ga-wx{font-size:12px;color:#334155}
+.ga-read{font-size:12px;color:#334155;margin:2px 0}
+.ga-rules{font-size:10px;color:#94a3b8;margin-top:4px;font-style:italic}
+.ga-team{margin:6px 0}
+.ga-tn{font-size:11px;font-weight:800;color:#0f172a;margin-bottom:3px}
+.ga-pp{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:3px 0}
+.ga-pl{font-size:9px;font-weight:800;color:#64748b;text-transform:uppercase;min-width:46px}
+.ga-pill{display:inline-flex;align-items:center;gap:3px;font-size:11px;background:#eef2f7;border:1px solid #e2e8f0;border-radius:20px;padding:2px 8px}
+.ga-pill img{width:18px;height:18px;border-radius:50%}
+
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -268,6 +302,8 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 <h2>★ Star-Out Status (R26)</h2>
 <div id="starOutSection"></div>
 
+<h2>Games — Tap to Expand</h2>
+<div id="gamesAccordion"></div>
 <h2>Top Parlay — Most Confident (SGP-aware)</h2>
 <div id="topConfSection"></div>
 <h2>🎮 Game Simulator <span style="font-size:11px;font-weight:400;color:#94a3b8">— powered by our model projections</span></h2>
@@ -1249,6 +1285,65 @@ function rebuildSimSelector(){
   const lbl=sel.parentNode.querySelector('span'); if(lbl) lbl.textContent=conf.length+' game'+(conf.length>1?'s':'')+' with confirmed lineups';
 }
 
+function gaToggle(h){ const b=h.nextElementSibling; const open=b.style.display!=='none'; b.style.display=open?'none':'block'; h.querySelector('.caret').textContent=open?'▸':'▾'; }
+function gaProps(pk,team){ const b=(MODEL_DATA&&MODEL_DATA.boards)||{}; const f=arr=>(arr||[]).filter(p=>p.gamePk===pk&&p.team===team); const uniq=arr=>{const s=new Set();return arr.filter(p=>{if(s.has(p.name))return false;s.add(p.name);return true;});}; return {hr:uniq(f(b.hr)),h1:uniq(f(b.h1)),h2:uniq(f(b.h2)),tb2:uniq(f(b.tb2)),hrr:uniq(f(b.hrr))}; }
+function spLine(s){ if(!s) return '—'; const hand=s.tbd?'TBD':(s.throws||'R')+'HP'; const tier=s.tier||'TBD'; return '<div class="ga-sp"><span class="ga-hand '+(s.tbd?'T':(s.throws||'R'))+'">'+hand+'</span> <b>'+esc(s.name||'TBD')+'</b> <span class="gtag '+tier.replace(' ','')+'">'+esc(tier)+'</span><div class="ga-spx">xERA '+(s.xera!=null?s.xera:'—')+' · ERA '+(s.era!=null?s.era:'—')+' · '+(s.ip!=null?s.ip+' IP':'')+(s.k9!=null?' · '+s.k9+' K/9':'')+(s.oops!=null?' · oOPS '+s.oops.toFixed(3).replace(/^0/,''):'')+'</div></div>'; }
+function windLine(c){ const z=c.wind_zones||[]; if(!z.length) return '<span style="color:#94a3b8">forecast pending</span>'; const ar=d=>d==='out'?'⬆':d==='in'?'⬇':'⬌'; return z.map(x=>'<span style="margin-right:10px">'+x.zone+' '+ar(x.dir)+' '+x.mph+'</span>').join('')+(c.temp!=null?' · 🌡 '+c.temp+'°F':''); }
+function propPills(label,arr,suffix){ if(!arr||!arr.length) return ''; return '<div class="ga-pp"><span class="ga-pl">'+label+'</span>'+arr.map(p=>'<span class="ga-pill">'+(p.playerId?hs(p.playerId,true):'')+esc(p.name)+(suffix&&p.metric!=null?' '+p.metric:(suffix&&p.score!=null?' '+Math.round(p.score):''))+'</span>').join('')+'</div>'; }
+function renderGamesAccordion(){
+  const el=$('gamesAccordion'); if(!el) return;
+  const gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[];
+  if(!gc.length){ el.innerHTML='<div class="empty">No games scheduled.</div>'; return; }
+  el.innerHTML=gc.map(c=>{
+    const ml=((MODEL_DATA.ml)||[]).find(x=>x.gamePk===c.gamePk)||{};
+    const nrfi=((MODEL_DATA.nrfi)||[]).find(x=>x.gamePk===c.gamePk)||{};
+    const at=c.away_sp.team, ht=c.home_sp.team;
+    const tierB=c.tier?'<span class="tier '+c.tier+'">'+esc(c.pick||'')+' '+c.tier+'</span>':'';
+    const head='<div class="ga-mu">'+tb(at)+' <b>'+esc(at)+' @ '+esc(ht)+'</b> '+tb(ht)+' <span class="ga-time">'+fmtTime(c.time)+' · '+esc(c.venue||'')+'</span></div>'
+      +'<div class="ga-1l">'+esc(c.away_sp.name||'TBD')+' ('+esc(c.away_sp.tier)+') vs '+esc(c.home_sp.name||'TBD')+' ('+esc(c.home_sp.tier)+') · '+(c.temp!=null?c.temp+'°F':'wx pending')+' · O/U '+(c.line!=null?c.line:'—')+' · '+tierB+'</div>';
+    const pa=gaProps(c.gamePk,at), ph=gaProps(c.gamePk,ht);
+    const playerBlock=(team,p)=>{ if(!p.hr.length&&!p.h1.length&&!p.h2.length&&!p.tb2.length&&!p.hrr.length) return '<div class="ga-team"><b>'+esc(team)+'</b> <span style="color:#94a3b8">— props post with confirmed lineups</span></div>'; return '<div class="ga-team"><div class="ga-tn">'+esc(team)+'</div>'+propPills('HR',p.hr,true)+propPills('1+ Hit',p.h1,true)+propPills('2B+',p.h2,true)+propPills('2+ TB',p.tb2,true)+propPills('2+ HRR',p.hrr,true)+'</div>'; };
+    const body='<div class="ga-grid2">'
+      +'<div class="ga-sec"><div class="ga-h">⚾ Pitching Matchup</div>'+spLine(c.away_sp)+spLine(c.home_sp)+'</div>'
+      +'<div class="ga-sec"><div class="ga-h">🌤 Weather</div><div class="ga-wx">'+windLine(c)+'</div>'
+        +'<div class="ga-h" style="margin-top:8px">📊 Model Read</div>'
+        +'<div class="ga-read"><b>ML:</b> '+(c.pick||'—')+' '+(c.tier||'')+(c.conf!=null?' ('+c.conf+'%)':'')+(ml.odds?' · '+esc(ml.odds):'')+'</div>'
+        +'<div class="ga-read"><b>O/U:</b> proj '+(c.total!=null?c.total:'—')+' vs line '+(c.line!=null?c.line:'—')+' · runs '+(c.away_runs!=null?c.away_runs+'/'+c.home_runs:'—')+'</div>'
+        +'<div class="ga-read"><b>NRFI/YRFI:</b> '+(nrfi.tier?esc(nrfi.tier.replace('_',' ')):'—')+(nrfi.bet?' · '+esc(nrfi.bet):'')+'</div>'
+        +(ml.rules&&ml.rules.length?'<div class="ga-rules">'+esc(ml.rules.slice(0,4).join(' · '))+'</div>':'')
+      +'</div></div>'
+      +'<div class="ga-sec"><div class="ga-h ga-toggle" onclick="gaToggle(this)"><span class="caret">▸</span> Player Hits & HR Props</div><div style="display:none">'+playerBlock(at,pa)+playerBlock(ht,ph)+'</div></div>';
+    return '<div class="ga-card"><div class="ga-head" onclick="gaToggle(this)"><span class="caret">▸</span><div style="flex:1">'+head+'</div></div><div class="ga-body" style="display:none">'+body+'</div></div>';
+  }).join('');
+}
+
+var SIM_OPEN=['Games — Tap to Expand','Top Parlay — Most Confident (SGP-aware)','🎮 Game Simulator','Game Simulator'];
+function makeCollapsible(){
+  const cont=document.querySelector('.wrap')||document.body;
+  const hs=[...cont.querySelectorAll('h2')];
+  hs.forEach(h=>{
+    if(h.dataset.col) return; h.dataset.col='1';
+    let sibs=[],el=h.nextElementSibling; while(el&&el.tagName!=='H2'){ const nx=el.nextElementSibling; sibs.push(el); el=nx; }
+    const wrap=document.createElement('div'); wrap.className='col-body';
+    h.after(wrap); sibs.forEach(s=>wrap.appendChild(s));
+    h.classList.add('col-h'); h.insertAdjacentHTML('afterbegin','<span class="col-caret">▾</span> ');
+    const open=SIM_OPEN.some(t=>h.textContent.indexOf(t.replace('🎮 ',''))>=0)|| h.textContent.indexOf('Games')>=0;
+    wrap.style.display=open?'block':'none'; h.querySelector('.col-caret').textContent=open?'▾':'▸';
+    h.addEventListener('click',function(ev){ if(ev.target.closest('a,button,select'))return; const v=wrap.style.display==='none'; wrap.style.display=v?'block':'none'; h.querySelector('.col-caret').textContent=v?'▾':'▸'; });
+  });
+}
+async function syncOdds(){
+  try{
+    const dt=(MODEL_DATA&&MODEL_DATA.date)?MODEL_DATA.date.replace(/-/g,''):'';
+    if(!dt) return;
+    const sb=await fetchJson('https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates='+dt);
+    const map={}; (sb.events||[]).forEach(ev=>{ try{ const comp=ev.competitions[0]; const o=(comp.odds||[])[0]; if(!o)return; const home=comp.competitors.find(x=>x.homeAway==='home').team.abbreviation; const away=comp.competitors.find(x=>x.homeAway==='away').team.abbreviation; map[away+'@'+home]={ou:o.overUnder, details:o.details}; }catch(e){} });
+    let changed=false;
+    (MODEL_DATA.gameCards||[]).forEach(c=>{ const k=c.away_sp.team+'@'+c.home_sp.team; const m=map[k]; if(m&&m.ou!=null&&c.line!==+m.ou){ c.line=+m.ou; changed=true; } });
+    if(changed){ if(typeof renderGamesAccordion==='function')renderGamesAccordion(); if(typeof renderGameCards==='function')renderGameCards(); }
+  }catch(e){ /* ESPN CORS may block in-browser; picks/odds still refresh at pipeline runs */ }
+}
+
 function renderGameSim(){
   const el=$('gameSimSection'); if(!el) return;
   if(document.getElementById('simSel')) return;   // built once; live refresh must not wipe an active sim
@@ -1420,7 +1515,7 @@ function drawBoard(c,res){
   $('simBoard').innerHTML='<div class="scoreboard" style="grid-template-columns:auto repeat('+cols+',1fr) auto auto">'+hd+row(c.away_sp.team,res?res.innings:null,res?res.aR:null,res?res.aH:null,0)+row(c.home_sp.team,res?res.innings:null,res?res.hR:null,res?res.hH:null,1)+'</div>';
 }
 
-function renderAll(){ renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderGameCards(); renderSP(); renderML(); renderNrfi(); renderHR(); renderHits(); renderBoards(); renderHrStreaks(); renderYesterdayHr(); renderParlays(); renderTopParlay(); renderPropPerf(); renderGameCenter(); }
+function renderAll(){ renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderGameCards(); renderSP(); renderML(); renderNrfi(); renderHR(); renderHits(); renderBoards(); renderHrStreaks(); renderYesterdayHr(); renderParlays(); renderTopParlay(); renderPropPerf(); renderGameCenter(); }
 
 async function refreshLive(){
   if (refreshing) return;
@@ -1453,8 +1548,9 @@ async function refreshLive(){
 renderAll(); renderAccuracy(); renderKpis(); renderSlip(); renderSaved();
 window.addEventListener('load', function(){ initAlgoCharts(); initPlayerSel(); });
 refreshLive();
-syncLineups();
-setInterval(function(){ refreshLive(); syncLineups(); }, 120000);
+syncLineups(); syncOdds(); setTimeout(makeCollapsible,300);
+setInterval(refreshLive,120000);
+setInterval(function(){ syncLineups(); syncOdds(); }, 3600000);
 </script>
 <script>
 /* ===== injected: staleness banner + auto-mode notice + dynamic version ===== */
