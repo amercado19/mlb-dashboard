@@ -617,7 +617,10 @@ function mlLiveCell(p){
 
 function renderTopParlay(){
   const tp = MODEL_DATA && MODEL_DATA.topParlay;
-  if (!tp){ $('topParlaySection').innerHTML = '<div class="empty">No 8-leg board today.</div>'; return; }
+  if (!tp || !(tp.legs||[]).length){
+    $('topParlaySection').innerHTML = '<div class="empty">' + esc((tp && tp.note) || 'No rule-compliant parlay board today.') + '</div>';
+    return;
+  }
   let prob = 1;
   const legs = (tp.legs||[]).map((l,i) => {
     if (l.prob) prob *= l.prob;
