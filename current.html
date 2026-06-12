@@ -797,28 +797,34 @@ function renderTopConf(){
 function fairAmNum(p){ p=Math.max(0.05,Math.min(0.95,p||0.5)); return p>=0.5? -Math.round(100*p/(1-p)) : Math.round(100*(1-p)/p); }
 function amStr(a){ return a>=0?'+'+a:''+a; }
 function amDec(a){ return a>=0? 1+a/100 : 1+100/(-a); }
+function fairAmNum(p){ p=Math.max(0.05,Math.min(0.95,p||0.5)); return p>=0.5? -Math.round(100*p/(1-p)) : Math.round(100*(1-p)/p); }
+function amStr(a){ return a>=0?'+'+a:''+a; }
+function amDec(a){ return a>=0? 1+a/100 : 1+100/(-a); }
 function renderTopParlay(){
   const tp=MODEL_DATA&&MODEL_DATA.topParlay;
   const el=$('topParlaySection'); if(!el) return;
   if(!tp||!(tp.legs||[]).length){ el.innerHTML='<div class="empty">'+esc((tp&&tp.note)||'No rule-compliant parlay today.')+'</div>'; return; }
   const gcByPk={}; (MODEL_DATA.gameCards||[]).forEach(c=>gcByPk[c.gamePk]=c);
   const order=[]; const groups={}; tp.legs.forEach(l=>{ const k=l.gamePk||'x'; if(!groups[k]){groups[k]=[];order.push(k);} groups[k].push(l); });
+  const SGP_CORR=0.62;   // FanDuel-style correlation discount on same-game legs
   let totalDec=1, legNum=0, sgpCount=0, body='';
   order.forEach(pk=>{
     const legs=groups[pk]; const c=gcByPk[pk]||{}; let gDec=1;
-    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); totalDec*=amDec(a); return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+'</span><span class="sgp-odds">'+amStr(a)+'</span></div>'; }).join('');
-    const gAm=decToAm(gDec); const isSgp=legs.length>=2; if(isSgp)sgpCount++;
+    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+'</span><span class="sgp-odds">'+amStr(a)+'</span></div>'; }).join('');
+    const isSgp=legs.length>=2; if(isSgp)sgpCount++;
+    const gDisc = isSgp ? (1+(gDec-1)*SGP_CORR) : gDec;   // discount correlated legs
+    totalDec *= gDisc;
+    const gAm=decToAm(gDisc);
     const at=(c.away_sp&&c.away_sp.team)||(legs[0].team)||''; const ht=(c.home_sp&&c.home_sp.team)||'';
-    let wx=''; if(c.temp!=null){ const z=c.wind_zones||[]; const dir=z.length?z[0].dir:''; wx=' · '+c.temp+'°F'+(c.wind_mph?' · '+c.wind_mph+'mph wind'+(dir?' '+dir.toUpperCase():''):''); }
-    const head='<div class="sgp-head">'+(at?tb(at):'')+(ht?tb(ht):'')+' <b>'+esc(c.game||legs[0].desc.split(' ')[0])+'</b>'+(c.time?' · '+fmtTime(c.time):'')+(c.venue?' · '+esc(c.venue):'')+wx+(isSgp?' <span class="sgp-tag">'+legs.length+' legs → SGP+</span>':'')+'<span class="sgp-est">'+amStr(gAm)+'</span></div>';
+    let wx=''; if(c.temp!=null){ const z=c.wind_zones||[]; const dir=z.length?z[0].dir:''; wx=' · '+c.temp+'°F'+(c.wind_mph?' · '+c.wind_mph+'mph '+(dir?dir.toUpperCase():'wind'):''); }
+    const head='<div class="sgp-head">'+(at?tb(at):'')+(ht?tb(ht):'')+' <b>'+esc(c.game||'Game')+'</b>'+(c.time?' · '+fmtTime(c.time):'')+(c.venue?' · '+esc(c.venue):'')+wx+(isSgp?' <span class="sgp-tag">'+legs.length+' legs → SGP+</span>':'')+'<span class="sgp-est">'+gAm+'</span></div>';
     body+='<div class="sgp-box">'+head+rows+'</div>';
   });
   const totalAm=decToAm(totalDec);
   const p10=Math.round(10*totalDec), p25=Math.round(25*totalDec), p100=Math.round(100*totalDec);
-  const games=order.length, legsN=legNum;
-  const summary='<div class="sgp-summary">Mixed parlay — <b>'+legsN+' legs across '+games+' game'+(games>1?'s':'')+'</b>'+(sgpCount?' ('+sgpCount+' same-game)':'')+' · no home runs · ≤2 legs/team. Each leg shows the model-fair price; verify the real line at your book.</div>';
-  const winP=(100/totalDec).toFixed(1);
-  const pay='<div class="sgp-pay"><b>Combined '+amStr(totalAm)+'</b> (model-fair ≈ '+winP+'% to hit) · $10 → ~$'+p10.toLocaleString()+' · $25 → ~$'+p25.toLocaleString()+' · $100 → ~$'+p100.toLocaleString()+'<div style="margin-top:4px;font-size:11px">'+esc(tp.note||'')+' <button onclick="addTopToSlip()" style="margin-left:8px">Add all to slip</button></div></div>';
+  const winP=(100/totalDec).toFixed(2);
+  const summary='<div class="sgp-summary">'+sgpCount+' same-game parlay'+(sgpCount!==1?'s':'')+' · <b>'+legNum+' legs across '+order.length+' game'+(order.length>1?'s':'')+'</b> · no home runs · ≤4 legs/game. Per-leg prices are model-fair (no vig); same-game legs include a correlation discount — verify the real number at your book.</div>';
+  const pay='<div class="sgp-pay"><b>Combined '+totalAm+'</b> · model-fair ≈ '+winP+'% to hit (≈ 1 in '+Math.round(totalDec).toLocaleString()+')<div style="margin-top:5px">$10 → ~$'+p10.toLocaleString()+' · $25 → ~$'+p25.toLocaleString()+' · $100 → ~$'+p100.toLocaleString()+'<button onclick="addTopToSlip()" style="margin-left:10px">Add all to slip</button></div></div>';
   el.innerHTML='<div id="topParlay">'+summary+body+pay+'</div>';
 }
 function addTopToSlip(){
