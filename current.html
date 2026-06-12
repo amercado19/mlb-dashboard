@@ -299,6 +299,12 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .sim-pb{position:absolute;top:0;left:0;right:0;background:linear-gradient(180deg,rgba(15,61,26,.96),rgba(15,61,26,.5));color:#eaffea;font-size:12px;font-weight:600;padding:6px 12px;font-family:-apple-system,Segoe UI,sans-serif}
 .sim-pbig{position:absolute;top:38px;left:0;right:0;text-align:center;font-size:30px;font-weight:900;letter-spacing:2px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.85);font-family:-apple-system,Segoe UI,sans-serif;pointer-events:none}
 .sim-pbig.hr{color:#fb7185}.sim-pbig.hit{color:#86efac}.sim-pbig.k{color:#cbd5e1}.sim-pbig.bb{color:#93c5fd}.sim-pbig.out{color:#e2e8f0}
+.cp-form{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.cp-in{display:flex;flex-direction:column;gap:3px}
+.cp-in label{font-size:10px;font-weight:800;color:#0369a1;text-transform:uppercase;letter-spacing:.4px}
+.cp-in input{width:62px;padding:6px 8px;border:1px solid #7dd3fc;border-radius:8px;font-size:14px;font-weight:800;text-align:center;color:#0c4a6e}
+.cp-go{background:linear-gradient(#0ea5e9,#0369a1);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-weight:800;letter-spacing:.5px;cursor:pointer;box-shadow:0 0 14px rgba(14,165,233,.35);margin-left:auto}
+.cp-go:hover{box-shadow:0 0 22px rgba(14,165,233,.6)}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -324,6 +330,9 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 
 <h2>★ Star-Out Status (R26)</h2>
 <div id="starOutSection"></div>
+
+<h2>🧩 Build Your Own Parlay</h2>
+<div id="customParlay"></div>
 
 <h2>Games — Tap to Expand</h2>
 <div id="gamesAccordion"></div>
@@ -1318,6 +1327,51 @@ function gaProps(pk,team){ const b=(MODEL_DATA&&MODEL_DATA.boards)||{}; const f=
 function spLine(s){ if(!s) return '—'; const hand=s.tbd?'TBD':(s.throws||'R')+'HP'; const tier=s.tier||'TBD'; return '<div class="ga-sp"><span class="ga-hand '+(s.tbd?'T':(s.throws||'R'))+'">'+hand+'</span> <b>'+esc(s.name||'TBD')+'</b> <span class="gtag '+tier.replace(' ','')+'">'+esc(tier)+'</span><div class="ga-spx">xERA '+(s.xera!=null?s.xera:'—')+' · ERA '+(s.era!=null?s.era:'—')+' · '+(s.ip!=null?s.ip+' IP':'')+(s.k9!=null?' · '+s.k9+' K/9':'')+(s.oops!=null?' · oOPS '+s.oops.toFixed(3).replace(/^0/,''):'')+'</div></div>'; }
 function windLine(c){ const z=c.wind_zones||[]; if(!z.length) return '<span style="color:#94a3b8">forecast pending</span>'; const ar=d=>d==='out'?'⬆':d==='in'?'⬇':'⬌'; return z.map(x=>'<span style="margin-right:10px">'+x.zone+' '+ar(x.dir)+' '+x.mph+'</span>').join('')+(c.temp!=null?' · 🌡 '+c.temp+'°F':''); }
 function propPills(label,arr,suffix){ if(!arr||!arr.length) return ''; return '<div class="ga-pp"><span class="ga-pl">'+label+'</span>'+arr.map(p=>'<span class="ga-pill">'+(p.playerId?hs(p.playerId,true):'')+esc(p.name)+(suffix&&p.metric!=null?' '+p.metric:(suffix&&p.score!=null?' '+Math.round(p.score):''))+'</span>').join('')+'</div>'; }
+function cpNum(id){ const v=parseInt(((document.getElementById(id))||{}).value); return Math.max(0,Math.min(8, isNaN(v)?0:v)); }
+function buildCustomParlay(){
+  const want={ml:cpNum('cp-ml'),over:cpNum('cp-over'),hit:cpNum('cp-hit'),tb2:cpNum('cp-tb2'),hrr:cpNum('cp-hrr')};
+  const b=(MODEL_DATA&&MODEL_DATA.boards)||{};
+  const used=new Set(); const legs=[];
+  // pools sorted best-first
+  const mlPool=[];
+  ((MODEL_DATA.ml)||[]).forEach(e=>{ if(e.team&&e.conf) mlPool.push({prob:e.conf/100,team:e.team,desc:e.team+' ML ('+(e.tier||'')+')',betType:'ml',gamePk:e.gamePk}); });
+  if(!mlPool.length) (b.ml||[]).forEach(x=>{ if(x.conf) mlPool.push({prob:x.conf/100,team:x.pick,desc:x.pick+' ML',betType:'ml',gamePk:x.gamePk}); });
+  mlPool.sort((a,c)=>c.prob-a.prob);
+  const overPool=(b.ou||[]).filter(o=>o.lean==='OVER').sort((a,c)=>((c.proj-c.line)-(a.proj-a.line))).map(o=>({prob:Math.min(0.62,0.5+((o.proj-o.line)||0)*0.04),desc:o.game+' Over '+o.line,betType:'over',gamePk:o.gamePk}));
+  const pp=(arr,bt,lab,prob,per)=>(arr||[]).map(r=>({prob:per&&r.score?Math.min(0.85,r.score/100):prob,team:r.team,desc:r.name+' '+lab,betType:bt,name:r.name,gamePk:r.gamePk,playerId:r.playerId}));
+  const hitPool=pp(b.h1,'hit','1+ hit',0.62,true);
+  const tbPool=pp(b.tb2,'2tb','2+ TB',0.40);
+  const hrrPool=pp(b.hrr,'hrr','2+ HRR',0.42);
+  const take=(pool,k)=>{ let added=0; for(const l of pool){ if(added>=k)break; if(l.playerId&&used.has(l.playerId))continue; if(l.playerId)used.add(l.playerId); legs.push(l); added++; } return added; };
+  take(mlPool,want.ml); take(overPool,want.over); take(hitPool,want.hit); take(tbPool,want.tb2); take(hrrPool,want.hrr);
+  const res=document.getElementById('cpResult');
+  if(!legs.length){ res.innerHTML='<div class="empty">Set at least one leg count and click Generate. (Player props need confirmed lineups.)</div>'; return; }
+  // group by game for SGP display
+  const gcByPk={}; (MODEL_DATA.gameCards||[]).forEach(c=>gcByPk[c.gamePk]=c);
+  const order=[],groups={}; legs.forEach(l=>{const k=l.gamePk||'x';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(l);});
+  const CORR=0.62; let totalDec=1,num=0,body='';
+  order.forEach(pk=>{ const lg=groups[pk]; const c=gcByPk[pk]||{}; let gDec=1;
+    const rows=lg.map(l=>{num++;const a=fairAmNum(l.prob);gDec*=amDec(a);return '<div class="sgp-leg"><span class="sgp-n">'+num+'</span><span class="sgp-desc">'+esc(l.desc)+'</span><span class="sgp-odds">'+amStr(a)+'</span></div>';}).join('');
+    const isSgp=lg.length>=2; const gDisc=isSgp?(1+(gDec-1)*CORR):gDec; totalDec*=gDisc;
+    const at=(c.away_sp&&c.away_sp.team)||lg[0].team||''; const ht=(c.home_sp&&c.home_sp.team)||'';
+    body+='<div class="sgp-box"><div class="sgp-head">'+(at?tb(at):'')+(ht?tb(ht):'')+' <b>'+esc(c.game||'Game')+'</b>'+(c.time?' · '+fmtTime(c.time):'')+(isSgp?' <span class="sgp-tag">'+lg.length+' legs → SGP+</span>':'')+'<span class="sgp-est">'+decToAm(gDisc)+'</span></div>'+rows+'</div>';
+  });
+  const p10=Math.round(10*totalDec),p25=Math.round(25*totalDec),p100=Math.round(100*totalDec);
+  const pay='<div class="sgp-pay"><b>Combined '+decToAm(totalDec)+'</b> · ≈ '+(100/totalDec).toFixed(2)+'% to hit (1 in '+Math.round(totalDec).toLocaleString()+') · $10 → ~$'+p10.toLocaleString()+' · $25 → ~$'+p25.toLocaleString()+' · $100 → ~$'+p100.toLocaleString()+'<button onclick="addCustomToSlip()">Add to slip</button></div>';
+  window._customLegs=legs;
+  res.innerHTML='<div style="margin:6px 0;font-size:12px;color:#475569">'+num+' legs across '+order.length+' game'+(order.length>1?'s':'')+' · best available of each type · model-fair odds (verify at book).</div>'+body+pay;
+}
+function addCustomToSlip(){ const legs=window._customLegs||[]; legs.forEach((l,i)=>{ const key='cp-'+i+'-'+(l.playerId||l.gamePk); if(!inSlip(key)) slip.push({key,desc:l.desc,betType:l.betType,gamePk:l.gamePk,playerId:l.playerId||null,pickSide:l.pickSide||null,line:l.line||null,odds:''}); }); saveSlip(); renderSlip(); const sb=$('slipBody'); if(sb)sb.classList.add('open'); }
+function renderCustomParlay(){ const el=$('customParlay'); if(!el||el.dataset.built)return; el.dataset.built='1';
+  el.innerHTML='<div class="cp-form">'
+    +'<div class="cp-in"><label>Moneyline</label><input type="number" id="cp-ml" min="0" max="8" value="1"></div>'
+    +'<div class="cp-in"><label>Overs</label><input type="number" id="cp-over" min="0" max="8" value="1"></div>'
+    +'<div class="cp-in"><label>1+ Hit</label><input type="number" id="cp-hit" min="0" max="8" value="2"></div>'
+    +'<div class="cp-in"><label>2+ Total Bases</label><input type="number" id="cp-tb2" min="0" max="8" value="1"></div>'
+    +'<div class="cp-in"><label>2+ HRR</label><input type="number" id="cp-hrr" min="0" max="8" value="1"></div>'
+    +'<button class="cp-go" onclick="buildCustomParlay()">⚡ Generate Best Parlay</button></div>'
+    +'<div id="cpResult"><div class="empty" style="font-size:12px">Set how many legs of each type you want, then hit Generate. The best available legs (no home runs) are picked from today’s model boards.</div></div>';
+}
 function renderGamesAccordion(){
   const el=$('gamesAccordion'); if(!el) return;
   const gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[];
@@ -1552,7 +1606,7 @@ function drawBoard(c,res){
   $('simBoard').innerHTML='<div class="scoreboard" style="grid-template-columns:auto repeat('+cols+',1fr) auto auto">'+hd+row(c.away_sp.team,res?res.innings:null,res?res.aR:null,res?res.aH:null,0)+row(c.home_sp.team,res?res.innings:null,res?res.hR:null,res?res.hH:null,1)+'</div>';
 }
 
-function renderAll(){ renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderGameCards(); renderSP(); renderML(); renderNrfi(); renderHR(); renderHits(); renderBoards(); renderHrStreaks(); renderYesterdayHr(); renderParlays(); renderTopParlay(); renderPropPerf(); renderGameCenter(); }
+function renderAll(){ renderCustomParlay(); renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderGameCards(); renderSP(); renderML(); renderNrfi(); renderHR(); renderHits(); renderBoards(); renderHrStreaks(); renderYesterdayHr(); renderParlays(); renderTopParlay(); renderPropPerf(); renderGameCenter(); }
 
 async function refreshLive(){
   if (refreshing) return;
@@ -1562,7 +1616,7 @@ async function refreshLive(){
     await loadSchedule();
     await loadBoxscores();
     buildAlerts();
-    renderAll();
+    const _sy=window.scrollY; renderAll(); window.scrollTo(0,_sy);
     renderSlip();
     renderSaved();
     loadTransactions();
