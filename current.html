@@ -868,5 +868,37 @@ window.addEventListener('load', function(){ initAlgoCharts(); initPlayerSel(); }
 refreshLive();
 setInterval(refreshLive, 120000);
 </script>
+<script>
+/* ===== injected: staleness banner + auto-mode notice + dynamic version ===== */
+(function(){
+  try{
+    var etToday = new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date());
+    var d = (typeof MODEL_DATA!=='undefined' && MODEL_DATA) ? MODEL_DATA.date : null;
+    var mode = (typeof MODEL_DATA!=='undefined' && MODEL_DATA) ? MODEL_DATA.mode : null;
+    var gen = (typeof MODEL_DATA!=='undefined' && MODEL_DATA) ? MODEL_DATA.generatedAt : '';
+    function banner(bg, fg, border, txt){
+      var b = document.createElement('div');
+      b.style.cssText = 'position:sticky;top:0;z-index:9999;padding:9px 14px;font:600 12px -apple-system,Segoe UI,sans-serif;background:'+bg+';color:'+fg+';border-bottom:1px solid '+border+';text-align:center';
+      b.textContent = txt;
+      document.body.prepend(b);
+    }
+    if(d && d < etToday){
+      banner('#2a0808','#ff9090','#5a1515',
+        '\u26a0 STALE \u2014 these picks were generated for '+d+'. Today\u2019s run has not published yet. Live scores below are current; the picks are NOT.');
+    } else if(mode === 'auto'){
+      banner('#1f1600','#e8b040','#4a3500',
+        'AUTO RUN \u2014 generated '+gen+' with no live odds. Threshold mode: verify every line at your book before betting.');
+    }
+    if(typeof MODEL_DATA!=='undefined' && MODEL_DATA && MODEL_DATA.version){
+      var v = MODEL_DATA.version;
+      document.title = 'MLB '+v+' Picks Command Center';
+      var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      var n; var targets=[];
+      while((n = walker.nextNode())){ if(/^\s*V\d+\.\d+\s*$/.test(n.nodeValue)) targets.push(n); }
+      targets.forEach(function(t){ t.nodeValue = v; });
+    }
+  }catch(e){ /* never break the page */ }
+})();
+</script>
 </body>
 </html>
