@@ -98,6 +98,13 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .tbwrap{position:relative;display:inline-flex;width:26px;height:26px;vertical-align:middle;flex-shrink:0;align-items:center;justify-content:center}
 .tbwrap .tb{position:absolute;inset:0;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;color:#fff;font-size:8.5px;font-weight:800;z-index:1;box-shadow:inset 0 -2px 4px rgba(0,0,0,.25)}
 .tlogo{position:absolute;inset:0;width:26px;height:26px;object-fit:contain;z-index:2;border-radius:50%}
+.wind-diagram{display:flex;align-items:center;gap:8px;padding:4px 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px}
+.wd-lbl{font-size:9px;text-transform:uppercase;color:#94a3b8;font-weight:700;margin-right:2px}
+.wd-field{display:flex;flex-direction:column;align-items:center;min-width:34px;gap:1px}
+.wd-field-name{font-size:9px;color:#64748b;font-weight:700}
+.wd-arrow{display:flex;align-items:center;justify-content:center;width:20px;height:20px}
+.wd-mph{font-size:10px;font-family:monospace;font-weight:700}
+.wd-mph.out{color:#10b981}.wd-mph.in{color:#ef4444}.wd-mph.cross{color:#94a3b8}
 .gc{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;box-shadow:var(--shadowSm);overflow:hidden}
 .gc summary{display:flex;align-items:center;gap:8px;padding:12px 15px;cursor:pointer;font-size:12.5px;list-style:none;font-weight:600}
 .gc summary::-webkit-details-marker{display:none}
@@ -151,7 +158,7 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 #slipFoot button{background:#f3f4f6;border:1px solid #cbd5e1;border-radius:7px;padding:5px 12px;cursor:pointer;font-size:11px;font-weight:600}
 </style>
 </head>
-<body>
+<body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
 <div id="hero">
   <div class="heroRow">
     <div>
@@ -169,9 +176,13 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 
 <div class="kpi" id="kpis"></div>
 
+<h2>Top Parlay — 8-Leg Board</h2>
+<div id="topParlaySection"></div>
+<h2>Section 4 — Model Parlay Suggestions</h2>
+<div id="parlaySection"></div>
 <h2>Model Performance</h2>
 <div class="chartGrid">
-  <div class="chartBox" style="grid-column:1/-1"><div class="ct">Accuracy by day — Moneyline · HR props · Hit props (graded days only, last 30)</div><div class="chartWrap"><canvas id="algoChart"></canvas></div></div>
+  <div class="chartBox" style="grid-column:1/-1"><div class="ct">Hit rate % per day, per prop — ML · NRFI · HR · 1+ Hit · 2B+ (graded days, last 30)</div><div class="chartWrap"><canvas id="algoChart"></canvas></div></div>
 </div>
 
 <h2>Prop Performance — What's Hitting</h2>
@@ -186,11 +197,12 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 <h2>Game Center — Tap a Game to Expand</h2>
 <div id="gameCenter"><div class="empty">Game cards load with the live feed.</div></div>
 
-<h2>Top Parlay — 8-Leg Board</h2>
-<div id="topParlaySection"></div>
 
 <h2>Section 1 — Moneyline Picks</h2>
 <div id="mlSection"></div>
+
+<h2>NRFI / YRFI Board</h2>
+<div id="nrfiSection"></div>
 
 <h2>Section 2 — HR Props (best → worst)</h2>
 <div id="hrSection"></div>
@@ -208,8 +220,6 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
   <div class="chartWrap"><canvas id="playerChart"></canvas></div>
 </div>
 
-<h2>Section 4 — Model Parlay Suggestions</h2>
-<div id="parlaySection"></div>
 
 <h2>My Saved Parlays</h2>
 <div id="savedSection"></div>
@@ -242,7 +252,7 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 
 <script>
 /* ============ MODEL DATA (replaced by daily scheduled run) ============ */
-const MODEL_DATA = {"generatedAt":"2026-06-12T15:52:55Z","date":"2026-06-12","version":"V3.4","mode":"auto","runNote":"AUTO RUN 11:52 AM ET — no live odds (threshold mode: verify every line at your book before betting). Lineups used if posted at run time, else props reflect season stats only. xERA: Baseball Savant. Pens: reliever-only splits, MLB Stats API.","ml":[{"gamePk":823370,"away":"MIA","home":"PIT","venue":"PNC Park","series":"G1/3","time":"2026-06-12T22:40:00Z","team":null,"pickSide":"away","tier":"PASS","conf":35.6,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side MIA fails thresholds (conf 35.6%).","sp":{"away":{"name":"Sandy Alcantara","xera":4.08},"home":{"name":"Braxton Ashcraft","xera":2.97}},"weatherAtRun":{"temp":"83","wind":"11 mph out"}},{"gamePk":822726,"away":"SEA","home":"WSH","venue":"Nationals Park","series":"G1/3","time":"2026-06-12T22:45:00Z","team":null,"pickSide":"away","tier":"PASS","conf":55.0,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side SEA fails thresholds (conf 55.0%).","sp":{"away":{"name":"Bryce Miller","xera":1.83},"home":{"name":"Zack Littell","xera":5.92}},"weatherAtRun":{"temp":"93","wind":"8 mph cross"}},{"gamePk":824826,"away":"SD","home":"BAL","venue":"Oriole Park at Camden Yards","series":"G1/3","time":"2026-06-12T23:05:00Z","team":null,"pickSide":"away","tier":"PASS","conf":40.4,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side SD fails thresholds (conf 40.4%).","sp":{"away":{"name":"Griffin Canning","xera":4.46},"home":{"name":"Shane Baz","xera":4.55}},"weatherAtRun":{"temp":"93","wind":"11 mph out"}},{"gamePk":824425,"away":"DET","home":"CLE","venue":"Progressive Field","series":"G1/3","time":"2026-06-12T23:10:00Z","team":null,"pickSide":"away","tier":"PASS","conf":39.9,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10"],"note":"Best side DET fails thresholds (conf 39.9%).","sp":{"away":{"name":"Jack Flaherty","xera":4.58},"home":{"name":"Tanner Bibee","xera":4.55}},"weatherAtRun":{"temp":"77","wind":"7 mph cross"}},{"gamePk":824752,"away":"TEX","home":"BOS","venue":"Fenway Park","series":"G1/3","time":"2026-06-12T23:10:00Z","team":null,"pickSide":"away","tier":"PASS","conf":29.9,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10","R19: opp top-10 HR offense -5","R20: opp pen 3.2 <3.50 -5"],"note":"Best side TEX fails thresholds (conf 29.9%).","sp":{"away":{"name":"Jack Leiter","xera":4.58},"home":{"name":"Sonny Gray","xera":4.55}},"weatherAtRun":{"temp":"","wind":"—"}},{"gamePk":824507,"away":"AZ","home":"CIN","venue":"Great American Ball Park","series":"G1/3","time":"2026-06-12T23:15:00Z","team":null,"pickSide":"away","tier":"PASS","conf":37.0,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10","R15: own SP mirage (ERA much better than xERA) -6","R19: opp top-10 HR offense -5"],"note":"Best side AZ fails thresholds (conf 37.0%).","sp":{"away":{"name":"Eduardo Rodriguez","xera":4.64},"home":{"name":"Nick Lodolo","xera":6.64}},"weatherAtRun":{"temp":"81","wind":"11 mph out"}},{"gamePk":823617,"away":"ATL","home":"NYM","venue":"Citi Field","series":"G1/3","time":"2026-06-12T23:15:00Z","team":null,"pickSide":"away","tier":"PASS","conf":36.3,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10","R20: opp pen 3.31 <3.50 -5"],"note":"Best side ATL fails thresholds (conf 36.3%).","sp":{"away":{"name":"Spencer Strider","xera":3.04},"home":{"name":"Nolan McLean","xera":3.37}},"weatherAtRun":{"temp":"92","wind":"13 mph out"}},{"gamePk":822803,"away":"NYY","home":"TOR","venue":"Rogers Centre","series":"G1/3","time":"2026-06-12T23:37:00Z","team":null,"pickSide":"away","tier":"PASS","conf":41.2,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side NYY fails thresholds (conf 41.2%).","sp":{"away":{"name":"Ryan Weathers","xera":4.19},"home":{"name":"TBD","xera":null}},"weatherAtRun":{"temp":"75","wind":"8 mph dome"}},{"gamePk":824588,"away":"LAD","home":"CWS","venue":"Rate Field","series":"G1/3","time":"2026-06-12T23:40:00Z","team":null,"pickSide":"away","tier":"PASS","conf":46.6,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side LAD fails thresholds (conf 46.6%).","sp":{"away":{"name":"Roki Sasaki","xera":4.22},"home":{"name":"Anthony Kay","xera":5.88}},"weatherAtRun":{"temp":"73","wind":"9 mph out"}},{"gamePk":823778,"away":"PHI","home":"MIL","venue":"American Family Field","series":"G1/3","time":"2026-06-12T23:40:00Z","team":null,"pickSide":"away","tier":"PASS","conf":24.7,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R1-B: opp xERA 2.21-2.50 cap 62%","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10","R20: opp pen 3.43 <3.50 -5"],"note":"Best side PHI fails thresholds (conf 24.7%).","sp":{"away":{"name":"Andrew Painter","xera":4.83},"home":{"name":"Jacob Misiorowski","xera":2.25}},"weatherAtRun":{"temp":"76","wind":"8 mph dome"}},{"gamePk":824102,"away":"HOU","home":"KC","venue":"Kauffman Stadium","series":"G1/3","time":"2026-06-13T00:10:00Z","team":null,"pickSide":"away","tier":"PASS","conf":32.9,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10","R20: own pen 4.82 >4.50 -5"],"note":"Best side HOU fails thresholds (conf 32.9%).","sp":{"away":{"name":"Tatsuya Imai","xera":4.83},"home":{"name":"Luinder Avila","xera":4.31}},"weatherAtRun":{"temp":"86","wind":"9 mph cross"}},{"gamePk":823695,"away":"STL","home":"MIN","venue":"Target Field","series":"G1/3","time":"2026-06-13T00:10:00Z","team":null,"pickSide":"away","tier":"PASS","conf":20.0,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R2: own xERA 6.59 ≥5.00","R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10","R15: own SP mirage (ERA much better than xERA) -6"],"note":"Best side STL fails thresholds (conf 20.0%).","sp":{"away":{"name":"Kyle Leahy","xera":6.59},"home":{"name":"Joe Ryan","xera":3.08}},"weatherAtRun":{"temp":"79","wind":"12 mph out"}},{"gamePk":824020,"away":"TB","home":"LAA","venue":"Angel Stadium","series":"G1/3","time":"2026-06-13T01:38:00Z","team":null,"pickSide":"away","tier":"PASS","conf":35.4,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10","R15: opp SP mirage (will regress) +4","R19: opp top-10 HR offense -5","R20: own pen 4.63 >4.50 -5"],"note":"Best side TB fails thresholds (conf 35.4%).","sp":{"away":{"name":"Shane McClanahan","xera":3.65},"home":{"name":"Sam Aldegheri","xera":3.99}},"weatherAtRun":{"temp":"76","wind":"7 mph out"}},{"gamePk":824997,"away":"COL","home":"ATH","venue":"Las Vegas Ballpark","series":"G1/3","time":"2026-06-13T02:05:00Z","team":null,"pickSide":"away","tier":"PASS","conf":30.9,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R22: TBD pitcher (personal rule)","R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10","R20: own pen 5.2 >4.50 -5"],"note":"Best side COL fails thresholds (conf 30.9%).","sp":{"away":{"name":"TBD","xera":null},"home":{"name":"Gage Jump","xera":3.47}},"weatherAtRun":{"temp":"","wind":"—"}},{"gamePk":823211,"away":"CHC","home":"SF","venue":"Oracle Park","series":"G1/3","time":"2026-06-13T02:15:00Z","team":null,"pickSide":"away","tier":"PASS","conf":35.3,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side CHC fails thresholds (conf 35.3%).","sp":{"away":{"name":"Javier Assad","xera":4.49},"home":{"name":"Landen Roupp","xera":3.32}},"weatherAtRun":{"temp":"59","wind":"11 mph out"}}],"hrProps":[],"hitProps":[],"parlays":[],"topParlay":{"name":"Top 0-Leg Board (auto)","note":"No rule-compliant legs today — every signal failed thresholds.","legs":[]},"playerForm":{},"accuracy":[{"date":"Mar25-Apr9","strong":"55/57","leans":"","day":"96.5%","notes":"V2 baseline"},{"date":"2026-04-10","strong":"1/4","leans":"","day":"25%","notes":"Pre-V3 bad day"},{"date":"2026-04-11","strong":"7/7","leans":"","day":"100%","notes":"V3 introduced"},{"date":"2026-04-12","strong":"6/6","leans":"","day":"100%","notes":""},{"date":"2026-04-13","strong":"3/3","leans":"","day":"100%","notes":""},{"date":"2026-04-14","strong":"2/3","leans":"","day":"67%","notes":"Keller R15 miss"},{"date":"2026-04-15","strong":"3/3","leans":"4/5","day":"87.5%","notes":"TOR lean miss"},{"date":"2026-04-16","strong":"2/2","leans":"3/3","day":"70%","notes":"V3.1 rules added (R18-R21, R-HEAT)"},{"date":"2026-06-11","strong":"0 placed","leans":"0 placed","day":"all PASS","notes":"Evening partial run; 3 games analyzed, all failed thresholds"}]};
+const MODEL_DATA = {"generatedAt":"2026-06-12T16:12:33Z","date":"2026-06-12","version":"V3.4","mode":"auto","runNote":"AUTO RUN (manual publish) — no live odds, threshold mode: verify every line at your book. xERA: Savant. Pens: MLB reliever splits.","ml":[{"gamePk":823370,"away":"MIA","home":"PIT","venue":"PNC Park","series":"G1/3","time":"2026-06-12T22:40:00Z","team":null,"pickSide":"away","tier":"PASS","conf":35.6,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side MIA fails thresholds (conf 35.6%).","sp":{"away":{"name":"Sandy Alcantara","xera":4.08},"home":{"name":"Braxton Ashcraft","xera":2.97}},"weatherAtRun":{"temp":"83","wind":"11 mph out"}},{"gamePk":822726,"away":"SEA","home":"WSH","venue":"Nationals Park","series":"G1/3","time":"2026-06-12T22:45:00Z","team":null,"pickSide":"away","tier":"PASS","conf":55.0,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side SEA fails thresholds (conf 55.0%).","sp":{"away":{"name":"Bryce Miller","xera":1.83},"home":{"name":"Zack Littell","xera":5.92}},"weatherAtRun":{"temp":"93","wind":"8 mph cross"}},{"gamePk":824826,"away":"SD","home":"BAL","venue":"Oriole Park at Camden Yards","series":"G1/3","time":"2026-06-12T23:05:00Z","team":null,"pickSide":"away","tier":"PASS","conf":40.4,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side SD fails thresholds (conf 40.4%).","sp":{"away":{"name":"Griffin Canning","xera":4.46},"home":{"name":"Shane Baz","xera":4.55}},"weatherAtRun":{"temp":"93","wind":"11 mph out"}},{"gamePk":824425,"away":"DET","home":"CLE","venue":"Progressive Field","series":"G1/3","time":"2026-06-12T23:10:00Z","team":null,"pickSide":"away","tier":"PASS","conf":39.9,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10"],"note":"Best side DET fails thresholds (conf 39.9%).","sp":{"away":{"name":"Jack Flaherty","xera":4.58},"home":{"name":"Tanner Bibee","xera":4.55}},"weatherAtRun":{"temp":"77","wind":"7 mph cross"}},{"gamePk":824752,"away":"TEX","home":"BOS","venue":"Fenway Park","series":"G1/3","time":"2026-06-12T23:10:00Z","team":null,"pickSide":"away","tier":"PASS","conf":29.9,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10","R19: opp top-10 HR offense -5","R20: opp pen 3.2 <3.50 -5"],"note":"Best side TEX fails thresholds (conf 29.9%).","sp":{"away":{"name":"Jack Leiter","xera":4.58},"home":{"name":"Sonny Gray","xera":4.55}},"weatherAtRun":{"temp":"","wind":"—"}},{"gamePk":824507,"away":"AZ","home":"CIN","venue":"Great American Ball Park","series":"G1/3","time":"2026-06-12T23:15:00Z","team":null,"pickSide":"away","tier":"PASS","conf":37.0,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10","R15: own SP mirage (ERA much better than xERA) -6","R19: opp top-10 HR offense -5"],"note":"Best side AZ fails thresholds (conf 37.0%).","sp":{"away":{"name":"Eduardo Rodriguez","xera":4.64},"home":{"name":"Nick Lodolo","xera":6.64}},"weatherAtRun":{"temp":"81","wind":"11 mph out"}},{"gamePk":823617,"away":"ATL","home":"NYM","venue":"Citi Field","series":"G1/3","time":"2026-06-12T23:15:00Z","team":null,"pickSide":"away","tier":"PASS","conf":36.3,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10","R20: opp pen 3.31 <3.50 -5"],"note":"Best side ATL fails thresholds (conf 36.3%).","sp":{"away":{"name":"Spencer Strider","xera":3.04},"home":{"name":"Nolan McLean","xera":3.37}},"weatherAtRun":{"temp":"92","wind":"13 mph out"}},{"gamePk":822803,"away":"NYY","home":"TOR","venue":"Rogers Centre","series":"G1/3","time":"2026-06-12T23:37:00Z","team":null,"pickSide":"away","tier":"PASS","conf":41.2,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side NYY fails thresholds (conf 41.2%).","sp":{"away":{"name":"Ryan Weathers","xera":4.19},"home":{"name":"TBD","xera":null}},"weatherAtRun":{"temp":"75","wind":"8 mph dome"}},{"gamePk":824588,"away":"LAD","home":"CWS","venue":"Rate Field","series":"G1/3","time":"2026-06-12T23:40:00Z","team":null,"pickSide":"away","tier":"PASS","conf":46.6,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side LAD fails thresholds (conf 46.6%).","sp":{"away":{"name":"Roki Sasaki","xera":4.22},"home":{"name":"Anthony Kay","xera":5.88}},"weatherAtRun":{"temp":"73","wind":"9 mph out"}},{"gamePk":823778,"away":"PHI","home":"MIL","venue":"American Family Field","series":"G1/3","time":"2026-06-12T23:40:00Z","team":null,"pickSide":"away","tier":"PASS","conf":24.7,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R1-B: opp xERA 2.21-2.50 cap 62%","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10","R20: opp pen 3.43 <3.50 -5"],"note":"Best side PHI fails thresholds (conf 24.7%).","sp":{"away":{"name":"Andrew Painter","xera":4.83},"home":{"name":"Jacob Misiorowski","xera":2.25}},"weatherAtRun":{"temp":"76","wind":"8 mph dome"}},{"gamePk":824102,"away":"HOU","home":"KC","venue":"Kauffman Stadium","series":"G1/3","time":"2026-06-13T00:10:00Z","team":null,"pickSide":"away","tier":"PASS","conf":32.9,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R2-A: own xERA 4.50-4.99 cap 60%","R4: small sample (≤2 GS) -10","R20: own pen 4.82 >4.50 -5"],"note":"Best side HOU fails thresholds (conf 32.9%).","sp":{"away":{"name":"Tatsuya Imai","xera":4.83},"home":{"name":"Luinder Avila","xera":4.31}},"weatherAtRun":{"temp":"86","wind":"9 mph cross"}},{"gamePk":823695,"away":"STL","home":"MIN","venue":"Target Field","series":"G1/3","time":"2026-06-13T00:10:00Z","team":null,"pickSide":"away","tier":"PASS","conf":20.0,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R2: own xERA 6.59 ≥5.00","R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10","R15: own SP mirage (ERA much better than xERA) -6"],"note":"Best side STL fails thresholds (conf 20.0%).","sp":{"away":{"name":"Kyle Leahy","xera":6.59},"home":{"name":"Joe Ryan","xera":3.08}},"weatherAtRun":{"temp":"79","wind":"12 mph out"}},{"gamePk":824020,"away":"TB","home":"LAA","venue":"Angel Stadium","series":"G1/3","time":"2026-06-13T01:38:00Z","team":null,"pickSide":"away","tier":"PASS","conf":35.4,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10","R15: opp SP mirage (will regress) +4","R19: opp top-10 HR offense -5","R20: own pen 4.63 >4.50 -5"],"note":"Best side TB fails thresholds (conf 35.4%).","sp":{"away":{"name":"Shane McClanahan","xera":3.65},"home":{"name":"Sam Aldegheri","xera":3.99}},"weatherAtRun":{"temp":"76","wind":"7 mph out"}},{"gamePk":824997,"away":"COL","home":"ATH","venue":"Las Vegas Ballpark","series":"G1/3","time":"2026-06-13T02:05:00Z","team":null,"pickSide":"away","tier":"PASS","conf":30.9,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R22: TBD pitcher (personal rule)","R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10","R20: own pen 5.2 >4.50 -5"],"note":"Best side COL fails thresholds (conf 30.9%).","sp":{"away":{"name":"TBD","xera":null},"home":{"name":"Gage Jump","xera":3.47}},"weatherAtRun":{"temp":"","wind":"—"}},{"gamePk":823211,"away":"CHC","home":"SF","venue":"Oracle Park","series":"G1/3","time":"2026-06-13T02:15:00Z","team":null,"pickSide":"away","tier":"PASS","conf":35.3,"implied":null,"edge":null,"odds":"no live odds — threshold mode (verify line at book)","rules":["R-SAMPLE: SP edge capped ±15 (tiny sample)","R4: small sample (≤2 GS) -10"],"note":"Best side CHC fails thresholds (conf 35.3%).","sp":{"away":{"name":"Javier Assad","xera":4.49},"home":{"name":"Landen Roupp","xera":3.32}},"weatherAtRun":{"temp":"59","wind":"11 mph out"}}],"nrfi":[{"gamePk":823370,"away":"MIA","home":"PIT","venue":"PNC Park","tier":"PASS","bet":"No bet","score":61.9,"pComb":62.4,"rules":[]},{"gamePk":822726,"away":"SEA","home":"WSH","venue":"Nationals Park","tier":"STRONG_YRFI","bet":"1-2u YRFI","score":29.0,"pComb":30.6,"rules":["R1-A: elite SP — block YRFI side","R2: bad SP — block NRFI side"]},{"gamePk":824826,"away":"SD","home":"BAL","venue":"Oriole Park at Camden Yards","tier":"PASS","bet":"No bet","score":50.6,"pComb":50.0,"rules":[]},{"gamePk":824425,"away":"DET","home":"CLE","venue":"Progressive Field","tier":"PASS","bet":"No bet","score":54.4,"pComb":50.0,"rules":[]},{"gamePk":824752,"away":"TEX","home":"BOS","venue":"Fenway Park","tier":"PASS","bet":"No bet","score":52.5,"pComb":50.0,"rules":["Both top-HR offenses — caution"]},{"gamePk":824507,"away":"AZ","home":"CIN","venue":"Great American Ball Park","tier":"STRONG_YRFI","bet":"1-2u YRFI","score":19.6,"pComb":28.6,"rules":["R2: bad SP — block NRFI side","R34: hot HR park -5"]},{"gamePk":823617,"away":"ATL","home":"NYM","venue":"Citi Field","tier":"PASS","bet":"No bet","score":52.8,"pComb":65.0,"rules":[]},{"gamePk":822803,"away":"NYY","home":"TOR","venue":"Rogers Centre","tier":"PASS","bet":"No bet","score":52.8,"pComb":54.5,"rules":["R22: TBD pitcher — pass"]},{"gamePk":824588,"away":"LAD","home":"CWS","venue":"Rate Field","tier":"STRONG_YRFI","bet":"1-2u YRFI","score":28.8,"pComb":30.0,"rules":["R2: bad SP — block NRFI side"]},{"gamePk":823778,"away":"PHI","home":"MIL","venue":"American Family Field","tier":"PASS","bet":"No bet","score":54.1,"pComb":49.5,"rules":[]},{"gamePk":824102,"away":"HOU","home":"KC","venue":"Kauffman Stadium","tier":"PASS","bet":"No bet","score":50.9,"pComb":44.4,"rules":[]},{"gamePk":823695,"away":"STL","home":"MIN","venue":"Target Field","tier":"STRONG_YRFI","bet":"1-2u YRFI","score":25.6,"pComb":30.6,"rules":["R2: bad SP — block NRFI side"]},{"gamePk":824020,"away":"TB","home":"LAA","venue":"Angel Stadium","tier":"PASS","bet":"No bet","score":59.6,"pComb":62.4,"rules":["Both top-HR offenses — caution"]},{"gamePk":824997,"away":"COL","home":"ATH","venue":"Las Vegas Ballpark","tier":"PASS","bet":"No bet","score":56.1,"pComb":56.5,"rules":["R22: TBD pitcher — pass"]},{"gamePk":823211,"away":"CHC","home":"SF","venue":"Oracle Park","tier":"PASS","bet":"No bet","score":57.6,"pComb":56.5,"rules":[]}],"hrProps":[],"hitProps":[],"parlays":[],"topParlay":{"name":"Top 0-Leg Board (auto)","note":"No rule-compliant legs today — every signal failed thresholds.","legs":[]},"playerForm":{},"accuracy":[{"date":"Mar25-Apr9","strong":"55/57","leans":"","day":"96.5%","notes":"V2 baseline"},{"date":"2026-04-10","strong":"1/4","leans":"","day":"25%","notes":"Pre-V3 bad day"},{"date":"2026-04-11","strong":"7/7","leans":"","day":"100%","notes":"V3 introduced"},{"date":"2026-04-12","strong":"6/6","leans":"","day":"100%","notes":""},{"date":"2026-04-13","strong":"3/3","leans":"","day":"100%","notes":""},{"date":"2026-04-14","strong":"2/3","leans":"","day":"67%","notes":"Keller R15 miss"},{"date":"2026-04-15","strong":"3/3","leans":"4/5","day":"87.5%","notes":"TOR lean miss"},{"date":"2026-04-16","strong":"2/2","leans":"3/3","day":"70%","notes":"V3.1 rules added (R18-R21, R-HEAT)"},{"date":"2026-06-11","strong":"0 placed","leans":"0 placed","day":"all PASS","notes":"Evening partial run; 3 games analyzed, all failed thresholds"}]};
 /* ===================================================================== */
 
 const $ = id => document.getElementById(id);
@@ -445,6 +455,32 @@ function renderLiveStrip(games){
   }).join('');
 }
 
+function windFields(windStr){
+  const m = /(\d+)\s*mph,?\s*(.*)/i.exec(windStr||'');
+  if (!m || !+m[1]) return null;
+  const mph = +m[1]; const d = (m[2]||'').toLowerCase();
+  let theta = null;            // 0° = blowing out to dead CF
+  if (/out to cf/.test(d)) theta = 0;
+  else if (/out to lf/.test(d)) theta = -45;
+  else if (/out to rf/.test(d)) theta = 45;
+  else if (/in from cf/.test(d)) theta = 180;
+  else if (/in from lf/.test(d)) theta = 135;
+  else if (/in from rf/.test(d)) theta = -135;
+  else if (/l to r/.test(d)) theta = 90;
+  else if (/r to l/.test(d)) theta = -90;
+  if (theta === null) return null;
+  return [['LF',-45],['CF',0],['RF',45]].map(p => {
+    const c = mph * Math.cos((theta - p[1]) * Math.PI / 180);
+    const cls = c > 2 ? 'out' : c < -2 ? 'in' : 'cross';
+    return [p[0], cls, Math.abs(Math.round(c))];
+  });
+}
+function windDiagram(windStr){
+  const wf = windFields(windStr);
+  if (!wf) return '';
+  return '<div class="wind-diagram"><span class="wd-lbl">Wind</span>' + wf.map(f =>
+    '<div class="wd-field"><div class="wd-field-name">' + f[0] + '</div><svg class="wd-arrow" viewBox="0 0 24 24"><use href="#arr-' + f[1] + '"/></svg><div class="wd-mph ' + f[1] + '">' + f[2] + '</div></div>').join('') + '</div>';
+}
 function renderWind(games){
   if (!games.length){ $('windStrip').innerHTML = '<div class="empty" style="width:100%">No games.</div>'; return; }
   $('windStrip').innerHTML = games.map(g => {
@@ -466,7 +502,7 @@ function renderWind(games){
       + '<span>🌧 <b id="pp-' + g.gamePk + '">' + (cached != null ? cached + '%' : '…') + '</b></span>'
       + '<span>' + esc(w.condition || '') + '</span>'
       + '</div></div>'
-      + '<span class="wimp ' + im[0] + '">' + im[1] + '</span></div>';
+      + (windDiagram(w.wind) || '<span class="wimp ' + im[0] + '">' + im[1] + '</span>') + '</div>';
   }).join('');
 }
 
@@ -741,9 +777,12 @@ function accSeries(){
     if (r.mlN != null && r.mlN > 0) ml = {w:r.mlW||0, n:r.mlN};
     else { const st = fr(r.strong), l = fr(r.leans);
       if (st || l) ml = {w:(st?st.w:0)+(l?l.w:0), n:(st?st.n:0)+(l?l.n:0)}; }
-    const hr = (r.hrN != null && r.hrN > 0) ? {w:r.hrW||0, n:r.hrN} : null;
-    const hits = (r.hitsN != null && r.hitsN > 0) ? {w:r.hitsW||0, n:r.hitsN} : null;
-    if (ml || hr || hits) rows.push({date:r.date, ml, hr, hits});
+    const wn = (w, n) => (n != null && n > 0) ? {w: w||0, n: n} : null;
+    const hr = wn(r.hrW, r.hrN);
+    const nrfi = wn(r.nrfiW, r.nrfiN);
+    let h1 = wn(r.h1W, r.h1N), h2 = wn(r.h2W, r.h2N);
+    if (!h1 && !h2) h1 = wn(r.hitsW, r.hitsN);   // legacy rows: combined hits → 1+Hit line
+    if (ml || hr || h1 || h2 || nrfi) rows.push({date:r.date, ml, nrfi, hr, h1, h2});
   }
   return rows.slice(-30);
 }
@@ -761,12 +800,14 @@ function initAlgoCharts(){
       type: 'line',
       data: { labels: rows.map(r => r.date.slice(5)), datasets: [
         { label: 'Moneyline', data: pct('ml'), borderColor: '#0c3b2c', backgroundColor: '#0c3b2c', tension: .25, spanGaps: true, pointRadius: 4 },
+        { label: 'NRFI/YRFI', data: pct('nrfi'), borderColor: '#7c3aed', backgroundColor: '#7c3aed', tension: .25, spanGaps: true, pointRadius: 4 },
         { label: 'HR props', data: pct('hr'), borderColor: '#dc2626', backgroundColor: '#dc2626', tension: .25, spanGaps: true, pointRadius: 4 },
-        { label: 'Hit props', data: pct('hits'), borderColor: '#2563eb', backgroundColor: '#2563eb', tension: .25, spanGaps: true, pointRadius: 4 }
+        { label: '1+ Hit', data: pct('h1'), borderColor: '#2563eb', backgroundColor: '#2563eb', tension: .25, spanGaps: true, pointRadius: 4 },
+        { label: '2B+', data: pct('h2'), borderColor: '#0891b2', backgroundColor: '#0891b2', tension: .25, spanGaps: true, pointRadius: 4 }
       ]},
       options: { responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: true, position: 'bottom' },
-          tooltip: { callbacks: { label: ctx => { const k = ['ml','hr','hits'][ctx.datasetIndex]; return ctx.dataset.label + ': ' + ctx.formattedValue + '%' + rec(k, ctx.dataIndex); } } } },
+          tooltip: { callbacks: { label: ctx => { const k = ['ml','nrfi','hr','h1','h2'][ctx.datasetIndex]; return ctx.dataset.label + ': ' + ctx.formattedValue + '%' + rec(k, ctx.dataIndex); } } } },
         scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } }, x: { ticks: { font: { size: 10 } } } } }
     });
   } catch(e){}
@@ -835,7 +876,19 @@ function renderGameCenter(){
 }
 function perfBar(p){ p = parseFloat(p)||0; const c = p>=60?'#16a34a':p>=45?'#f59e0b':'#dc2626'; return '<div style="background:#eef1f4;border-radius:6px;height:8px;width:120px"><div style="width:' + Math.min(100,p) + '%;height:8px;border-radius:6px;background:' + c + '"></div></div>'; }
 function renderPropPerf(){
-  const pp = (MODEL_DATA && MODEL_DATA.propPerformance) || null;
+  let pp = (MODEL_DATA && MODEL_DATA.propPerformance) || null;
+  if (!pp || !Object.keys(pp).length){
+    // Build from per-day graded accuracy rows (last 30): lifetime + last-7 per type
+    const rows30 = (typeof accSeries === 'function') ? accSeries() : [];
+    const types = [['ml','Moneyline'],['nrfi','NRFI/YRFI'],['hr','Anytime HR'],['h1','1+ Hit'],['h2','2B+']];
+    const agg = {};
+    for (const [k, label] of types){
+      let w=0, n=0, w7=0, n7=0;
+      rows30.forEach((r, i) => { const c = r[k]; if (c){ w += c.w; n += c.n; if (i >= rows30.length - 7){ w7 += c.w; n7 += c.n; } } });
+      if (n) agg[label] = {w: w, l: n - w, note: n7 ? 'last 7 days: ' + w7 + '/' + n7 + ' (' + (100*w7/n7).toFixed(0) + '%)' : ''};
+    }
+    if (Object.keys(agg).length) pp = agg;
+  }
   if (!pp || !Object.keys(pp).length){
     $('propPerf').innerHTML = '<div class="empty">Prop performance tracking starts after the next graded run — every recommended leg gets logged and graded by bet type (ML, anytime HR, hits, 2+ TB, NRFI, totals, parlays) so this table shows exactly which prop types are earning and which are bleeding.</div>';
     return;
@@ -853,7 +906,24 @@ function renderPropPerf(){
   $('propPerf').innerHTML = '<table><tr><th>Bet type</th><th>Record</th><th>Win %</th><th></th><th>Note</th></tr>' + rows + '</table>';
 }
 
-function renderAll(){ renderML(); renderHR(); renderHits(); renderParlays(); renderTopParlay(); renderPropPerf(); renderGameCenter(); }
+function renderNrfi(){
+  const nr = (MODEL_DATA && MODEL_DATA.nrfi) || [];
+  const el = $('nrfiSection');
+  if (!el) return;
+  if (!nr.length){ el.innerHTML = '<div class="empty">No NRFI/YRFI evaluations in this run.</div>'; return; }
+  const sorted = nr.slice().sort((a,b) => (a.tier||'').includes('PASS') - (b.tier||'').includes('PASS'));
+  el.innerHTML = '<table><tr><th>Game</th><th>Call</th><th>Score</th><th>P(combined)</th><th>Bet</th><th>Rules</th></tr>'
+    + sorted.map(n => {
+      const cls = (n.tier||'').includes('STRONG') ? 'STRONG' : (n.tier||'').includes('LEAN') ? 'LEAN' : 'PASS';
+      return '<tr><td>' + tb(n.away) + ' <b>' + esc(n.away) + ' @ ' + esc(n.home) + '</b> ' + tb(n.home) + '<div class="note">' + esc(n.venue||'') + '</div></td>'
+      + '<td><span class="tier ' + cls + '">' + esc(n.tier||'—') + '</span></td>'
+      + '<td class="mono">' + (n.score ?? '—') + '</td>'
+      + '<td class="mono">' + (n.pComb ?? '—') + '%</td>'
+      + '<td class="note">' + esc(n.bet||'') + '</td>'
+      + '<td class="rules">' + esc((n.rules||[]).slice(0,3).join(', ')) + '</td></tr>';
+    }).join('') + '</table>';
+}
+function renderAll(){ renderML(); renderNrfi(); renderHR(); renderHits(); renderParlays(); renderTopParlay(); renderPropPerf(); renderGameCenter(); }
 
 async function refreshLive(){
   if (refreshing) return;
