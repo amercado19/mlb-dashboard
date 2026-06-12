@@ -759,17 +759,19 @@ function renderKpis(){
   const a = parseAcc();
   const ml = (MODEL_DATA && MODEL_DATA.ml) || [];
   const strong = ml.filter(p => p.tier==='STRONG').length, lean = ml.filter(p => p.tier==='LEAN').length, pass = ml.filter(p => p.tier==='PASS').length;
-  const rows = (typeof accSeries === 'function') ? accSeries() : [];
+  // Board hit rates over the trailing 30 CALENDAR days (excludes old seed rows).
+  const cutoff = new Date(Date.now() - 30*86400000).toISOString().slice(0,10);
+  const rows = ((typeof boardSeries === 'function') ? boardSeries() : []).filter(r => r.date >= cutoff);
   const sum = k => rows.reduce((acc,r) => r[k] ? {w:acc.w+r[k].w, n:acc.n+r[k].n} : acc, {w:0,n:0});
   const card = (c, label) => '<div class="kbox"><div class="kv">' + (c.n ? (100*c.w/c.n).toFixed(0) + '%' : '—')
     + '</div><div class="kl">' + label + (c.n ? ' (' + c.w + '/' + c.n + ')' : '') + '</div></div>';
   const ml30 = sum('ml');
-  const props30 = ['hr','h1','h2'].reduce((acc,k) => { const c = sum(k); return {w:acc.w+c.w, n:acc.n+c.n}; }, {w:0,n:0});
-  const nrfi30 = sum('nrfi');
+  const props30 = ['hr','h1','h2','tb2','hrr'].reduce((acc,k) => { const c = sum(k); return {w:acc.w+c.w, n:acc.n+c.n}; }, {w:0,n:0});
+  const ou30 = sum('ou');
   $('kpis').innerHTML =
-    card(ml30, 'ML last 30d')
-    + card(props30, 'Props last 30d')
-    + card(nrfi30, 'NRFI last 30d')
+    card(ml30, 'Top-10 ML 30d')
+    + card(props30, 'All prop boards 30d')
+    + card(ou30, 'O/U leans 30d')
     + '<div class="kbox"><div class="kv">' + strong + ' / ' + lean + ' / ' + pass + '</div><div class="kl">Today S / L / P</div></div>'
     + '<div class="kbox"><div class="kv">' + (a.ct ? (100*a.cw/a.ct).toFixed(1) + '%' : '—') + '</div><div class="kl">Lifetime strong (' + a.cw + '/' + a.ct + ')</div></div>';
 }
@@ -791,6 +793,13 @@ function accSeries(){
     if (r.mlN != null && r.mlN > 0) ml = {w:r.mlW||0, n:r.mlN};
     else { const st = fr(r.strong), l = fr(r.leans);
       if (st || l) ml = {w:(st?st.w:0)+(l?l.w:0), n:(st?st.n:0)+(l?l.n:0)}; }
+    const wn = (w, n) => (n != null && n > 0) ? {w: w||0, n: n} : null;
+    const nrfi = wn(r.nrfiW, r.nrfiN);
+    const hr = wn(r.hrW, r.hrN);
+    let h1 = wn(r.h1W, r.h1N), h2 = wn(r.h2W, r.h2N);
+    if (!h1 && !h2) h1 = wn(r.hitsW, r.hitsN);
+    const ou = wn(r.ouW, r.ouN), parlay = wn(r.parlayW, r.parlayN);
+    rows.push({date:r.date, ml, nrfi, hr, h1, h2, ou, parlay});
   }
   return rows.slice(-30);
 }
