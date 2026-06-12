@@ -97,7 +97,7 @@ select.psel{border:1px solid #cbd5e1;border-radius:8px;padding:5px 10px;font-siz
 input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .tbwrap{position:relative;display:inline-flex;width:26px;height:26px;vertical-align:middle;flex-shrink:0;align-items:center;justify-content:center}
 .tbwrap .tb{position:absolute;inset:0;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;color:#fff;font-size:8.5px;font-weight:800;z-index:1;box-shadow:inset 0 -2px 4px rgba(0,0,0,.25)}
-.tlogo{position:absolute;inset:0;width:26px;height:26px;object-fit:contain;z-index:2;filter:drop-shadow(0 1px 2px rgba(0,0,0,.2))}
+.tlogo{position:absolute;inset:0;width:26px;height:26px;object-fit:contain;z-index:2;border-radius:50%}
 .gc{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;box-shadow:var(--shadowSm);overflow:hidden}
 .gc summary{display:flex;align-items:center;gap:8px;padding:12px 15px;cursor:pointer;font-size:12.5px;list-style:none;font-weight:600}
 .gc summary::-webkit-details-marker{display:none}
@@ -171,8 +171,7 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 
 <h2>Model Performance</h2>
 <div class="chartGrid">
-  <div class="chartBox"><div class="ct">Daily win rate by slate</div><div class="chartWrap"><canvas id="algoChart"></canvas></div></div>
-  <div class="chartBox"><div class="ct">Cumulative strong-pick hit rate</div><div class="chartWrap"><canvas id="cumChart"></canvas></div></div>
+  <div class="chartBox" style="grid-column:1/-1"><div class="ct">Accuracy by day — Moneyline · HR props · Hit props (graded days only, last 30)</div><div class="chartWrap"><canvas id="algoChart"></canvas></div></div>
 </div>
 
 <h2>Prop Performance — What's Hitting</h2>
@@ -251,7 +250,7 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;
 const TEAMS = {108:['LAA','#BA0021'],109:['AZ','#A71930'],110:['BAL','#DF4601'],111:['BOS','#BD3039'],112:['CHC','#0E3386'],113:['CIN','#C6011F'],114:['CLE','#00385D'],115:['COL','#333366'],116:['DET','#0C2340'],117:['HOU','#EB6E1F'],118:['KC','#004687'],119:['LAD','#005A9C'],120:['WSH','#AB0003'],121:['NYM','#002D72'],133:['ATH','#003831'],134:['PIT','#27251F'],135:['SD','#2F241D'],136:['SEA','#0C2C56'],137:['SF','#FD5A1E'],138:['STL','#C41E3A'],139:['TB','#092C5C'],140:['TEX','#003278'],141:['TOR','#134A8E'],142:['MIN','#002B5C'],143:['PHI','#E81828'],144:['ATL','#CE1141'],145:['CWS','#27251F'],146:['MIA','#00A3E0'],147:['NYY','#0C2340'],158:['MIL','#12284B']};
 const COLORS = {}; const IDBYABBR = {};
 for (const k in TEAMS){ COLORS[TEAMS[k][0]] = TEAMS[k][1]; IDBYABBR[TEAMS[k][0]] = k; }
-function logoImg(id){ return '<img class="tlogo" src="https://www.mlbstatic.com/team-logos/' + id + '.svg" onerror="this.remove()" alt="" loading="lazy">'; }
+function logoImg(id){ return '<img class="tlogo" src="https://midfield.mlbstatic.com/v1/team/' + id + '/spots/32" onerror="this.remove()" alt="" loading="lazy">'; }
 function tbById(id){ const t = TEAMS[id] || ['?','#64748b']; return '<span class="tbwrap">' + logoImg(id) + '<span class="tb" style="background:' + t[1] + '">' + t[0] + '</span></span>'; }
 function tb(abbr){ const id = IDBYABBR[abbr]; return id ? tbById(id) : '<span class="tbwrap"><span class="tb" style="background:#64748b">' + esc(abbr) + '</span></span>'; }
 function windArrow(w){
@@ -440,7 +439,7 @@ function renderLiveStrip(games){
       + '<div class="row"><span style="display:flex;align-items:center;gap:6px">' + tbById(g.teams.away.team.id) + esc(g.teams.away.team.name.split(' ').pop()) + '</span><span><b>' + (g.teams.away.score ?? '-') + '</b>' + (ah !== '' ? ' <span class="mono" style="color:#94a3b8">' + ah + 'H</span>' : '') + '</span></div>'
       + '<div class="row"><span style="display:flex;align-items:center;gap:6px">' + tbById(g.teams.home.team.id) + esc(g.teams.home.team.name.split(' ').pop()) + '</span><span><b>' + (g.teams.home.score ?? '-') + '</b>' + (hh !== '' ? ' <span class="mono" style="color:#94a3b8">' + hh + 'H</span>' : '') + '</span></div>'
       + matchup
-      + '<div class="wx' + (temp >= 85 ? ' hot' : '') + '">' + esc(w.temp || '?') + '°F · ' + esc(w.wind || '?') + (windOut ? ' ⬆' : windIn ? ' ⬇' : '') + '</div>'
+      + '<div class="wx' + (temp >= 85 ? ' hot' : '') + '">' + ((w.temp || w.wind) ? esc(w.temp || '—') + '°F · ' + esc(w.wind || '—') + (windOut ? ' ⬆' : windIn ? ' ⬇' : '') : '<span style="color:#94a3b8">forecast pending</span>') + '</div>'
       + '<div class="wx">' + esc((g.seriesStatus && g.seriesStatus.result) || '') + '</div>'
       + '</div>';
   }).join('');
@@ -460,8 +459,9 @@ function renderWind(games){
       + tbById(g.teams.away.team.id) + '<span>@</span>' + tbById(g.teams.home.team.id)
       + '<span style="font-weight:700">' + esc((g.venue && g.venue.name) || '') + '</span></div>'
       + '<div class="wmeta">'
-      + '<span>💨 <b>' + esc(w.wind || '?') + '</b></span>'
-      + '<span>🌡 <b>' + esc(w.temp || '?') + '°F</b></span>'
+      + ((w.wind || w.temp)
+          ? '<span>💨 <b>' + esc(w.wind || '—') + '</b></span><span>🌡 <b>' + esc(w.temp || '—') + '°F</b></span>'
+          : '<span style="color:#94a3b8;font-style:italic">park forecast posts ~4h before first pitch</span>')
       + '<span>⛰ <b>' + (vm ? vm[0].toLocaleString() + ' ft' : '—') + '</b></span>'
       + '<span>🌧 <b id="pp-' + g.gamePk + '">' + (cached != null ? cached + '%' : '…') + '</b></span>'
       + '<span>' + esc(w.condition || '') + '</span>'
@@ -731,23 +731,43 @@ function renderAccuracy(){
     + acc.slice().reverse().map(r => '<tr><td class="mono">' + esc(r.date) + '</td><td class="mono">' + esc(r.strong||'—') + '</td><td class="mono">' + esc(r.leans||'—') + '</td><td class="mono">' + esc(r.day||'—') + '</td><td class="note">' + esc(r.notes||'') + '</td></tr>').join('') + '</table>';
 }
 
-let algoC = null, cumC = null, playerC = null;
+function accSeries(){
+  const acc = (MODEL_DATA && MODEL_DATA.accuracy) || [];
+  const fr = t => { const m = /^(\d+)\/(\d+)/.exec(t||''); return m ? {w:+m[1], n:+m[2]} : null; };
+  const rows = [];
+  for (const r of acc){
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(r.date||'')) continue;
+    let ml = null;
+    if (r.mlN != null && r.mlN > 0) ml = {w:r.mlW||0, n:r.mlN};
+    else { const st = fr(r.strong), l = fr(r.leans);
+      if (st || l) ml = {w:(st?st.w:0)+(l?l.w:0), n:(st?st.n:0)+(l?l.n:0)}; }
+    const hr = (r.hrN != null && r.hrN > 0) ? {w:r.hrW||0, n:r.hrN} : null;
+    const hits = (r.hitsN != null && r.hitsN > 0) ? {w:r.hitsW||0, n:r.hitsN} : null;
+    if (ml || hr || hits) rows.push({date:r.date, ml, hr, hits});
+  }
+  return rows.slice(-30);
+}
+let algoC = null, playerC = null;
 function initAlgoCharts(){
   if (typeof Chart === 'undefined') return;
-  const a = parseAcc();
-  const labels = a.rows.map(r => r.label);
+  const rows = accSeries();
+  const box = $('algoChart');
+  if (!rows.length){ if (box && box.parentNode) box.parentNode.innerHTML = '<div class="empty">Accuracy lines start plotting after the first graded day (tomorrow morning\u2019s run grades today\u2019s board).</div>'; return; }
+  const pct = k => rows.map(r => r[k] && r[k].n ? +(100*r[k].w/r[k].n).toFixed(1) : null);
+  const rec = (k,i) => { const c = rows[i][k]; return c ? ' (' + c.w + '/' + c.n + ')' : ''; };
   try {
     if (algoC) algoC.destroy();
-    algoC = new Chart($('algoChart'), {
-      type: 'bar',
-      data: { labels, datasets: [{ label: 'Day win %', data: a.rows.map(r => r.day), backgroundColor: a.rows.map(r => r.day == null ? '#e5e7eb' : r.day >= 70 ? '#16a34a' : r.day >= 50 ? '#f59e0b' : '#dc2626'), borderRadius: 5 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } }, x: { ticks: { font: { size: 9 } } } } }
-    });
-    if (cumC) cumC.destroy();
-    cumC = new Chart($('cumChart'), {
+    algoC = new Chart(box, {
       type: 'line',
-      data: { labels, datasets: [{ label: 'Cumulative strong %', data: a.rows.map(r => r.cum), borderColor: '#0c3b2c', backgroundColor: 'rgba(16,185,129,.13)', fill: true, tension: .3, pointRadius: 3 }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } }, x: { ticks: { font: { size: 9 } } } } }
+      data: { labels: rows.map(r => r.date.slice(5)), datasets: [
+        { label: 'Moneyline', data: pct('ml'), borderColor: '#0c3b2c', backgroundColor: '#0c3b2c', tension: .25, spanGaps: true, pointRadius: 4 },
+        { label: 'HR props', data: pct('hr'), borderColor: '#dc2626', backgroundColor: '#dc2626', tension: .25, spanGaps: true, pointRadius: 4 },
+        { label: 'Hit props', data: pct('hits'), borderColor: '#2563eb', backgroundColor: '#2563eb', tension: .25, spanGaps: true, pointRadius: 4 }
+      ]},
+      options: { responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: true, position: 'bottom' },
+          tooltip: { callbacks: { label: ctx => { const k = ['ml','hr','hits'][ctx.datasetIndex]; return ctx.dataset.label + ': ' + ctx.formattedValue + '%' + rec(k, ctx.dataIndex); } } } },
+        scales: { y: { min: 0, max: 100, ticks: { callback: v => v + '%' } }, x: { ticks: { font: { size: 10 } } } } }
     });
   } catch(e){}
 }
