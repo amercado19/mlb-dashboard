@@ -305,6 +305,18 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .cp-in input{width:62px;padding:6px 8px;border:1px solid #7dd3fc;border-radius:8px;font-size:14px;font-weight:800;text-align:center;color:#0c4a6e}
 .cp-go{background:linear-gradient(#0ea5e9,#0369a1);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-weight:800;letter-spacing:.5px;cursor:pointer;box-shadow:0 0 14px rgba(14,165,233,.35);margin-left:auto}
 .cp-go:hover{box-shadow:0 0 22px rgba(14,165,233,.6)}
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.psq{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;transition:.12s;aspect-ratio:1/1;display:flex;flex-direction:column;justify-content:center}
+.psq:hover{border-color:#0ea5e9;box-shadow:0 4px 14px rgba(14,165,233,.18);transform:translateY(-2px)}
+.psq.on{border-color:#0ea5e9;background:#f0f9ff;box-shadow:0 0 0 2px rgba(14,165,233,.25)}
+.psq-ic{font-size:26px}
+.psq-l{font-size:12px;font-weight:800;color:#0f172a;margin-top:6px;line-height:1.15}
+.psq-t{font-size:10px;color:#475569;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.psq-n{font-size:9px;color:#94a3b8;margin-top:4px;text-transform:uppercase;letter-spacing:.4px}
+#propPanel{margin-top:12px}
+.pp-table{width:100%;border-collapse:collapse;font-size:12px}
+.pp-table th{font-size:10px;color:#94a3b8;text-transform:uppercase;text-align:left;padding:5px 7px;border-bottom:2px solid #e2e8f0}
+.pp-table td{padding:6px 7px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -342,8 +354,9 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 <div id="gameSimSection"></div>
 
 <div id="topParlaySection"></div>
-<h2>Section 4 — Model Parlay Suggestions</h2>
-<div id="parlaySection"></div>
+<h2>Prop Boards — Tap a Square</h2>
+<div id="propBoards"></div>
+
 <h2>🔥 Home Run Streaks — Active</h2>
 <div id="hrStreakSection"></div>
 
@@ -361,36 +374,8 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 <h2>Live Scoreboard — Full Slate</h2>
 <div class="strip" id="liveStrip"><div class="empty" style="width:100%">Loading live games…</div></div>
 
-<h2>Ballpark Weather Report</h2>
-<div class="strip" id="windStrip"><div class="empty" style="width:100%">Loading weather…</div></div>
-
-<h2>Game Center — Tap a Game to Expand</h2>
-<div id="gameCenter"><div class="empty">Game cards load with the live feed.</div></div>
-
-
 <h2>Starting Pitchers — Handedness & Platoon Splits</h2>
 <div id="spSection"></div>
-
-<h2>Section 1 — Moneyline Picks</h2>
-<div id="mlSection"></div>
-
-<h2>NRFI / YRFI Board</h2>
-<div id="nrfiSection"></div>
-
-<h2>Section 2 — HR Props (best → worst)</h2>
-<div id="hrSection"></div>
-
-<h2>Section 3 — Hits / 2B+ Board (best → worst)</h2>
-<div id="hitSection"></div>
-
-<h2>Over / Under Board — Model Projections</h2>
-<div id="ouSection"></div>
-
-<h2>Top 2+ Total Bases Board</h2>
-<div id="tb2Section"></div>
-
-<h2>Top 2+ (Hits+Runs+RBI) Board</h2>
-<div id="hrrSection"></div>
 
 <h2>Player Performance — Last 10 Games</h2>
 <div class="chartBox">
@@ -663,7 +648,7 @@ function windDiagram(windStr){
   return '<div class="wind-diagram"><span class="wd-lbl">Wind</span>' + wf.map(f =>
     '<div class="wd-field"><div class="wd-field-name">' + f[0] + '</div><svg class="wd-arrow" viewBox="0 0 24 24"><use href="#arr-' + f[1] + '"/></svg><div class="wd-mph ' + f[1] + '">' + f[2] + '</div></div>').join('') + '</div>';
 }
-function renderWind(games){
+function renderWind(games){ if(!$('windStrip'))return;
   if (!games.length){ $('windStrip').innerHTML = '<div class="empty" style="width:100%">No games.</div>'; return; }
   $('windStrip').innerHTML = games.map(g => {
     const w = g.weather || {};
@@ -1372,6 +1357,36 @@ function renderCustomParlay(){ const el=$('customParlay'); if(!el||el.dataset.bu
     +'<button class="cp-go" onclick="buildCustomParlay()">⚡ Generate Best Parlay</button></div>'
     +'<div id="cpResult"><div class="empty" style="font-size:12px">Set how many legs of each type you want, then hit Generate. The best available legs (no home runs) are picked from today’s model boards.</div></div>';
 }
+function propRows(k){ const b=(MODEL_DATA&&MODEL_DATA.boards)||{}; if(k==='nrfi')return (MODEL_DATA.nrfi||[]); if(k==='ou')return (b.ou||[]); return (b[k]||[]); }
+function gcLabel(pk){ const c=((MODEL_DATA.gameCards)||[]).find(x=>x.gamePk===pk); return c?c.game:''; }
+function renderPropSquares(){
+  const el=$('propBoards'); if(!el) return;
+  const b=(MODEL_DATA&&MODEL_DATA.boards)||{};
+  const defs=[
+    {k:'hr',label:'Home Runs',ic:'⚾'},{k:'h1',label:'1+ Hit',ic:'🎯'},{k:'h2',label:'2B+',ic:'↔'},
+    {k:'tb2',label:'2+ Total Bases',ic:'💥'},{k:'hrr',label:'2+ H/R/RBI',ic:'🔢'},
+    {k:'nrfi',label:'NRFI / YRFI',ic:'🅾'},{k:'ou',label:'Over / Under',ic:'📊'}];
+  const teaser=d=>{ const r=propRows(d.k); if(!r.length)return '—'; if(d.k==='nrfi'){const s=r.filter(x=>x.tier&&x.tier.indexOf('STRONG')>=0);return s.length?s.length+' STRONG':r.length+' games';} if(d.k==='ou'){const o=r.filter(x=>x.lean==='OVER').length;return o+' OVER leans';} return (r[0].name||'')+(r[0].score!=null?' '+Math.round(r[0].score):''); };
+  const sq=defs.map(d=>{ const n=propRows(d.k).length; return '<div class="psq" onclick="openProp(\''+d.k+'\',this)"><div class="psq-ic">'+d.ic+'</div><div class="psq-l">'+d.label+'</div><div class="psq-t">'+esc(teaser(d))+'</div><div class="psq-n">'+(n?n+' picks':'lineups pending')+'</div></div>'; }).join('');
+  el.innerHTML='<div class="prop-grid">'+sq+'</div><div id="propPanel"></div>';
+}
+function openProp(k,tile){
+  document.querySelectorAll('.psq').forEach(s=>s.classList.remove('on')); if(tile)tile.classList.add('on');
+  const panel=$('propPanel'); const rows=propRows(k); if(!panel)return;
+  if(!rows.length){ panel.innerHTML='<div class="empty" style="font-size:12px">No '+k+' board yet — player props need confirmed lineups.</div>'; return; }
+  let h='';
+  if(k==='nrfi'){
+    const sorted=rows.slice().sort((a,c)=>(''+a.tier).indexOf('PASS')-(''+c.tier).indexOf('PASS'));
+    h='<table class="pp-table"><tr><th>Game</th><th>Call</th><th>P(comb)</th><th>Bet</th></tr>'+sorted.map(r=>'<tr><td><b>'+esc(r.game||gcLabel(r.gamePk))+'</b></td><td>'+esc((r.tier||'—').replace(/_/g,' '))+'</td><td class="mono">'+(r.pComb!=null?r.pComb+'%':'—')+'</td><td>'+esc(r.bet||'')+'</td></tr>').join('')+'</table>';
+  } else if(k==='ou'){
+    const sorted=rows.slice().sort((a,c)=>(a.lean==='PASS')-(c.lean==='PASS')||((c.proj-c.line)-(a.proj-a.line)));
+    h='<table class="pp-table"><tr><th>Game</th><th>Proj</th><th>Line</th><th>Lean</th></tr>'+sorted.map(r=>'<tr><td><b>'+esc(r.game||gcLabel(r.gamePk))+'</b></td><td class="mono">'+(r.proj!=null?r.proj:'—')+'</td><td class="mono">'+(r.line!=null?r.line:'—')+'</td><td>'+esc(r.lean||'')+'</td></tr>').join('')+'</table>';
+  } else {
+    const unit=k==='tb2'?'TB/G':k==='hrr'?'H+R+RBI/G':'Score';
+    h='<table class="pp-table"><tr><th>#</th><th>Player</th><th>Team</th><th>Game</th><th>'+unit+'</th></tr>'+rows.map((r,i)=>'<tr><td class="mono">'+(i+1)+'</td><td>'+(r.playerId?hs(r.playerId,true):'')+' '+esc(r.name||'')+'</td><td>'+tb(r.team)+'</td><td class="mono">'+esc(gcLabel(r.gamePk))+'</td><td class="mono"><b>'+(r.metric!=null?r.metric:(r.score!=null?Math.round(r.score):'—'))+'</b></td></tr>').join('')+'</table>';
+  }
+  panel.innerHTML=h;
+}
 function renderGamesAccordion(){
   const el=$('gamesAccordion'); if(!el) return;
   const gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[];
@@ -1606,7 +1621,7 @@ function drawBoard(c,res){
   $('simBoard').innerHTML='<div class="scoreboard" style="grid-template-columns:auto repeat('+cols+',1fr) auto auto">'+hd+row(c.away_sp.team,res?res.innings:null,res?res.aR:null,res?res.aH:null,0)+row(c.home_sp.team,res?res.innings:null,res?res.hR:null,res?res.hH:null,1)+'</div>';
 }
 
-function renderAll(){ renderCustomParlay(); renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderGameCards(); renderSP(); renderML(); renderNrfi(); renderHR(); renderHits(); renderBoards(); renderHrStreaks(); renderYesterdayHr(); renderParlays(); renderTopParlay(); renderPropPerf(); renderGameCenter(); }
+function renderAll(){ renderCustomParlay(); renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderTopParlay(); renderPropSquares(); renderSP(); renderHrStreaks(); renderYesterdayHr(); renderPropPerf(); }
 
 async function refreshLive(){
   if (refreshing) return;
