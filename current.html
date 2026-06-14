@@ -317,6 +317,12 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .pp-table{width:100%;border-collapse:collapse;font-size:12px}
 .pp-table th{font-size:10px;color:#94a3b8;text-transform:uppercase;text-align:left;padding:5px 7px;border-bottom:2px solid #e2e8f0}
 .pp-table td{padding:6px 7px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+.rate{font-family:monospace;font-weight:800;padding:1px 7px;border-radius:7px;font-size:11px}
+.rate.r-hi{background:#dcfce7;color:#15803d}.rate.r-mid{background:#fef9c3;color:#a16207}.rate.r-lo{background:#fee2e2;color:#b91c1c}
+.psq-tabs-hint{font-size:8px;color:#0ea5e9;margin-top:3px;font-weight:700}
+.hr-tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.hr-tab{font-size:11px;font-weight:800;padding:5px 12px;border-radius:20px;background:#f1f5f9;color:#475569;cursor:pointer;border:1px solid #e2e8f0}
+.hr-tab.on{background:#0369a1;color:#fff;border-color:#0369a1}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -356,12 +362,6 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 <div id="topParlaySection"></div>
 <h2>Prop Boards — Tap a Square</h2>
 <div id="propBoards"></div>
-
-<h2>🔥 Home Run Streaks — Active</h2>
-<div id="hrStreakSection"></div>
-
-<h2>Went Yard Yesterday</h2>
-<div id="yesterdayHrSection"></div>
 
 <h2>Model Performance</h2>
 <div class="chartGrid">
@@ -1346,35 +1346,66 @@ function renderCustomParlay(){ const el=$('customParlay'); if(!el||el.dataset.bu
     +'<button class="cp-go" onclick="buildCustomParlay()">⚡ Generate Best Parlay</button></div>'
     +'<div id="cpResult"><div class="empty" style="font-size:12px">Set how many legs of each type you want, then hit Generate. The best available legs (no home runs) are picked from today’s model boards.</div></div>';
 }
-function propRows(k){ const b=(MODEL_DATA&&MODEL_DATA.boards)||{}; if(k==='nrfi')return (MODEL_DATA.nrfi||[]); if(k==='ou')return (b.ou||[]); return (b[k]||[]); }
+
+
+
+
 function gcLabel(pk){ const c=((MODEL_DATA.gameCards)||[]).find(x=>x.gamePk===pk); return c?c.game:''; }
+function diversify(rows,perGame){ perGame=perGame||2; const gc={},out=[]; for(const r of rows){ const k=r.gamePk||'x'; if((gc[k]||0)>=perGame)continue; gc[k]=(gc[k]||0)+1; out.push(r); } return out; }
+function propRows(k){ const b=(MODEL_DATA&&MODEL_DATA.boards)||{}; if(k==='nrfi')return (MODEL_DATA.nrfi||[]); if(k==='ou')return (b.ou||[]); return diversify(b[k]||[],2).slice(0,12); }
+function rate10fn(rows,valFn){ const vals=rows.map(valFn).filter(v=>v!=null); if(!vals.length)return ()=>'—'; const mn=Math.min(...vals),mx=Math.max(...vals); return v=>{ if(v==null)return '—'; const r=mx>mn?(5.5+4.5*(v-mn)/(mx-mn)):8.5; return r.toFixed(1); }; }
+function ratePill(r){ const n=parseFloat(r); const cls=isNaN(n)?'':n>=8?'r-hi':n>=6.5?'r-mid':'r-lo'; return '<span class="rate '+cls+'">'+r+'</span>'; }
 function renderPropSquares(){
   const el=$('propBoards'); if(!el) return;
-  const b=(MODEL_DATA&&MODEL_DATA.boards)||{};
   const defs=[
     {k:'hr',label:'Home Runs',ic:'⚾'},{k:'h1',label:'1+ Hit',ic:'🎯'},{k:'h2',label:'2B+',ic:'↔'},
     {k:'tb2',label:'2+ Total Bases',ic:'💥'},{k:'hrr',label:'2+ H/R/RBI',ic:'🔢'},
     {k:'nrfi',label:'NRFI / YRFI',ic:'🅾'},{k:'ou',label:'Over / Under',ic:'📊'}];
-  const teaser=d=>{ const r=propRows(d.k); if(!r.length)return '—'; if(d.k==='nrfi'){const s=r.filter(x=>x.tier&&x.tier.indexOf('STRONG')>=0);return s.length?s.length+' STRONG':r.length+' games';} if(d.k==='ou'){const o=r.filter(x=>x.lean==='OVER').length;return o+' OVER leans';} return (r[0].name||'')+(r[0].score!=null?' '+Math.round(r[0].score):''); };
-  const sq=defs.map(d=>{ const n=propRows(d.k).length; return '<div class="psq" onclick="openProp(\''+d.k+'\',this)"><div class="psq-ic">'+d.ic+'</div><div class="psq-l">'+d.label+'</div><div class="psq-t">'+esc(teaser(d))+'</div><div class="psq-n">'+(n?n+' picks':'lineups pending')+'</div></div>'; }).join('');
+  const teaser=d=>{ const r=propRows(d.k); if(!r.length)return '—'; if(d.k==='nrfi'){const s=r.filter(x=>x.tier&&x.tier.indexOf('STRONG')>=0);return s.length?s.length+' STRONG':r.length+' games';} if(d.k==='ou'){return r.filter(x=>x.lean==='OVER').length+' OVER leans';} return (r[0].name||''); };
+  const sq=defs.map(d=>{ const n=propRows(d.k).length; const extra=d.k==='hr'?'<div class="psq-tabs-hint">props · streaks · yesterday</div>':''; return '<div class="psq" onclick="openProp(\''+d.k+'\',this)"><div class="psq-ic">'+d.ic+'</div><div class="psq-l">'+d.label+'</div><div class="psq-t">'+esc(teaser(d))+'</div><div class="psq-n">'+(n?n+' picks':'lineups pending')+'</div>'+extra+'</div>'; }).join('');
   el.innerHTML='<div class="prop-grid">'+sq+'</div><div id="propPanel"></div>';
 }
 function openProp(k,tile){
   document.querySelectorAll('.psq').forEach(s=>s.classList.remove('on')); if(tile)tile.classList.add('on');
+  if(k==='hr'){ renderHrSquare('props'); return; }
   const panel=$('propPanel'); const rows=propRows(k); if(!panel)return;
   if(!rows.length){ panel.innerHTML='<div class="empty" style="font-size:12px">No '+k+' board yet — player props need confirmed lineups.</div>'; return; }
   let h='';
   if(k==='nrfi'){
     const sorted=rows.slice().sort((a,c)=>(''+a.tier).indexOf('PASS')-(''+c.tier).indexOf('PASS'));
-    h='<table class="pp-table"><tr><th>Game</th><th>Call</th><th>P(comb)</th><th>Bet</th></tr>'+sorted.map(r=>'<tr><td><b>'+esc(r.game||gcLabel(r.gamePk))+'</b></td><td>'+esc((r.tier||'—').replace(/_/g,' '))+'</td><td class="mono">'+(r.pComb!=null?r.pComb+'%':'—')+'</td><td>'+esc(r.bet||'')+'</td></tr>').join('')+'</table>';
+    const rt=rate10fn(sorted,r=>r.pComb!=null?Math.abs(r.pComb-50):null);
+    h='<table class="pp-table"><tr><th>Game</th><th>Call</th><th>P(comb)</th><th>Rating</th></tr>'+sorted.map(r=>'<tr><td><b>'+esc(r.game||gcLabel(r.gamePk))+'</b></td><td>'+esc((r.tier||"—").replace(/_/g," "))+'</td><td class="mono">'+(r.pComb!=null?r.pComb+"%":"—")+'</td><td>'+ratePill(rt(r.pComb!=null?Math.abs(r.pComb-50):null))+'</td></tr>').join('')+'</table>';
   } else if(k==='ou'){
-    const sorted=rows.slice().sort((a,c)=>(a.lean==='PASS')-(c.lean==='PASS')||((c.proj-c.line)-(a.proj-a.line)));
-    h='<table class="pp-table"><tr><th>Game</th><th>Proj</th><th>Line</th><th>Lean</th></tr>'+sorted.map(r=>'<tr><td><b>'+esc(r.game||gcLabel(r.gamePk))+'</b></td><td class="mono">'+(r.proj!=null?r.proj:'—')+'</td><td class="mono">'+(r.line!=null?r.line:'—')+'</td><td>'+esc(r.lean||'')+'</td></tr>').join('')+'</table>';
+    const sorted=rows.slice().sort((a,c)=>(a.lean==="PASS")-(c.lean==="PASS")||((c.proj-c.line)-(a.proj-a.line)));
+    const rt=rate10fn(sorted,r=>(r.proj!=null&&r.line!=null)?Math.abs(r.proj-r.line):null);
+    h='<table class="pp-table"><tr><th>Game</th><th>Proj</th><th>Line</th><th>Lean</th><th>Rating</th></tr>'+sorted.map(r=>'<tr><td><b>'+esc(r.game||gcLabel(r.gamePk))+'</b></td><td class="mono">'+(r.proj!=null?r.proj:"—")+'</td><td class="mono">'+(r.line!=null?r.line:"—")+'</td><td>'+esc(r.lean||"")+'</td><td>'+ratePill(rt((r.proj!=null&&r.line!=null)?Math.abs(r.proj-r.line):null))+'</td></tr>').join('')+'</table>';
   } else {
     const unit=k==='tb2'?'TB/G':k==='hrr'?'H+R+RBI/G':'Score';
-    h='<table class="pp-table"><tr><th>#</th><th>Player</th><th>Team</th><th>Game</th><th>'+unit+'</th></tr>'+rows.map((r,i)=>'<tr><td class="mono">'+(i+1)+'</td><td>'+(r.playerId?hs(r.playerId,true):'')+' '+esc(r.name||'')+'</td><td>'+tb(r.team)+'</td><td class="mono">'+esc(gcLabel(r.gamePk))+'</td><td class="mono"><b>'+(r.metric!=null?r.metric:(r.score!=null?Math.round(r.score):'—'))+'</b></td></tr>').join('')+'</table>';
+    const valFn=r=>(r.metric!=null?r.metric:r.score);
+    const rt=rate10fn(rows,valFn);
+    h='<table class="pp-table"><tr><th>#</th><th>Player</th><th>Team</th><th>Game</th><th>'+unit+'</th><th>Rating</th></tr>'+rows.map((r,i)=>'<tr><td class="mono">'+(i+1)+'</td><td>'+(r.playerId?hs(r.playerId,true):"")+' '+esc(r.name||"")+'</td><td>'+tb(r.team)+'</td><td class="mono">'+esc(gcLabel(r.gamePk))+'</td><td class="mono">'+(r.metric!=null?r.metric:(r.score!=null?Math.round(r.score):"—"))+'</td><td>'+ratePill(rt(valFn(r)))+'</td></tr>').join('')+'</table>';
   }
   panel.innerHTML=h;
+}
+function renderHrSquare(tab){
+  const panel=$('propPanel'); if(!panel)return; tab=tab||'props';
+  const bar='<div class="hr-tabs">'
+    +'<span class="hr-tab'+(tab==='props'?' on':'')+'" onclick="renderHrSquare(\'props\')">Top HR Props</span>'
+    +'<span class="hr-tab'+(tab==='streaks'?' on':'')+'" onclick="renderHrSquare(\'streaks\')">🔥 Active Streaks</span>'
+    +'<span class="hr-tab'+(tab==='yday'?' on':'')+'" onclick="renderHrSquare(\'yday\')">Went Yard Yesterday</span></div>';
+  let body='';
+  if(tab==='props'){
+    const rows=propRows('hr');
+    if(!rows.length) body='<div class="empty" style="font-size:12px">HR board posts with confirmed lineups.</div>';
+    else { const rt=rate10fn(rows,r=>r.score); body='<table class="pp-table"><tr><th>#</th><th>Player</th><th>Team</th><th>Game</th><th>Score</th><th>Rating</th></tr>'+rows.map((r,i)=>'<tr><td class="mono">'+(i+1)+'</td><td>'+(r.playerId?hs(r.playerId,true):"")+' '+esc(r.name||"")+'</td><td>'+tb(r.team)+'</td><td class="mono">'+esc(gcLabel(r.gamePk))+'</td><td class="mono">'+(r.score!=null?Math.round(r.score):"—")+'</td><td>'+ratePill(rt(r.score))+'</td></tr>').join('')+'</table>'; }
+  } else if(tab==='streaks'){
+    const st=(MODEL_DATA&&MODEL_DATA.hrStreaks)||[];
+    body=st.length? '<div class="hrface">'+st.map(p=>'<div class="starcard" style="border-color:#fed7aa"><img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_120,q_auto:best/v1/people/'+p.playerId+'/headshot/67/current" alt=""><div class="nm">'+esc(p.name)+'</div><div class="tm" style="color:#b45309">'+esc(p.team)+' · '+p.streak+' straight 🔥</div></div>').join('')+'</div>' : '<div class="empty" style="font-size:12px">No active multi-game HR streaks.</div>';
+  } else {
+    const hr=(MODEL_DATA&&MODEL_DATA.yesterdayHR)||[]; const dt=(MODEL_DATA&&MODEL_DATA.yesterdayHRDate)||'';
+    body=hr.length? '<div class="note" style="margin-bottom:6px">'+hr.length+' homered'+(dt?' ('+esc(dt)+')':'')+'</div><div class="hrface">'+hr.map(p=>'<div class="starcard" style="border-color:#fecaca"><img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_120,q_auto:best/v1/people/'+p.playerId+'/headshot/67/current" alt=""><div class="nm">'+esc(p.name)+'</div><div class="tm" style="color:#b91c1c">'+esc(p.team)+(p.hr>1?' · '+p.hr+' HR':' · HR')+'</div></div>').join('')+'</div>' : '<div class="empty" style="font-size:12px">No HR data for yesterday yet.</div>';
+  }
+  panel.innerHTML=bar+body;
 }
 function renderGamesAccordion(){
   const el=$('gamesAccordion'); if(!el) return;
@@ -1610,7 +1641,7 @@ function drawBoard(c,res){
   $('simBoard').innerHTML='<div class="scoreboard" style="grid-template-columns:auto repeat('+cols+',1fr) auto auto">'+hd+row(c.away_sp.team,res?res.innings:null,res?res.aR:null,res?res.aH:null,0)+row(c.home_sp.team,res?res.innings:null,res?res.hR:null,res?res.hH:null,1)+'</div>';
 }
 
-function renderAll(){ renderCustomParlay(); renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderTopParlay(); renderPropSquares(); renderSP(); renderHrStreaks(); renderYesterdayHr(); renderPropPerf(); }
+function renderAll(){ renderCustomParlay(); renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderTopParlay(); renderPropSquares(); renderSP(); renderPropPerf(); }
 
 async function refreshLive(){
   if (refreshing) return;
