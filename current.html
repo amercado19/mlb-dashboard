@@ -751,18 +751,7 @@ function buildAlerts(){
           out.push({cls:'', msg:'SP CHANGE (' + p.away + '@' + p.home + '): ' + pickSp + ' → ' + liveSp + '. R10 fires (-12). Re-evaluate before betting.'});
         }
       }
-      const wRun = p.weatherAtRun || {};
-      const wNow = g.weather || {};
-      if (wRun.wind && wNow.wind && wRun.wind !== wNow.wind){
-        const wasOut = /Out To/i.test(wRun.wind), nowOut = /Out To/i.test(wNow.wind);
-        const wasIn = /In From/i.test(wRun.wind), nowIn = /In From/i.test(wNow.wind);
-        if (wasOut !== nowOut || wasIn !== nowIn){
-          out.push({cls:'warn', msg:'WIND SHIFT at ' + p.venue + ': "' + wRun.wind + '" → "' + wNow.wind + '". HR/2B+ prop scores at this park are stale.'});
-        }
-      }
-      if (wRun.temp && wNow.temp && Math.abs(parseInt(wNow.temp)-parseInt(wRun.temp)) >= 8){
-        out.push({cls:'warn', msg:'TEMP DRIFT at ' + p.venue + ': ' + wRun.temp + '°F → ' + wNow.temp + '°F.'});
-      }
+      // wind/temp alerts removed — weather shown per-game in the game cards
     }
   }
   $('alerts').innerHTML = out.map(a => '<div class="alert ' + a.cls + '">' + esc(a.msg) + '</div>').join('');
