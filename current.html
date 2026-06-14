@@ -323,6 +323,63 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 .hr-tabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
 .hr-tab{font-size:11px;font-weight:800;padding:5px 12px;border-radius:20px;background:#f1f5f9;color:#475569;cursor:pointer;border:1px solid #e2e8f0}
 .hr-tab.on{background:#0369a1;color:#fff;border-color:#0369a1}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+:root{ --ink:#d7f3ff !important; --line:rgba(34,211,238,.28) !important; --bg:#04070d !important; --card:#0a1626 !important; --pine:#22d3ee !important; --shadowSm:0 0 14px rgba(34,211,238,.10) !important; }
+body{ background:#04070d !important; background-image:linear-gradient(rgba(34,211,238,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,.05) 1px,transparent 1px) !important; background-size:44px 44px !important; color:#cfe9f2 !important; font-family:'Rajdhani',system-ui,sans-serif !important; }
+h1,h2,h3{ font-family:'Orbitron',sans-serif !important; color:#22d3ee !important; text-shadow:0 0 12px rgba(34,211,238,.5) !important; letter-spacing:1.4px !important; text-transform:uppercase; }
+#hero{ background:linear-gradient(130deg,#04111f,#062436 55%,#073a4d) !important; border:1px solid rgba(34,211,238,.35) !important; border-top:none !important; box-shadow:0 0 34px rgba(34,211,238,.18) !important; }
+h1{ color:#fff !important; } h1 em{ color:#22d3ee !important; text-shadow:0 0 14px #22d3ee; }
+.sub,.tag{ color:#9fd9e8 !important; }
+.kbox{ background:#0a1626 !important; border-color:rgba(34,211,238,.28) !important; }
+.kv{ color:#22d3ee !important; text-shadow:0 0 10px rgba(34,211,238,.4); } .kl{ color:#8fc4d6 !important; }
+.badge{ background:#0d2236 !important; color:#9fd9e8 !important; border:1px solid rgba(34,211,238,.3); }
+.badge.fresh{ background:#06301f !important; color:#34ffb0 !important; }
+.badge.stale{ background:#2a0808 !important; color:#ff9090 !important; }
+.psq{ background:#0a1626 !important; border-color:rgba(34,211,238,.28) !important; color:#d7f3ff !important; }
+.psq:hover{ box-shadow:0 0 18px rgba(34,211,238,.5) !important; }
+.psq.on{ background:#0d2740 !important; border-color:#22d3ee !important; }
+.psq-l{ color:#e0faff !important; } .psq-t,.psq-n{ color:#86bccf !important; } .psq-tabs-hint{ color:#22d3ee !important; }
+.pp-table th{ color:#5fd0e8 !important; border-color:rgba(34,211,238,.3) !important; }
+.pp-table td{ border-color:rgba(34,211,238,.12) !important; color:#d7f3ff !important; }
+.gc-spn,.gc-mu,.ga-mu,.ga-read{ color:#e6fbff !important; } .gc-foot .val{ color:#22d3ee !important; }
+.gc-foot .lbl,.gc-vn,.gc-spx,.ga-time,.ga-1l{ color:#86bccf !important; }
+.gc-foot>div{ background:transparent !important; }
+.ga-body{ background:#08131f !important; } .ga-sec{ background:transparent !important; }
+.ga-h{ color:#5fd0e8 !important; } .ga-tn{ color:#e0faff !important; } .ga-pl{ color:#86bccf !important; }
+.ga-pill{ background:#0d2236 !important; border-color:rgba(34,211,238,.3) !important; color:#d7f3ff !important; }
+.ga-wx,.ga-sp{ color:#cfe9f2 !important; } .ga-spx{ color:#86bccf !important; }
+.recap-box,.cp-form,.sgp-summary{ background:#0a1626 !important; border-color:rgba(34,211,238,.25) !important; color:#d7f3ff !important; }
+.recap-chip{ background:#0d2236 !important; border-color:rgba(34,211,238,.25) !important; color:#d7f3ff !important; }
+.recap-scores{ color:#9fd9e8 !important; }
+.cp-in input{ background:#04070d !important; color:#22d3ee !important; border-color:rgba(34,211,238,.45) !important; }
+.cp-in label{ color:#5fd0e8 !important; }
+.sgp-box{ background:#06210f !important; border-color:rgba(52,255,176,.35) !important; }
+.sgp-head{ color:#7dffc0 !important; } .sgp-est{ color:#34ffb0 !important; }
+.sgp-leg{ border-color:rgba(52,255,176,.15) !important; color:#e6fbff !important; }
+.sgp-desc{ color:#e6fbff !important; }
+.sgp-pay{ background:#1a1606 !important; border-color:rgba(255,210,80,.3) !important; color:#ffe9a8 !important; }
+.sgp-summary{ color:#cfe9f2 !important; }
+.alert{ background:#0a1626 !important; border-left:3px solid #22d3ee !important; color:#cfe9f2 !important; }
+.alert.warn{ border-left-color:#fbbf24 !important; }
+table td, table th{ color:#d7f3ff; }
+.note{ color:#86bccf !important; }
+.empty{ color:#86bccf !important; }
+.starcard{ background:#0a1626 !important; }
+.starcard .nm{ color:#e0faff !important; }
+.col-body{ }
+.gtag.AVG,.gc-spt.AVG{ }
+button{ font-family:'Rajdhani',sans-serif !important; }
+.cp-go,.sim-btn{ font-family:'Orbitron',sans-serif !important; }
+/* Slate ticker (NYSE-style) */
+.ticker{ overflow:hidden; white-space:nowrap; background:#04070d; border:1px solid rgba(34,211,238,.4); border-radius:10px; padding:10px 0; margin:0 0 14px; box-shadow:0 0 16px rgba(34,211,238,.22), inset 0 0 18px rgba(34,211,238,.08); position:relative; }
+.tk-track{ display:inline-block; animation:tkscroll 50s linear infinite; }
+.ticker:hover .tk-track{ animation-play-state:paused; }
+@keyframes tkscroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+.tk-item{ display:inline-flex; align-items:center; gap:5px; font-family:'Orbitron',sans-serif; font-size:12px; color:#d7f3ff; padding:0 8px; }
+.tk-at{ color:#22d3ee; margin:0 3px; } .tk-t{ color:#fde047; margin-left:6px; font-weight:700; text-shadow:0 0 8px rgba(253,224,71,.4); }
+.tk-sep{ color:#22d3ee; margin:0 14px; text-shadow:0 0 8px #22d3ee; }
+.tk-item .tbwrap{ vertical-align:middle; }
+
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -343,6 +400,7 @@ input.legcb{width:16px;height:16px;cursor:pointer;accent-color:var(--pine)}
 
 <div class="kpi" id="kpis"></div>
 
+<div id="slateTicker" class="ticker"></div>
 <h2>🧩 Build Your Own Parlay</h2>
 <div id="customParlay"></div>
 
@@ -450,8 +508,8 @@ let refreshing = false;
 const precipCache = {};
 
 function localDate(){
-  // Eastern time — the pipeline stamps MODEL_DATA.date in ET, so compare in ET
-  return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date());
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 const SLATE_DATE = (MODEL_DATA && MODEL_DATA.date) ? MODEL_DATA.date : localDate();
 
@@ -1336,6 +1394,15 @@ function buildCustomParlay(){
   res.innerHTML='<div style="margin:6px 0;font-size:12px;color:#475569">'+num+' legs across '+order.length+' game'+(order.length>1?'s':'')+' · best available of each type · model-fair odds (verify at book).</div>'+body+pay;
 }
 function addCustomToSlip(){ const legs=window._customLegs||[]; legs.forEach((l,i)=>{ const key='cp-'+i+'-'+(l.playerId||l.gamePk); if(!inSlip(key)) slip.push({key,desc:l.desc,betType:l.betType,gamePk:l.gamePk,playerId:l.playerId||null,pickSide:l.pickSide||null,line:l.line||null,odds:''}); }); saveSlip(); renderSlip(); const sb=$('slipBody'); if(sb)sb.classList.add('open'); }
+function renderTicker(){
+  const el=$('slateTicker'); if(!el)return;
+  const gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[];
+  if(!gc.length){ el.style.display='none'; return; }
+  el.style.display='block';
+  const items=gc.map(c=>'<span class="tk-item">'+tb(c.away_sp.team)+' '+esc(c.away_sp.team)+' <span class="tk-at">@</span> '+tb(c.home_sp.team)+' '+esc(c.home_sp.team)+' <span class="tk-t">'+fmtTime(c.time)+'</span></span>').join('<span class="tk-sep">◆</span>');
+  const seq=items+'<span class="tk-sep">◆</span>';
+  el.innerHTML='<div class="tk-track">'+seq+seq+'</div>';
+}
 function renderCustomParlay(){ const el=$('customParlay'); if(!el||el.dataset.built)return; el.dataset.built='1';
   el.innerHTML='<div class="cp-form">'
     +'<div class="cp-in"><label>Moneyline</label><input type="number" id="cp-ml" min="0" max="8" value="1"></div>'
@@ -1641,7 +1708,7 @@ function drawBoard(c,res){
   $('simBoard').innerHTML='<div class="scoreboard" style="grid-template-columns:auto repeat('+cols+',1fr) auto auto">'+hd+row(c.away_sp.team,res?res.innings:null,res?res.aR:null,res?res.aH:null,0)+row(c.home_sp.team,res?res.innings:null,res?res.hR:null,res?res.hH:null,1)+'</div>';
 }
 
-function renderAll(){ renderCustomParlay(); renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderTopParlay(); renderPropSquares(); renderSP(); renderPropPerf(); }
+function renderAll(){ renderTicker(); renderCustomParlay(); renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopConf(); renderTopParlay(); renderPropSquares(); renderSP(); renderPropPerf(); }
 
 async function refreshLive(){
   if (refreshing) return;
@@ -1665,7 +1732,7 @@ async function refreshLive(){
   }
   const f = $('freshness');
   if (MODEL_DATA && MODEL_DATA.date === localDate()){ f.className = 'badge fresh'; f.textContent = 'PICKS FRESH'; }
-  else if (MODEL_DATA && MODEL_DATA.date){ var diff=Math.round((new Date(localDate())-new Date(MODEL_DATA.date))/86400000); if(diff<=1){ f.className='badge'; f.textContent='LATEST: ' + MODEL_DATA.date; } else { f.className='badge stale'; f.textContent='STALE (' + MODEL_DATA.date + ')'; } }
+  else if (MODEL_DATA && (MODEL_DATA.ml||[]).length){ f.className = 'badge stale'; f.textContent = 'PICKS STALE (' + (MODEL_DATA.date||'?') + ')'; }
   else { f.className = 'badge stale'; f.textContent = 'NO RUN YET'; }
   $('refreshBtn').disabled = false;
   refreshing = false;
@@ -1693,14 +1760,8 @@ setInterval(function(){ syncLineups(); syncOdds(); }, 3600000);
       document.body.prepend(b);
     }
     if(d && d < etToday){
-      var diff=Math.round((new Date(etToday)-new Date(d))/86400000);
-      if(diff<=1){
-        banner('#1f1600','#e8b040','#4a3500',
-          'Showing the latest published picks ('+d+'). Today\u2019s runs publish automatically every 2 hours, ~9 AM\u201311 PM ET.');
-      } else {
-        banner('#2a0808','#ff9090','#5a1515',
-          '\u26a0 STALE \u2014 picks are from '+d+' ('+diff+' days old). The auto-publish pipeline may need attention.');
-      }
+      banner('#2a0808','#ff9090','#5a1515',
+        '\u26a0 STALE \u2014 these picks were generated for '+d+'. Today\u2019s run has not published yet. Live scores below are current; the picks are NOT.');
     } else if(mode === 'auto'){
       banner('#1f1600','#e8b040','#4a3500',
         'AUTO RUN \u2014 generated '+gen+'. Odds: ESPN/DraftKings pregame lines \u2014 verify against your book before betting.');
