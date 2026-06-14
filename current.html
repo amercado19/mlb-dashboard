@@ -816,15 +816,14 @@ async function loadTransactions(){
   try {
     const end = SLATE_DATE;
     const start = new Date(new Date(SLATE_DATE + 'T12:00:00Z').getTime() - 4*86400000).toISOString().slice(0,10);
-    const MLB_TEAMS = new Set([108,109,110,111,112,113,114,115,116,117,118,119,120,121,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,158]);
     const data = await fetchJson('https://statsapi.mlb.com/api/v1/transactions?startDate=' + start + '&endDate=' + end + '&sportId=1');
+    const tname = t => (t.toTeam && t.toTeam.name) || (t.fromTeam && t.fromTeam.name) || '';
     const tx = (data.transactions || [])
-      .filter(t => t.team && MLB_TEAMS.has(t.team.id))
-      .filter(t => /injured list|injury|day-to-day|activated|paternity|bereavement/i.test((t.typeDesc||'') + ' ' + (t.description||'')));
+      .filter(t => /injured list|day-to-day|paternity list|bereavement list|injury/i.test((t.typeDesc||'') + ' ' + (t.description||'')));
     if (!tx.length){ $('injSection').innerHTML = '<div class="empty">No IL or injury-related moves in the last few days.</div>'; return; }
     tx.sort((a,b) => (b.date||'').localeCompare(a.date||''));
     $('injSection').innerHTML = '<div class="card">' + tx.map(t =>
-      '<div style="margin-bottom:5px;font-size:12px"><span class="mono" style="color:#7dd3e8">' + esc((t.date||'').slice(5)) + '</span> <b>' + esc((t.team && t.team.name) || '') + ':</b> ' + esc(t.description || t.typeDesc) + '</div>'
+      '<div style="margin-bottom:5px;font-size:12px"><span class="mono" style="color:#7dd3e8">' + esc((t.date||'').slice(5)) + '</span> ' + esc(t.description || t.typeDesc) + '</div>'
     ).join('') + '</div>';
   } catch(e){
     $('injSection').innerHTML = '<div class="empty">Could not load transactions.</div>';
