@@ -903,7 +903,11 @@ function renderTopParlay(){
   if(_pct<0.25){ el.innerHTML='<div class="empty">⚾ Suggested parlay unlocks once ≥25% of lineups are confirmed — '+_off+'/'+_gc.length+' posted so far. Lineups usually drop ~3–4h before first pitch.</div>'; return; }
   if(!tp||!(tp.legs||[]).length){ el.innerHTML='<div class="empty">'+esc((tp&&tp.note)||'No rule-compliant parlay today.')+'</div>'; return; }
   const gcByPk={}; (MODEL_DATA.gameCards||[]).forEach(c=>gcByPk[c.gamePk]=c);
-  const order=[]; const groups={}; tp.legs.forEach(l=>{ const k=l.gamePk||'x'; if(!groups[k]){groups[k]=[];order.push(k);} groups[k].push(l); });
+  const liveLineupIds=function(pk){ var g=liveGames[pk]; var lu=(g&&g.lineups)||{}; var ids={}; (lu.awayPlayers||[]).concat(lu.homePlayers||[]).forEach(function(p){ids[p.id]=1;}); return ids; };
+  var droppedOut=0;
+  var _legs=(tp.legs||[]).filter(function(l){ if(!l.playerId) return true; var ids=liveLineupIds(l.gamePk); if(!Object.keys(ids).length) return true; var inLU=!!ids[l.playerId]; if(!inLU)droppedOut++; return inLU; });
+  if(!_legs.length){ el.innerHTML='<div class="empty">⚾ Suggested parlay legs were all scratched from confirmed lineups. Next auto-run will rebuild it.</div>'; return; }
+  const order=[]; const groups={}; _legs.forEach(l=>{ const k=l.gamePk||'x'; if(!groups[k]){groups[k]=[];order.push(k);} groups[k].push(l); });
   const SGP_CORR=0.62;   // FanDuel-style correlation discount on same-game legs
   let totalDec=1, legNum=0, sgpCount=0, body='', projCount=0;
   order.forEach(pk=>{
@@ -923,8 +927,9 @@ function renderTopParlay(){
   const winP=(100/totalDec).toFixed(2);
   const summary='<div class="sgp-summary">'+sgpCount+' same-game parlay'+(sgpCount!==1?'s':'')+' · <b>'+legNum+' legs across '+order.length+' game'+(order.length>1?'s':'')+'</b> · no home runs · ≤4 legs/game. Per-leg prices are model-fair (no vig); same-game legs include a correlation discount — verify the real number at your book.</div>';
   const pay='<div class="sgp-pay"><b>Combined '+totalAm+'</b> · model-fair ≈ '+winP+'% to hit (≈ 1 in '+Math.round(totalDec).toLocaleString()+')<div style="margin-top:5px">$10 → ~$'+p10.toLocaleString()+' · $25 → ~$'+p25.toLocaleString()+' · $100 → ~$'+p100.toLocaleString()+'<button onclick="addTopToSlip()" style="margin-left:10px">Add all to slip</button></div></div>';
+  var dNote = droppedOut? '<div class="note" style="color:#ff8080;font-weight:700;margin-bottom:6px">\u2717 '+droppedOut+' leg'+(droppedOut!==1?'s':'')+' dropped \u2014 player not in the confirmed lineup (e.g. scratched). Odds below reflect the remaining legs.</div>':'';
   const pNote = projCount? '<div class="note" style="color:#fbbf24;font-weight:700;margin-bottom:6px">\u26a0 '+projCount+' leg'+(projCount!==1?'s':'')+' use projected lineups (those games aren\u2019t confirmed yet) — treat as tentative until lineups post.</div>':'';
-  el.innerHTML='<div id="topParlay">'+pNote+summary+body+pay+'</div>';
+  el.innerHTML='<div id="topParlay">'+dNote+pNote+summary+body+pay+'</div>';
 }
 function addTopToSlip(){
   const tp = MODEL_DATA && MODEL_DATA.topParlay;
