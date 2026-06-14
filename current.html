@@ -508,8 +508,7 @@ let refreshing = false;
 const precipCache = {};
 
 function localDate(){
-  const d = new Date();
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date());
 }
 const SLATE_DATE = (MODEL_DATA && MODEL_DATA.date) ? MODEL_DATA.date : localDate();
 
@@ -1732,7 +1731,7 @@ async function refreshLive(){
   }
   const f = $('freshness');
   if (MODEL_DATA && MODEL_DATA.date === localDate()){ f.className = 'badge fresh'; f.textContent = 'PICKS FRESH'; }
-  else if (MODEL_DATA && (MODEL_DATA.ml||[]).length){ f.className = 'badge stale'; f.textContent = 'PICKS STALE (' + (MODEL_DATA.date||'?') + ')'; }
+  else if (MODEL_DATA && MODEL_DATA.date){ var diff=Math.round((new Date(localDate())-new Date(MODEL_DATA.date))/86400000); if(diff<=1){ f.className='badge'; f.textContent='LATEST: ' + MODEL_DATA.date; } else { f.className='badge stale'; f.textContent='STALE (' + MODEL_DATA.date + ')'; } }
   else { f.className = 'badge stale'; f.textContent = 'NO RUN YET'; }
   $('refreshBtn').disabled = false;
   refreshing = false;
@@ -1760,8 +1759,9 @@ setInterval(function(){ syncLineups(); syncOdds(); }, 3600000);
       document.body.prepend(b);
     }
     if(d && d < etToday){
-      banner('#2a0808','#ff9090','#5a1515',
-        '\u26a0 STALE \u2014 these picks were generated for '+d+'. Today\u2019s run has not published yet. Live scores below are current; the picks are NOT.');
+      var diff=Math.round((new Date(etToday)-new Date(d))/86400000);
+      if(diff<=1){ banner('#1f1600','#e8b040','#4a3500','Showing the latest published picks ('+d+'). Today\u2019s runs publish automatically every 2 hours, ~9 AM\u201311 PM ET.'); }
+      else { banner('#2a0808','#ff9090','#5a1515','\u26a0 STALE \u2014 picks are from '+d+' ('+diff+' days old). The auto-publish pipeline may need attention.'); }
     } else if(mode === 'auto'){
       banner('#1f1600','#e8b040','#4a3500',
         'AUTO RUN \u2014 generated '+gen+'. Odds: ESPN/DraftKings pregame lines \u2014 verify against your book before betting.');
