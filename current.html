@@ -424,6 +424,8 @@ select.psel,.sim-bar select,#playerSearch{background:#0f1b30 !important;color:#d
 .ssflag{font-size:8px;color:#fbbf24;margin-top:3px;font-weight:700}
 .kbox.kpos .kv{color:#34d399 !important}
 .kbox.kneg .kv{color:#f87171 !important}
+
+.leg-warn{font-size:9px;color:#fbbf24;font-weight:800;margin-left:5px;white-space:nowrap}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -897,15 +899,15 @@ function renderTopParlay(){
   const tp=MODEL_DATA&&MODEL_DATA.topParlay;
   const el=$('topParlaySection'); if(!el) return;
   var _gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[]; var _off=_gc.filter(function(c){return c.lineups_official;}).length; var _pct=_gc.length?_off/_gc.length:0;
-  if(_pct<0.8){ el.innerHTML='<div class="empty">⚾ Suggested parlay unlocks once ≥80% of lineups are confirmed — '+_off+'/'+_gc.length+' posted so far. Lineups usually drop ~3–4h before first pitch.</div>'; return; }
+  if(_pct<0.25){ el.innerHTML='<div class="empty">⚾ Suggested parlay unlocks once ≥25% of lineups are confirmed — '+_off+'/'+_gc.length+' posted so far. Lineups usually drop ~3–4h before first pitch.</div>'; return; }
   if(!tp||!(tp.legs||[]).length){ el.innerHTML='<div class="empty">'+esc((tp&&tp.note)||'No rule-compliant parlay today.')+'</div>'; return; }
   const gcByPk={}; (MODEL_DATA.gameCards||[]).forEach(c=>gcByPk[c.gamePk]=c);
   const order=[]; const groups={}; tp.legs.forEach(l=>{ const k=l.gamePk||'x'; if(!groups[k]){groups[k]=[];order.push(k);} groups[k].push(l); });
   const SGP_CORR=0.62;   // FanDuel-style correlation discount on same-game legs
-  let totalDec=1, legNum=0, sgpCount=0, body='';
+  let totalDec=1, legNum=0, sgpCount=0, body='', projCount=0;
   order.forEach(pk=>{
     const legs=groups[pk]; const c=gcByPk[pk]||{}; let gDec=1;
-    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+'</span><span class="sgp-odds">'+amStr(a)+'</span></div>'; }).join('');
+    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); const proj=(l.playerId && !c.lineups_official); if(proj)projCount++; const warn=proj?' <span class="leg-warn" title="This game\u2019s lineup is not confirmed yet — leg is based on a projected lineup">\u26a0 proj</span>':''; return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+warn+'</span><span class="sgp-odds">'+amStr(a)+'</span></div>'; }).join('');
     const isSgp=legs.length>=2; if(isSgp)sgpCount++;
     const gDisc = isSgp ? (1+(gDec-1)*SGP_CORR) : gDec;   // discount correlated legs
     totalDec *= gDisc;
@@ -920,7 +922,8 @@ function renderTopParlay(){
   const winP=(100/totalDec).toFixed(2);
   const summary='<div class="sgp-summary">'+sgpCount+' same-game parlay'+(sgpCount!==1?'s':'')+' · <b>'+legNum+' legs across '+order.length+' game'+(order.length>1?'s':'')+'</b> · no home runs · ≤4 legs/game. Per-leg prices are model-fair (no vig); same-game legs include a correlation discount — verify the real number at your book.</div>';
   const pay='<div class="sgp-pay"><b>Combined '+totalAm+'</b> · model-fair ≈ '+winP+'% to hit (≈ 1 in '+Math.round(totalDec).toLocaleString()+')<div style="margin-top:5px">$10 → ~$'+p10.toLocaleString()+' · $25 → ~$'+p25.toLocaleString()+' · $100 → ~$'+p100.toLocaleString()+'<button onclick="addTopToSlip()" style="margin-left:10px">Add all to slip</button></div></div>';
-  el.innerHTML='<div id="topParlay">'+summary+body+pay+'</div>';
+  const pNote = projCount? '<div class="note" style="color:#fbbf24;font-weight:700;margin-bottom:6px">\u26a0 '+projCount+' leg'+(projCount!==1?'s':'')+' use projected lineups (those games aren\u2019t confirmed yet) — treat as tentative until lineups post.</div>':'';
+  el.innerHTML='<div id="topParlay">'+pNote+summary+body+pay+'</div>';
 }
 function addTopToSlip(){
   const tp = MODEL_DATA && MODEL_DATA.topParlay;
