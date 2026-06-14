@@ -459,10 +459,8 @@ select.psel,.sim-bar select,#playerSearch{background:#0f1b30 !important;color:#d
 <h2>Prop Boards — Tap a Square</h2>
 <div id="propBoards"></div>
 
-<h2>Model Performance</h2>
-<div class="chartGrid">
-  <div class="chartBox" style="grid-column:1/-1"><div class="ct">Daily top-10 board hit rate % — ML · HR · 1+Hit · Doubles · 2+TB · 2+HRR · O/U leans (graded days, last 30)</div><div class="chartWrap"><canvas id="algoChart"></canvas></div></div>
-</div>
+<h2>Model Performance — Tap a Square</h2>
+<div id="perfBoards"></div>
 
 <h2>Prop Performance — What's Hitting</h2>
 <div id="propPerf"></div>
@@ -816,11 +814,14 @@ async function loadBoxscores(){
 
 async function loadTransactions(){
   try {
-    const data = await fetchJson('https://statsapi.mlb.com/api/v1/transactions?startDate=' + SLATE_DATE + '&endDate=' + SLATE_DATE);
-    const tx = (data.transactions || []).filter(t => /injured list|injury|paternity|bereavement/i.test((t.typeDesc||'') + ' ' + (t.description||'')));
-    if (!tx.length){ $('injSection').innerHTML = '<div class="empty">No IL or injury-related moves posted yet today.</div>'; return; }
+    const end = SLATE_DATE;
+    const start = new Date(new Date(SLATE_DATE + 'T12:00:00Z').getTime() - 4*86400000).toISOString().slice(0,10);
+    const data = await fetchJson('https://statsapi.mlb.com/api/v1/transactions?startDate=' + start + '&endDate=' + end);
+    const tx = (data.transactions || []).filter(t => /injured list|injury|day-to-day|activated|paternity|bereavement/i.test((t.typeDesc||'') + ' ' + (t.description||'')));
+    if (!tx.length){ $('injSection').innerHTML = '<div class="empty">No IL or injury-related moves in the last few days.</div>'; return; }
+    tx.sort((a,b) => (b.date||'').localeCompare(a.date||''));
     $('injSection').innerHTML = '<div class="card">' + tx.map(t =>
-      '<div style="margin-bottom:5px;font-size:12px"><b>' + esc((t.team && t.team.name) || '') + ':</b> ' + esc(t.description || t.typeDesc) + '</div>'
+      '<div style="margin-bottom:5px;font-size:12px"><span class="mono" style="color:#7dd3e8">' + esc((t.date||'').slice(5)) + '</span> <b>' + esc((t.team && t.team.name) || '') + ':</b> ' + esc(t.description || t.typeDesc) + '</div>'
     ).join('') + '</div>';
   } catch(e){
     $('injSection').innerHTML = '<div class="empty">Could not load transactions.</div>';
@@ -1088,6 +1089,22 @@ function boardSeries(){
   return rows.slice(-30);
 }
 let algoC = null, playerC = null;
+const PERF_DEFS=[{k:'all',label:'All Boards',ic:'📈'},{k:'ml',label:'Moneyline',ic:'💰',c:'#22d3ee'},{k:'hr',label:'Home Runs',ic:'⚾',c:'#f87171'},{k:'h1',label:'1+ Hit',ic:'🎯',c:'#60a5fa'},{k:'h2',label:'Doubles',ic:'↔',c:'#34d399'},{k:'tb2',label:'2+ Total Bases',ic:'💥',c:'#c084fc'},{k:'hrr',label:'2+ H/R/RBI',ic:'🔢',c:'#f472b6'},{k:'ou',label:'O/U Leans',ic:'📊',c:'#fbbf24'}];
+function perfStat(k){ const rows=boardSeries(); let w=0,n=0; rows.forEach(r=>{const c=r[k]; if(c){w+=c.w;n+=c.n;}}); return n?{pct:Math.round(100*w/n),w,n}:null; }
+function renderPerfSquares(){ const el=$('perfBoards'); if(!el)return; const rows=boardSeries();
+  const sq=PERF_DEFS.map(d=>{ let t,n; if(d.k==='all'){ t=rows.length?rows.length+'d':'—'; n='overview'; } else { const s=perfStat(d.k); t=s?s.pct+'%':'—'; n=s?('('+s.w+'/'+s.n+')'):'no data'; } return '<div class="psq" onclick="openPerf(\''+d.k+'\',this)"><div class="psq-ic">'+d.ic+'</div><div class="psq-l">'+d.label+'</div><div class="psq-t">'+t+'</div><div class="psq-n">'+n+'</div></div>'; }).join('');
+  el.innerHTML='<div class="prop-grid">'+sq+'</div><div id="perfPanel" class="chartBox" style="margin-top:10px"><div class="ct" id="perfTitle">All boards — daily hit rate %</div><div class="chartWrap"><canvas id="algoChart"></canvas></div></div>';
+  openPerf('all',document.querySelector('#perfBoards .psq'));
+}
+function openPerf(k,tile){ document.querySelectorAll('#perfBoards .psq').forEach(s=>s.classList.remove('on')); if(tile)tile.classList.add('on'); const rows=boardSeries(); const box=$('algoChart'); const panel=$('perfPanel');
+  if(!rows.length){ if(panel)panel.innerHTML='<div class="empty">Board accuracy plots after the first graded day. Each square = a category\u2019s daily top-10 hit rate.</div>'; return; }
+  if(!box)return;
+  const pct=key=>rows.map(r=>r[key]&&r[key].n?+(100*r[key].w/r[key].n).toFixed(1):null);
+  const labels=rows.map(r=>r.date.slice(5)); const titleEl=$('perfTitle'); let datasets;
+  if(k==='all'){ datasets=PERF_DEFS.filter(d=>d.k!=='all').map(d=>({label:d.label,data:pct(d.k),borderColor:d.c,backgroundColor:d.c,tension:.25,spanGaps:true,pointRadius:3})); if(titleEl)titleEl.textContent='All boards — daily hit rate %'; }
+  else { const d=PERF_DEFS.find(x=>x.k===k); const s=perfStat(k); datasets=[{label:d.label,data:pct(k),borderColor:d.c,backgroundColor:'rgba(34,211,238,.10)',tension:.25,spanGaps:true,pointRadius:4,fill:true}]; if(titleEl)titleEl.textContent=d.label+' — daily hit rate %'+(s?' \u00b7 '+s.pct+'% ('+s.w+'/'+s.n+') over '+rows.length+'d':''); }
+  try{ if(algoC)algoC.destroy(); algoC=new Chart(box,{type:'line',data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:k==='all',position:'bottom',labels:{color:'#cfe9f2',boxWidth:10,font:{size:10}}}},scales:{y:{min:0,max:100,ticks:{color:'#9fb3c8',callback:v=>v+'%'},grid:{color:'rgba(34,211,238,.08)'}},x:{ticks:{color:'#9fb3c8',font:{size:10}},grid:{color:'rgba(34,211,238,.06)'}}}}}); }catch(e){}
+}
 function initAlgoCharts(){
   if (typeof Chart === 'undefined') return;
   const rows = boardSeries();
@@ -1788,7 +1805,7 @@ async function refreshLive(){
 }
 
 renderAll(); renderAccuracy(); renderKpis(); renderSlip(); renderSaved();
-window.addEventListener('load', function(){ initAlgoCharts(); initPlayerSel(); });
+window.addEventListener('load', function(){ renderPerfSquares(); initPlayerSel(); });
 refreshLive();
 syncLineups(); syncOdds(); setTimeout(makeCollapsible,300);
 setInterval(refreshLive,120000);
