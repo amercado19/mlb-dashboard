@@ -691,7 +691,7 @@ function gameStatus(g){
 }
 
 async function loadSchedule(){
-  const data = await fetchJson('https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=' + SLATE_DATE + '&hydrate=probablePitcher,linescore,weather,seriesStatus');
+  const data = await fetchJson('https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=' + SLATE_DATE + '&hydrate=probablePitcher,linescore,weather,seriesStatus,lineups');
   liveGames = {};
   const games = (data.dates && data.dates[0]) ? data.dates[0].games : [];
   for (const g of games) liveGames[g.gamePk] = g;
@@ -898,7 +898,7 @@ function amDec(a){ return a>=0? 1+a/100 : 1+100/(-a); }
 function renderTopParlay(){
   const tp=MODEL_DATA&&MODEL_DATA.topParlay;
   const el=$('topParlaySection'); if(!el) return;
-  var lineupConfirmed=function(c){ if(!c)return false; if(c.lineups_official)return true; var g=liveGames[c.gamePk]; var st=g&&g.status&&g.status.abstractGameState; return st==='Live'||st==='Final'; };
+  var lineupConfirmed=function(c){ if(!c)return false; if(c.lineups_official)return true; var g=liveGames[c.gamePk]; if(!g)return false; var st=g.status&&g.status.abstractGameState; if(st==='Live'||st==='Final')return true; var lu=g.lineups||{}; return (lu.awayPlayers||[]).length>=9 && (lu.homePlayers||[]).length>=9; };
   var _gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[]; var _off=_gc.filter(lineupConfirmed).length; var _pct=_gc.length?_off/_gc.length:0;
   if(_pct<0.25){ el.innerHTML='<div class="empty">⚾ Suggested parlay unlocks once ≥25% of lineups are confirmed — '+_off+'/'+_gc.length+' posted so far. Lineups usually drop ~3–4h before first pitch.</div>'; return; }
   if(!tp||!(tp.legs||[]).length){ el.innerHTML='<div class="empty">'+esc((tp&&tp.note)||'No rule-compliant parlay today.')+'</div>'; return; }
