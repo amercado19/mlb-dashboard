@@ -898,7 +898,8 @@ function amDec(a){ return a>=0? 1+a/100 : 1+100/(-a); }
 function renderTopParlay(){
   const tp=MODEL_DATA&&MODEL_DATA.topParlay;
   const el=$('topParlaySection'); if(!el) return;
-  var _gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[]; var _off=_gc.filter(function(c){return c.lineups_official;}).length; var _pct=_gc.length?_off/_gc.length:0;
+  var lineupConfirmed=function(c){ if(!c)return false; if(c.lineups_official)return true; var g=liveGames[c.gamePk]; var st=g&&g.status&&g.status.abstractGameState; return st==='Live'||st==='Final'; };
+  var _gc=(MODEL_DATA&&MODEL_DATA.gameCards)||[]; var _off=_gc.filter(lineupConfirmed).length; var _pct=_gc.length?_off/_gc.length:0;
   if(_pct<0.25){ el.innerHTML='<div class="empty">⚾ Suggested parlay unlocks once ≥25% of lineups are confirmed — '+_off+'/'+_gc.length+' posted so far. Lineups usually drop ~3–4h before first pitch.</div>'; return; }
   if(!tp||!(tp.legs||[]).length){ el.innerHTML='<div class="empty">'+esc((tp&&tp.note)||'No rule-compliant parlay today.')+'</div>'; return; }
   const gcByPk={}; (MODEL_DATA.gameCards||[]).forEach(c=>gcByPk[c.gamePk]=c);
@@ -907,7 +908,7 @@ function renderTopParlay(){
   let totalDec=1, legNum=0, sgpCount=0, body='', projCount=0;
   order.forEach(pk=>{
     const legs=groups[pk]; const c=gcByPk[pk]||{}; let gDec=1;
-    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); const proj=(l.playerId && !c.lineups_official); if(proj)projCount++; const warn=proj?' <span class="leg-warn" title="This game\u2019s lineup is not confirmed yet — leg is based on a projected lineup">\u26a0 proj</span>':''; return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+warn+'</span><span class="sgp-odds">'+amStr(a)+'</span></div>'; }).join('');
+    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); const proj=(l.playerId && !lineupConfirmed(c)); if(proj)projCount++; const warn=proj?' <span class="leg-warn" title="This game\u2019s lineup is not confirmed yet — leg is based on a projected lineup">\u26a0 proj</span>':''; return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+warn+'</span><span class="sgp-odds">'+amStr(a)+'</span></div>'; }).join('');
     const isSgp=legs.length>=2; if(isSgp)sgpCount++;
     const gDisc = isSgp ? (1+(gDec-1)*SGP_CORR) : gDec;   // discount correlated legs
     totalDec *= gDisc;
