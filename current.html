@@ -450,6 +450,10 @@ select.psel,.sim-bar select,#playerSearch{background:#0f1b30 !important;color:#d
 .tp-ctrls{display:flex;gap:8px;margin:8px 0}
 .tp-ctrls button{background:#13283a;color:#9fd6e8;border:1px solid rgba(34,211,238,.3);border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer}
 .tp-ctrls button:hover{background:#0e2740}
+
+.tp-auto{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.tp-auto button{background:#0e2740;color:#7dd3e8;border:1px solid rgba(34,211,238,.3);border-radius:7px;padding:4px 9px;font-size:10px;font-weight:700;cursor:pointer}
+.tp-auto button:hover{background:#13344a}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -931,15 +935,15 @@ function legTierInfo(l){
   var bk=map[l.betType]; if(bk){ var board=bf[bk]||[]; var rt=rate10fn(board,function(r){return r.metric;}); var row=board.filter(function(r){return r.playerId===l.playerId;})[0]; if(row){ var rg=parseFloat(rt(row.metric)); return rg>=8?['STRONG','r-hi']:rg>=6.5?['LEAN','r-mid']:['WEAK','r-lo']; } }
   return (l.prob||0)>=0.6?['LEAN','r-mid']:['WEAK','r-lo'];
 }
-function tpAutoAdd(){
+function tpAutoAdd(type){
   var cands=tpCandidates(); if(!TP_WORK)TP_WORK=[];
-  var inWork={}, teamCt={};
-  TP_WORK.forEach(function(l){ inWork[(l.betType)+'|'+(l.playerId||l.gamePk)]=1; if(l.team)teamCt[l.team]=(teamCt[l.team]||0)+1; });
+  var inWork={};
+  TP_WORK.forEach(function(l){ inWork[(l.betType)+'|'+(l.playerId||l.gamePk)]=1; });
   var TW={ml:1.0,over:1.05,'2tb':1.3,hrr:1.2,hr:1.0,hit:0.7,'2b':0.9};
   var best=null,bv=-1;
-  cands.forEach(function(c){ var key=(c.betType)+'|'+(c.playerId||c.gamePk); if(inWork[key])return; if(c.team&&(teamCt[c.team]||0)>=2)return; var v=(c.prob||0)*(TW[c.betType]||1); if(v>bv){bv=v;best=c;} });
-  if(!best){ var box=document.getElementById('tpAddBox'); if(box)box.innerHTML='<div class="note" style="color:#fbbf24">No more value legs to add (team caps reached).</div>'; return; }
-  var nl=Object.assign({},best); nl._id='auto'+Date.now(); TP_WORK.push(nl); renderTopParlay();
+  cands.forEach(function(c){ if(type&&c.betType!==type)return; var key=(c.betType)+'|'+(c.playerId||c.gamePk); if(inWork[key])return; var v=(c.prob||0)*(TW[c.betType]||1); if(v>bv){bv=v;best=c;} });
+  if(!best){ var box=document.getElementById('tpAddBox'); if(box){var m=document.createElement('div');m.className='note';m.style.color='#fbbf24';m.textContent='No more '+(type||'value')+' legs available.';box.appendChild(m);} return; }
+  var nl=Object.assign({},best); nl._id='auto'+Date.now(); TP_WORK.push(nl); renderTopParlay(); tpAddOpen();
 }
 function tpRemove(id){ if(TP_WORK){ TP_WORK=TP_WORK.filter(function(l){return l._id!==id;}); renderTopParlay(); } }
 function tpReset(){ TP_WORK=null; renderTopParlay(); }
@@ -951,8 +955,8 @@ function tpCandidates(){
   P.forEach(function(d){ (bf[d[0]]||[]).slice(0,15).forEach(function(r){ out.push({desc:r.name+' '+d[1],betType:d[2],gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:d[3](r.metric),metric:r.metric}); }); });
   return out;
 }
-function tpAddOpen(){ var p=document.getElementById('tpAddBox'); if(!p)return; if(p.getAttribute('data-open')){ p.style.display='none'; p.removeAttribute('data-open'); return; } p.setAttribute('data-open','1'); var cands=tpCandidates(); window._TPC=cands; var inWork={}; (TP_WORK||[]).forEach(function(l){inWork[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;}); var opts=cands.map(function(c,i){ var key=(c.betType)+'|'+(c.playerId||c.gamePk)+'|'+c.desc; if(inWork[key])return ''; return '<option value="'+i+'">'+esc(c.desc)+'</option>'; }).filter(Boolean).join(''); p.innerHTML='<select id="tpAddSel" class="psel" style="max-width:280px">'+opts+'</select> <button class="cp-go" onclick="tpAddSel()">Add selected</button> <button class="cp-go" onclick="tpAutoAdd()">🤖 Let the algo pick</button>'; p.style.display='block'; }
-function tpAddSel(){ var sel=document.getElementById('tpAddSel'); if(!sel||sel.value==='')return; var c=window._TPC[+sel.value]; if(!c)return; if(!TP_WORK)TP_WORK=[]; var nl=Object.assign({},c); nl._id='add'+Date.now(); TP_WORK.push(nl); renderTopParlay(); }
+function tpAddOpen(){ var p=document.getElementById('tpAddBox'); if(!p)return; if(p.getAttribute('data-open')){ p.style.display='none'; p.removeAttribute('data-open'); return; } p.setAttribute('data-open','1'); var cands=tpCandidates(); window._TPC=cands; var inWork={}; (TP_WORK||[]).forEach(function(l){inWork[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;}); var opts=cands.map(function(c,i){ var key=(c.betType)+'|'+(c.playerId||c.gamePk)+'|'+c.desc; if(inWork[key])return ''; return '<option value="'+i+'">'+esc(c.desc)+'</option>'; }).filter(Boolean).join(''); p.innerHTML='<div style="margin-bottom:6px"><select id="tpAddSel" class="psel" style="max-width:260px">'+opts+'</select> <button class="cp-go" onclick="tpAddSel()">Add selected</button></div><div class="tp-auto"><span style="font-size:10px;color:#86bccf">🤖 Algo adds best:</span><button onclick="tpAutoAdd(\'hr\')">HR</button><button onclick="tpAutoAdd(\'hit\')">1+ Hit</button><button onclick="tpAutoAdd(\'2b\')">2B</button><button onclick="tpAutoAdd(\'2tb\')">2+ TB</button><button onclick="tpAutoAdd(\'hrr\')">HRR</button><button onclick="tpAutoAdd(\'ml\')">ML</button><button onclick="tpAutoAdd(\'over\')">Over</button><button onclick="tpAutoAdd(\'\')">Any</button></div>'; p.style.display='block'; }
+function tpAddSel(){ var sel=document.getElementById('tpAddSel'); if(!sel||sel.value==='')return; var c=window._TPC[+sel.value]; if(!c)return; if(!TP_WORK)TP_WORK=[]; var nl=Object.assign({},c); nl._id='add'+Date.now(); TP_WORK.push(nl); renderTopParlay(); tpAddOpen(); }
 function renderTopParlay(){
   const tp=MODEL_DATA&&MODEL_DATA.topParlay;
   const el=$('topParlaySection'); if(!el) return;
