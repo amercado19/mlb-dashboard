@@ -466,7 +466,7 @@ select.psel,.sim-bar select,#playerSearch{background:#0f1b30 !important;color:#d
     </div>
     <span class="badge v">V3.1</span>
     <span class="badge" id="freshness"></span>
-    <button class="rf" id="refreshBtn" onclick="refreshLive()">↻ Refresh live</button>
+    <button class="rf" id="refreshBtn" onclick="refreshLive()" title="Re-pull live scores + posted lineups and re-render (keeps your parlay edits)">🔄 Refresh lineups</button> <button class="rf" onclick="location.reload()" title="Reload to pull the latest auto-published picks">⟳ Reload latest picks</button>
   </div>
 </div>
 
@@ -952,7 +952,7 @@ function tpCandidates(){
   (MODEL_DATA.ml||[]).forEach(function(p){ if(p.tier==='STRONG'||p.tier==='LEAN'){ out.push({desc:(p.team||'')+' ML ('+p.tier+')',betType:'ml',gamePk:p.gamePk,team:p.team,pickSide:p.pickSide,prob:(p.conf||55)/100}); } });
   (bf.ou||[]).forEach(function(ou){ if(ou.lean==='OVER'){ out.push({desc:'Game Over '+ou.line+' (proj '+ou.proj+')',betType:'over',gamePk:ou.gamePk,line:ou.line,prob:Math.min(.62,.5+(((ou.proj||0)-(ou.line||0)))*.04)}); } });
   var P=[['hr','HR','hr',function(m){return Math.min(.30,(m||50)/250);}],['h1','1+ hit','hit',function(m){return Math.min(.85,(m||60)/100);}],['tb2','2+ total bases','2tb',function(m){return .40;}],['hrr','2+ hits/runs/RBI','hrr',function(m){return .42;}]];
-  P.forEach(function(d){ (bf[d[0]]||[]).slice(0,15).forEach(function(r){ out.push({desc:r.name+' '+d[1],betType:d[2],gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:d[3](r.metric),metric:r.metric}); }); });
+  P.forEach(function(d){ (bf[d[0]]||[]).slice(0,15).forEach(function(r){ if(r.playerId){ var lg=liveGames[r.gamePk]; var lu=(lg&&lg.lineups)||{}; var ids=(lu.awayPlayers||[]).concat(lu.homePlayers||[]); if(ids.length && !ids.some(function(p){return p.id===r.playerId;})) return; } out.push({desc:r.name+' '+d[1],betType:d[2],gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:d[3](r.metric),metric:r.metric}); }); });
   return out;
 }
 function tpAddOpen(){ var p=document.getElementById('tpAddBox'); if(!p)return; if(p.getAttribute('data-open')){ p.style.display='none'; p.removeAttribute('data-open'); return; } p.setAttribute('data-open','1'); var cands=tpCandidates(); window._TPC=cands; var inWork={}; (TP_WORK||[]).forEach(function(l){inWork[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;}); var opts=cands.map(function(c,i){ var key=(c.betType)+'|'+(c.playerId||c.gamePk)+'|'+c.desc; if(inWork[key])return ''; return '<option value="'+i+'">'+esc(c.desc)+'</option>'; }).filter(Boolean).join(''); p.innerHTML='<div style="margin-bottom:6px"><select id="tpAddSel" class="psel" style="max-width:260px">'+opts+'</select> <button class="cp-go" onclick="tpAddSel()">Add selected</button></div><div class="tp-auto"><span style="font-size:10px;color:#86bccf">🤖 Algo adds best:</span><button onclick="tpAutoAdd(\'hr\')">HR</button><button onclick="tpAutoAdd(\'hit\')">1+ Hit</button><button onclick="tpAutoAdd(\'2tb\')">2+ TB</button><button onclick="tpAutoAdd(\'hrr\')">HRR</button><button onclick="tpAutoAdd(\'ml\')">ML</button><button onclick="tpAutoAdd(\'over\')">Over</button><button onclick="tpAutoAdd(\'\')">Any</button></div>'; p.style.display='block'; }
