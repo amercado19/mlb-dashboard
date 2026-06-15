@@ -1582,7 +1582,7 @@ function renderPlayerCards(){
     var oppSP=(c.away_sp&&c.away_sp.team===p.team)?c.home_sp:((c.home_sp&&c.home_sp.team===p.team)?c.away_sp:null); var arse=(oppSP&&oppSP.arsenal)?'<div class="pc-arse">\ud83c\udfaf vs '+(oppSP.throws||'')+'HP '+esc(oppSP.name||'')+': '+esc(oppSP.arsenal)+(oppSP.fb_pct!=null?' \u00b7 '+oppSP.fb_pct+'% FB':'')+'</div>':'';
     var sig= p.sig>=3?'<span class="pc-sig">⚡ '+p.sig+'-SIGNAL</span>':'';
     var chips=defs.filter(function(d){return p.props[d.k];}).map(function(d){ var pr=p.props[d.k]; var key=d.bt+'-'+p.id+'-'+p.gamePk; var add=cb(key, p.name+' '+d.lbl, d.bt, p.gamePk, p.id, null, ''); return '<div class="pc-chip"><span class="pc-cl">'+d.lbl+'</span>'+ratePill(pr.rating)+'<span class="pc-cadd">'+add+'</span></div>'; }).join('');
-    return '<div class="pc-card'+(idx===0?' pc-top':'')+'">'+crown+'<div class="pc-head">'+hs(p.id,true)+' '+tb(p.team)+' <b>'+esc(p.name)+'</b>'+sig+'</div><div class="pc-meta">'+esc(game)+(t?' · '+t:'')+'</div>'+arse+'<div class="pc-chips">'+chips+'</div></div>';
+    return '<div class="pc-card'+(idx===0?' pc-top':'')+'">'+crown+'<div class="pc-head">'+hs(p.id,true)+' '+tb(p.team)+' <b class="pc-name" onclick="openMatchupModal('+p.id+','+p.gamePk+',&quot;'+esc(p.name).replace(/\x22/g,'')+'&quot;,&quot;'+p.team+'&quot;)" style="cursor:pointer;border-bottom:1px dotted #22d3ee">'+esc(p.name)+' 🔍</b>'+sig+'</div><div class="pc-meta">'+esc(game)+(t?' · '+t:'')+'</div>'+arse+'<div class="pc-chips">'+chips+'</div></div>';
   }).join('');
   el.innerHTML='<div class="note" style="margin-bottom:8px;color:#86bccf">One card per hitter \u2014 every prop board they land on, with /10 rating and a + to add to your slip. Ranked by how many boards they hit (multi-signal first). \u23eb = appears on 3+ boards.</div><div class="pc-grid">'+cards+'</div>';
 }
@@ -1950,5 +1950,135 @@ setInterval(function(){ syncLineups(); syncOdds(); }, 3600000);
   }catch(e){ /* never break the page */ }
 })();
 </script>
+<style>
+#mxOverlay{display:none;position:fixed;inset:0;background:rgba(2,6,12,.86);z-index:9998;overflow-y:auto;padding:24px 12px}
+#mxModal{max-width:1040px;margin:0 auto;background:#060d18;border:1px solid rgba(34,211,238,.35);border-radius:16px;box-shadow:0 0 40px rgba(34,211,238,.18);position:relative;padding:16px 16px 28px}
+#mxClose{position:absolute;top:10px;right:12px;font-size:18px;color:#7dd3e8;cursor:pointer;font-weight:800;z-index:2}
+.mx-h2{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#22d3ee;margin:16px 0 8px;border-bottom:1px solid rgba(34,211,238,.2);padding-bottom:4px}
+.mx-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px solid rgba(34,211,238,.2);padding-bottom:10px}
+.mx-bat,.mx-pit{display:flex;align-items:center;gap:8px}
+.mx-pit{text-align:right;flex-direction:row-reverse}
+.mx-nm{font-family:'Orbitron',sans-serif;font-size:15px;color:#e0faff;font-weight:700}
+.mx-sub{font-size:10px;color:#86bccf}
+.mx-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:780px){.mx-cols{grid-template-columns:1fr}}
+.mx-grade{text-align:center;margin:10px 0}
+.mx-gcirc{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:96px;height:96px;border-radius:50%;border:3px solid #22d3ee;box-shadow:0 0 18px rgba(34,211,238,.3)}
+.mx-gletter{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;color:#22d3ee}
+.mx-thesis{font-size:11.5px;color:#cfe9f2;margin-top:8px;line-height:1.45}
+.mx-bar{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:11px}
+.mx-blab{width:120px;color:#9fd6e8;flex:0 0 120px}
+.mx-btrack{flex:1;height:8px;background:#0e1d30;border-radius:5px;overflow:hidden}
+.mx-bfill{height:100%;background:linear-gradient(90deg,#0e7490,#22d3ee);border-radius:5px}
+.mx-bval{width:64px;text-align:right;color:#e0faff;font-family:monospace;font-weight:700;flex:0 0 64px}
+.mx-tbl{width:100%;border-collapse:collapse;font-size:10.5px}
+.mx-tbl th{color:#7dd3e8;text-align:left;padding:4px 6px;border-bottom:1px solid rgba(34,211,238,.25);text-transform:uppercase;font-size:9px}
+.mx-tbl td{padding:4px 6px;border-bottom:1px solid rgba(34,211,238,.08);color:#d7f3ff;font-family:monospace}
+.mx-zone{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:160px;margin:6px auto}
+.mx-zcell{aspect-ratio:1/1;border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;color:#06101e;font-weight:800}
+.mx-cq{display:flex;gap:3px;flex-wrap:wrap;margin:6px 0}
+.mx-cqsq{width:15px;height:15px;border-radius:3px}
+.mx-bb{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.mx-bbc{background:#0a1626;border:1px solid rgba(34,211,238,.2);border-radius:8px;padding:5px;text-align:center}
+.mx-bbev{font-size:14px;font-weight:800;font-family:monospace}
+.mx-bbsub{font-size:8px;color:#86bccf}
+.mx-loading{color:#7dd3e8;font-size:11px;padding:8px}
+.mx-note{font-size:9px;color:#fbbf24;margin-top:4px}
+</style>
+<div id="mxOverlay" onclick="if(event.target===this)closeMatchupModal()"><div id="mxModal"><div id="mxClose" onclick="closeMatchupModal()">&#10005;</div><div id="mxBody"></div></div></div>
+<script>
+var ARS_P=null,ARS_B=null,SC_CACHE={};
+function mxSplit(l){var r=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(ch=='"')q=!q;else if(ch==','&&!q){r.push(c);c='';}else c+=ch;}r.push(c);return r;}
+function mxCSV(t){var L=t.split(/\r?\n/).filter(function(x){return x.length;});if(!L.length)return[];var h=mxSplit(L[0]);var o=[];for(var i=1;i<L.length;i++){var c=mxSplit(L[i]);if(c.length<h.length)continue;var r={};for(var j=0;j<h.length;j++)r[h[j]]=c[j];o.push(r);}return o;}
+async function mxText(u){var r=await fetch(u);if(!r.ok)throw new Error('HTTP '+r.status);return await r.text();}
+function mxYear(){return (MODEL_DATA.date||'2026').slice(0,4);}
+async function mxEnsureArsenal(){if(ARS_P&&ARS_B)return;var b='https://baseballsavant.mlb.com/leaderboard/pitch-arsenal-stats?year='+mxYear()+'&min=5&hand=&csv=true&type=';var res=await Promise.all([mxText(b+'pitcher'),mxText(b+'batter')]);var idx=function(rows){var m={};rows.forEach(function(r){var id=r.player_id;(m[id]=m[id]||[]).push(r);});return m;};ARS_P=idx(mxCSV(res[0]));ARS_B=idx(mxCSV(res[1]));}
+async function mxStatcast(pid){if(SC_CACHE[pid])return SC_CACHE[pid];var y=mxYear();var u='https://baseballsavant.mlb.com/statcast_search/csv?all=true&type=details&player_type=batter&batters_lookup%5B%5D='+pid+'&game_date_gt='+y+'-03-01&game_date_lt='+y+'-12-01&min_pitches=0&min_results=0';var rows=mxCSV(await mxText(u));SC_CACHE[pid]=rows;return rows;}
+function mxGrade(p){p=p==null?0:p;return p>=.85?'A+':p>=.72?'A':p>=.6?'B+':p>=.48?'B':p>=.36?'C+':'C';}
+function mxBar(label,pct,valTxt){pct=Math.max(2,Math.min(100,pct));return '<div class="mx-bar"><span class="mx-blab">'+label+'</span><span class="mx-btrack"><span class="mx-bfill" style="width:'+pct+'%"></span></span><span class="mx-bval">'+valTxt+'</span></div>';}
+function closeMatchupModal(){document.getElementById('mxOverlay').style.display='none';}
+function mxGc(pk){return ((MODEL_DATA.gameCards)||[]).filter(function(c){return c.gamePk===pk;})[0]||{};}
+function mxOppSP(c,team){if(c.away_sp&&c.away_sp.team===team)return c.home_sp;if(c.home_sp&&c.home_sp.team===team)return c.away_sp;return null;}
+function openMatchupModal(pid,gamePk,name,team){
+  var ov=document.getElementById('mxOverlay');var body=document.getElementById('mxBody');ov.style.display='block';window.scrollTo(0,0);
+  var c=mxGc(gamePk);var opp=mxOppSP(c,team)||{};
+  var hr=((MODEL_DATA.hrProps)||[]).filter(function(x){return x.playerId===pid;})[0]||{};
+  var hit=((MODEL_DATA.hitProps)||[]).filter(function(x){return x.playerId===pid;})[0]||{};
+  var head='<div class="mx-head"><div class="mx-bat">'+hs(pid,true)+'<div><div class="mx-nm">'+esc(name)+'</div><div class="mx-sub">'+esc(team)+'</div></div></div>'
+    +'<div class="mx-sub">vs</div>'
+    +'<div class="mx-pit">'+(opp.id?hs(opp.id,true):'')+'<div><div class="mx-nm">'+esc(opp.name||'TBD')+'</div><div class="mx-sub">'+(opp.throws||'')+'HP'+(opp.arsenal?' &middot; '+esc(opp.arsenal):'')+(opp.fb_pct!=null?' &middot; '+opp.fb_pct+'% FB':'')+'</div></div></div></div>';
+  var bars='';
+  if(hr.iso!=null) bars+=mxBar('ISO',hr.iso*250,hr.iso.toFixed(3));
+  if(hr.hr!=null) bars+=mxBar('Season HR',Math.min(100,hr.hr*4),hr.hr+'');
+  if(hr.spXera!=null) bars+=mxBar('vs SP xERA',Math.min(100,hr.spXera*16),hr.spXera.toFixed(2));
+  if(hit.avg!=null) bars+=mxBar('AVG',hit.avg*280,hit.avg.toFixed(3));
+  if(hit.hpg!=null) bars+=mxBar('Hits/Game',hit.hpg*70,hit.hpg.toFixed(2));
+  if(hit.xbh!=null) bars+=mxBar('XBH/Game',hit.xbh*120,(''+hit.xbh));
+  if(hr.park) bars+=mxBar('Park',60,esc(hr.park).slice(0,14));
+  if(hr.wind) bars+=mxBar('Wind',50,esc(hr.wind));
+  var grade=mxGrade((hr.score||hit.score||55)/100);
+  var thesis=esc(hr.note&&hr.note!=='NO_ODDS'?hr.note:('Matchup vs '+(opp.throws||'')+'HP '+(opp.name||'')+(opp.arsenal?' ('+opp.arsenal+')':'')+'. Model board score '+(hr.score||hit.score||'—')+'.'));
+  var left='<div class="mx-grade"><div class="mx-gcirc"><div class="mx-gletter">'+grade+'</div></div><div class="mx-thesis">'+thesis+'</div></div>'
+    +'<div class="mx-h2">Model Breakdown</div>'+(bars||'<div class="mx-sub">No model factors for this hitter.</div>')
+    +'<div class="mx-h2">Prop Ratings</div><div id="mxProbs">'+mxProbs(pid)+'</div>';
+  var right='<div id="mxRight"><div class="mx-h2">Loading Statcast &amp; arsenals…</div><div class="mx-loading">Pulling live Baseball Savant data…</div></div>';
+  body.innerHTML=head+'<div class="mx-cols"><div>'+left+'</div><div>'+right+'</div></div>';
+  mxLoadDetail(pid,opp,name);
+}
+function mxProbs(pid){
+  var bf=(MODEL_DATA.boardsFull)||(MODEL_DATA.boards)||{};
+  var defs=[['hr','HR'],['h1','1+ Hit'],['h2','2B'],['tb2','2+ TB'],['hrr','2+ HRR']];
+  var rt={};defs.forEach(function(d){rt[d[0]]=rate10fn(bf[d[0]]||[],function(r){return r.metric;});});
+  var rows=defs.map(function(d){var row=(bf[d[0]]||[]).filter(function(r){return r.playerId===pid;})[0];if(!row)return '';return '<tr><td>'+d[1]+'</td><td>'+ratePill(rt[d[0]](row.metric))+'</td><td>'+(row.metric!=null?row.metric:'—')+'</td></tr>';}).filter(Boolean).join('');
+  return rows?'<table class="mx-tbl"><tr><th>Prop</th><th>Rating</th><th>Metric</th></tr>'+rows+'</table>':'<div class="mx-sub">Not on any board today.</div>';
+}
+async function mxLoadDetail(pid,opp,name){
+  var R=document.getElementById('mxRight');if(!R)return;
+  var html='';
+  try{
+    await mxEnsureArsenal();
+    if(opp.id&&ARS_P[opp.id]){
+      var pa=ARS_P[opp.id].slice().sort(function(a,b){return (+b.pitch_usage)-(+a.pitch_usage);});
+      html+='<div class="mx-h2">'+esc(opp.name||'Pitcher')+' Arsenal (results allowed)</div><table class="mx-tbl"><tr><th>Pitch</th><th>Use%</th><th>BA</th><th>SLG</th><th>wOBA</th><th>Whiff%</th></tr>'+pa.map(function(r){return '<tr><td>'+esc(r.pitch_name)+'</td><td>'+Math.round(+r.pitch_usage)+'</td><td>'+(r.ba||'—')+'</td><td>'+(r.slg||'—')+'</td><td>'+(r.woba||'—')+'</td><td>'+(r.whiff_percent||'—')+'</td></tr>';}).join('')+'</table>';
+    }
+    if(ARS_B[pid]){
+      var ba=ARS_B[pid].slice().sort(function(a,b){return (+b.pitch_usage)-(+a.pitch_usage);});
+      html+='<div class="mx-h2">'+esc(name)+' vs Pitch Type</div><table class="mx-tbl"><tr><th>Pitch</th><th>Seen%</th><th>BA</th><th>SLG</th><th>wOBA</th><th>Whiff%</th></tr>'+ba.map(function(r){return '<tr><td>'+esc(r.pitch_name)+'</td><td>'+Math.round(+r.pitch_usage)+'</td><td>'+(r.ba||'—')+'</td><td>'+(r.slg||'—')+'</td><td>'+(r.woba||'—')+'</td><td>'+(r.whiff_percent||'—')+'</td></tr>';}).join('')+'</table>';
+    }
+  }catch(e){html+='<div class="mx-note">Arsenal data unavailable ('+e.message+')</div>';}
+  try{
+    var rows=await mxStatcast(pid);
+    var bip=rows.filter(function(r){return r.launch_speed&&r.launch_speed!=='null';});
+    html+=mxContact(bip)+mxZone(bip)+mxSpray(bip)+mxRecent(bip);
+  }catch(e){html+='<div class="mx-note">Statcast unavailable ('+e.message+')</div>';}
+  if(R)R.innerHTML=html||'<div class="mx-sub">No detail data.</div>';
+}
+var HITSET={single:1,double:1,triple:1,home_run:1};
+function mxContact(bip){
+  if(!bip.length)return '';
+  var last=bip.slice(-14);
+  var sq=last.map(function(r){var ev=+r.launch_speed;var c=ev>=98?'#34d399':ev>=90?'#fbbf24':'#f87171';return '<span class="mx-cqsq" style="background:'+c+'" title="'+ev+' mph"></span>';}).join('');
+  var hh=bip.filter(function(r){return +r.launch_speed>=95;}).length;
+  return '<div class="mx-h2">Contact Quality (last '+last.length+' BIP)</div><div class="mx-cq">'+sq+'</div><div class="mx-sub">Hard-hit '+Math.round(100*hh/bip.length)+'% &middot; avg EV '+(bip.reduce(function(a,r){return a+(+r.launch_speed);},0)/bip.length).toFixed(1)+' mph &middot; <span style="color:#34d399">98+</span> <span style="color:#fbbf24">90-97</span> <span style="color:#f87171">&lt;90</span></div>';
+}
+function mxZone(bip){
+  var z={};bip.forEach(function(r){var n=+r.zone;if(n>=1&&n<=9){(z[n]=z[n]||{h:0,n:0});z[n].n++;if(HITSET[r.events])z[n].h++;}});
+  var cells='';for(var i=1;i<=9;i++){var d=z[i];var rate=d&&d.n?d.h/d.n:null;var bg=rate==null?'#13283a':rate>=.35?'#34d399':rate>=.2?'#fbbf24':'#f87171';var lab=d&&d.n?(Math.round(100*rate)+'%'):'—';cells+='<div class="mx-zcell" style="background:'+bg+'">'+lab+'<span style="font-size:7px">'+(d?d.n:0)+' BIP</span></div>';}
+  return '<div class="mx-h2">Strike-Zone Results (hit% by zone, catcher view)</div><div class="mx-zone">'+cells+'</div>';
+}
+function mxSpray(bip){
+  var pts=bip.filter(function(r){return r.hc_x&&r.hc_y&&r.hc_x!=='null';});
+  if(!pts.length)return '';
+  var dot=pts.map(function(r){var x=(+r.hc_x);var y=(+r.hc_y);var col=r.events==='home_run'?'#f87171':HITSET[r.events]?'#34d399':'#64748b';return '<circle cx="'+x.toFixed(0)+'" cy="'+y.toFixed(0)+'" r="2.2" fill="'+col+'" opacity="0.8"/>';}).join('');
+  return '<div class="mx-h2">Spray Chart ('+pts.length+' batted balls)</div><svg viewBox="0 0 250 230" style="width:100%;max-width:320px;display:block;margin:0 auto;background:#0a1626;border:1px solid rgba(34,211,238,.2);border-radius:10px"><path d="M125 205 L40 120 A120 120 0 0 1 210 120 Z" fill="rgba(34,211,238,.05)" stroke="rgba(34,211,238,.25)"/><line x1="125" y1="205" x2="40" y2="120" stroke="rgba(34,211,238,.25)"/><line x1="125" y1="205" x2="210" y2="120" stroke="rgba(34,211,238,.25)"/>'+dot+'<circle cx="125" cy="205" r="2.5" fill="#fbbf24"/></svg><div class="mx-sub" style="text-align:center"><span style="color:#f87171">HR</span> &middot; <span style="color:#34d399">hit</span> &middot; <span style="color:#64748b">out</span></div>';
+}
+function mxRecent(bip){
+  if(!bip.length)return '';
+  var rec=bip.slice(-9).reverse();
+  var cards=rec.map(function(r){var ev=+r.launch_speed;var c=ev>=98?'#34d399':ev>=90?'#fbbf24':'#f87171';var res=(r.events||'').replace(/_/g,' ');return '<div class="mx-bbc"><div class="mx-bbev" style="color:'+c+'">'+ev.toFixed(0)+'</div><div class="mx-bbsub">'+(r.launch_angle||'?')+'° &middot; '+esc(res||'in play')+'</div></div>';}).join('');
+  return '<div class="mx-h2">Recent Batted Balls (EV mph)</div><div class="mx-bb">'+cards+'</div>';
+}
+</script>
+
 </body>
 </html>
