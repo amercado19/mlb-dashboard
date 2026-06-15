@@ -430,6 +430,18 @@ select.psel,.sim-bar select,#playerSearch{background:#0f1b30 !important;color:#d
 .leg-od{width:62px;background:#0f1b30;color:#7dd3e8;border:1px solid #2a4a6b;border-radius:6px;padding:2px 5px;font:700 11px monospace;text-align:center}
 .leg-od.odbad{border-color:#f87171;color:#fca5a5;background:#2a0a0a}
 .ev-flag{font-size:9px;color:#f87171;font-weight:800;margin-left:4px}
+
+.pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:10px}
+.pc-card{position:relative;background:#0a1626;border:1px solid rgba(34,211,238,.28);border-radius:14px;padding:11px 12px}
+.pc-card.pc-top{border-color:#fbbf24;box-shadow:0 0 16px rgba(251,191,36,.25)}
+.pc-crown{position:absolute;top:-9px;right:10px;background:#3a2a06;color:#fde047;font-size:9px;font-weight:800;padding:2px 7px;border-radius:8px;border:1px solid #fbbf24}
+.pc-head{display:flex;align-items:center;gap:6px;font-size:13px;color:#e0faff;flex-wrap:wrap}
+.pc-sig{font-size:8px;font-weight:800;color:#22d3ee;background:#0e2740;border:1px solid rgba(34,211,238,.4);border-radius:8px;padding:1px 6px;margin-left:auto}
+.pc-meta{font-size:10px;color:#86bccf;margin:4px 0 8px;font-family:monospace}
+.pc-chips{display:flex;flex-wrap:wrap;gap:6px}
+.pc-chip{display:flex;align-items:center;gap:4px;background:#0e1d30;border:1px solid rgba(34,211,238,.2);border-radius:8px;padding:3px 6px}
+.pc-cl{font-size:9px;font-weight:800;color:#9fd6e8}
+.pc-cadd .legcb{margin:0 0 0 1px;cursor:pointer}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -468,6 +480,9 @@ select.psel,.sim-bar select,#playerSearch{background:#0f1b30 !important;color:#d
 <div id="gamesAccordion"></div>
 <h2>🎮 Game Simulator <span style="font-size:11px;font-weight:400;color:#94a3b8">— powered by our model projections</span></h2>
 <div id="gameSimSection"></div>
+
+<h2>🃏 Player Cards — Every Prop per Hitter</h2>
+<div id="playerCards"></div>
 
 <h2>Prop Boards — Tap a Square</h2>
 <div id="propBoards"></div>
@@ -1547,6 +1562,27 @@ function diversify(rows,perGame){ perGame=perGame||2; const gc={},out=[]; for(co
 function propRows(k){ const b=(MODEL_DATA&&MODEL_DATA.boardsFull)||(MODEL_DATA&&MODEL_DATA.boards)||{}; if(k==='nrfi')return (MODEL_DATA.nrfi||[]); if(k==='ou')return (b.ou||[]); return (b[k]||[]).slice(0,25); }
 function rate10fn(rows,valFn){ const vals=rows.map(valFn).filter(v=>v!=null); if(!vals.length)return ()=>'—'; const mn=Math.min(...vals),mx=Math.max(...vals); return v=>{ if(v==null)return '—'; const r=mx>mn?(5.5+4.5*(v-mn)/(mx-mn)):8.5; return r.toFixed(1); }; }
 function ratePill(r){ const n=parseFloat(r); const cls=isNaN(n)?'':n>=8?'r-hi':n>=6.5?'r-mid':'r-lo'; return '<span class="rate '+cls+'">'+r+'</span>'; }
+function renderPlayerCards(){
+  var el=$('playerCards'); if(!el) return;
+  var bf=(MODEL_DATA&&MODEL_DATA.boardsFull)||(MODEL_DATA&&MODEL_DATA.boards)||{};
+  var defs=[{k:'hr',lbl:'HR',bt:'hr'},{k:'h1',lbl:'1+H',bt:'hit'},{k:'h2',lbl:'2B',bt:'2b'},{k:'tb2',lbl:'2TB',bt:'2tb'},{k:'hrr',lbl:'HRR',bt:'hrr'}];
+  var rt={}; defs.forEach(function(d){ rt[d.k]=rate10fn(bf[d.k]||[],function(r){return r.metric;}); });
+  var players={};
+  defs.forEach(function(d){ (bf[d.k]||[]).forEach(function(r,i){ if(!r.playerId)return; var p=players[r.playerId]||(players[r.playerId]={id:r.playerId,name:r.name,team:r.team,gamePk:r.gamePk,props:{}}); p.props[d.k]={rank:i+1,rating:rt[d.k](r.metric)}; }); });
+  var list=Object.keys(players).map(function(k){return players[k];});
+  if(!list.length){ el.innerHTML='<div class="empty">Player cards populate once lineups post (each card shows every prop board a hitter lands on).</div>'; return; }
+  list.forEach(function(p){ var ks=Object.keys(p.props); p.sig=ks.length; p.best=Math.max.apply(null,ks.map(function(k){return parseFloat(p.props[k].rating)||0;})); p.avg=ks.reduce(function(a,k){return a+(parseFloat(p.props[k].rating)||0);},0)/ks.length; });
+  list.sort(function(a,b){ return b.sig-a.sig || b.best-a.best || b.avg-a.avg; });
+  var gcByPk={}; (MODEL_DATA.gameCards||[]).forEach(function(c){gcByPk[c.gamePk]=c;});
+  var cards=list.slice(0,42).map(function(p,idx){
+    var c=gcByPk[p.gamePk]||{}; var game=c.game||''; var t=c.time?fmtTime(c.time):'';
+    var crown= idx===0?'<div class="pc-crown">👑 TOP PICK</div>':'';
+    var sig= p.sig>=3?'<span class="pc-sig">⚡ '+p.sig+'-SIGNAL</span>':'';
+    var chips=defs.filter(function(d){return p.props[d.k];}).map(function(d){ var pr=p.props[d.k]; var key=d.bt+'-'+p.id+'-'+p.gamePk; var add=cb(key, p.name+' '+d.lbl, d.bt, p.gamePk, p.id, null, ''); return '<div class="pc-chip"><span class="pc-cl">'+d.lbl+'</span>'+ratePill(pr.rating)+'<span class="pc-cadd">'+add+'</span></div>'; }).join('');
+    return '<div class="pc-card'+(idx===0?' pc-top':'')+'">'+crown+'<div class="pc-head">'+hs(p.id,true)+' '+tb(p.team)+' <b>'+esc(p.name)+'</b>'+sig+'</div><div class="pc-meta">'+esc(game)+(t?' · '+t:'')+'</div><div class="pc-chips">'+chips+'</div></div>';
+  }).join('');
+  el.innerHTML='<div class="note" style="margin-bottom:8px;color:#86bccf">One card per hitter \u2014 every prop board they land on, with /10 rating and a + to add to your slip. Ranked by how many boards they hit (multi-signal first). \u23eb = appears on 3+ boards.</div><div class="pc-grid">'+cards+'</div>';
+}
 function renderPropSquares(){
   const el=$('propBoards'); if(!el) return;
   const defs=[
@@ -1839,7 +1875,7 @@ function drawBoard(c,res){
   $('simBoard').innerHTML='<div class="scoreboard" style="grid-template-columns:auto repeat('+cols+',1fr) auto auto">'+hd+row(c.away_sp.team,res?res.innings:null,res?res.aR:null,res?res.aH:null,0)+row(c.home_sp.team,res?res.innings:null,res?res.hR:null,res?res.hH:null,1)+'</div>';
 }
 
-function renderAll(){ renderEdge(); renderTicker(); renderCustomParlay(); renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopParlay(); renderPropSquares(); renderSP(); renderPropPerf(); }
+function renderAll(){ renderEdge(); renderPlayerCards(); renderTicker(); renderCustomParlay(); renderGamesAccordion(); renderGameSim(); renderRecap(); renderStarOut(); renderTopParlay(); renderPropSquares(); renderSP(); renderPropPerf(); }
 
 async function refreshLive(){
   if (refreshing) return;
