@@ -923,6 +923,24 @@ function fairAmNum(p){ p=Math.max(0.05,Math.min(0.95,p||0.5)); return p>=0.5? -M
 function amStr(a){ return a>=0?'+'+a:''+a; }
 function amDec(a){ return a>=0? 1+a/100 : 1+100/(-a); }
 var TP_WORK=null, TP_DATE=null;
+function legTierInfo(l){
+  var bf=(MODEL_DATA.boardsFull)||(MODEL_DATA.boards)||{};
+  var map={hit:'h1','2tb':'tb2',hrr:'hrr',hr:'hr','2b':'h2'};
+  if(l.betType==='ml'){ var m=(MODEL_DATA.ml||[]).filter(function(p){return p.gamePk===l.gamePk&&p.team===l.team;})[0]; var t=m&&m.tier; return t==='STRONG'?['STRONG','r-hi']:t==='LEAN'?['LEAN','r-mid']:['WEAK','r-lo']; }
+  if(l.betType==='over'){ var ou=(bf.ou||[]).filter(function(o){return o.gamePk===l.gamePk;})[0]; var e=ou?((ou.proj||0)-(ou.line||0)):0; return e>=1?['STRONG','r-hi']:e>=0.4?['LEAN','r-mid']:['WEAK','r-lo']; }
+  var bk=map[l.betType]; if(bk){ var board=bf[bk]||[]; var rt=rate10fn(board,function(r){return r.metric;}); var row=board.filter(function(r){return r.playerId===l.playerId;})[0]; if(row){ var rg=parseFloat(rt(row.metric)); return rg>=8?['STRONG','r-hi']:rg>=6.5?['LEAN','r-mid']:['WEAK','r-lo']; } }
+  return (l.prob||0)>=0.6?['LEAN','r-mid']:['WEAK','r-lo'];
+}
+function tpAutoAdd(){
+  var cands=tpCandidates(); if(!TP_WORK)TP_WORK=[];
+  var inWork={}, teamCt={};
+  TP_WORK.forEach(function(l){ inWork[(l.betType)+'|'+(l.playerId||l.gamePk)]=1; if(l.team)teamCt[l.team]=(teamCt[l.team]||0)+1; });
+  var TW={ml:1.0,over:1.05,'2tb':1.3,hrr:1.2,hr:1.0,hit:0.7,'2b':0.9};
+  var best=null,bv=-1;
+  cands.forEach(function(c){ var key=(c.betType)+'|'+(c.playerId||c.gamePk); if(inWork[key])return; if(c.team&&(teamCt[c.team]||0)>=2)return; var v=(c.prob||0)*(TW[c.betType]||1); if(v>bv){bv=v;best=c;} });
+  if(!best){ var box=document.getElementById('tpAddBox'); if(box)box.innerHTML='<div class="note" style="color:#fbbf24">No more value legs to add (team caps reached).</div>'; return; }
+  var nl=Object.assign({},best); nl._id='auto'+Date.now(); TP_WORK.push(nl); renderTopParlay();
+}
 function tpRemove(id){ if(TP_WORK){ TP_WORK=TP_WORK.filter(function(l){return l._id!==id;}); renderTopParlay(); } }
 function tpReset(){ TP_WORK=null; renderTopParlay(); }
 function tpCandidates(){
@@ -930,10 +948,10 @@ function tpCandidates(){
   (MODEL_DATA.ml||[]).forEach(function(p){ if(p.tier==='STRONG'||p.tier==='LEAN'){ out.push({desc:(p.team||'')+' ML ('+p.tier+')',betType:'ml',gamePk:p.gamePk,team:p.team,pickSide:p.pickSide,prob:(p.conf||55)/100}); } });
   (bf.ou||[]).forEach(function(ou){ if(ou.lean==='OVER'){ out.push({desc:'Game Over '+ou.line+' (proj '+ou.proj+')',betType:'over',gamePk:ou.gamePk,line:ou.line,prob:Math.min(.62,.5+(((ou.proj||0)-(ou.line||0)))*.04)}); } });
   var P=[['hr','HR','hr',function(m){return Math.min(.30,(m||50)/250);}],['h1','1+ hit','hit',function(m){return Math.min(.85,(m||60)/100);}],['h2','2B','2b',function(m){return .25;}],['tb2','2+ total bases','2tb',function(m){return .40;}],['hrr','2+ hits/runs/RBI','hrr',function(m){return .42;}]];
-  P.forEach(function(d){ (bf[d[0]]||[]).slice(0,15).forEach(function(r){ out.push({desc:r.name+' '+d[1],betType:d[2],gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:d[3](r.metric)}); }); });
+  P.forEach(function(d){ (bf[d[0]]||[]).slice(0,15).forEach(function(r){ out.push({desc:r.name+' '+d[1],betType:d[2],gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:d[3](r.metric),metric:r.metric}); }); });
   return out;
 }
-function tpAddOpen(){ var p=document.getElementById('tpAddBox'); if(!p)return; if(p.getAttribute('data-open')){ p.style.display='none'; p.removeAttribute('data-open'); return; } p.setAttribute('data-open','1'); var cands=tpCandidates(); window._TPC=cands; var inWork={}; (TP_WORK||[]).forEach(function(l){inWork[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;}); var opts=cands.map(function(c,i){ var key=(c.betType)+'|'+(c.playerId||c.gamePk)+'|'+c.desc; if(inWork[key])return ''; return '<option value="'+i+'">'+esc(c.desc)+'</option>'; }).filter(Boolean).join(''); p.innerHTML='<select id="tpAddSel" class="psel" style="max-width:280px">'+opts+'</select> <button class="cp-go" onclick="tpAddSel()">Add to parlay</button>'; p.style.display='block'; }
+function tpAddOpen(){ var p=document.getElementById('tpAddBox'); if(!p)return; if(p.getAttribute('data-open')){ p.style.display='none'; p.removeAttribute('data-open'); return; } p.setAttribute('data-open','1'); var cands=tpCandidates(); window._TPC=cands; var inWork={}; (TP_WORK||[]).forEach(function(l){inWork[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;}); var opts=cands.map(function(c,i){ var key=(c.betType)+'|'+(c.playerId||c.gamePk)+'|'+c.desc; if(inWork[key])return ''; return '<option value="'+i+'">'+esc(c.desc)+'</option>'; }).filter(Boolean).join(''); p.innerHTML='<select id="tpAddSel" class="psel" style="max-width:280px">'+opts+'</select> <button class="cp-go" onclick="tpAddSel()">Add selected</button> <button class="cp-go" onclick="tpAutoAdd()">🤖 Let the algo pick</button>'; p.style.display='block'; }
 function tpAddSel(){ var sel=document.getElementById('tpAddSel'); if(!sel||sel.value==='')return; var c=window._TPC[+sel.value]; if(!c)return; if(!TP_WORK)TP_WORK=[]; var nl=Object.assign({},c); nl._id='add'+Date.now(); TP_WORK.push(nl); renderTopParlay(); }
 function renderTopParlay(){
   const tp=MODEL_DATA&&MODEL_DATA.topParlay;
@@ -956,7 +974,7 @@ function renderTopParlay(){
   let totalDec=1, legNum=0, sgpCount=0, body='', projCount=0;
   order.forEach(pk=>{
     const legs=groups[pk]; const c=gcByPk[pk]||{}; let gDec=1;
-    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); const proj=(l.playerId && !lineupConfirmed(c)); if(proj)projCount++; const warn=proj?' <span class="leg-warn" title="This game\u2019s lineup is not confirmed yet — leg is based on a projected lineup">\u26a0 proj</span>':''; const evId='ev'+legNum; return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+warn+' <span class="ev-flag" id="'+evId+'"></span></span><span class="sgp-odds"><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+evId+'" value="'+amStr(a)+'" inputmode="text" oninput="recalcParlay()" title="Your book price for this leg — edit to recompute"></span><span class="tp-rm" onclick="tpRemove(\''+l._id+'\')" title="Remove leg">✕</span></div>'; }).join('');
+    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); const proj=(l.playerId && !lineupConfirmed(c)); if(proj)projCount++; const warn=proj?' <span class="leg-warn" title="This game\u2019s lineup is not confirmed yet — leg is based on a projected lineup">\u26a0 proj</span>':''; const evId='ev'+legNum; var ti=legTierInfo(l); var tpill='<span class="rate '+ti[1]+'" style="margin-left:6px;font-size:9px">'+ti[0]+'</span>'; return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+tpill+warn+' <span class="ev-flag" id="'+evId+'"></span></span><span class="sgp-odds"><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+evId+'" value="'+amStr(a)+'" inputmode="text" oninput="recalcParlay()" title="Your book price for this leg — edit to recompute"></span><span class="tp-rm" onclick="tpRemove(\''+l._id+'\')" title="Remove leg">✕</span></div>'; }).join('');
     const isSgp=legs.length>=2; if(isSgp)sgpCount++;
     const gDisc = isSgp ? (1+(gDec-1)*SGP_CORR) : gDec;   // discount correlated legs
     totalDec *= gDisc;
