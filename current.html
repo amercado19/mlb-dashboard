@@ -951,11 +951,11 @@ function tpCandidates(){
   var bf=(MODEL_DATA.boardsFull)||(MODEL_DATA.boards)||{}; var out=[];
   (MODEL_DATA.ml||[]).forEach(function(p){ if(p.tier==='STRONG'||p.tier==='LEAN'){ out.push({desc:(p.team||'')+' ML ('+p.tier+')',betType:'ml',gamePk:p.gamePk,team:p.team,pickSide:p.pickSide,prob:(p.conf||55)/100}); } });
   (bf.ou||[]).forEach(function(ou){ if(ou.lean==='OVER'){ out.push({desc:'Game Over '+ou.line+' (proj '+ou.proj+')',betType:'over',gamePk:ou.gamePk,line:ou.line,prob:Math.min(.62,.5+(((ou.proj||0)-(ou.line||0)))*.04)}); } });
-  var P=[['hr','HR','hr',function(m){return Math.min(.30,(m||50)/250);}],['h1','1+ hit','hit',function(m){return Math.min(.85,(m||60)/100);}],['h2','2B','2b',function(m){return .25;}],['tb2','2+ total bases','2tb',function(m){return .40;}],['hrr','2+ hits/runs/RBI','hrr',function(m){return .42;}]];
+  var P=[['hr','HR','hr',function(m){return Math.min(.30,(m||50)/250);}],['h1','1+ hit','hit',function(m){return Math.min(.85,(m||60)/100);}],['tb2','2+ total bases','2tb',function(m){return .40;}],['hrr','2+ hits/runs/RBI','hrr',function(m){return .42;}]];
   P.forEach(function(d){ (bf[d[0]]||[]).slice(0,15).forEach(function(r){ out.push({desc:r.name+' '+d[1],betType:d[2],gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:d[3](r.metric),metric:r.metric}); }); });
   return out;
 }
-function tpAddOpen(){ var p=document.getElementById('tpAddBox'); if(!p)return; if(p.getAttribute('data-open')){ p.style.display='none'; p.removeAttribute('data-open'); return; } p.setAttribute('data-open','1'); var cands=tpCandidates(); window._TPC=cands; var inWork={}; (TP_WORK||[]).forEach(function(l){inWork[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;}); var opts=cands.map(function(c,i){ var key=(c.betType)+'|'+(c.playerId||c.gamePk)+'|'+c.desc; if(inWork[key])return ''; return '<option value="'+i+'">'+esc(c.desc)+'</option>'; }).filter(Boolean).join(''); p.innerHTML='<div style="margin-bottom:6px"><select id="tpAddSel" class="psel" style="max-width:260px">'+opts+'</select> <button class="cp-go" onclick="tpAddSel()">Add selected</button></div><div class="tp-auto"><span style="font-size:10px;color:#86bccf">🤖 Algo adds best:</span><button onclick="tpAutoAdd(\'hr\')">HR</button><button onclick="tpAutoAdd(\'hit\')">1+ Hit</button><button onclick="tpAutoAdd(\'2b\')">2B</button><button onclick="tpAutoAdd(\'2tb\')">2+ TB</button><button onclick="tpAutoAdd(\'hrr\')">HRR</button><button onclick="tpAutoAdd(\'ml\')">ML</button><button onclick="tpAutoAdd(\'over\')">Over</button><button onclick="tpAutoAdd(\'\')">Any</button></div>'; p.style.display='block'; }
+function tpAddOpen(){ var p=document.getElementById('tpAddBox'); if(!p)return; if(p.getAttribute('data-open')){ p.style.display='none'; p.removeAttribute('data-open'); return; } p.setAttribute('data-open','1'); var cands=tpCandidates(); window._TPC=cands; var inWork={}; (TP_WORK||[]).forEach(function(l){inWork[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;}); var opts=cands.map(function(c,i){ var key=(c.betType)+'|'+(c.playerId||c.gamePk)+'|'+c.desc; if(inWork[key])return ''; return '<option value="'+i+'">'+esc(c.desc)+'</option>'; }).filter(Boolean).join(''); p.innerHTML='<div style="margin-bottom:6px"><select id="tpAddSel" class="psel" style="max-width:260px">'+opts+'</select> <button class="cp-go" onclick="tpAddSel()">Add selected</button></div><div class="tp-auto"><span style="font-size:10px;color:#86bccf">🤖 Algo adds best:</span><button onclick="tpAutoAdd(\'hr\')">HR</button><button onclick="tpAutoAdd(\'hit\')">1+ Hit</button><button onclick="tpAutoAdd(\'2tb\')">2+ TB</button><button onclick="tpAutoAdd(\'hrr\')">HRR</button><button onclick="tpAutoAdd(\'ml\')">ML</button><button onclick="tpAutoAdd(\'over\')">Over</button><button onclick="tpAutoAdd(\'\')">Any</button></div>'; p.style.display='block'; }
 function tpAddSel(){ var sel=document.getElementById('tpAddSel'); if(!sel||sel.value==='')return; var c=window._TPC[+sel.value]; if(!c)return; if(!TP_WORK)TP_WORK=[]; var nl=Object.assign({},c); nl._id='add'+Date.now(); TP_WORK.push(nl); renderTopParlay(); tpAddOpen(); }
 function renderTopParlay(){
   const tp=MODEL_DATA&&MODEL_DATA.topParlay;
@@ -1210,7 +1210,7 @@ function boardSeries(){
   return rows.slice(-30);
 }
 let algoC = null, playerC = null;
-const PERF_DEFS=[{k:'all',label:'All Boards',ic:'📈'},{k:'ml',label:'Moneyline',ic:'💰',c:'#22d3ee'},{k:'hr',label:'Home Runs',ic:'⚾',c:'#f87171'},{k:'h1',label:'1+ Hit',ic:'🎯',c:'#60a5fa'},{k:'h2',label:'Doubles',ic:'↔',c:'#34d399'},{k:'tb2',label:'2+ Total Bases',ic:'💥',c:'#c084fc'},{k:'hrr',label:'2+ H/R/RBI',ic:'🔢',c:'#f472b6'},{k:'ou',label:'O/U Leans',ic:'📊',c:'#fbbf24'},{k:'calib',label:'Calibration',ic:'🎯',c:'#22d3ee'}];
+const PERF_DEFS=[{k:'all',label:'All Boards',ic:'📈'},{k:'ml',label:'Moneyline',ic:'💰',c:'#22d3ee'},{k:'hr',label:'Home Runs',ic:'⚾',c:'#f87171'},{k:'h1',label:'1+ Hit',ic:'🎯',c:'#60a5fa'},{k:'h2',label:'2B',ic:'↔',c:'#34d399'},{k:'tb2',label:'2+ Total Bases',ic:'💥',c:'#c084fc'},{k:'hrr',label:'2+ H/R/RBI',ic:'🔢',c:'#f472b6'},{k:'ou',label:'O/U Leans',ic:'📊',c:'#fbbf24'},{k:'calib',label:'Calibration',ic:'🎯',c:'#22d3ee'}];
 function perfStat(k){ const rows=boardSeries(); let w=0,n=0; rows.forEach(r=>{const c=r[k]; if(c){w+=c.w;n+=c.n;}}); return n?{pct:Math.round(100*w/n),w,n}:null; }
 function renderPerfSquares(){ const el=$('perfBoards'); if(!el)return; const rows=boardSeries();
   const sq=PERF_DEFS.map(d=>{ let t,n; if(d.k==='all'){ t=rows.length?rows.length+'d':'—'; n='overview'; } else if(d.k==='calib'){ const cal=(MODEL_DATA&&MODEL_DATA.calibration)||[]; const cn=cal.reduce((a,b)=>a+(b.n||0),0); t=cn?(''+cn):'—'; n=cn?'sides':'no data'; } else { const s=perfStat(d.k); t=s?s.pct+'%':'—'; n=s?('('+s.w+'/'+s.n+')'+(s.n<20?' ⚠':'')):'no data'; } return '<div class="psq" onclick="openPerf(\''+d.k+'\',this)"><div class="psq-ic">'+d.ic+'</div><div class="psq-l">'+d.label+'</div><div class="psq-t">'+t+'</div><div class="psq-n">'+n+'</div></div>'; }).join('');
@@ -1230,7 +1230,7 @@ function initAlgoCharts(){
   if (typeof Chart === 'undefined') return;
   const rows = boardSeries();
   const box = $('algoChart');
-  if (!rows.length){ if (box && box.parentNode) box.parentNode.innerHTML = '<div class="empty">Board accuracy plots after the first graded day. Each line = the day\u2019s top-10 board hit rate (top-10 ML, HR, 1+Hit, Doubles, 2+TB, 2+HRR) + over/under leans.</div>'; return; }
+  if (!rows.length){ if (box && box.parentNode) box.parentNode.innerHTML = '<div class="empty">Board accuracy plots after the first graded day. Each line = the day\u2019s top-10 board hit rate (top-10 ML, HR, 1+Hit, 2B, 2+TB, 2+HRR) + over/under leans.</div>'; return; }
   const pct = k => rows.map(r => r[k] && r[k].n ? +(100*r[k].w/r[k].n).toFixed(1) : null);
   const rec = (k,i) => { const c = rows[i][k]; return c ? ' (' + c.w + '/' + c.n + ')' : ''; };
   try {
@@ -1241,7 +1241,7 @@ function initAlgoCharts(){
         { label: 'Top-10 ML', data: pct('ml'), borderColor: '#0c3b2c', backgroundColor: '#0c3b2c', tension: .25, spanGaps: true, pointRadius: 4 },
         { label: 'Top-10 HR', data: pct('hr'), borderColor: '#dc2626', backgroundColor: '#dc2626', tension: .25, spanGaps: true, pointRadius: 4 },
         { label: 'Top-10 1+Hit', data: pct('h1'), borderColor: '#2563eb', backgroundColor: '#2563eb', tension: .25, spanGaps: true, pointRadius: 4 },
-        { label: 'Top-10 Doubles', data: pct('h2'), borderColor: '#0891b2', backgroundColor: '#0891b2', tension: .25, spanGaps: true, pointRadius: 4 },
+        { label: 'Top-10 2B', data: pct('h2'), borderColor: '#0891b2', backgroundColor: '#0891b2', tension: .25, spanGaps: true, pointRadius: 4 },
         { label: 'Top-10 2+TB', data: pct('tb2'), borderColor: '#9333ea', backgroundColor: '#9333ea', tension: .25, spanGaps: true, pointRadius: 4 },
         { label: 'Top-10 2+HRR', data: pct('hrr'), borderColor: '#db2777', backgroundColor: '#db2777', tension: .25, spanGaps: true, pointRadius: 4 },
         { label: 'O/U leans', data: pct('ou'), borderColor: '#f59e0b', backgroundColor: '#f59e0b', tension: .25, spanGaps: true, pointRadius: 4 }
@@ -1316,7 +1316,7 @@ function renderGameCenter(){
     if (ml) body += '<div class="gcLbl">Moneyline</div><div class="gcRow"><span class="tier ' + esc(ml.tier) + '">' + esc(ml.tier) + '</span><b>' + esc(ml.team || 'No pick') + '</b><span class="mono">' + esc(ml.odds || '') + '</span><span class="note">' + esc(ml.note || '') + '</span></div>';
     if (hrs.length) body += '<div class="gcLbl">HR props</div>' + hrs.map(p =>
       '<div class="gcRow">' + hs(p.playerId) + '<b>' + esc(p.name) + '</b><span class="mono">#' + esc(p.order) + ' · score ' + esc(p.score) + '</span><span class="tier ' + esc(p.tier) + '">' + esc(p.tier) + '</span>' + propLive(p, 'hr') + '</div>').join('');
-    if (hits.length) body += '<div class="gcLbl">Hits / Doubles</div>' + hits.map(p =>
+    if (hits.length) body += '<div class="gcLbl">Hits / 2B</div>' + hits.map(p =>
       '<div class="gcRow">' + hs(p.playerId) + '<b>' + esc(p.name) + '</b><span class="mono">' + esc(p.betType) + ' · ' + esc(p.avg) + ' · score ' + esc(p.score) + '</span>' + propLive(p, 'hit') + '</div>').join('');
     if (!ml && !hrs.length && !hits.length) body += '<div class="note" style="padding:6px 0">No model picks for this game — outside the analyzed slate or all rules passed.</div>';
     return '<details class="gc" data-pk="' + pk + '"' + (openPks[pk] ? ' open' : '') + '><summary>'
@@ -1330,7 +1330,7 @@ function renderPropPerf(){
   if (!pp || !Object.keys(pp).length){
     // Build from per-day graded accuracy rows (last 30): lifetime + last-7 per type
     const rows30 = (typeof accSeries === 'function') ? accSeries() : [];
-    const types = [['ml','Moneyline'],['nrfi','NRFI/YRFI'],['hr','Anytime HR'],['h1','1+ Hit'],['h2','Doubles'],['ou','Overs'],['parlay','Suggested parlays']];
+    const types = [['ml','Moneyline'],['nrfi','NRFI/YRFI'],['hr','Anytime HR'],['h1','1+ Hit'],['h2','2B'],['ou','Overs'],['parlay','Suggested parlays']];
     const agg = {};
     for (const [k, label] of types){
       let w=0, n=0, w7=0, n7=0;
@@ -1634,7 +1634,7 @@ function renderPlayerCards(){
 function renderPropSquares(){
   const el=$('propBoards'); if(!el) return;
   const defs=[
-    {k:'hr',label:'Home Runs',ic:'⚾'},{k:'h1',label:'1+ Hit',ic:'🎯'},{k:'h2',label:'Doubles',ic:'↔'},
+    {k:'hr',label:'Home Runs',ic:'⚾'},{k:'h1',label:'1+ Hit',ic:'🎯'},{k:'h2',label:'2B',ic:'↔'},
     {k:'tb2',label:'2+ Total Bases',ic:'💥'},{k:'hrr',label:'2+ H/R/RBI',ic:'🔢'},
     {k:'nrfi',label:'NRFI / YRFI',ic:'🅾'},{k:'ou',label:'Over / Under',ic:'📊'},
     {k:'ml',label:'Moneyline',ic:'💰'},{k:'spread',label:'Spread (RL)',ic:'📏'}];
@@ -1700,7 +1700,7 @@ function renderGamesAccordion(){
   const propsBlock=(c)=>{
     const blk=(team)=>{ const p=gaProps(c.gamePk,team); if(!p.hr.length&&!p.h1.length&&!p.h2.length&&!p.tb2.length&&!p.hrr.length) return '<div class="ga-team"><b>'+esc(team)+'</b> <span style="color:#94a3b8;font-size:11px">props post with confirmed lineups</span></div>';
       const pill=(lbl,arr)=>arr.length?'<div class="ga-pp"><span class="ga-pl">'+lbl+'</span>'+arr.map(x=>'<span class="ga-pill">'+(x.playerId?hs(x.playerId,true):'')+esc(x.name)+(x.metric!=null?' '+x.metric:(x.score!=null?' '+Math.round(x.score):''))+'</span>').join('')+'</div>':'';
-      return '<div class="ga-team"><div class="ga-tn">'+esc(team)+'</div>'+pill('HR',p.hr)+pill('1+ Hit',p.h1)+pill('Doubles',p.h2)+pill('2+ TB',p.tb2)+pill('2+ HRR',p.hrr)+'</div>'; };
+      return '<div class="ga-team"><div class="ga-tn">'+esc(team)+'</div>'+pill('HR',p.hr)+pill('1+ Hit',p.h1)+pill('2B',p.h2)+pill('2+ TB',p.tb2)+pill('2+ HRR',p.hrr)+'</div>'; };
     return '<div class="gc-props"><div class="gc-ptoggle" onclick="gaToggle(this)"><span class="caret">▸</span> Player Hits & HR Props</div><div style="display:none;padding-top:6px">'+blk(c.away_sp.team)+blk(c.home_sp.team)+'</div></div>';
   };
   el.innerHTML='<div class="gcgrid">'+gc.map(c=>'<div class="gc '+(c.tier||'PASS')+'">'
