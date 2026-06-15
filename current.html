@@ -444,6 +444,12 @@ select.psel,.sim-bar select,#playerSearch{background:#0f1b30 !important;color:#d
 .pc-cadd .legcb{margin:0 0 0 1px;cursor:pointer}
 
 .pc-arse{font-size:9.5px;color:#9fd6e8;background:#0e1d30;border:1px solid rgba(34,211,238,.18);border-radius:7px;padding:3px 6px;margin-bottom:7px;line-height:1.3}
+
+.tp-rm{color:#f87171;font-weight:800;cursor:pointer;margin-left:8px;font-size:11px;flex:0 0 auto}
+.tp-rm:hover{color:#ff5050}
+.tp-ctrls{display:flex;gap:8px;margin:8px 0}
+.tp-ctrls button{background:#13283a;color:#9fd6e8;border:1px solid rgba(34,211,238,.3);border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer}
+.tp-ctrls button:hover{background:#0e2740}
 </style>
 </head>
 <body><svg width="0" height="0" style="position:absolute"><defs><symbol id="arr-out" viewBox="0 0 24 24"><path d="M12 4 L19 11 L14 11 L14 20 L10 20 L10 11 L5 11 Z" fill="#10b981"/></symbol><symbol id="arr-in" viewBox="0 0 24 24"><path d="M12 20 L5 13 L10 13 L10 4 L14 4 L14 13 L19 13 Z" fill="#ef4444"/></symbol><symbol id="arr-cross" viewBox="0 0 24 24"><path d="M20 12 L13 5 L13 10 L4 10 L4 14 L13 14 L13 19 Z" fill="#94a3b8"/></symbol></defs></svg>
@@ -916,6 +922,19 @@ function amDec(a){ return a>=0? 1+a/100 : 1+100/(-a); }
 function fairAmNum(p){ p=Math.max(0.05,Math.min(0.95,p||0.5)); return p>=0.5? -Math.round(100*p/(1-p)) : Math.round(100*(1-p)/p); }
 function amStr(a){ return a>=0?'+'+a:''+a; }
 function amDec(a){ return a>=0? 1+a/100 : 1+100/(-a); }
+var TP_WORK=null, TP_DATE=null;
+function tpRemove(id){ if(TP_WORK){ TP_WORK=TP_WORK.filter(function(l){return l._id!==id;}); renderTopParlay(); } }
+function tpReset(){ TP_WORK=null; renderTopParlay(); }
+function tpCandidates(){
+  var bf=(MODEL_DATA.boardsFull)||(MODEL_DATA.boards)||{}; var out=[];
+  (MODEL_DATA.ml||[]).forEach(function(p){ if(p.tier==='STRONG'||p.tier==='LEAN'){ out.push({desc:(p.team||'')+' ML ('+p.tier+')',betType:'ml',gamePk:p.gamePk,team:p.team,pickSide:p.pickSide,prob:(p.conf||55)/100}); } });
+  (bf.ou||[]).forEach(function(ou){ if(ou.lean==='OVER'){ out.push({desc:'Game Over '+ou.line+' (proj '+ou.proj+')',betType:'over',gamePk:ou.gamePk,line:ou.line,prob:Math.min(.62,.5+(((ou.proj||0)-(ou.line||0)))*.04)}); } });
+  var P=[['hr','HR','hr',function(m){return Math.min(.30,(m||50)/250);}],['h1','1+ hit','hit',function(m){return Math.min(.85,(m||60)/100);}],['h2','2B','2b',function(m){return .25;}],['tb2','2+ total bases','2tb',function(m){return .40;}],['hrr','2+ hits/runs/RBI','hrr',function(m){return .42;}]];
+  P.forEach(function(d){ (bf[d[0]]||[]).slice(0,15).forEach(function(r){ out.push({desc:r.name+' '+d[1],betType:d[2],gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:d[3](r.metric)}); }); });
+  return out;
+}
+function tpAddOpen(){ var p=document.getElementById('tpAddBox'); if(!p)return; if(p.getAttribute('data-open')){ p.style.display='none'; p.removeAttribute('data-open'); return; } p.setAttribute('data-open','1'); var cands=tpCandidates(); window._TPC=cands; var inWork={}; (TP_WORK||[]).forEach(function(l){inWork[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;}); var opts=cands.map(function(c,i){ var key=(c.betType)+'|'+(c.playerId||c.gamePk)+'|'+c.desc; if(inWork[key])return ''; return '<option value="'+i+'">'+esc(c.desc)+'</option>'; }).filter(Boolean).join(''); p.innerHTML='<select id="tpAddSel" class="psel" style="max-width:280px">'+opts+'</select> <button class="cp-go" onclick="tpAddSel()">Add to parlay</button>'; p.style.display='block'; }
+function tpAddSel(){ var sel=document.getElementById('tpAddSel'); if(!sel||sel.value==='')return; var c=window._TPC[+sel.value]; if(!c)return; if(!TP_WORK)TP_WORK=[]; var nl=Object.assign({},c); nl._id='add'+Date.now(); TP_WORK.push(nl); renderTopParlay(); }
 function renderTopParlay(){
   const tp=MODEL_DATA&&MODEL_DATA.topParlay;
   const el=$('topParlaySection'); if(!el) return;
@@ -925,15 +944,19 @@ function renderTopParlay(){
   if(!tp||!(tp.legs||[]).length){ el.innerHTML='<div class="empty">'+esc((tp&&tp.note)||'No rule-compliant parlay today.')+'</div>'; return; }
   const gcByPk={}; (MODEL_DATA.gameCards||[]).forEach(c=>gcByPk[c.gamePk]=c);
   const liveLineupIds=function(pk){ var g=liveGames[pk]; var lu=(g&&g.lineups)||{}; var ids={}; (lu.awayPlayers||[]).concat(lu.homePlayers||[]).forEach(function(p){ids[p.id]=1;}); return ids; };
-  var droppedOut=0;
-  var _legs=(tp.legs||[]).filter(function(l){ if(!l.playerId) return true; var ids=liveLineupIds(l.gamePk); if(!Object.keys(ids).length) return true; var inLU=!!ids[l.playerId]; if(!inLU)droppedOut++; return inLU; });
-  if(!_legs.length){ el.innerHTML='<div class="empty">⚾ Suggested parlay legs were all scratched from confirmed lineups. Next auto-run will rebuild it.</div>'; return; }
+  var notScratched=function(l){ if(!l.playerId) return true; var ids=liveLineupIds(l.gamePk); if(!Object.keys(ids).length) return true; return !!ids[l.playerId]; };
+  var _modelLegs=(tp.legs||[]).filter(notScratched);
+  var droppedOut=(tp.legs||[]).length-_modelLegs.length;
+  if(TP_WORK===null||TP_DATE!==MODEL_DATA.date){ TP_WORK=_modelLegs.map(function(l,i){var cc=Object.assign({},l);cc._id=cc._id||('m'+i+'-'+(l.playerId||l.gamePk||i));return cc;}); TP_DATE=MODEL_DATA.date; }
+  TP_WORK=TP_WORK.filter(notScratched);
+  var _legs=TP_WORK;
+  if(!_legs.length){ el.innerHTML='<div class="empty">No legs in your parlay yet. <button class="cp-go" onclick="tpReset()">↺ Restore model parlay</button> <button onclick="tpAddOpen()">➕ Add leg</button><div id="tpAddBox" style="display:none;margin-top:8px"></div></div>'; return; }
   const order=[]; const groups={}; _legs.forEach(l=>{ const k=l.gamePk||'x'; if(!groups[k]){groups[k]=[];order.push(k);} groups[k].push(l); });
   const SGP_CORR=0.62;   // FanDuel-style correlation discount on same-game legs
   let totalDec=1, legNum=0, sgpCount=0, body='', projCount=0;
   order.forEach(pk=>{
     const legs=groups[pk]; const c=gcByPk[pk]||{}; let gDec=1;
-    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); const proj=(l.playerId && !lineupConfirmed(c)); if(proj)projCount++; const warn=proj?' <span class="leg-warn" title="This game\u2019s lineup is not confirmed yet — leg is based on a projected lineup">\u26a0 proj</span>':''; const evId='ev'+legNum; return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+warn+' <span class="ev-flag" id="'+evId+'"></span></span><span class="sgp-odds"><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+evId+'" value="'+amStr(a)+'" inputmode="text" oninput="recalcParlay()" title="Your book price for this leg — edit to recompute"></span></div>'; }).join('');
+    const rows=legs.map(l=>{ legNum++; const a=fairAmNum(l.prob); gDec*=amDec(a); const proj=(l.playerId && !lineupConfirmed(c)); if(proj)projCount++; const warn=proj?' <span class="leg-warn" title="This game\u2019s lineup is not confirmed yet — leg is based on a projected lineup">\u26a0 proj</span>':''; const evId='ev'+legNum; return '<div class="sgp-leg"><span class="sgp-n">'+legNum+'</span><span class="sgp-desc">'+esc(l.desc)+warn+' <span class="ev-flag" id="'+evId+'"></span></span><span class="sgp-odds"><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+evId+'" value="'+amStr(a)+'" inputmode="text" oninput="recalcParlay()" title="Your book price for this leg — edit to recompute"></span><span class="tp-rm" onclick="tpRemove(\''+l._id+'\')" title="Remove leg">✕</span></div>'; }).join('');
     const isSgp=legs.length>=2; if(isSgp)sgpCount++;
     const gDisc = isSgp ? (1+(gDec-1)*SGP_CORR) : gDec;   // discount correlated legs
     totalDec *= gDisc;
@@ -950,7 +973,7 @@ function renderTopParlay(){
   const pay='<div class="sgp-pay" id="sgpPay"><b>Combined '+totalAm+'</b> · model-fair ≈ '+winP+'% to hit (≈ 1 in '+Math.round(totalDec).toLocaleString()+')<div style="margin-top:5px">$10 → ~$'+p10.toLocaleString()+' · $25 → ~$'+p25.toLocaleString()+' · $100 → ~$'+p100.toLocaleString()+'<button onclick="addTopToSlip()" style="margin-left:10px">Add all to slip</button></div></div>';
   var dNote = droppedOut? '<div class="note" style="color:#ff8080;font-weight:700;margin-bottom:6px">\u2717 '+droppedOut+' leg'+(droppedOut!==1?'s':'')+' dropped \u2014 player not in the confirmed lineup (e.g. scratched). Odds below reflect the remaining legs.</div>':'';
   const pNote = projCount? '<div class="note" style="color:#fbbf24;font-weight:700;margin-bottom:6px">\u26a0 '+projCount+' leg'+(projCount!==1?'s':'')+' use projected lineups (those games aren\u2019t confirmed yet) — treat as tentative until lineups post.</div>':'';
-  el.innerHTML='<div id="topParlay">'+dNote+pNote+summary+body+pay+'</div>'; try{recalcParlay();}catch(e){}
+  var controls='<div class="tp-ctrls"><button onclick="tpAddOpen()">➕ Add leg</button><button onclick="tpReset()">↺ Reset to model</button></div><div id="tpAddBox" style="display:none;margin-top:8px"></div>'; el.innerHTML='<div id="topParlay">'+dNote+pNote+summary+body+controls+pay+'</div>'; try{recalcParlay();}catch(e){}
 }
 function recalcParlay(){
   var inputs=[].slice.call(document.querySelectorAll('#topParlay .leg-od'));
