@@ -144,6 +144,13 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
 .psq.on .ct{color:#fdf8ec}
 .gprops{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
 .gprops summary{cursor:pointer;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+
+.byo{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:10px}
+.byoin{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;gap:3px;letter-spacing:.5px}
+.byoin input{width:52px;font-family:var(--mono);font-weight:700;font-size:14px;text-align:center;border:1.5px solid var(--line);border-radius:7px;padding:4px;background:var(--panel);color:var(--txt)}
+.sgptag{font-family:var(--mono);font-size:10px;color:var(--accent);text-transform:uppercase;margin:8px 0 2px;font-weight:700;letter-spacing:.5px}
+.tppay{font-family:var(--mono);font-size:12px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin:10px 0;line-height:1.5}
+.evf{font-family:var(--mono);font-size:9px;font-weight:800;color:var(--lose);margin-left:4px}
 </style>
 </head>
 <body>
@@ -295,16 +302,42 @@ function tpAddSel(){var s=$('tpSel');if(!s||s.value==='')return;var c=window._TP
 function tpRecalc(){var inputs=[].slice.call(document.querySelectorAll('#parlay .leg-od'));if(!inputs.length)return;var SGP=.62,byG={};inputs.forEach(function(i){var g=i.dataset.game;(byG[g]=byG[g]||[]).push(i);});var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(i){var a=parseFloat(i.value);gd*=isNaN(a)?1:amDec(a);});dec*=arr.length>=2?(1+(gd-1)*SGP):gd;});inputs.forEach(function(i){var a=parseFloat(i.value);var mp=parseFloat(i.dataset.prob);var ev=document.getElementById(i.dataset.ev);if(isNaN(a)){i.classList.remove('odbad');if(ev)ev.textContent='';return;}var imp=a<0?(-a)/(-a+100):100/(a+100);if(imp-mp>.07){i.classList.add('odbad');if(ev){ev.textContent='−EV';ev.style.color='var(--lose)';}}else{i.classList.remove('odbad');if(ev)ev.textContent='';}});var pay=$('tpPay');if(pay)pay.innerHTML='<b>Combined '+decToAm(dec)+'</b> · ≈'+(100/dec).toFixed(1)+'% to hit · $10→$'+Math.round(10*dec).toLocaleString()+' · $100→$'+Math.round(100*dec).toLocaleString()+'. Edit any leg to your book price; red −EV = book more confident than model. Same-game legs get a 0.62 correlation discount.';}
 function renderParlay(){
   var tp=D.topParlay||{};
-  if(TP_WORK===null){ TP_WORK=(tp.legs||[]).map(function(l,i){var c=Object.assign({},l);c._id='s'+i;return c;}); }
+  if(TP_WORK===null){TP_WORK=(tp.legs||[]).map(function(l,i){var c=Object.assign({},l);c._id='s'+i;return c;});}
   var legs=TP_WORK;
-  var ctrl='<div class="tpctrl"><button class="rf" onclick="tpAddOpen()">➕ Add leg</button><button class="rf" onclick="tpReset()">↺ Reset to model</button></div><div id="tpAddBox" style="display:none;margin-bottom:10px"></div>';
-  if(!legs.length){ $('parlay').innerHTML='<div class="empty">No legs in your parlay.</div>'+ctrl; return; }
-  var groups={},order=[];legs.forEach(function(l){var k=l.gamePk||'x';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(l);});
-  var num=0,body='';
-  order.forEach(function(pk){var gl=groups[pk];var isSgp=gl.length>=2;body+='<div class="card"><div class="card-h"><span>'+(isSgp?gl.length+' legs → SGP':'Single leg')+'</span></div>'+gl.map(function(l){num++;var a=fairAmNum(l.prob);var ti=legTierInfo(l);var ev='ev'+num;return '<div class="leg"><span class="ln">'+num+'</span><span class="ld">'+esc(l.desc)+' <span class="badge '+ti[1]+'">'+ti[0]+'</span> <span id="'+ev+'" style="font-family:var(--mono);font-size:9px;font-weight:800"></span></span><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+ev+'" value="'+amStr(a)+'" oninput="tpRecalc()" title="Your book price"><span class="tprm" onclick="tpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';}).join('')+'</div>';});
-  $('parlay').innerHTML=ctrl+(tp.note?'<div class="note" style="margin-bottom:10px">\u2699 Auto-generated daily: '+esc(tp.note)+'</div>':'')+body+'<div class="card"><div class="note" id="tpPay"></div></div>'; tpRecalc();
+  var legHtml='';
+  if(legs.length){
+    var groups={},order=[];legs.forEach(function(l){var k=l.gamePk||'x';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(l);});
+    var num=0;
+    order.forEach(function(pk){var gl=groups[pk];if(gl.length>=2)legHtml+='<div class="sgptag">▸ '+gl.length+'-leg same-game</div>';
+      gl.forEach(function(l){num++;var a=fairAmNum(l.prob);var ti=legTierInfo(l);var ev='ev'+num;
+        legHtml+='<div class="leg"><span class="ln">'+num+'</span><span class="ld">'+esc(l.desc)+' <span class="badge '+ti[1]+'">'+ti[0]+'</span> <span id="'+ev+'" class="evf"></span></span><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+ev+'" value="'+amStr(a)+'" oninput="tpRecalc()" title="Your book price"><span class="tprm" onclick="tpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';});
+    });
+  } else { legHtml='<div class="empty" style="padding:14px">No legs — add some below or reset to the model parlay.</div>'; }
+  var ctrl='<div class="tpctrl"><button class="rf" onclick="tpAddOpen()">➕ Add leg</button><button class="rf" onclick="tpReset()">↺ Reset to model</button></div><div id="tpAddBox" style="display:none;margin-top:8px"></div>';
+  var sugg='<div class="card"><div class="card-h"><span>⭐ Suggested Parlay</span><span class="t">'+legs.length+' legs</span></div><div class="card-b">'
+    +(tp.note?'<div class="note" style="margin:0 0 10px;padding:0">⚙ '+esc(tp.note)+'</div>':'')
+    +legHtml+'<div class="tppay" id="tpPay"></div>'+ctrl+'</div></div>';
+  var BYO=[['ml','Moneyline',1],['over','Overs',1],['hit','1+ Hit',2],['2tb','2+ TB',1],['hrr','2+ HRR',1],['hr','Home Run',0]];
+  var form='<div class="card"><div class="card-h">🛠 Build Your Own Parlay</div><div class="card-b"><div class="byo">'
+    +BYO.map(function(b){return '<label class="byoin">'+b[1]+'<input type="number" id="byo-'+b[0]+'" min="0" max="8" value="'+b[2]+'"></label>';}).join('')
+    +'<button class="rf" onclick="buildCustom()">⚡ Generate</button></div><div id="byoResult"><div class="note" style="padding:0">Set how many of each prop type, then Generate. Best available legs from today’s boards (no duplicate players).</div></div></div></div>';
+  $('parlay').innerHTML=sugg+form; tpRecalc();
 }
-
+function buildCustom(){
+  var order=['ml','over','hit','2tb','hrr','hr'];
+  var c=tpCandidates();
+  var bf=D.boardsFull||D.boards||{};
+  (bf.hr||[]).slice(0,15).forEach(function(r){c.push({desc:r.name+' HR',betType:'hr',gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:Math.min(.30,(r.metric||50)/250)});});
+  var byType={};c.forEach(function(x){(byType[x.betType]=byType[x.betType]||[]).push(x);});
+  Object.keys(byType).forEach(function(t){byType[t].sort(function(a,b){return (b.prob||0)-(a.prob||0);});});
+  var picked=[],usedP={};
+  order.forEach(function(t){var el=$('byo-'+t);var want=el?parseInt(el.value||0,10)||0:0;var arr=byType[t]||[];var n=0;for(var i=0;i<arr.length&&n<want;i++){var x=arr[i];if(x.playerId&&usedP[x.playerId])continue;picked.push(x);if(x.playerId)usedP[x.playerId]=1;n++;}});
+  if(!picked.length){$('byoResult').innerHTML='<div class="note" style="padding:0">Pick at least one leg type, then Generate.</div>';return;}
+  var byG={};picked.forEach(function(l){(byG[l.gamePk]=byG[l.gamePk]||[]).push(l);});
+  var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(l){gd*=amDec(fairAmNum(l.prob));});dec*=arr.length>=2?(1+(gd-1)*.62):gd;});
+  $('byoResult').innerHTML=picked.map(function(l,i){var ti=legTierInfo(l);return '<div class="leg"><span class="ln">'+(i+1)+'</span><span class="ld">'+esc(l.desc)+' <span class="badge '+ti[1]+'">'+ti[0]+'</span></span><span class="lp">'+amStr(fairAmNum(l.prob))+'</span></div>';}).join('')
+    +'<div class="tppay"><b>Combined '+decToAm(dec)+'</b> · ≈'+(100/dec).toFixed(1)+'% to hit · $10→$'+Math.round(10*dec).toLocaleString()+' · $100→$'+Math.round(100*dec).toLocaleString()+'. Model-fair (no vig); same-game legs get a 0.62 correlation discount.</div>';
+}
 
 function renderPerformance(){
   var roi=D.roi||{},ml=roi.ml||{},par=roi.parlay||{},clv=D.clv||{};
