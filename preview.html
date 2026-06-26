@@ -14,9 +14,9 @@
 <title>MLB 2026 — Daily Edge</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
-:root{--bg:#efe4c8;--panel:#fdf8ec;--panel2:#ece0c2;--line:#d6c098;--txt:#2c2218;--muted:#8a7752;--accent:#138086;--accent2:#e8632a;--win:#138086;--draw:#a8946d;--lose:#cc4631;--gold:#d99a07;--mono:'Space Mono','SFMono-Regular',ui-monospace,monospace;--sans:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;--card-sh:3px 3px 0 rgba(44,34,24,.13);}
+:root{--bg:#eef1f7;--panel:#ffffff;--panel2:#e6ebf4;--line:#bcc7db;--txt:#0a1a3a;--muted:#566586;--accent:#0a3161;--accent2:#bf0a30;--win:#0a3161;--draw:#8893a8;--lose:#bf0a30;--gold:#c8992f;--mono:'Space Mono','SFMono-Regular',ui-monospace,monospace;--sans:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;--card-sh:3px 3px 0 rgba(10,26,58,.16);}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--sans);background-image:radial-gradient(rgba(138,119,82,.07) 1px,transparent 1px);background-size:18px 18px;}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--sans);background-image:radial-gradient(rgba(10,49,97,.06) 1px,transparent 1px);background-size:18px 18px;}
 header{padding:20px 16px 0;max-width:1100px;margin:0 auto}
 h1{font-family:var(--mono);text-transform:uppercase;letter-spacing:1px;font-size:26px;margin:0 0 4px;font-weight:700}
 h1 span{color:var(--accent2)}
@@ -182,6 +182,8 @@ function rate10fn(rows,valFn){var vals=rows.map(valFn).filter(function(v){return
 function ratePill(r){var n=parseFloat(r);var c=isNaN(n)?'b-pass':n>=8?'b-strong':n>=6.5?'b-lean':'b-pass';return '<span class="badge '+c+'">'+r+'</span>';}
 function teamsOf(gc){var p=(gc.game||'').split('@');return {away:(gc.away_sp&&gc.away_sp.team)||p[0]||'AWY',home:(gc.home_sp&&gc.home_sp.team)||p[1]||'HOM'};}
 function tierBadge(t){t=(t||'').toUpperCase();var c=t==='STRONG'?'b-strong':t==='LEAN'?'b-lean':'b-pass';return '<span class="badge '+c+'">'+esc(t||'—')+'</span>';}
+function handBadge(t){if(!t)return '';var c=t==='L'?'b-loss':'b-strong';return '<span class="badge '+c+'">'+esc(t)+'HP</span>';}
+function spTierBadge(tier){if(!tier)return '';var t=(''+tier).toUpperCase();var c=(t.indexOf('ELITE')>=0||t.indexOf('GOOD')>=0)?'b-strong':(t.indexOf('POOR')>=0||t.indexOf('BELOW')>=0||t.indexOf('BAD')>=0)?'b-loss':'b-pass';return '<span class="badge '+c+'">'+esc(tier)+'</span>';}
 function windArrows(z){if(!z||!z.length)return '';var A={out:['⬆','var(--accent)'],in:['⬇','var(--lose)'],cross:['⬌','var(--draw)']};return '<div class="wind">'+z.map(function(w){var a=A[w.dir]||['·','var(--muted)'];return '<span class="wz"><span class="wzl">'+esc(w.zone)+'</span><span class="wza" style="color:'+a[1]+'">'+a[0]+'</span><span class="wzm">'+w.mph+'</span></span>';}).join('')+'</div>';}
 
 function gameProps(pk){var bf=D.boardsFull||D.boards||{};var out=[];[['hr','HR'],['h1','1+H'],['h2','2B'],['tb2','2TB'],['hrr','HRR']].forEach(function(d){(bf[d[0]]||[]).filter(function(r){return r.gamePk===pk;}).slice(0,2).forEach(function(r){out.push({lbl:d[1],name:r.name,team:r.team,pid:r.playerId,gp:r.gamePk,metric:r.metric});});});return out;}
@@ -200,8 +202,8 @@ function renderSlate(){
       +'<div class="card-h"><span>'+esc(tm.away)+' @ '+esc(tm.home)+'</span><span class="t">'+esc(fmtTime(g.time))+'</span></div>'
       +'<div class="card-b">'
         +'<div class="teams">'
-          +'<div class="team'+(awayFav&&pick?' fav':'')+'">'+teamLogo(tm.away)+'<span class="abbr">'+esc(tm.away)+'</span><span class="nm">'+esc(asp.name||'')+(asp.throws?' ('+esc(asp.throws)+'HP)':'')+(asp.tier?' · '+esc(asp.tier):'')+'</span><span class="rs">'+ar+'</span></div>'
-          +'<div class="team'+(!awayFav&&pick?' fav':'')+'">'+teamLogo(tm.home)+'<span class="abbr">'+esc(tm.home)+'</span><span class="nm">'+esc(hspx.name||'')+(hspx.throws?' ('+esc(hspx.throws)+'HP)':'')+(hspx.tier?' · '+esc(hspx.tier):'')+'</span><span class="rs">'+hr+'</span></div>'
+          +'<div class="team'+(awayFav&&pick?' fav':'')+'">'+teamLogo(tm.away)+'<span class="abbr">'+esc(tm.away)+'</span><span class="nm">'+esc(asp.name||'')+' '+handBadge(asp.throws)+spTierBadge(asp.tier)+'</span><span class="rs">'+ar+'</span></div>'
+          +'<div class="team'+(!awayFav&&pick?' fav':'')+'">'+teamLogo(tm.home)+'<span class="abbr">'+esc(tm.home)+'</span><span class="nm">'+esc(hspx.name||'')+' '+handBadge(hspx.throws)+spTierBadge(hspx.tier)+'</span><span class="rs">'+hr+'</span></div>'
         +'</div>'
         +'<div class="probbar"><i style="width:'+aPct.toFixed(0)+'%;background:var(--accent)"></i><i style="width:'+hPct.toFixed(0)+'%;background:var(--lose)"></i></div>'
         +'<div class="probrow"><span>'+esc(tm.away)+' '+aPct.toFixed(0)+'%</span><span>'+hPct.toFixed(0)+'% '+esc(tm.home)+'</span></div>'
@@ -220,7 +222,7 @@ function renderMatchups(){
   if(!gc.length){$('matchups').innerHTML='<div class="empty">No matchups.</div>';return;}
   $('matchups').innerHTML='<div class="grid">'+gc.map(function(g){
     var tm=teamsOf(g),m=mlByPk[g.gamePk]||{},ou=ouByPk[g.gamePk]||{},nf=nrByPk[g.gamePk]||{};
-    function spL(sp){if(!sp)return '';return '<div class="sp"><b>'+esc(sp.name||'TBD')+'</b> ('+esc(sp.throws||'?')+'HP) · '+esc(sp.tier||'')+'<div class="arse">xERA '+(sp.xera!=null?sp.xera:'—')+' · ERA '+(sp.era!=null?sp.era:'—')+' · K9 '+(sp.k9!=null?sp.k9:'—')+(sp.arsenal?' · '+esc(sp.arsenal):'')+'</div></div>';}
+    function spL(sp){if(!sp)return '';return '<div class="sp"><b>'+esc(sp.name||'TBD')+'</b> '+handBadge(sp.throws)+' '+spTierBadge(sp.tier)+'<div class="arse">xERA '+(sp.xera!=null?sp.xera:'—')+' · ERA '+(sp.era!=null?sp.era:'—')+' · K9 '+(sp.k9!=null?sp.k9:'—')+(sp.arsenal?' · '+esc(sp.arsenal):'')+'</div></div>';}
     var kv='';
     if(m.team)kv+='<div class="kv"><span class="k">ML pick</span><span class="v">'+esc(m.team)+' '+tierBadge(m.tier)+'</span></div>';
     if(m.odds)kv+='<div class="kv"><span class="k">Odds</span><span class="v">'+esc(m.odds)+'</span></div>';
