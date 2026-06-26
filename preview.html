@@ -151,6 +151,8 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
 .sgptag{font-family:var(--mono);font-size:10px;color:var(--accent);text-transform:uppercase;margin:8px 0 2px;font-weight:700;letter-spacing:.5px}
 .tppay{font-family:var(--mono);font-size:12px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin:10px 0;line-height:1.5}
 .evf{font-family:var(--mono);font-size:9px;font-weight:800;color:var(--lose);margin-left:4px}
+
+.luok{color:#1b9e4b;font-weight:800;font-family:var(--mono);margin-left:4px}
 </style>
 </head>
 <body>
@@ -209,8 +211,8 @@ function renderSlate(){
       +'<div class="card-h"><span>'+esc(tm.away)+' @ '+esc(tm.home)+'</span><span class="t">'+esc(fmtTime(g.time))+'</span></div>'
       +'<div class="card-b">'
         +'<div class="teams">'
-          +'<div class="team'+(awayFav&&pick?' fav':'')+'">'+teamLogo(tm.away)+'<span class="abbr">'+esc(tm.away)+'</span><span class="nm">'+esc(asp.name||'')+' '+handBadge(asp.throws)+spTierBadge(asp.tier)+'</span><span class="rs">'+ar+'</span></div>'
-          +'<div class="team'+(!awayFav&&pick?' fav':'')+'">'+teamLogo(tm.home)+'<span class="abbr">'+esc(tm.home)+'</span><span class="nm">'+esc(hspx.name||'')+' '+handBadge(hspx.throws)+spTierBadge(hspx.tier)+'</span><span class="rs">'+hr+'</span></div>'
+          +'<div class="team'+(awayFav&&pick?' fav':'')+'">'+teamLogo(tm.away)+'<span class="abbr">'+esc(tm.away)+'</span>'+(g.lineups_official?'<span class="luok" title="Lineup confirmed">✓</span>':'')+'<span class="nm">'+esc(asp.name||'')+' '+handBadge(asp.throws)+spTierBadge(asp.tier)+'</span><span class="rs">'+ar+'</span></div>'
+          +'<div class="team'+(!awayFav&&pick?' fav':'')+'">'+teamLogo(tm.home)+'<span class="abbr">'+esc(tm.home)+'</span>'+(g.lineups_official?'<span class="luok" title="Lineup confirmed">✓</span>':'')+'<span class="nm">'+esc(hspx.name||'')+' '+handBadge(hspx.throws)+spTierBadge(hspx.tier)+'</span><span class="rs">'+hr+'</span></div>'
         +'</div>'
         +'<div class="probbar"><i style="width:'+aPct.toFixed(0)+'%;background:var(--accent)"></i><i style="width:'+hPct.toFixed(0)+'%;background:var(--lose)"></i></div>'
         +'<div class="probrow"><span>'+esc(tm.away)+' '+aPct.toFixed(0)+'%</span><span>'+hPct.toFixed(0)+'% '+esc(tm.home)+'</span></div>'
