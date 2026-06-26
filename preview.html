@@ -125,6 +125,14 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
 .mx-bbev{font-size:14px;font-weight:800;font-family:var(--mono)}.mx-bbsub{font-size:8px;color:var(--muted);font-family:var(--mono)}
 .mx-loading{color:var(--muted);font-size:11px;padding:8px;font-family:var(--mono)}.mx-note{font-size:9px;color:var(--accent2);margin-top:4px;font-family:var(--mono)}
 .rate{font-family:var(--mono)}
+
+.tpctrl{display:flex;gap:8px;margin-bottom:10px}
+.tpsel{font-family:var(--sans);padding:6px;border:1.5px solid var(--line);border-radius:7px;max-width:240px;background:var(--panel)}
+.tpauto{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.tpauto button{font-family:var(--mono);font-size:10px;font-weight:700;background:var(--panel2);border:1.5px solid var(--line);border-radius:6px;padding:4px 8px;cursor:pointer;text-transform:uppercase}
+.leg-od{width:60px;font-family:var(--mono);font-weight:700;text-align:center;border:1.5px solid var(--line);border-radius:6px;padding:2px 4px;background:var(--panel);color:var(--txt)}
+.leg-od.odbad{border-color:var(--lose);color:var(--lose);background:rgba(204,70,49,.08)}
+.tprm{color:var(--lose);font-weight:800;cursor:pointer;font-family:var(--mono);margin-left:6px}
 </style>
 </head>
 <body>
@@ -135,6 +143,7 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
 </header>
 <main>
   <section id="slate" class="active"></section>
+  <section id="picks"></section>
   <section id="matchups"></section>
   <section id="props"></section>
   <section id="parlay"></section>
@@ -225,13 +234,56 @@ function showProp(k,btn){
   body.innerHTML=(bf[k]||[]).map(function(r,i){var oc=r.playerId?' onclick="openMatchupModal('+r.playerId+','+r.gamePk+',&quot;'+esc(r.name).replace(/&quot;|"/g,'')+'&quot;,&quot;'+esc(r.team||'')+'&quot;)"':'';return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+(def[2]?'<span class="unit"> '+def[2]+'</span>':'')+'</span></div>';}).join('')||'<div class="empty">Board posts with confirmed lineups.</div>';
 }
 
-function fairAm(p){p=Math.max(.05,Math.min(.95,p||.5));return p>=.5?('-'+Math.round(100*p/(1-p))):('+'+Math.round(100*(1-p)/p));}
-function renderParlay(){
-  var tp=D.topParlay||{},legs=tp.legs||[];
-  if(!legs.length){$('parlay').innerHTML='<div class="empty">'+esc(tp.note||'No suggested parlay today.')+'</div>';return;}
-  var dec=1;legs.forEach(function(l){var p=Math.max(.05,Math.min(.95,l.prob||.5));dec*=1/p;});
-  $('parlay').innerHTML='<div class="card"><div class="card-h"><span>'+esc(tp.name||'Suggested Parlay')+'</span><span class="t">'+legs.length+' legs</span></div>'+legs.map(function(l,i){return '<div class="leg"><span class="ln">'+(i+1)+'</span><span class="ld">'+esc(l.desc)+'</span><span class="lp">'+fairAm(l.prob)+'</span></div>';}).join('')+'<div class="note">Model-fair prices (no vig). Combined ≈ '+fairAm(1/dec)+' · '+(100/dec).toFixed(1)+'% to hit. Verify each line at your book.</div></div>';
+function amDec(a){return a>=0?1+a/100:1+100/(-a);}
+function decToAm(d){return d>=2?('+'+Math.round((d-1)*100)):('-'+Math.round(100/(d-1)));}
+function fairAmNum(p){p=Math.max(.05,Math.min(.95,p||.5));return p>=.5?-Math.round(100*p/(1-p)):Math.round(100*(1-p)/p);}
+function amStr(a){return a>=0?'+'+a:''+a;}
+function renderPicks(){
+  var ml=(D.ml||[]).slice();var g={STRONG:[],LEAN:[],PASS:[]};
+  ml.forEach(function(p){var t=(p.tier||'PASS').toUpperCase();(g[t]||g.PASS).push(p);});
+  function teamOf(p){return p.team||(p.pickSide==='home'?p.home:p.away);}
+  function sec(title,arr,cls){if(!arr.length)return '';arr.sort(function(a,b){return (b.edge==null?-99:b.edge)-(a.edge==null?-99:a.edge);});
+    return '<div class="card"><div class="card-h">'+title+' ('+arr.length+')</div>'+arr.map(function(p){var tm=teamOf(p);
+      return '<div class="prow"><span class="pnm" style="cursor:default;display:flex;align-items:center;gap:6px">'+teamLogo(tm)+'<b>'+esc(tm||'—')+'</b><span class="ptm">'+esc(p.away)+'@'+esc(p.home)+'</span></span><span class="badge '+cls+'">'+esc(p.tier)+'</span><span class="pmetric">'+(p.conf!=null?p.conf+'%':'—')+'<span class="unit">'+(p.edge!=null?' '+(p.edge>0?'+':'')+p.edge+'e':'')+'</span></span><span class="pmetric" style="color:var(--txt);min-width:auto">'+esc(p.odds||'')+'</span></div>';}).join('')+'</div>';}
+  var html=sec('★ STRONG Picks',g.STRONG,'b-strong')+sec('LEAN Picks',g.LEAN,'b-lean');
+  if(!g.STRONG.length&&!g.LEAN.length) html='<div class="empty">No STRONG or LEAN moneyline picks today — the model passed every game (no edge over the market price).</div>';
+  if(g.PASS.length){html+='<details class="pl-day"><summary>PASS — '+g.PASS.length+' games (no edge)</summary><div class="pl-legs">'+g.PASS.map(function(p){var tm=teamOf(p);return '<div class="pl-leg">'+esc(p.away)+'@'+esc(p.home)+' · lean '+esc(tm||'—')+' '+(p.conf!=null?p.conf+'%':'')+(p.edge!=null?' ('+(p.edge>0?'+':'')+p.edge+'e)':'')+'</div>';}).join('')+'</div></details>';}
+  $('picks').innerHTML=html;
 }
+var TP_WORK=null;
+function legTierInfo(l){
+  var bf=D.boardsFull||D.boards||{};var map={hit:'h1','2tb':'tb2',hrr:'hrr',hr:'hr','2b':'h2'};
+  if(l.betType==='ml'){var m=(D.ml||[]).filter(function(p){return p.gamePk===l.gamePk&&p.team===l.team;})[0];var t=m&&m.tier;return t==='STRONG'?['STRONG','b-strong']:t==='LEAN'?['LEAN','b-lean']:['WEAK','b-pass'];}
+  if(l.betType==='over'){var ou=(bf.ou||[]).filter(function(o){return o.gamePk===l.gamePk;})[0];var e=ou?((ou.proj||0)-(ou.line||0)):0;return e>=1?['STRONG','b-strong']:e>=.4?['LEAN','b-lean']:['WEAK','b-pass'];}
+  var bk=map[l.betType];if(bk){var bd=bf[bk]||[];var rt=rate10fn(bd,function(r){return r.metric;});var row=bd.filter(function(r){return r.playerId===l.playerId;})[0];if(row){var rg=parseFloat(rt(row.metric));return rg>=8?['STRONG','b-strong']:rg>=6.5?['LEAN','b-lean']:['WEAK','b-pass'];}}
+  return (l.prob||0)>=.6?['LEAN','b-lean']:['WEAK','b-pass'];
+}
+function tpCandidates(){
+  var bf=D.boardsFull||D.boards||{};var out=[];
+  (D.ml||[]).forEach(function(p){if(p.tier==='STRONG'||p.tier==='LEAN'){out.push({desc:(p.team||'')+' ML ('+p.tier+')',betType:'ml',gamePk:p.gamePk,team:p.team,prob:(p.conf||55)/100});}});
+  (bf.ou||[]).forEach(function(o){if(o.lean==='OVER'){out.push({desc:'Game Over '+o.line+' (proj '+o.proj+')',betType:'over',gamePk:o.gamePk,line:o.line,prob:Math.min(.62,.5+(((o.proj||0)-(o.line||0)))*.04)});}});
+  var P=[['hr','HR','hr',function(m){return Math.min(.30,(m||50)/250);}],['h1','1+ hit','hit',function(m){return Math.min(.85,(m||60)/100);}],['tb2','2+ total bases','2tb',function(m){return .40;}],['hrr','2+ hits/runs/RBI','hrr',function(m){return .42;}]];
+  P.forEach(function(d){(bf[d[0]]||[]).slice(0,15).forEach(function(r){out.push({desc:r.name+' '+d[1],betType:d[2],gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:d[3](r.metric)});});});
+  return out;
+}
+function tpRemove(id){if(TP_WORK){TP_WORK=TP_WORK.filter(function(l){return l._id!==id;});renderParlay();}}
+function tpReset(){TP_WORK=null;renderParlay();}
+function tpAutoAdd(type){var c=tpCandidates();if(!TP_WORK)TP_WORK=[];var inW={};TP_WORK.forEach(function(l){inW[(l.betType)+'|'+(l.playerId||l.gamePk)]=1;});var TW={ml:1,over:1.05,'2tb':1.3,hrr:1.2,hr:1,hit:.7};var best=null,bv=-1;c.forEach(function(x){if(type&&x.betType!==type)return;var k=(x.betType)+'|'+(x.playerId||x.gamePk);if(inW[k])return;var v=(x.prob||0)*(TW[x.betType]||1);if(v>bv){bv=v;best=x;}});if(!best)return;var nl=Object.assign({},best);nl._id='a'+Date.now();TP_WORK.push(nl);renderParlay();}
+function tpAddOpen(){var p=$('tpAddBox');if(!p)return;if(p.getAttribute('data-open')){p.style.display='none';p.removeAttribute('data-open');return;}p.setAttribute('data-open','1');var c=tpCandidates();window._TPC=c;var inW={};(TP_WORK||[]).forEach(function(l){inW[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;});var opts=c.map(function(x,i){var k=(x.betType)+'|'+(x.playerId||x.gamePk)+'|'+x.desc;if(inW[k])return '';return '<option value="'+i+'">'+esc(x.desc)+'</option>';}).filter(Boolean).join('');p.innerHTML='<div style="margin-bottom:6px"><select id="tpSel" class="tpsel">'+opts+'</select> <button class="rf" onclick="tpAddSel()">Add selected</button></div><div class="tpauto"><span style="font-size:10px;color:var(--muted)">🤖 Algo adds best:</span><button onclick="tpAutoAdd(\'hr\')">HR</button><button onclick="tpAutoAdd(\'hit\')">1+Hit</button><button onclick="tpAutoAdd(\'2tb\')">2TB</button><button onclick="tpAutoAdd(\'hrr\')">HRR</button><button onclick="tpAutoAdd(\'ml\')">ML</button><button onclick="tpAutoAdd(\'over\')">Over</button><button onclick="tpAutoAdd(\'\')">Any</button></div>';p.style.display='block';}
+function tpAddSel(){var s=$('tpSel');if(!s||s.value==='')return;var c=window._TPC[+s.value];if(!c)return;if(!TP_WORK)TP_WORK=[];var nl=Object.assign({},c);nl._id='m'+Date.now();TP_WORK.push(nl);renderParlay();tpAddOpen();}
+function tpRecalc(){var inputs=[].slice.call(document.querySelectorAll('#parlay .leg-od'));if(!inputs.length)return;var SGP=.62,byG={};inputs.forEach(function(i){var g=i.dataset.game;(byG[g]=byG[g]||[]).push(i);});var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(i){var a=parseFloat(i.value);gd*=isNaN(a)?1:amDec(a);});dec*=arr.length>=2?(1+(gd-1)*SGP):gd;});inputs.forEach(function(i){var a=parseFloat(i.value);var mp=parseFloat(i.dataset.prob);var ev=document.getElementById(i.dataset.ev);if(isNaN(a)){i.classList.remove('odbad');if(ev)ev.textContent='';return;}var imp=a<0?(-a)/(-a+100):100/(a+100);if(imp-mp>.07){i.classList.add('odbad');if(ev){ev.textContent='−EV';ev.style.color='var(--lose)';}}else{i.classList.remove('odbad');if(ev)ev.textContent='';}});var pay=$('tpPay');if(pay)pay.innerHTML='<b>Combined '+decToAm(dec)+'</b> · ≈'+(100/dec).toFixed(1)+'% to hit · $10→$'+Math.round(10*dec).toLocaleString()+' · $100→$'+Math.round(100*dec).toLocaleString()+'. Edit any leg to your book price; red −EV = book more confident than model. Same-game legs get a 0.62 correlation discount.';}
+function renderParlay(){
+  var tp=D.topParlay||{};
+  if(TP_WORK===null){ TP_WORK=(tp.legs||[]).map(function(l,i){var c=Object.assign({},l);c._id='s'+i;return c;}); }
+  var legs=TP_WORK;
+  var ctrl='<div class="tpctrl"><button class="rf" onclick="tpAddOpen()">➕ Add leg</button><button class="rf" onclick="tpReset()">↺ Reset to model</button></div><div id="tpAddBox" style="display:none;margin-bottom:10px"></div>';
+  if(!legs.length){ $('parlay').innerHTML='<div class="empty">No legs in your parlay.</div>'+ctrl; return; }
+  var groups={},order=[];legs.forEach(function(l){var k=l.gamePk||'x';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(l);});
+  var num=0,body='';
+  order.forEach(function(pk){var gl=groups[pk];var isSgp=gl.length>=2;body+='<div class="card"><div class="card-h"><span>'+(isSgp?gl.length+' legs → SGP':'Single leg')+'</span></div>'+gl.map(function(l){num++;var a=fairAmNum(l.prob);var ti=legTierInfo(l);var ev='ev'+num;return '<div class="leg"><span class="ln">'+num+'</span><span class="ld">'+esc(l.desc)+' <span class="badge '+ti[1]+'">'+ti[0]+'</span> <span id="'+ev+'" style="font-family:var(--mono);font-size:9px;font-weight:800"></span></span><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+ev+'" value="'+amStr(a)+'" oninput="tpRecalc()" title="Your book price"><span class="tprm" onclick="tpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';}).join('')+'</div>';});
+  $('parlay').innerHTML=ctrl+body+'<div class="card"><div class="note" id="tpPay"></div></div>'; tpRecalc();
+}
+
 
 function renderPerformance(){
   var roi=D.roi||{},ml=roi.ml||{},par=roi.parlay||{},clv=D.clv||{};
@@ -254,11 +306,11 @@ function renderLibrary(){
   }).join('');
 }
 
-var TABS=[['slate','Slate'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['library','Library']];
+var TABS=[['slate','Slate'],['picks','Picks'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['library','Library']];
 function buildNav(){$('nav').innerHTML=TABS.map(function(t,i){return '<button class="'+(i===0?'active':'')+'" data-s="'+t[0]+'" onclick="showTab(\''+t[0]+'\',this)">'+esc(t[1])+'</button>';}).join('');}
 function showTab(id,btn){var ss=document.querySelectorAll('main section');for(var i=0;i<ss.length;i++)ss[i].classList.remove('active');$(id).classList.add('active');var bs=document.querySelectorAll('nav button');for(var j=0;j<bs.length;j++)bs[j].classList.remove('active');if(btn)btn.classList.add('active');}
 function renderMeta(){var n=(D.gameCards||[]).length;var upd=D.generatedAt?new Date(D.generatedAt).toLocaleString():'—';$('meta').innerHTML='<span>'+esc(D.date||'')+'</span><span>'+n+' games today</span><span>updated '+esc(upd)+'</span><span>'+esc(D.version||'')+'</span><button class="rf" onclick="refresh()">↻ Refresh</button>';$('foot').textContent='Model output presented as-is · '+esc(D.version||'')+' · click a player for the Statcast deep-dive · not financial advice';}
-function renderAll(){renderMeta();renderSlate();renderMatchups();renderProps();renderParlay();renderPerformance();renderLibrary();}
+function renderAll(){renderMeta();renderSlate();renderPicks();renderMatchups();renderProps();renderParlay();renderPerformance();renderLibrary();}
 async function refresh(){if(!DATA_URL){location.reload();return;}try{var r=await fetch(DATA_URL+(DATA_URL.indexOf('?')<0?'?':'&')+'_='+Date.now());D=await r.json();MODEL_DATA=D;renderAll();}catch(e){location.reload();}}
 buildNav();renderAll();
 </script>
