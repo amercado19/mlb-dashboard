@@ -190,6 +190,8 @@ function hs(pid,small){return pid?'<img class="hs" src="https://img.mlbstatic.co
 function rate10fn(rows,valFn){var vals=rows.map(valFn).filter(function(v){return v!=null;});if(!vals.length)return function(){return '—';};var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);return function(v){if(v==null)return '—';if(mx===mn)return '7.5';return (1+9*(v-mn)/(mx-mn)).toFixed(1);};}
 function ratePill(r){var n=parseFloat(r);var c=isNaN(n)?'b-pass':n>=8?'b-strong':n>=6.5?'b-lean':'b-pass';return '<span class="badge '+c+'">'+r+'</span>';}
 function teamsOf(gc){var p=(gc.game||'').split('@');return {away:(gc.away_sp&&gc.away_sp.team)||p[0]||'AWY',home:(gc.home_sp&&gc.home_sp.team)||p[1]||'HOM'};}
+function gameLabelByPk(pk){var c=(D.gameCards||[]).filter(function(x){return x.gamePk===pk;})[0];if(c&&c.game)return c.game;var m=(D.ml||[]).filter(function(x){return x.gamePk===pk;})[0];return m?(m.away+'@'+m.home):'';}
+function legDesc(l){var d=l.desc||'';if((l.betType==='over'||l.betType==='under')){var g=gameLabelByPk(l.gamePk);if(g&&d.indexOf(g)<0)d=g+' '+d;}return d;}
 function tierBadge(t){t=(t||'').toUpperCase();var c=t==='STRONG'?'b-strong':t==='LEAN'?'b-lean':'b-pass';return '<span class="badge '+c+'">'+esc(t||'—')+'</span>';}
 function handBadge(t){if(!t)return '';var c=t==='L'?'b-loss':'b-strong';return '<span class="badge '+c+'">'+esc(t)+'HP</span>';}
 function spTierBadge(tier){if(!tier)return '';var t=(''+tier).toUpperCase();var c=(t.indexOf('ELITE')>=0||t.indexOf('GOOD')>=0)?'b-strong':(t.indexOf('POOR')>=0||t.indexOf('BELOW')>=0||t.indexOf('BAD')>=0)?'b-loss':'b-pass';return '<span class="badge '+c+'">'+esc(tier)+'</span>';}
@@ -291,7 +293,7 @@ function legTierInfo(l){
 function tpCandidates(){
   var bf=D.boardsFull||D.boards||{};var out=[];
   (D.ml||[]).forEach(function(p){if(p.tier==='STRONG'||p.tier==='LEAN'){out.push({desc:(p.team||'')+' ML ('+p.tier+')',betType:'ml',gamePk:p.gamePk,team:p.team,prob:(p.conf||55)/100});}});
-  (bf.ou||[]).forEach(function(o){if(o.lean==='OVER'){out.push({desc:'Game Over '+o.line+' (proj '+o.proj+')',betType:'over',gamePk:o.gamePk,line:o.line,prob:Math.min(.62,.5+(((o.proj||0)-(o.line||0)))*.04)});}});
+  (bf.ou||[]).forEach(function(o){if(o.lean==='OVER'){out.push({desc:(gameLabelByPk(o.gamePk)||'Game')+' Over '+o.line+' (proj '+o.proj+')',betType:'over',gamePk:o.gamePk,line:o.line,prob:Math.min(.62,.5+(((o.proj||0)-(o.line||0)))*.04)});}});
   var P=[['hr','HR','hr',function(m){return Math.min(.30,(m||50)/250);}],['h1','1+ hit','hit',function(m){return Math.min(.85,(m||60)/100);}],['tb2','2+ total bases','2tb',function(m){return .40;}],['hrr','2+ hits/runs/RBI','hrr',function(m){return .42;}]];
   P.forEach(function(d){(bf[d[0]]||[]).slice(0,15).forEach(function(r){out.push({desc:r.name+' '+d[1],betType:d[2],gamePk:r.gamePk,playerId:r.playerId,team:r.team,prob:d[3](r.metric)});});});
   return out;
@@ -312,7 +314,7 @@ function renderParlay(){
     var num=0;
     order.forEach(function(pk){var gl=groups[pk];if(gl.length>=2)legHtml+='<div class="sgptag">▸ '+gl.length+'-leg same-game</div>';
       gl.forEach(function(l){num++;var a=fairAmNum(l.prob);var ti=legTierInfo(l);var ev='ev'+num;
-        legHtml+='<div class="leg"><span class="ln">'+num+'</span><span class="ld">'+esc(l.desc)+' <span class="badge '+ti[1]+'">'+ti[0]+'</span> <span id="'+ev+'" class="evf"></span></span><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+ev+'" value="'+amStr(a)+'" oninput="tpRecalc()" title="Your book price"><span class="tprm" onclick="tpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';});
+        legHtml+='<div class="leg"><span class="ln">'+num+'</span><span class="ld">'+esc(legDesc(l))+' <span class="badge '+ti[1]+'">'+ti[0]+'</span> <span id="'+ev+'" class="evf"></span></span><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+ev+'" value="'+amStr(a)+'" oninput="tpRecalc()" title="Your book price"><span class="tprm" onclick="tpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';});
     });
   } else { legHtml='<div class="empty" style="padding:14px">No legs — add some below or reset to the model parlay.</div>'; }
   var ctrl='<div class="tpctrl"><button class="rf" onclick="tpAddOpen()">➕ Add leg</button><button class="rf" onclick="tpReset()">↺ Reset to model</button></div><div id="tpAddBox" style="display:none;margin-top:8px"></div>';
@@ -337,7 +339,7 @@ function buildCustom(){
   if(!picked.length){$('byoResult').innerHTML='<div class="note" style="padding:0">Pick at least one leg type, then Generate.</div>';return;}
   var byG={};picked.forEach(function(l){(byG[l.gamePk]=byG[l.gamePk]||[]).push(l);});
   var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(l){gd*=amDec(fairAmNum(l.prob));});dec*=arr.length>=2?(1+(gd-1)*.62):gd;});
-  $('byoResult').innerHTML=picked.map(function(l,i){var ti=legTierInfo(l);return '<div class="leg"><span class="ln">'+(i+1)+'</span><span class="ld">'+esc(l.desc)+' <span class="badge '+ti[1]+'">'+ti[0]+'</span></span><span class="lp">'+amStr(fairAmNum(l.prob))+'</span></div>';}).join('')
+  $('byoResult').innerHTML=picked.map(function(l,i){var ti=legTierInfo(l);return '<div class="leg"><span class="ln">'+(i+1)+'</span><span class="ld">'+esc(legDesc(l))+' <span class="badge '+ti[1]+'">'+ti[0]+'</span></span><span class="lp">'+amStr(fairAmNum(l.prob))+'</span></div>';}).join('')
     +'<div class="tppay"><b>Combined '+decToAm(dec)+'</b> · ≈'+(100/dec).toFixed(1)+'% to hit · $10→$'+Math.round(10*dec).toLocaleString()+' · $100→$'+Math.round(100*dec).toLocaleString()+'. Model-fair (no vig); same-game legs get a 0.62 correlation discount.</div>';
 }
 
