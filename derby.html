@@ -154,6 +154,8 @@ input[type=number]{font-family:inherit}
       <span><span class="dot" style="background:#9fb0cc"></span>Other batted ball</span>
       <span>· grey arc = CBP fence · "CBP boost" = extra HRs the park gives them</span>
     </div>
+    <div style="margin-top:12px"><button onclick="bpToggle()" style="background:transparent;color:var(--navy2);border:.5px solid var(--line);border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit">✎ Edit / add BP pitchers</button></div>
+    <div id="bpEdit" style="display:none;margin-top:10px"></div>
   </div>
 
   <!-- MODEL -->
@@ -245,11 +247,11 @@ const P=[
  {n:"Junior Caminero",id:691406,h:"R",fl:8,md:14,ce:18,ev:105.7,la:28.3,lg:463,p:"Tomás Francisco",watch:1,closer:1},
  {n:"Kyle Schwarber",id:656941,h:"L",fl:8,md:13,ce:18,ev:105.5,la:30.4,lg:460,p:"Rafael Peña",watch:1,closer:0},
  {n:"Ben Rice",id:700250,h:"L",fl:7,md:12,ce:16,ev:103.1,la:28.9,lg:433,p:"Dan Rice (dad)",watch:1,closer:0},
- {n:"Munetaka Murakami",id:808959,h:"L",fl:6,md:12,ce:16,ev:106.7,la:32.2,lg:451,p:"—",watch:1,closer:0},
+ {n:"Munetaka Murakami",id:808959,h:"L",fl:6,md:12,ce:16,ev:106.7,la:32.2,lg:451,p:"Luis Sierra",watch:1,closer:0},
  {n:"Jac Caglianone",id:695506,h:"L",fl:5,md:11,ce:16,ev:107.7,la:27.6,lg:444,p:"—",watch:1,closer:1},
- {n:"Jordan Walker",id:691023,h:"R",fl:5,md:10,ce:14,ev:105.7,la:27.5,lg:459,p:"—",watch:0,closer:1},
+ {n:"Jordan Walker",id:691023,h:"R",fl:5,md:10,ce:14,ev:105.7,la:27.5,lg:459,p:"Kleininger Terán",watch:0,closer:1},
  {n:"Bryce Harper",id:547180,h:"L",fl:6,md:9,ce:13,ev:104.4,la:29.0,lg:457,p:"Dino Ebel",watch:0,closer:0},
- {n:"Willson Contreras",id:575929,h:"R",fl:5,md:9,ce:13,ev:106.5,la:30.2,lg:449,p:"—",watch:0,closer:0}
+ {n:"Willson Contreras",id:575929,h:"R",fl:5,md:9,ce:13,ev:106.5,la:30.2,lg:449,p:"José David Flores",watch:0,closer:0}
 ];
 const KP=[[-45,329],[-30,374],[-15,392],[0,401],[15,388],[30,369],[45,330]];
 function wall(a){a=Math.max(-45,Math.min(45,a));for(let i=0;i<KP.length-1;i++){if(a>=KP[i][0]&&a<=KP[i+1][0]){const[x0,y0]=KP[i],[x1,y1]=KP[i+1];return y0+(y1-y0)*(a-x0)/(x1-x0);}}return 400;}
@@ -260,7 +262,7 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function card(pl){
   const hs='https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_120,q_auto:best/v1/people/'+pl.id+'/headshot/67/current';
   const tags=(pl.watch?'<span class="tag watch">15+ WATCH</span>':'')+(pl.closer?'<span class="tag closer">CLOSER</span>':'');
-  return `<div class="pcard"><div class="pc-head"><img src="${hs}" alt="" onerror="this.style.visibility='hidden'"><div><div class="nm">${esc(pl.n)} <span style="font-weight:400;color:#aebde4">${pl.h}</span></div><div class="meta">BP: ${esc(pl.p)}</div><div style="margin-top:3px">${tags}</div></div></div>`
+  return `<div class="pcard"><div class="pc-head"><img src="${hs}" alt="" onerror="this.style.visibility='hidden'"><div><div class="nm">${esc(pl.n)} <span style="font-weight:400;color:#aebde4">${pl.h}</span></div><div class="meta" id="bp-${pl.id}">BP: ${esc(pl.p)}</div><div style="margin-top:3px">${tags}</div></div></div>`
    +`<div class="pc-body"><div class="spraybox" id="sp-${pl.id}"><svg viewBox="0 0 200 200"><text x="100" y="95" text-anchor="middle" font-size="9" fill="#9fb0cc">loading spray…</text></svg></div>`
    +`<div class="pc-stats"><div class="row"><span>Proj R1</span><span class="big">${pl.fl}–${pl.ce}</span></div><div class="row"><span>Median</span><span>~${pl.md} HR</span></div><div class="row"><span>Avg EV</span><span>${pl.ev} mph</span></div><div class="row"><span>Launch</span><span>${pl.la}°</span></div><div class="row"><span>Longest</span><span>${pl.lg} ft</span></div><div class="row" id="cbp-${pl.id}"><span>CBP boost</span><span>…</span></div></div></div></div>`;
 }
@@ -490,6 +492,10 @@ function ltOdds(){
 }
 function ltRenderAll(){document.getElementById('ltPick').innerHTML=ltPickHTML();document.getElementById('ltCurrent').innerHTML=ltCurrentHTML();ltGrid();ltOdds();}
 ltRenderAll();
+// --- editable BP pitchers ---
+function bpToggle(){const e=document.getElementById('bpEdit');if(e.style.display==='none'){renderBP();e.style.display='block';}else e.style.display='none';}
+function renderBP(){document.getElementById('bpEdit').innerHTML='<div style="font-size:12px;color:var(--mut);margin-bottom:6px">Add or change a hitter\'s BP pitcher (there\'s no live feed for these — enter as news drops), then Apply.</div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px">'+P.map(pl=>`<label style="font-size:12px;display:flex;flex-direction:column;gap:2px"><span style="color:var(--mut)">${pl.n.split(' ').slice(1).join(' ')}</span><input id="bpin-${pl.id}" value="${pl.p==='—'?'':pl.p.replace(/"/g,'&quot;')}" placeholder="pitcher name" style="padding:5px 8px;border:.5px solid var(--line);border-radius:6px;font-size:13px;font-family:inherit"></label>`).join('')+'</div><button onclick="applyBP()" style="margin-top:10px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">Apply</button>';}
+function applyBP(){P.forEach(pl=>{const el=document.getElementById('bpin-'+pl.id);if(!el)return;const v=el.value;pl.p=(v&&v.trim())?v.trim():'—';const c=document.getElementById('bp-'+pl.id);if(c)c.textContent='BP: '+pl.p;});}
 (async()=>{for(const pl of P){await loadSpray(pl);}})();
 </script>
 </body>
