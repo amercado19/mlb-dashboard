@@ -349,14 +349,15 @@ function updateR1(){
 // --- Monte Carlo simulator ---
 const SW={r1:20,semi:15,fin:15};
 function gauss(){let u=0;for(let i=0;i<3;i++)u+=Math.random();return(u-1.5)*2;} // ~N(0,1), bounded ±3
-function hotness(){return Math.exp(gauss()*0.45);} // lognormal — the real Derby variance is "who gets hot"
+function hotness(){return Math.exp(gauss()*0.35);} // lognormal — the real Derby variance is "who gets hot"
 const FMEAN=P.reduce((a,p)=>a+p.md,0)/P.length/20; // field-average per-swing HR rate
 function pval(pl){const raw=pl.md/20;return Math.min(0.85,Math.max(0.12,0.60*raw+0.40*FMEAN));} // shrink 40% toward field mean
 function simRound(p,n,track){
-  const pe=Math.min(0.92,Math.max(0.05,p*hotness()));
+  const pe=Math.min(0.80,Math.max(0.05,p*hotness()));
   let hr=0,last=false;const arr=track?[]:null;
   for(let i=0;i<n;i++){last=Math.random()<pe;if(last)hr++;if(track)arr.push(last?1:0);}
-  if(last){while(true){const b=Math.random()<pe;if(track)arr.push(b?2:3);if(b){hr++;if(hr>80)break;}else break;}}
+  let bonus=0;
+  if(last){while(bonus<8){const b=Math.random()<pe;if(track)arr.push(b?2:3);if(b){hr++;bonus++;}else break;}}
   return{hr,arr};
 }
 function oneBracket(track){
@@ -387,8 +388,10 @@ function sampleSim(){
   const b=oneBracket(true);
   const sq=v=>{const c=v===1?'#1d7a4d':v===2?'#28c76f':'#cdd6e5';const br=v===2?'box-shadow:0 0 0 1px #0f5c34;':'';return `<span style="display:inline-block;width:11px;height:11px;border-radius:2px;background:${c};margin:1px;${br}"></span>`;};
   let html='<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--navy);margin-bottom:6px">One simulated Derby — Round 1, every swing</div>';
-  b.r1.slice().sort((a,z)=>z.hr-a.hr).forEach((r,i)=>{
-    html+=`<div style="margin:5px 0;display:flex;align-items:center;gap:8px"><span style="width:104px;font-size:13px;flex-shrink:0;${i<4?'font-weight:700':'color:#7c8698'}">${r.pl.n.split(' ').slice(1).join(' ')} ${i<4?'<span style="color:#1d7a4d">✓</span>':''}</span><span style="flex:1;line-height:1;min-width:0">${r.arr.map(sq).join('')}</span><span style="font-size:13px;font-weight:700;width:42px;text-align:right;flex-shrink:0">${r.hr}</span></div>`;
+  const advSet=new Set(b.adv.map(a=>a.pl.n));
+  b.r1.slice().sort((a,z)=>((advSet.has(z.pl.n)?1:0)-(advSet.has(a.pl.n)?1:0))||(z.hr-a.hr)).forEach((r)=>{
+    const isAdv=advSet.has(r.pl.n);
+    html+=`<div style="margin:5px 0;display:flex;align-items:center;gap:8px"><span style="width:104px;font-size:13px;flex-shrink:0;${isAdv?'font-weight:700':'color:#7c8698'}">${r.pl.n.split(' ').slice(1).join(' ')} ${isAdv?'<span style="color:#1d7a4d">✓</span>':''}</span><span style="flex:1;line-height:1;min-width:0">${r.arr.map(sq).join('')}</span><span style="font-size:13px;font-weight:700;width:42px;text-align:right;flex-shrink:0">${r.hr}</span></div>`;
   });
   html+='<div class="note" style="margin-top:4px"><span style="display:inline-block;width:9px;height:9px;background:#1d7a4d;border-radius:2px"></span> HR · <span style="display:inline-block;width:9px;height:9px;background:#28c76f;border-radius:2px"></span> bonus-swing HR · <span style="display:inline-block;width:9px;height:9px;background:#cdd6e5;border-radius:2px"></span> foul/out. Top 4 advance.</div>';
   html+=`<div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px"><div><b>Semi A →</b> ${b.sA.n.split(' ').slice(1).join(' ')}</div><div><b>Semi B →</b> ${b.sB.n.split(' ').slice(1).join(' ')}</div></div>`;
