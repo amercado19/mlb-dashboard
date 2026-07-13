@@ -15,16 +15,20 @@ h1{font-size:30px;font-weight:700;margin:0;letter-spacing:.5px;text-transform:up
 h1 .yr{color:var(--red)}
 .sub{color:var(--mut);font-size:13px;margin-top:4px}
 .hdr{background:var(--navy);color:#fff;border-radius:14px 14px 0 0;padding:18px 22px}
-.hdr h1{color:#fff}
-.hdr .sub{color:#aebde4}
+.hdr h1{color:#fff}.hdr .sub{color:#aebde4}
 .stripe{height:4px;background:var(--red)}
 .wx{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .wxb{background:rgba(255,255,255,.10);border-radius:10px;padding:8px 12px;font-size:12px;color:#dbe4f7}
 .wxb b{color:#fff;font-size:15px;display:block}
 .sec{background:var(--card);border:.5px solid var(--line);border-radius:12px;box-shadow:3px 3px 0 rgba(10,26,58,.12);padding:16px 18px;margin-top:16px}
 .sec h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--navy);margin:0 0 12px}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.rule{background:#f7f9fc;border-left:4px solid var(--navy2);border-radius:0;padding:9px 12px}
+.rule b{display:block;font-size:15px;color:var(--navy)}
+.rule span{font-size:12px;color:var(--mut)}
+.rule.hot{border-left-color:var(--red)} .rule.hot b{color:var(--red)}
 .bar-row{display:flex;align-items:center;gap:10px;margin:7px 0}
-.bar-name{width:120px;font-size:14px;font-weight:500;flex-shrink:0}
+.bar-name{width:130px;font-size:14px;font-weight:500;flex-shrink:0}
 .bar-name .hand{color:var(--mut);font-weight:400;font-size:11px}
 .bar-track{flex:1;background:#e7ecf5;border-radius:6px;height:24px;position:relative;overflow:hidden}
 .bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-size:12px;font-weight:700}
@@ -35,16 +39,15 @@ h1 .yr{color:var(--red)}
 .tier .names{font-size:16px;font-weight:700;margin:2px 0 4px}
 .tier p{margin:0;font-size:13px;color:#33405e}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:right;color:var(--mut);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.3px;padding:6px 6px;border-bottom:1.5px solid var(--line)}
+th{text-align:right;color:var(--mut);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.3px;padding:6px 5px;border-bottom:1.5px solid var(--line)}
 th:first-child,td:first-child{text-align:left}
-td{padding:7px 6px;border-bottom:.5px solid #e7ecf5}
+td{padding:7px 5px;border-bottom:.5px solid #e7ecf5}
 td.mono{font-family:'Space Mono',monospace}
 tr:hover td{background:#f7f9fc}
-.pill{font-size:10px;font-weight:700;padding:2px 6px;border-radius:5px;background:#e4ecfa;color:var(--navy2)}
 .note{font-size:12px;color:var(--mut);margin-top:8px}
+.caveat{background:#fdf2e9;border:.5px solid #f0c9a0;border-radius:10px;padding:12px 14px;font-size:13px;color:#7a4a13;margin-top:16px}
 .foot{font-size:11px;color:var(--mut);margin-top:20px;line-height:1.6}
 .foot a{color:var(--navy2)}
-.caveat{background:#fdf2e9;border:.5px solid #f0c9a0;border-radius:10px;padding:12px 14px;font-size:13px;color:#7a4a13;margin-top:16px}
 </style>
 </head>
 <body>
@@ -54,7 +57,7 @@ tr:hover td{background:#f7f9fc}
     <div class="sub">Citizens Bank Park, Philadelphia · Mon Jul 13, 8:00 PM ET · Netflix</div>
     <div class="wx">
       <div class="wxb">Temp<b>78°F</b>warm — carries</div>
-      <div class="wxb">Wind<b>6 mph S</b>light, minor factor</div>
+      <div class="wxb">Wind<b>6 mph S</b>light, minor</div>
       <div class="wxb">Park<b>+8% HR</b>vs MLB avg</div>
       <div class="wxb">Field<b>5 L / 3 R</b>lefty-heavy → RF porch</div>
     </div>
@@ -62,72 +65,85 @@ tr:hover td{background:#f7f9fc}
   <div class="stripe"></div>
 
   <div class="sec">
-    <h2>Projected home runs — stadium &amp; weather adjusted (Ballpark Pal "Expected HR")</h2>
+    <h2>New format for 2026 — swings, not a clock</h2>
+    <div class="rules">
+      <div class="rule"><b>20 swings</b><span>Round 1 allotment</span></div>
+      <div class="rule"><b>15 / 15</b><span>Round 2 &amp; Final swings</span></div>
+      <div class="rule"><b>No timer, no outs</b><span>every swing counts, HR or not</span></div>
+      <div class="rule hot"><b>Last-swing bonus</b><span>homer on your final swing → keep going until you miss</span></div>
+      <div class="rule"><b>Top 4 advance</b><span>R1 ties broken by longest HR</span></div>
+      <div class="rule"><b>No distance rounds</b><span>all HRs count within the swing cap</span></div>
+    </div>
+    <div class="note">Because you only get 20 cuts, the edge isn't season power totals — it's <b>HR-per-swing conversion, loft, and stamina</b>. A grooved, high-loft, repeatable swing beats raw exit velo that comes on line drives.</div>
+  </div>
+
+  <div class="sec">
+    <h2>Projected Round 1 home runs (of 20 swings)</h2>
     <div id="bars"></div>
-    <div class="note">This is expected HRs per that hitter's own batted-ball profile, adjusted for tonight's CBP dimensions + weather. It's the single best objective proxy — but the Derby is timed, bracketed, and stamina-driven, so volume of quality fly balls matters as much as raw expected total.</div>
+    <div class="note">Estimate of HRs in the 20-swing opening round, from each hitter's power, loft, CBP fit, and stamina. Baseline is ~10/20 (50%); the last-swing bonus gives the hot hand real upside beyond these. These are leans, not precise counts.</div>
   </div>
 
   <div class="sec">
     <h2>Who could win — the read</h2>
     <div class="tier fav"><div class="lbl">Favorite</div><div class="names">Kyle Schwarber (L)</div>
-      <p>Leads the field in expected HRs (26.1), most 400+ fly balls (19), most HR-candidate fly balls (42 = high repeatable volume, which wins timed rounds), healthy, and hitting in his home park in front of his crowd. Everything lines up. He's the chalk for a reason — the question is price, not fit.</p></div>
+      <p>Most 400+ fly balls in the field (19), elite loft (30°+), the most repeatable high-volume swing, and it's his home park. The swing format rewards exactly his profile: groove it and rack up conversions. Chalk for a reason.</p></div>
     <div class="tier live"><div class="lbl">Live value</div><div class="names">Junior Caminero (R) · Ben Rice (L)</div>
-      <p><b>Caminero</b> — the sharp value: youngest legs in the field (stamina is huge in the grind), hottest hitter entering the break, and the longest ball of anyone here (463 ft). <b>Rice</b> — the quiet sleeper: 3rd in expected HRs (23.7) on big volume (40 candidates), a lefty whose pull side fits the short RF porch. Both are underpriced relative to Schwarber.</p></div>
-    <div class="tier dark"><div class="lbl">Dangerous, not favored</div><div class="names">Willson Contreras (R) · Jordan Walker (R) · Bryce Harper (L)</div>
-      <p>Contreras leads the field in "no-doubters" (13 — raw thump). Walker has a 459-ft max and easy carry. Harper is the 2018 champ with home-crowd juice, but his expected total (19.9) is mid-pack — sentiment over projection.</p></div>
-    <div class="tier long"><div class="lbl">Boom-or-bust longshots</div><div class="names">Jac Caglianone (L) · Munetaka Murakami (L)</div>
-      <p>Both hit the ball as hard as anyone — Caglianone leads in exit velo (107.7) and average distance (402 ft), Murakami in elite EV/barrel percentiles. But both sit last in expected HRs (16.1) on <i>low volume</i> (23 &amp; 26 candidates). Elite max power, not enough repeatable fly balls for a timed format. Fade at short prices; dart throw only.</p></div>
+      <p><b>Caminero</b> — youngest legs (stamina matters more with the bonus rule), hottest bat, longest ball in the field (463 ft). <b>Rice</b> — the sleeper edge: his <i>dad</i> is throwing to him (nobody grooves him better), a lefty pull swing into the short RF porch, and high fly-ball volume. Both underpriced vs Schwarber.</p></div>
+    <div class="tier dark"><div class="lbl">Loft upgrade under the new format</div><div class="names">Munetaka Murakami (L)</div>
+      <p>His season "expected HR" ranked last on <i>volume</i>, but the Derby doesn't care about volume — it cares about repeatable loft, and Murakami has the best launch in the field (32.2°) plus 99th-percentile barrels. On grooved BP that converts. More live than the odds suggest — a real dark horse.</p></div>
+    <div class="tier long"><div class="lbl">Fade at short prices</div><div class="names">Jac Caglianone (L) · Willson Contreras (R) · Jordan Walker (R) · Bryce Harper (L)</div>
+      <p><b>Caglianone</b> hits it hardest (107.7 EV) but on the <i>lowest loft</i> (27.6°) — line-drive power plays worse in a Derby, boom-or-bust. <b>Contreras/Walker</b> have thump but middling conversion. <b>Harper</b> is the sentimental home pick and 2018 champ, but his projection is mid-pack — story over math.</p></div>
   </div>
 
   <div class="sec">
-    <h2>Full field — the numbers</h2>
+    <h2>Full field — numbers, projection &amp; who's throwing</h2>
     <div style="overflow-x:auto">
     <table id="tbl">
       <thead><tr>
-        <th>Hitter</th><th>2026 HR</th><th>Exp HR</th><th>Avg EV</th><th>Avg Dist</th><th>Longest</th><th>400+ FB</th><th>No-Dbt</th><th>HR Cands</th>
+        <th>Hitter</th><th>Proj R1</th><th>Exp HR</th><th>Avg EV</th><th>Launch°</th><th>Longest</th><th>400+</th><th>Pitcher (BP)</th>
       </tr></thead>
       <tbody></tbody>
     </table>
     </div>
-    <div class="note">Avg EV / Avg Dist / Longest are on HR-candidate fly balls. <span class="pill">HR Cands</span> = volume of quality fly balls — the stamina/pace stat for a timed Derby. Sorted by Expected HR.</div>
+    <div class="note">Proj R1 = projected homers in the 20-swing first round (loft &amp; stamina weighted). Launch° is average — higher is better for the Derby. Pitchers marked "—" weren't confirmed in public sources yet.</div>
   </div>
 
   <div class="sec">
-    <h2>Park &amp; spray fit</h2>
-    <p style="font-size:13.5px;margin:0 0 8px">Citizens Bank Park plays <b>~8% above MLB average</b> for home runs, with short-ish lines (LF ~329, RF ~330) that reward pull power. The field is <b>5 lefties to 3 righties</b>, and the lefty pull crowd (Schwarber, Rice, Harper, Caglianone, Murakami) all aim at the short right-field porch. Tonight's warm 78° air adds carry; the light 6 mph south wind is a minor, mostly-neutral factor — not enough to reshape the bracket.</p>
-    <p class="note">For each hitter's actual spray chart plotted onto CBP's fences, see Ballpark Pal's interactive spray tool (link below) — it overlays where their batted balls would land at this park specifically.</p>
+    <h2>Father-son Derby lore</h2>
+    <p style="font-size:13.5px;margin:0 0 8px">The <b>Guerreros</b> are the gold standard — Vlad Sr. won in 2007, Vlad Jr. won in 2023, the only father-son pair to both take the crown (Jr. also holds the single-Derby record, 91 HRs in 2019). The <b>Fielders</b> (Prince won it twice) and three-time champ <b>Ken Griffey Jr.</b> round out the power bloodlines.</p>
+    <p class="note">This year's father-son thread: <b>Ben Rice's dad, Dan Rice</b> — a former Brown University pitcher — is the one throwing to him tonight. It's a genuine comfort edge in a format that lives and dies on rhythm.</p>
   </div>
 
-  <div class="caveat"><b>Reality check:</b> the Derby is genuinely high-variance. It's batting-practice pitching (no live-pitch matchup), single-elimination brackets, and outcomes swing on timing, pace, stamina, and who's grooving that night — factors no model captures. Treat every projection here as a lean, not a lock, and size bets accordingly.</p></div>
+  <div class="caveat"><b>Reality check:</b> even with the right format, the Derby is high-variance — grooved BP, timing, pace, and stamina swing outcomes in ways no model nails. The last-swing bonus adds even more randomness (a hot streak can blow past any projection). Treat all of this as leans, and size bets small.</div>
 
   <div class="foot">
-    Sources: <a href="https://www.ballparkpal.com/2026-Home-Run-Derby-Guide.php">Ballpark Pal 2026 Derby Guide</a> (expected HR, exit velo, distances, park factors) · <a href="https://www.mlb.com/news/2026-home-run-derby-power-rankings">MLB.com power rankings</a> · <a href="https://www.espn.com/espn/betting/story/_/id/49305223/">ESPN betting preview</a> · weather via Open-Meteo for Citizens Bank Park, Jul 13 2026. Not affiliated with MLB. For analysis only.
+    Sources: <a href="https://www.mlb.com/news/home-run-derby-format-change-for-2026">MLB.com 2026 format change</a> · <a href="https://www.mlb.com/news/pitchers-throwing-to-the-2026-home-run-derby-participants">MLB.com pitchers list</a> · <a href="https://www.ballparkpal.com/2026-Home-Run-Derby-Guide.php">Ballpark Pal Derby Guide</a> (EV, launch, distance, park factors) · <a href="https://www.mlb.com/news/greatest-father-son-duos-in-mlb-history-c50711176">MLB.com father-son duos</a> · weather via Open-Meteo for Citizens Bank Park, Jul 13 2026. Analysis only; not affiliated with MLB.
   </div>
 </div>
 
 <script>
 const F = [
-  {n:"Kyle Schwarber",h:"L",hr:32,exp:26.1,ev:105.5,dist:390,long:460,fb400:19,nd:10,cand:42},
-  {n:"Junior Caminero",h:"R",hr:28,exp:23.9,ev:105.7,dist:401,long:463,fb400:16,nd:10,cand:34},
-  {n:"Ben Rice",h:"L",hr:29,exp:23.7,ev:103.1,dist:383,long:433,fb400:11,nd:5,cand:40},
-  {n:"Willson Contreras",h:"R",hr:20,exp:20.9,ev:106.5,dist:394,long:449,fb400:14,nd:13,cand:31},
-  {n:"Jordan Walker",h:"R",hr:22,exp:20.1,ev:105.7,dist:394,long:459,fb400:13,nd:5,cand:30},
-  {n:"Bryce Harper",h:"L",hr:20,exp:19.9,ev:104.4,dist:385,long:457,fb400:13,nd:3,cand:36},
-  {n:"Jac Caglianone",h:"L",hr:15,exp:16.1,ev:107.7,dist:402,long:444,fb400:16,nd:6,cand:23},
-  {n:"Munetaka Murakami",h:"L",hr:20,exp:16.1,ev:106.7,dist:394,long:451,fb400:11,nd:7,cand:26}
+  {n:"Kyle Schwarber",h:"L",proj:13,exp:26.1,ev:105.5,launch:30.4,long:460,fb400:19,p:"Rafael Peña (PHI)"},
+  {n:"Junior Caminero",h:"R",proj:12,exp:23.9,ev:105.7,launch:28.3,long:463,fb400:16,p:"Tomás Francisco (TB)"},
+  {n:"Ben Rice",h:"L",proj:11,exp:23.7,ev:103.1,launch:28.9,long:433,fb400:11,p:"Dan Rice (his dad)"},
+  {n:"Munetaka Murakami",h:"L",proj:11,exp:16.1,ev:106.7,launch:32.2,long:451,fb400:11,p:"—"},
+  {n:"Bryce Harper",h:"L",proj:10,exp:19.9,ev:104.4,launch:29.0,long:457,fb400:13,p:"Dino Ebel (LAD)"},
+  {n:"Willson Contreras",h:"R",proj:9,exp:20.9,ev:106.5,launch:30.2,long:449,fb400:14,p:"—"},
+  {n:"Jordan Walker",h:"R",proj:9,exp:20.1,ev:105.7,launch:27.5,long:459,fb400:13,p:"—"},
+  {n:"Jac Caglianone",h:"L",proj:8,exp:16.1,ev:107.7,launch:27.6,long:444,fb400:16,p:"—"}
 ];
-const maxExp = Math.max(...F.map(x=>x.exp));
-const cols = ['#bf0a30','#0a3161','#0a3161','#0a2463','#0a2463','#0a2463','#566586','#566586'];
+const maxP = Math.max(...F.map(x=>x.proj));
+const cols = ['#bf0a30','#0a3161','#0a3161','#c8992f','#0a2463','#566586','#566586','#566586'];
 document.getElementById('bars').innerHTML = F.map((x,i)=>{
-  const w = Math.round(x.exp/maxExp*100);
-  return `<div class="bar-row"><div class="bar-name">${x.n.split(' ')[1]} <span class="hand">${x.h}</span></div>`
-    + `<div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${cols[i]}">${x.exp}</div></div></div>`;
+  const w = Math.round(x.proj/20*100);
+  return `<div class="bar-row"><div class="bar-name">${x.n.split(' ').slice(1).join(' ')} <span class="hand">${x.h}</span></div>`
+    + `<div class="bar-track"><div class="bar-fill" style="width:${w}%;background:${cols[i]}">${x.proj} HR</div></div></div>`;
 }).join('');
 document.querySelector('#tbl tbody').innerHTML = F.map(x=>
-  `<tr><td>${x.n} <span class="hand" style="color:#566586;font-size:11px">${x.h}</span></td>`
-  + `<td class="mono">${x.hr}</td><td class="mono">${x.exp}</td><td class="mono">${x.ev}</td>`
-  + `<td class="mono">${x.dist} ft</td><td class="mono">${x.long} ft</td><td class="mono">${x.fb400}</td>`
-  + `<td class="mono">${x.nd}</td><td class="mono">${x.cand}</td></tr>`
+  `<tr><td>${x.n} <span style="color:#566586;font-size:11px">${x.h}</span></td>`
+  + `<td class="mono">${x.proj}</td><td class="mono">${x.exp}</td><td class="mono">${x.ev}</td>`
+  + `<td class="mono">${x.launch}°</td><td class="mono">${x.long} ft</td><td class="mono">${x.fb400}</td>`
+  + `<td style="font-size:12px">${x.p}</td></tr>`
 ).join('');
 </script>
 </body>
