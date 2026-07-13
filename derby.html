@@ -448,7 +448,7 @@ function projR1(pl){
   return hr;
 }
 function ltSet(id){LT.cur=id;ltRenderAll();}
-function ltSwing(v){if(!LT.cur)return;const pl=P.find(p=>p.id===LT.cur);if(pl._lt.done)return;pl._lt.log.push(v);ltRenderAll();}
+function ltSwing(v){if(!LT.cur)return;const pl=P.find(p=>p.id===LT.cur);if(pl._lt.done)return;const u=pl._lt.log.length;const lastHR=u>0&&pl._lt.log[u-1]===1;if(u>=20&&!lastHR){pl._lt.done=true;ltRenderAll();return;}pl._lt.log.push(v);if(pl._lt.log.length>=20&&v===0)pl._lt.done=true;ltRenderAll();}
 function ltUndo(){if(!LT.cur)return;const pl=P.find(p=>p.id===LT.cur);pl._lt.log.pop();if(pl._lt.done)pl._lt.done=false;ltRenderAll();}
 function ltMarkDone(){if(!LT.cur)return;const pl=P.find(p=>p.id===LT.cur);pl._lt.done=!pl._lt.done;ltRenderAll();}
 function ltReset(){P.forEach(pl=>pl._lt={log:[],done:false});LT.cur=null;ltRenderAll();}
@@ -458,7 +458,8 @@ function ltCurrentHTML(){
   const pl=P.find(p=>p.id===LT.cur);const used=ltUsed(pl),hr=ltHR(pl);
   let sum=0,mn=99,mx=0;const K=1500;for(let i=0;i<K;i++){const t=projR1(pl);sum+=t;if(t<mn)mn=t;if(t>mx)mx=t;}
   const proj=(sum/K).toFixed(1);
-  const state=pl._lt.done?' · <span style="color:#8fe0b0">DONE</span>':(used>=20?' · <span style="color:#ffd27a">BONUS SWINGS</span>':'');
+  const lastHR=used>0&&pl._lt.log[used-1]===1;
+  const state=pl._lt.done?' · <span style="color:#8fe0b0">ROUND DONE</span>':(used>=20&&lastHR?' · <span style="color:#ffd27a">BONUS — keep swinging</span>':'');
   return `<div style="background:var(--navy);color:#fff;border-radius:12px;padding:14px 16px">
     <div style="font-size:16px;font-weight:700">${pl.n} <span style="color:#aebde4;font-weight:400">${pl.h}</span></div>
     <div style="font-size:13px;color:#dbe4f7;margin:5px 0">${used}/20 swings · <b style="color:#fff;font-size:15px">${hr} HR</b>${state}</div>
