@@ -183,9 +183,11 @@ input[type=number]{font-family:inherit}
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <button class="refbtn" onclick="runSim()">▶ Run 10,000 sims</button>
       <button onclick="sampleSim()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">🎲 Simulate one (pitch by pitch)</button>
+      <button onclick="comboSim()" style="background:var(--win);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">🤝 Top 30-HR combos</button>
     </div>
     <div id="simOdds" style="margin-top:14px"></div>
     <div id="simSample" style="margin-top:16px"></div>
+    <div id="simCombos" style="margin-top:16px"></div>
   </div>
 
   <!-- CONTEXT -->
@@ -392,6 +394,25 @@ function sampleSim(){
   html+=`<div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px"><div><b>Semi A →</b> ${b.sA.n.split(' ').slice(1).join(' ')}</div><div><b>Semi B →</b> ${b.sB.n.split(' ').slice(1).join(' ')}</div></div>`;
   html+=`<div style="margin-top:10px;background:var(--navy);color:#fff;border-radius:10px;padding:12px 16px"><div style="font-size:11px;color:#aebde4;text-transform:uppercase;font-weight:700">This sim's champion</div><div style="font-size:16px;font-weight:700;margin-top:3px">${b.champ.n} 🏆</div><div style="font-size:12px;color:#dbe4f7;margin-top:2px">Final: ${b.finalists[0].n.split(' ').slice(1).join(' ')} ${b.finalHR[0]} — ${b.finalHR[1]} ${b.finalists[1].n.split(' ').slice(1).join(' ')}</div></div>`;
   document.getElementById('simSample').innerHTML=html;
+}
+function comboSim(){
+  const btn=event&&event.target;if(btn)btn.textContent='running…';
+  setTimeout(()=>{
+    const N=20000;const sumHR=P.map(()=>0);
+    const pairs=[];for(let i=0;i<8;i++)for(let j=i+1;j<8;j++)pairs.push([i,j,0]);
+    for(let s=0;s<N;s++){
+      const hrs=P.map(pl=>simRound(pval(pl),SW.r1).hr);
+      for(let i=0;i<8;i++)sumHR[i]+=hrs[i];
+      for(const p of pairs){if(hrs[p[0]]+hrs[p[1]]>=30)p[2]++;}
+    }
+    const avg=P.map((pl,i)=>sumHR[i]/N);
+    const ranked=pairs.map(p=>({i:p[0],j:p[1],pct:p[2]/N})).sort((a,b)=>b.pct-a.pct).slice(0,3);
+    const nm=i=>P[i].n.split(' ').slice(1).join(' ');const medal=['🥇','🥈','🥉'];
+    document.getElementById('simCombos').innerHTML='<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--navy);margin-bottom:8px">Top duos to combine for 30+ HR in Round 1 · '+N.toLocaleString()+' sims</div>'
+     +ranked.map((r,k)=>`<div style="background:#f7f9fc;border-left:4px solid ${k==0?'#bf0a30':'#0a3161'};padding:10px 13px;margin:7px 0"><div style="font-size:15px;font-weight:700">${medal[k]} ${nm(r.i)} + ${nm(r.j)}</div><div style="font-size:13px;color:#33405e;margin-top:2px"><b style="color:${k==0?'#bf0a30':'#0a3161'}">${(r.pct*100).toFixed(1)}%</b> of Round 1s reach 30+ combined · avg <b>${avg[r.i].toFixed(1)}</b> + <b>${avg[r.j].toFixed(1)}</b> = <b>${(avg[r.i]+avg[r.j]).toFixed(1)}</b> combined</div></div>`).join('')
+     +`<div class="note">Average combined is usually just under 30 for the top pairs — so "30+ combined" is a live but not-automatic over. Pairs are the two highest per-swing rates (Caminero/Schwarber), where two big medians stack.</div>`;
+    if(btn)btn.textContent='🤝 Top 30-HR combos';
+  },30);
 }
 (async()=>{for(const pl of P){await loadSpray(pl);}})();
 </script>
