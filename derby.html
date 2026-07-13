@@ -95,7 +95,24 @@ h1 .yr{color:var(--red)}
   </div>
 
   <div class="sec">
-    <h2>Round-by-round bracket projection</h2>
+    <h2>Upset-weighted value model — fading the chalk</h2>
+    <div style="font-size:13px;color:#33405e;margin-bottom:6px">Raw season power says Schwarber. But the Derby rewards <b>grooveability</b>, not season rank (last year's champ was a bottom-tier price). So this model reweights four factors that actually predict a hot Derby night:</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:11px;margin-bottom:12px">
+      <span class="tag" style="background:#e4ecfa;color:#0a3161">Power / loft 35%</span>
+      <span class="tag" style="background:#e4f3ea;color:#1d7a4d">Youth / stamina 25%</span>
+      <span class="tag" style="background:#fbe2e8;color:#bf0a30">Momentum vs expectation 22%</span>
+      <span class="tag" style="background:#faf0d9;color:#916c14">Pitcher-groove 18%</span>
+    </div>
+    <div id="valueBoard"></div>
+    <div style="margin-top:12px;background:var(--navy);color:#fff;border-radius:10px;padding:12px 16px">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#aebde4">The value read</div>
+      <div style="font-size:13px;color:#dbe4f7;margin-top:5px"><b style="color:#fff">Caminero</b> is the value favorite — young, torrid, elite power at a better price than Schwarber. <b style="color:#fff">Rice</b> &amp; <b style="color:#fff">Caglianone</b> are the live upsets (youth + groove + park). <b style="color:#fff">Fade Schwarber</b> as overpriced chalk: elite bat, but 33, on a merely-as-expected season, in a stamina format. That's where the market is wrong.</div>
+    </div>
+    <div class="note">Factor scores are 0–10 estimates (subjective but transparent). This is a value lens vs the field's power-seeding — not a promise the longshot wins.</div>
+  </div>
+
+  <div class="sec">
+    <h2>Round-by-round bracket projection <span style="font-size:11px;color:var(--mut);font-weight:400">(raw-power seed)</span></h2>
     <div style="font-size:13px;color:#33405e;margin-bottom:12px">Seeded by our Round 1 medians. Top 4 advance to head-to-head semis (1v4, 2v3), then the final. Single-elimination compounds variance, so treat the champion as a lean, not a lock.</div>
 
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--navy);margin:4px 0 6px">Round 1 · open field, top 4 advance</div>
@@ -277,6 +294,31 @@ function updateR1(){
     +`<div style="font-size:16px;margin-top:4px"><b>${fin.w.n}</b> <span style="color:#aebde4">def. ${fin.l.short}</span> <span style="background:var(--gold);color:#3a2a06;font-weight:700;font-size:11px;padding:2px 8px;border-radius:6px;margin-left:6px">🏆</span></div>`
     +`<div style="font-size:12px;color:#dbe4f7;margin-top:4px">Re-seeded from your Round 1 results. ${fin.close?'Final projects as a near coin-flip — stamina and momentum decide it.':'Clear edge on Round 1 form.'} ${fin.w.closer?'Winner has the closer/stamina profile to finish strong.':''}</div></div>`;
 }
+// --- Upset-weighted value model ---
+const VF=[
+ {n:"Junior Caminero",P:9,Y:10,M:10,G:7},
+ {n:"Ben Rice",P:7,Y:7,M:9,G:10},
+ {n:"Jac Caglianone",P:7.5,Y:10,M:8,G:6},
+ {n:"Munetaka Murakami",P:9,Y:7.5,M:8,G:6},
+ {n:"Jordan Walker",P:7,Y:9,M:6.5,G:6},
+ {n:"Kyle Schwarber",P:9,Y:4,M:6,G:8.5},
+ {n:"Bryce Harper",P:7.5,Y:4,M:4.5,G:7},
+ {n:"Willson Contreras",P:7.5,Y:3.5,M:5,G:6}
+];
+VF.forEach(v=>v.c=0.35*v.P+0.25*v.Y+0.22*v.M+0.18*v.G);
+VF.sort((a,b)=>b.c-a.c);
+(function(){
+  const chip=(l,val,c)=>`<span style="font-size:10px;color:${c};margin-right:7px;font-family:'Space Mono',monospace">${l}${val}</span>`;
+  document.getElementById('valueBoard').innerHTML=VF.map((v,i)=>{
+    const w=Math.round(v.c/10*100);
+    const col=i==0?'#bf0a30':(i<3?'#0a3161':(i<5?'#0a2463':'#9fb0cc'));
+    return `<div style="margin:7px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:2px;align-items:baseline">`
+     +`<span><b>${v.n.split(' ').slice(1).join(' ')}</b> &nbsp;`
+     +chip('P',v.P,'#0a3161')+chip('Y',v.Y,'#1d7a4d')+chip('M',v.M,'#bf0a30')+chip('G',v.G,'#916c14')+`</span>`
+     +`<span style="font-weight:700">${v.c.toFixed(1)}</span></div>`
+     +`<div style="height:13px;background:#e7ecf5;border-radius:6px"><div style="height:100%;width:${w}%;background:${col};border-radius:6px"></div></div></div>`;
+  }).join('');
+})();
 (async()=>{ for(const pl of P){ await loadSpray(pl); } })();
 </script>
 </body>
