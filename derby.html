@@ -30,25 +30,34 @@ h1 .yr{color:var(--red)}
 .pcard{background:var(--card);border:.5px solid var(--line);border-radius:12px;box-shadow:3px 3px 0 rgba(10,26,58,.12);overflow:hidden}
 .pc-head{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--navy);color:#fff}
 .pc-head img{width:52px;height:52px;border-radius:50%;background:#22345c;object-fit:cover;border:2px solid #22345c}
-.pc-head .nm{font-size:16px;font-weight:700}
-.pc-head .meta{font-size:11px;color:#aebde4}
-.pc-head .tags{margin-top:3px}
+.pc-head .nm{font-size:16px;font-weight:700}.pc-head .meta{font-size:11px;color:#aebde4}
 .tag{font-size:9px;font-weight:700;padding:1px 6px;border-radius:5px;margin-right:4px}
 .tag.watch{background:#fbe2e8;color:var(--red)}.tag.closer{background:#d7efe0;color:var(--win)}
 .pc-body{display:flex;gap:10px;padding:12px 14px}
-.spraybox{width:150px;flex-shrink:0}
-.spraybox svg{width:150px;height:150px;display:block}
-.pc-stats{flex:1;font-size:12px}
-.pc-stats .big{font-size:15px;font-weight:700;color:var(--navy)}
+.spraybox{width:150px;flex-shrink:0}.spraybox svg{width:150px;height:150px;display:block}
+.pc-stats{flex:1;font-size:12px}.pc-stats .big{font-size:15px;font-weight:700;color:var(--navy)}
 .pc-stats .row{display:flex;justify-content:space-between;padding:2px 0;border-bottom:.5px solid #eef1f7}
 .pc-stats .row span:first-child{color:var(--mut)}
 .legend{display:flex;gap:12px;font-size:11px;color:var(--mut);margin-top:6px;flex-wrap:wrap}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:1px;margin-right:3px}
-.tier{border-left:4px solid var(--line);padding:10px 14px;margin:10px 0;background:#f7f9fc}
-.tier.fav{border-left-color:var(--red)}.tier.live{border-left-color:var(--navy2)}.tier.dark{border-left-color:var(--gold)}.tier.long{border-left-color:var(--mut)}
-.tier .lbl{font-size:11px;font-weight:700;text-transform:uppercase}
-.tier.fav .lbl{color:var(--red)}.tier.live .lbl{color:var(--navy2)}.tier.dark .lbl{color:#916c14}.tier.long .lbl{color:var(--mut)}
-.tier .names{font-size:16px;font-weight:700;margin:2px 0 4px}.tier p{margin:0;font-size:13px;color:#33405e}
+.rng{margin:9px 0}
+.rng-top{display:flex;justify-content:space-between;font-size:14px;margin-bottom:3px}
+.track{position:relative;height:16px;background:#e7ecf5;border-radius:8px}
+.band{position:absolute;height:100%;border-radius:8px;background:#c9d6ec}
+.med{position:absolute;top:-3px;width:4px;height:22px;border-radius:2px;background:var(--navy)}
+.mk15{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--red);opacity:.55}
+table.bet{width:100%;border-collapse:collapse;font-size:13px}
+table.bet th{text-align:left;color:var(--mut);font-weight:500;font-size:11px;text-transform:uppercase;padding:7px 8px;border-bottom:1.5px solid var(--line)}
+table.bet td{padding:9px 8px;border-bottom:.5px solid #e7ecf5;vertical-align:top}
+table.bet .pk{font-weight:700;color:var(--navy)}
+.bracket{display:flex;gap:14px;align-items:center;overflow-x:auto;padding:4px 0}
+.bcol{display:flex;flex-direction:column;gap:16px;justify-content:space-around;min-width:180px}
+.match{border:.5px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.match .r{padding:7px 11px;font-size:13px;display:flex;justify-content:space-between}
+.match .r.w{background:#e4f3ea;font-weight:700}
+.match .r.l{color:var(--mut)}
+.champ{background:var(--navy);color:#fff;border-radius:10px;padding:14px;text-align:center;min-width:150px}
+.champ .c{font-size:17px;font-weight:700}
 .note{font-size:12px;color:var(--mut);margin-top:8px}
 .caveat{background:#fdf2e9;border:.5px solid #f0c9a0;border-radius:10px;padding:12px 14px;font-size:13px;color:#7a4a13;margin-top:16px}
 .foot{font-size:11px;color:var(--mut);margin-top:20px;line-height:1.6}.foot a{color:var(--navy2)}
@@ -83,117 +92,102 @@ h1 .yr{color:var(--red)}
   </div>
 
   <div class="sec">
+    <h2>Best bets by market</h2>
+    <table class="bet">
+      <tr><th>Market</th><th>Pick</th><th>Why</th></tr>
+      <tr><td>Outright winner</td><td class="pk">Junior Caminero</td><td>Young, torrid, elite power — priced behind Schwarber. Best upside-for-price in the field.</td></tr>
+      <tr><td>Longshot to win</td><td class="pk">Ben Rice</td><td>Dad throwing him BP (max comfort) + the park adds him a field-high +6 HRs. Real path at a big price.</td></tr>
+      <tr><td>Round 1 — most HRs / over</td><td class="pk">Kyle Schwarber</td><td>Raw grooveable power at home, and the stamina tax doesn't bite in Round 1. This is where the "old chalk" is correctly priced.</td></tr>
+      <tr><td>Dark horse</td><td class="pk">Munetaka Murakami</td><td>Best loft (32°) + elite barrels; his ceiling is a monster round if he grooves.</td></tr>
+      <tr><td>Hard fade</td><td class="pk">Contreras · Harper</td><td>Oldest bats, flat seasons, no path in either the outright or the props.</td></tr>
+    </table>
+    <div class="note">The core idea: the field overpays for Schwarber's <b>outright</b> price and underrates Caminero — but Schwarber is still the right side for a <b>Round-1 HR prop</b>. Different bets, different picks.</div>
+  </div>
+
+  <div class="sec">
     <h2>Player cards — headshot, projection &amp; live spray chart on CBP</h2>
     <div class="grid" id="cards"></div>
     <div class="legend">
       <span><span class="dot" style="background:#1d7a4d"></span>Actual HR (2026)</span>
       <span><span class="dot" style="background:#e0a92b"></span>Would clear CBP (not a HR at their park)</span>
-      <span><span class="dot" style="background:#9fb0cc"></span>Other batted ball (200+ ft)</span>
-      <span>· grey arc = Citizens Bank Park fence</span>
+      <span><span class="dot" style="background:#9fb0cc"></span>Other batted ball</span>
+      <span>· grey arc = CBP fence</span>
     </div>
-    <div class="note">Spray charts pull each hitter's 2026 batted balls live from Baseball Savant and plot them on CBP's actual wall distances. "CBP +N" = extra homers this park's dimensions would have given them — a direct read on who the venue helps most.</div>
   </div>
 
   <div class="sec">
-    <h2>Upset-weighted value model — fading the chalk</h2>
-    <div style="font-size:13px;color:#33405e;margin-bottom:6px">Raw season power says Schwarber. But the Derby rewards <b>grooveability</b>, not season rank (last year's champ was a bottom-tier price). So this model reweights four factors that actually predict a hot Derby night:</div>
+    <h2>Round 1 projection — floor / median / ceiling (of 20 swings)</h2>
+    <div id="ranges"></div>
+    <div class="note"><b style="color:var(--red)">Projected breakout: Caminero (~14)</b> — projected to top the field and beat his season pace, so it's <b>not</b> chalk-led. Model estimate from power, loft, stamina, momentum &amp; park; <b style="color:#0a2463">|</b> median · <b style="color:#bf0a30">|</b> = the 15 line.</div>
+  </div>
+
+  <div class="sec">
+    <h2>Upset-weighted value model</h2>
+    <div style="font-size:13px;color:#33405e;margin-bottom:6px">Reweighted to reward <b>grooveability</b> over season rank (last year's champ was a bottom price). Adjusted weights: youth halved, pitcher-groove counted only where it's real (Rice's dad, Schwarber at home) — everyone else neutral.</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:11px;margin-bottom:12px">
-      <span class="tag" style="background:#e4ecfa;color:#0a3161">Power / loft 35%</span>
-      <span class="tag" style="background:#e4f3ea;color:#1d7a4d">Youth / stamina 25%</span>
-      <span class="tag" style="background:#fbe2e8;color:#bf0a30">Momentum vs expectation 22%</span>
-      <span class="tag" style="background:#faf0d9;color:#916c14">Pitcher-groove 18%</span>
+      <span class="tag" style="background:#e4ecfa;color:#0a3161">Power / loft 40%</span>
+      <span class="tag" style="background:#e4f3ea;color:#1d7a4d">Youth / stamina 12.5%</span>
+      <span class="tag" style="background:#fbe2e8;color:#bf0a30">Momentum vs expectation 27.5%</span>
+      <span class="tag" style="background:#faf0d9;color:#916c14">Pitcher-groove 20%</span>
     </div>
     <div id="valueBoard"></div>
-    <div style="margin-top:12px;background:var(--navy);color:#fff;border-radius:10px;padding:12px 16px">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#aebde4">The value read</div>
-      <div style="font-size:13px;color:#dbe4f7;margin-top:5px"><b style="color:#fff">Caminero</b> is the value favorite — young, torrid, elite power at a better price than Schwarber. <b style="color:#fff">Rice</b> &amp; <b style="color:#fff">Caglianone</b> are the live upsets (youth + groove + park). <b style="color:#fff">Fade Schwarber</b> as overpriced chalk: elite bat, but 33, on a merely-as-expected season, in a stamina format. That's where the market is wrong.</div>
-    </div>
-    <div class="note">Factor scores are 0–10 estimates (subjective but transparent). This is a value lens vs the field's power-seeding — not a promise the longshot wins.</div>
+    <div class="note">P=power/loft · Y=youth · M=momentum · G=groove (0–10). Schwarber lands 4th here — a real threat, not a lock; the value is fading his <i>outright</i> price, not the player.</div>
   </div>
 
   <div class="sec">
-    <h2>Round-by-round bracket projection <span style="font-size:11px;color:var(--mut);font-weight:400">(raw-power seed)</span></h2>
-    <div style="font-size:13px;color:#33405e;margin-bottom:12px">Seeded by our Round 1 medians. Top 4 advance to head-to-head semis (1v4, 2v3), then the final. Single-elimination compounds variance, so treat the champion as a lean, not a lock.</div>
-
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--navy);margin:4px 0 6px">Round 1 · open field, top 4 advance</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px;margin-bottom:14px">
-      <div style="background:#e4f3ea;border-left:4px solid var(--win);padding:6px 10px;font-size:13px"><b>1 · Schwarber</b> ~13 <span style="color:var(--win);font-weight:700;font-size:11px">ADV</span></div>
-      <div style="background:#e4f3ea;border-left:4px solid var(--win);padding:6px 10px;font-size:13px"><b>2 · Caminero</b> ~12 <span style="color:var(--win);font-weight:700;font-size:11px">ADV</span></div>
-      <div style="background:#e4f3ea;border-left:4px solid var(--win);padding:6px 10px;font-size:13px"><b>3 · Rice</b> ~11 <span style="color:var(--win);font-weight:700;font-size:11px">ADV</span></div>
-      <div style="background:#e4f3ea;border-left:4px solid var(--win);padding:6px 10px;font-size:13px"><b>4 · Murakami</b> ~11 <span style="color:var(--win);font-weight:700;font-size:11px">ADV</span></div>
-      <div style="background:#f7f9fc;border-left:4px solid var(--gold);padding:6px 10px;font-size:13px"><b>5 · Harper</b> ~10 <span style="color:#916c14;font-size:11px">bubble — out</span></div>
-      <div style="background:#f7f9fc;border-left:4px solid var(--line);padding:6px 10px;font-size:13px">6 · Contreras ~9</div>
-      <div style="background:#f7f9fc;border-left:4px solid var(--line);padding:6px 10px;font-size:13px">7 · Walker ~9</div>
-      <div style="background:#f7f9fc;border-left:4px solid var(--line);padding:6px 10px;font-size:13px">8 · Caglianone ~8</div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div>
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--navy);margin-bottom:6px">Semifinal A (15 swings)</div>
-        <div style="border:.5px solid var(--line);border-radius:8px;overflow:hidden">
-          <div style="padding:7px 10px;background:#eaf1e9;font-size:13px;border-bottom:.5px solid var(--line)"><b>Schwarber (1)</b> <span style="color:var(--win);font-weight:700;float:right">WINS ✓</span></div>
-          <div style="padding:7px 10px;font-size:13px;color:var(--mut)">Murakami (4)</div>
-        </div>
-        <div class="note" style="margin-top:4px">Schwarber's higher floor + home edge; Murakami needs a groove to flip it.</div>
+    <h2>Projected bracket <span style="font-size:11px;color:var(--mut);font-weight:400">(seeded by the value model)</span></h2>
+    <div style="font-size:12px;color:var(--mut);margin-bottom:8px">Round 1 advancers (top 4): <b style="color:var(--ink)">Caminero · Rice · Murakami · Schwarber</b> · bubble: Caglianone · out: Walker, Harper, Contreras</div>
+    <div class="bracket">
+      <div class="bcol">
+        <div class="match"><div class="r w">Caminero (1) <span>✓</span></div><div class="r l">Schwarber (4)</div></div>
+        <div class="match"><div class="r w">Rice (2) <span>✓</span></div><div class="r l">Murakami (3)</div></div>
       </div>
-      <div>
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--navy);margin-bottom:6px">Semifinal B (15 swings)</div>
-        <div style="border:.5px solid var(--line);border-radius:8px;overflow:hidden">
-          <div style="padding:7px 10px;background:#eaf1e9;font-size:13px;border-bottom:.5px solid var(--line)"><b>Caminero (2)</b> <span style="color:var(--win);font-weight:700;float:right">WINS ✓</span></div>
-          <div style="padding:7px 10px;font-size:13px;color:var(--mut)">Rice (3)</div>
-        </div>
-        <div class="note" style="margin-top:4px">Coin flip — Rice is live via the +6 CBP park boost; Caminero's raw ceiling edges it.</div>
+      <div style="color:var(--mut);font-weight:700">→</div>
+      <div class="bcol">
+        <div class="match"><div class="r w">Caminero <span>✓</span></div><div class="r l">Rice</div></div>
+      </div>
+      <div style="color:var(--mut);font-weight:700">→</div>
+      <div class="bcol">
+        <div class="champ"><div style="font-size:11px;color:#aebde4;text-transform:uppercase;font-weight:700">Champion</div><div class="c">Junior Caminero 🏆</div><div style="font-size:11px;color:#aebde4;margin-top:2px">age 23 · value pick</div></div>
       </div>
     </div>
-
-    <div style="margin-top:14px;background:var(--navy);color:#fff;border-radius:10px;padding:14px 16px">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#aebde4">Final (15 swings) · projected champion</div>
-      <div style="font-size:15px;margin:6px 0 2px"><b style="color:#fff">Kyle Schwarber</b> <span style="color:#aebde4">def. Caminero</span> <span style="background:var(--gold);color:#3a2a06;font-weight:700;font-size:11px;padding:2px 8px;border-radius:6px;margin-left:6px">🏆 CHAMPION</span></div>
-      <div style="font-size:12.5px;color:#dbe4f7;margin-top:4px">Home park, most repeatable swing, highest floor. Caminero's stamina is the upset path — but a 15-swing final blunts the fatigue edge that would matter over a longer format. Chalk, and it's earned.</div>
-    </div>
-    <div class="note">Live longshot for the whole bracket: <b>Rice</b> — if his park boost plays and his dad grooves him, he can run through the lefty-friendly draw. Best ticket if you want a price over Schwarber.</div>
+    <div class="note">Semis are 1v4 / 2v3. Caminero over Schwarber and Rice over Murakami are both close — a strong Schwarber Round-1 can flip his semi. Live longshot to win it all: <b>Rice</b>.</div>
   </div>
 
   <div class="sec">
     <h2>After Round 1 — enter results, update the bracket</h2>
-    <div style="font-size:13px;color:#33405e;margin-bottom:10px">Punch in each hitter's Round 1 homers as they finish, then hit <b>Update</b>. The bracket re-seeds by actual results — top 4 advance, semis and champion re-project off who's actually hot.</div>
+    <div style="font-size:13px;color:#33405e;margin-bottom:10px">Punch in each hitter's Round 1 homers, hit <b>Update</b>. The bracket re-seeds by actual results — top 4 advance, semis and champion re-project off who's actually hot.</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px" id="r1inputs"></div>
     <button onclick="updateR1()" style="margin-top:12px;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">Update bracket ↻</button>
     <div id="r1out" style="margin-top:14px"></div>
   </div>
 
   <div class="sec">
-    <h2>Who could win — the read</h2>
-    <div class="tier fav"><div class="lbl">Favorite · 15+ live</div><div class="names">Kyle Schwarber (L)</div>
-      <p>Most repeatable elite swing, most 400+ balls with margin, home park. Highest floor and a real 15+ ceiling.</p></div>
-    <div class="tier live"><div class="lbl">Live value · closers</div><div class="names">Junior Caminero (R) · Ben Rice (L)</div>
-      <p><b>Caminero</b> — youngest legs (still crushing at swing 20 → bonus), hottest bat, longest ball (463 ft). <b>Rice</b> — dad throwing to him, and the park helps him most (+6 would-be HRs at CBP).</p></div>
-    <div class="tier dark"><div class="lbl">Loft dark horse</div><div class="names">Munetaka Murakami (L)</div>
-      <p>Best launch in the field (32°) + elite barrels = highest per-swing ceiling if he grooves. Volume-based projections underrate him.</p></div>
-    <div class="tier long"><div class="lbl">Fade at short prices</div><div class="names">Caglianone (L) · Contreras (R) · Walker (R) · Harper (L)</div>
-      <p>Caglianone hits it hardest but on the lowest loft (line drives). Harper is the sentimental home pick, mid-pack projection, older bat that can fade late.</p></div>
+    <h2>Father-son Derby lore</h2>
+    <p style="font-size:13.5px;margin:0 0 8px">The <b>Guerreros</b> lead it — Vlad Sr. won 2007, Vlad Jr. won 2023 (only father-son pair to both win; Jr. holds the single-Derby record, 91 in 2019). The <b>Fielders</b> (Prince won twice) and 3-time champ <b>Ken Griffey Jr.</b> round it out.</p>
+    <p class="note">This year's thread: <b>Ben Rice's dad, Dan Rice</b> — a former Brown pitcher — is throwing to him. A real rhythm edge, and the reason he grades out as our top longshot.</p>
   </div>
 
-  <div class="caveat"><b>Reality check:</b> the Derby is high-variance — grooved BP, timing, pace and stamina swing it in ways no model nails, and the last-swing bonus adds more. Leans, not locks — size bets small.</div>
+  <div class="caveat"><b>Reality check:</b> this reweight deliberately fades the favorite, which is where value lives — but it's higher variance. It won't hit as often as chalk; it pays more when it does. Everything here is a lean — bet small, spread across the markets above, and enjoy the show.</div>
 
-  <div class="foot">Sources: <a href="https://www.mlb.com/news/home-run-derby-format-change-for-2026">MLB.com 2026 format</a> · <a href="https://www.mlb.com/news/pitchers-throwing-to-the-2026-home-run-derby-participants">MLB.com pitchers</a> · spray data live from <a href="https://baseballsavant.mlb.com/">Baseball Savant</a> · projections model exit velo + loft + stamina + park · weather via Open-Meteo. Analysis only; not affiliated with MLB.</div>
+  <div class="foot">Sources: <a href="https://www.mlb.com/news/home-run-derby-format-change-for-2026">MLB.com 2026 format</a> · <a href="https://www.mlb.com/news/pitchers-throwing-to-the-2026-home-run-derby-participants">MLB.com pitchers</a> · spray data live from <a href="https://baseballsavant.mlb.com/">Baseball Savant</a> · ages via MLB Stats API · weather via Open-Meteo. Analysis only; not affiliated with MLB.</div>
 </div>
 
 <script>
 const P=[
- {n:"Kyle Schwarber",id:656941,h:"L",fl:8,md:13,ce:18,ev:105.5,la:30.4,lg:460,p:"Rafael Peña",watch:1,closer:1},
- {n:"Junior Caminero",id:691406,h:"R",fl:7,md:12,ce:17,ev:105.7,la:28.3,lg:463,p:"Tomás Francisco",watch:1,closer:1},
- {n:"Ben Rice",id:700250,h:"L",fl:6,md:11,ce:15,ev:103.1,la:28.9,lg:433,p:"Dan Rice (dad)",watch:1,closer:0},
- {n:"Munetaka Murakami",id:808959,h:"L",fl:6,md:11,ce:16,ev:106.7,la:32.2,lg:451,p:"—",watch:1,closer:0},
- {n:"Bryce Harper",id:547180,h:"L",fl:6,md:10,ce:14,ev:104.4,la:29.0,lg:457,p:"Dino Ebel",watch:0,closer:0},
- {n:"Willson Contreras",id:575929,h:"R",fl:5,md:9,ce:13,ev:106.5,la:30.2,lg:449,p:"—",watch:0,closer:0},
- {n:"Jordan Walker",id:691023,h:"R",fl:5,md:9,ce:13,ev:105.7,la:27.5,lg:459,p:"—",watch:0,closer:1},
- {n:"Jac Caglianone",id:695506,h:"L",fl:4,md:8,ce:14,ev:107.7,la:27.6,lg:444,p:"—",watch:0,closer:1}
+ {n:"Junior Caminero",id:691406,h:"R",fl:8,md:14,ce:18,ev:105.7,la:28.3,lg:463,p:"Tomás Francisco",watch:1,closer:1},
+ {n:"Kyle Schwarber",id:656941,h:"L",fl:8,md:13,ce:18,ev:105.5,la:30.4,lg:460,p:"Rafael Peña",watch:1,closer:0},
+ {n:"Ben Rice",id:700250,h:"L",fl:7,md:12,ce:16,ev:103.1,la:28.9,lg:433,p:"Dan Rice (dad)",watch:1,closer:0},
+ {n:"Munetaka Murakami",id:808959,h:"L",fl:6,md:12,ce:16,ev:106.7,la:32.2,lg:451,p:"—",watch:1,closer:0},
+ {n:"Jac Caglianone",id:695506,h:"L",fl:5,md:11,ce:16,ev:107.7,la:27.6,lg:444,p:"—",watch:1,closer:1},
+ {n:"Jordan Walker",id:691023,h:"R",fl:5,md:10,ce:14,ev:105.7,la:27.5,lg:459,p:"—",watch:0,closer:1},
+ {n:"Bryce Harper",id:547180,h:"L",fl:6,md:9,ce:13,ev:104.4,la:29.0,lg:457,p:"Dino Ebel",watch:0,closer:0},
+ {n:"Willson Contreras",id:575929,h:"R",fl:5,md:9,ce:13,ev:106.5,la:30.2,lg:449,p:"—",watch:0,closer:0}
 ];
 const KP=[[-45,329],[-30,374],[-15,392],[0,401],[15,388],[30,369],[45,330]];
 function wall(a){a=Math.max(-45,Math.min(45,a));for(let i=0;i<KP.length-1;i++){if(a>=KP[i][0]&&a<=KP[i+1][0]){const[x0,y0]=KP[i],[x1,y1]=KP[i+1];return y0+(y1-y0)*(a-x0)/(x1-x0);}}return 400;}
-const HP=[100,180], MAXD=470, RAD=150;
-function pos(ang,dist){const r=Math.min(dist,MAXD)/MAXD*RAD;const t=ang*Math.PI/180;return [HP[0]+r*Math.sin(t), HP[1]-r*Math.cos(t)];}
+const HP=[100,180],MAXD=470,RAD=150;
+function pos(ang,dist){const r=Math.min(dist,MAXD)/MAXD*RAD;const t=ang*Math.PI/180;return[HP[0]+r*Math.sin(t),HP[1]-r*Math.cos(t)];}
 function parseLine(l){const o=[];let c='',q=false;for(const ch of l){if(ch=='"')q=!q;else if(ch==','&&!q){o.push(c);c='';}else c+=ch;}o.push(c);return o;}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 function card(pl){
@@ -201,7 +195,7 @@ function card(pl){
   const tags=(pl.watch?'<span class="tag watch">15+ WATCH</span>':'')+(pl.closer?'<span class="tag closer">CLOSER</span>':'');
   return `<div class="pcard"><div class="pc-head"><img src="${hs}" alt="" onerror="this.style.visibility='hidden'">`
    +`<div><div class="nm">${esc(pl.n)} <span style="font-weight:400;color:#aebde4">${pl.h}</span></div>`
-   +`<div class="meta">BP: ${esc(pl.p)}</div><div class="tags">${tags}</div></div></div>`
+   +`<div class="meta">BP: ${esc(pl.p)}</div><div style="margin-top:3px">${tags}</div></div></div>`
    +`<div class="pc-body"><div class="spraybox" id="sp-${pl.id}"><svg viewBox="0 0 200 200"><text x="100" y="95" text-anchor="middle" font-size="9" fill="#9fb0cc">loading spray…</text></svg></div>`
    +`<div class="pc-stats"><div class="row"><span>Proj R1</span><span class="big">${pl.fl}–${pl.ce}</span></div>`
    +`<div class="row"><span>Median</span><span>~${pl.md} HR</span></div>`
@@ -211,115 +205,91 @@ function card(pl){
    +`<div class="row" id="cbp-${pl.id}"><span>CBP boost</span><span>…</span></div></div></div></div>`;
 }
 document.getElementById('cards').innerHTML=P.map(card).join('');
-function fieldSVG(){
-  let s='';
-  // foul lines
-  const [lx,ly]=pos(-45,MAXD),[rx,ry]=pos(45,MAXD);
+const MX=20;
+document.getElementById('ranges').innerHTML=P.map(x=>{
+  const flp=x.fl/MX*100,cep=x.ce/MX*100,mdp=x.md/MX*100,p15=15/MX*100;
+  const tags=(x.watch?'<span class="tag watch">15+</span>':'')+(x.closer?'<span class="tag closer">closer</span>':'');
+  return `<div class="rng"><div class="rng-top"><div><b>${x.n}</b> <span style="color:#9aa3b2;font-size:11px">${x.h}</span> ${tags}</div><div style="font-size:12px;color:#566586">${x.fl}–${x.ce} · <b style="color:#0a1a3a">~${x.md}</b></div></div>`
+   +`<div class="track"><div class="band" style="left:${flp}%;width:${cep-flp}%"></div><div class="mk15" style="left:${p15}%"></div><div class="med" style="left:calc(${mdp}% - 2px)"></div></div></div>`;
+}).join('');
+function fieldSVG(){let s='';const[lx,ly]=pos(-45,MAXD),[rx,ry]=pos(45,MAXD);
   s+=`<line x1="${HP[0]}" y1="${HP[1]}" x2="${lx.toFixed(1)}" y2="${ly.toFixed(1)}" stroke="#d6deea" stroke-width="1"/>`;
   s+=`<line x1="${HP[0]}" y1="${HP[1]}" x2="${rx.toFixed(1)}" y2="${ry.toFixed(1)}" stroke="#d6deea" stroke-width="1"/>`;
-  // fence arc
   let d='M';for(let a=-45;a<=45;a+=3){const[x,y]=pos(a,wall(a));d+=` ${x.toFixed(1)},${y.toFixed(1)}`;}
-  s+=`<path d="${d}" fill="none" stroke="#8b98ad" stroke-width="1.5"/>`;
-  return s;
-}
+  s+=`<path d="${d}" fill="none" stroke="#8b98ad" stroke-width="1.5"/>`;return s;}
 async function loadSpray(pl){
   const box=document.getElementById('sp-'+pl.id);
   try{
     const u='https://baseballsavant.mlb.com/statcast_search/csv?all=true&type=details&player_type=batter&batters_lookup%5B%5D='+pl.id+'&hfSea=2026%7C&game_date_gt=2026-03-01&game_date_lt=2026-07-14';
-    const t=await(await fetch(u)).text();
-    const lines=t.split('\n').filter(x=>x.trim());const h=parseLine(lines[0]);const gi=n=>h.indexOf(n);
+    const t=await(await fetch(u)).text();const lines=t.split('\n').filter(x=>x.trim());const h=parseLine(lines[0]);const gi=n=>h.indexOf(n);
     const iE=gi('events'),iX=gi('hc_x'),iY=gi('hc_y'),iD=gi('hit_distance_sc'),iL=gi('launch_angle');
-    let hr=0,wb=0,dots='';
+    let wb=0,dots='';
     for(let r=1;r<lines.length;r++){const f=parseLine(lines[r]);
       const hx=parseFloat(f[iX]),hy=parseFloat(f[iY]),dist=parseFloat(f[iD]),la=parseFloat(f[iL]),ev=f[iE];
       if(isNaN(hx)||isNaN(hy)||isNaN(dist)||dist<200)continue;
       const x=hx-125.42,y=198.27-hy;const ang=Math.atan2(x,y)*180/Math.PI;
       let col='#9fb0cc',rr=1.6,o=.5;
-      if(ev==='home_run'){col='#1d7a4d';hr++;rr=2.1;o=.9;}
+      if(ev==='home_run'){col='#1d7a4d';rr=2.1;o=.9;}
       else if(!isNaN(la)&&la>=18&&la<=44&&dist>=wall(ang)){col='#e0a92b';wb++;rr=2.1;o=.9;}
       const[px,py]=pos(ang,dist);dots+=`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${rr}" fill="${col}" opacity="${o}"/>`;
     }
     box.innerHTML=`<svg viewBox="0 0 200 200">${fieldSVG()}${dots}</svg>`;
-    const cbp=document.getElementById('cbp-'+pl.id);
-    if(cbp)cbp.innerHTML=`<span>CBP boost</span><span style="color:#916c14;font-weight:700">+${wb} HR</span>`;
-  }catch(e){ box.innerHTML=`<svg viewBox="0 0 200 200"><text x="100" y="100" text-anchor="middle" font-size="8" fill="#bf0a30">spray unavailable</text></svg>`; }
+    const c=document.getElementById('cbp-'+pl.id);if(c)c.innerHTML=`<span>CBP boost</span><span style="color:#916c14;font-weight:700">+${wb} HR</span>`;
+  }catch(e){box.innerHTML=`<svg viewBox="0 0 200 200"><text x="100" y="100" text-anchor="middle" font-size="8" fill="#bf0a30">spray unavailable</text></svg>`;}
 }
-// --- Refresh weather + spray ---
-function windCompass(deg){const d=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];return d[Math.round(deg/22.5)%16];}
-async function refreshWeather(){
-  try{
-    const u='https://api.open-meteo.com/v1/forecast?latitude=39.906&longitude=-75.166&hourly=wind_speed_10m,wind_direction_10m,temperature_2m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America/New_York&forecast_days=1';
-    const j=await(await fetch(u)).json();const h=j.hourly;
-    let idx=h.time.findIndex(t=>t.slice(11,16)==='20:00'); if(idx<0)idx=h.time.length-1;
-    const temp=Math.round(h.temperature_2m[idx]), mph=Math.round(h.wind_speed_10m[idx]), dir=h.wind_direction_10m[idx];
-    document.getElementById('wxTemp').textContent=temp+'°F';
-    document.getElementById('wxWind').textContent=mph+' mph '+windCompass(dir);
-    document.getElementById('wxTempN').textContent=temp>=80?'warm — carries':temp>=65?'mild':'cool air';
-    document.getElementById('wxWindN').textContent=mph<8?'light, minor':(mph<15?'moderate':'strong');
-  }catch(e){}
-}
-async function refreshAll(){
-  const el=document.getElementById('updated'); el.textContent='refreshing…';
-  await refreshWeather();
-  for(const pl of P){ loadSpray(pl); }
-  const now=new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'});
-  el.textContent='Updated '+now+' ET';
-}
-// --- Round 1 result entry + bracket recompute ---
-document.getElementById('r1inputs').innerHTML = P.map(pl=>
-  `<label style="font-size:13px;display:flex;align-items:center;gap:6px;background:#f7f9fc;border:.5px solid var(--line);border-radius:8px;padding:6px 10px">`
-  +`<span style="flex:1">${pl.n.split(' ').slice(1).join(' ')} <span style="color:#9aa3b2">${pl.h}</span></span>`
-  +`<input type="number" min="0" max="40" id="r1-${pl.id}" style="width:54px;padding:4px 6px;border:.5px solid var(--line);border-radius:6px;font-family:inherit;font-size:13px" placeholder="HR"></label>`
-).join('');
-function updateR1(){
-  const rows=P.map(pl=>({n:pl.n,short:pl.n.split(' ').slice(1).join(' '),h:pl.h,closer:pl.closer,hr:parseFloat((document.getElementById('r1-'+pl.id)||{}).value)}))
-             .filter(r=>!isNaN(r.hr));
-  const out=document.getElementById('r1out');
-  if(rows.length<8){ out.innerHTML='<div class="note">Enter all 8 Round 1 totals to project the bracket ('+rows.length+'/8 entered).</div>'; return; }
-  rows.sort((a,b)=>b.hr-a.hr);
-  const adv=rows.slice(0,4);
-  const pick=(a,b)=>{const w=a.hr>=b.hr?a:b,l=a.hr>=b.hr?b:a;return {w,l,close:Math.abs(a.hr-b.hr)<=2};};
-  const sA=pick(adv[0],adv[3]), sB=pick(adv[1],adv[2]), fin=pick(sA.w,sB.w);
-  const badge=(t,c)=>`<span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:5px;background:${c};color:#fff">${t}</span>`;
-  const row=(r,a)=>`<div style="display:flex;justify-content:space-between;padding:4px 10px;font-size:13px;${a?'background:#e4f3ea;font-weight:700':'color:#566586'}"><span>${r.short} <span style="color:#9aa3b2;font-weight:400">${r.h}</span></span><span class="mono">${r.hr} HR ${a?'✓':''}</span></div>`;
-  out.innerHTML =
-    `<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--navy);margin-bottom:4px">Standings — top 4 advance</div>`
-    +`<div style="border:.5px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:12px">`+rows.map((r,i)=>row(r,i<4)).join('')+`</div>`
-    +`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">`
-    +`<div><div style="font-size:11px;font-weight:700;color:var(--navy)">Semi A (1v4)</div><div style="font-size:13px;margin-top:3px"><b>${sA.w.short}</b> over ${sA.l.short} ${sA.close?badge('TOSS-UP','#916c14'):badge('proj','#0a3161')}</div></div>`
-    +`<div><div style="font-size:11px;font-weight:700;color:var(--navy)">Semi B (2v3)</div><div style="font-size:13px;margin-top:3px"><b>${sB.w.short}</b> over ${sB.l.short} ${sB.close?badge('TOSS-UP','#916c14'):badge('proj','#0a3161')}</div></div>`
-    +`</div>`
-    +`<div style="margin-top:12px;background:var(--navy);color:#fff;border-radius:10px;padding:12px 16px">`
-    +`<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#aebde4">Updated projected champion</div>`
-    +`<div style="font-size:16px;margin-top:4px"><b>${fin.w.n}</b> <span style="color:#aebde4">def. ${fin.l.short}</span> <span style="background:var(--gold);color:#3a2a06;font-weight:700;font-size:11px;padding:2px 8px;border-radius:6px;margin-left:6px">🏆</span></div>`
-    +`<div style="font-size:12px;color:#dbe4f7;margin-top:4px">Re-seeded from your Round 1 results. ${fin.close?'Final projects as a near coin-flip — stamina and momentum decide it.':'Clear edge on Round 1 form.'} ${fin.w.closer?'Winner has the closer/stamina profile to finish strong.':''}</div></div>`;
-}
-// --- Upset-weighted value model ---
+// value model (adjusted): P.40 Y.125 M.275 G.20 ; groove real only for Rice/Schwarber
 const VF=[
- {n:"Junior Caminero",P:9,Y:10,M:10,G:7},
+ {n:"Junior Caminero",P:9,Y:10,M:10,G:5},
  {n:"Ben Rice",P:7,Y:7,M:9,G:10},
- {n:"Jac Caglianone",P:7.5,Y:10,M:8,G:6},
- {n:"Munetaka Murakami",P:9,Y:7.5,M:8,G:6},
- {n:"Jordan Walker",P:7,Y:9,M:6.5,G:6},
+ {n:"Munetaka Murakami",P:9,Y:7.5,M:8,G:5},
  {n:"Kyle Schwarber",P:9,Y:4,M:6,G:8.5},
- {n:"Bryce Harper",P:7.5,Y:4,M:4.5,G:7},
- {n:"Willson Contreras",P:7.5,Y:3.5,M:5,G:6}
+ {n:"Jac Caglianone",P:7.5,Y:10,M:8,G:5},
+ {n:"Jordan Walker",P:7,Y:9,M:6.5,G:5},
+ {n:"Willson Contreras",P:7.5,Y:3.5,M:5,G:5},
+ {n:"Bryce Harper",P:7.5,Y:4,M:4.5,G:5}
 ];
-VF.forEach(v=>v.c=0.35*v.P+0.25*v.Y+0.22*v.M+0.18*v.G);
+VF.forEach(v=>v.c=0.40*v.P+0.125*v.Y+0.275*v.M+0.20*v.G);
 VF.sort((a,b)=>b.c-a.c);
 (function(){
   const chip=(l,val,c)=>`<span style="font-size:10px;color:${c};margin-right:7px;font-family:'Space Mono',monospace">${l}${val}</span>`;
   document.getElementById('valueBoard').innerHTML=VF.map((v,i)=>{
-    const w=Math.round(v.c/10*100);
-    const col=i==0?'#bf0a30':(i<3?'#0a3161':(i<5?'#0a2463':'#9fb0cc'));
+    const w=Math.round(v.c/10*100);const col=i==0?'#bf0a30':(i<3?'#0a3161':(i<5?'#0a2463':'#9fb0cc'));
     return `<div style="margin:7px 0"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:2px;align-items:baseline">`
-     +`<span><b>${v.n.split(' ').slice(1).join(' ')}</b> &nbsp;`
-     +chip('P',v.P,'#0a3161')+chip('Y',v.Y,'#1d7a4d')+chip('M',v.M,'#bf0a30')+chip('G',v.G,'#916c14')+`</span>`
+     +`<span><b>${v.n.split(' ').slice(1).join(' ')}</b> &nbsp;`+chip('P',v.P,'#0a3161')+chip('Y',v.Y,'#1d7a4d')+chip('M',v.M,'#bf0a30')+chip('G',v.G,'#916c14')+`</span>`
      +`<span style="font-weight:700">${v.c.toFixed(1)}</span></div>`
      +`<div style="height:13px;background:#e7ecf5;border-radius:6px"><div style="height:100%;width:${w}%;background:${col};border-radius:6px"></div></div></div>`;
   }).join('');
 })();
-(async()=>{ for(const pl of P){ await loadSpray(pl); } })();
+// refresh
+function windCompass(d){const c=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];return c[Math.round(d/22.5)%16];}
+async function refreshWeather(){try{
+  const j=await(await fetch('https://api.open-meteo.com/v1/forecast?latitude=39.906&longitude=-75.166&hourly=wind_speed_10m,wind_direction_10m,temperature_2m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America/New_York&forecast_days=1')).json();
+  const h=j.hourly;let i=h.time.findIndex(t=>t.slice(11,16)==='20:00');if(i<0)i=h.time.length-1;
+  const T=Math.round(h.temperature_2m[i]),M=Math.round(h.wind_speed_10m[i]),D=h.wind_direction_10m[i];
+  document.getElementById('wxTemp').textContent=T+'°F';document.getElementById('wxWind').textContent=M+' mph '+windCompass(D);
+  document.getElementById('wxTempN').textContent=T>=80?'warm — carries':(T>=65?'mild':'cool air');
+  document.getElementById('wxWindN').textContent=M<8?'light, minor':(M<15?'moderate':'strong');
+}catch(e){}}
+async function refreshAll(){const el=document.getElementById('updated');el.textContent='refreshing…';await refreshWeather();for(const pl of P){loadSpray(pl);}
+  el.textContent='Updated '+new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',timeZone:'America/New_York'})+' ET';}
+// round 1 updater
+document.getElementById('r1inputs').innerHTML=P.map(pl=>
+  `<label style="font-size:13px;display:flex;align-items:center;gap:6px;background:#f7f9fc;border:.5px solid var(--line);border-radius:8px;padding:6px 10px"><span style="flex:1">${pl.n.split(' ').slice(1).join(' ')} <span style="color:#9aa3b2">${pl.h}</span></span><input type="number" min="0" max="40" id="r1-${pl.id}" style="width:54px;padding:4px 6px;border:.5px solid var(--line);border-radius:6px;font-family:inherit;font-size:13px" placeholder="HR"></label>`
+).join('');
+function updateR1(){
+  const rows=P.map(pl=>({n:pl.n,short:pl.n.split(' ').slice(1).join(' '),h:pl.h,closer:pl.closer,hr:parseFloat((document.getElementById('r1-'+pl.id)||{}).value)})).filter(r=>!isNaN(r.hr));
+  const out=document.getElementById('r1out');
+  if(rows.length<8){out.innerHTML='<div class="note">Enter all 8 Round 1 totals to project the bracket ('+rows.length+'/8 entered).</div>';return;}
+  rows.sort((a,b)=>b.hr-a.hr);const adv=rows.slice(0,4);
+  const pick=(a,b)=>{const w=a.hr>=b.hr?a:b,l=a.hr>=b.hr?b:a;return{w,l,close:Math.abs(a.hr-b.hr)<=2};};
+  const sA=pick(adv[0],adv[3]),sB=pick(adv[1],adv[2]),fin=pick(sA.w,sB.w);
+  const bdg=(t,c)=>`<span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:5px;background:${c};color:#fff">${t}</span>`;
+  const rr=(r,a)=>`<div class="r ${a?'w':'l'}">${r.short} <span>${r.hr} HR ${a?'✓':''}</span></div>`;
+  out.innerHTML=`<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--navy);margin-bottom:4px">Standings — top 4 advance</div><div class="match" style="margin-bottom:12px">`+rows.map((r,i)=>rr(r,i<4)).join('')+`</div>`
+   +`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div><div style="font-size:11px;font-weight:700;color:var(--navy)">Semi A</div><div style="font-size:13px;margin-top:3px"><b>${sA.w.short}</b> over ${sA.l.short} ${sA.close?bdg('TOSS-UP','#916c14'):bdg('proj','#0a3161')}</div></div><div><div style="font-size:11px;font-weight:700;color:var(--navy)">Semi B</div><div style="font-size:13px;margin-top:3px"><b>${sB.w.short}</b> over ${sB.l.short} ${sB.close?bdg('TOSS-UP','#916c14'):bdg('proj','#0a3161')}</div></div></div>`
+   +`<div style="margin-top:12px;background:var(--navy);color:#fff;border-radius:10px;padding:12px 16px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#aebde4">Updated projected champion</div><div style="font-size:16px;margin-top:4px"><b>${fin.w.n}</b> <span style="color:#aebde4">def. ${fin.l.short}</span> 🏆</div><div style="font-size:12px;color:#dbe4f7;margin-top:4px">Re-seeded from your Round 1 results. ${fin.close?'Final projects as a near coin-flip.':'Clear edge on Round 1 form.'} ${fin.w.closer?'Winner has the stamina to finish strong.':''}</div></div>`;
+}
+(async()=>{for(const pl of P){await loadSpray(pl);}})();
 </script>
 </body>
 </html>
