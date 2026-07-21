@@ -65,7 +65,7 @@ a.back{font-family:var(--mono);font-size:11px;color:var(--accent)}
 <script>
 'use strict';
 const API='https://statsapi.mlb.com/api/v1';
-const POLL_MS=45000;
+const POLL_MS=15000; // statsapi public feed itself lags broadcast ~15-30s; this is the floor
 const NYY_ID=147;
 let model={}, modelRaw=null, peopleCache=new Map(), feedCache=new Map(), lastPoll=null;
 
@@ -246,8 +246,10 @@ async function tick(force){
     const games=sched.dates?.[0]?.games||[];
     const live=games.filter(g=>g.status.abstractGameState==='Live');
     const other=games.filter(g=>g.status.abstractGameState!=='Live');
-    const results=[];
-    for(const g of live){try{results.push(await processLive(g))}catch(e){console.error(g.gamePk,e)}}
+    // all live games in parallel — sequential awaits made an 8-game slate take 15-20s per cycle
+    const settled=await Promise.allSettled(live.map(g=>processLive(g)));
+    const results=settled.filter(x=>x.status==='fulfilled').map(x=>x.value);
+    settled.filter(x=>x.status==='rejected').forEach(x=>console.error(x.reason));
     results.sort((a,b)=>(b.L.score-a.L.score));
     // pick games pinned first among live
     results.sort((a,b)=>((b.m&&b.m.tier!=='PASS')?1:0)-((a.m&&a.m.tier!=='PASS')?1:0));

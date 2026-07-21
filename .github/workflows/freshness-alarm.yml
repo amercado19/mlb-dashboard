@@ -1,0 +1,33 @@
+# Cloud-side staleness monitor — replaces the Mac-dependent Cowork health check.
+# Runs on GitHub's servers hourly during game hours. If the pipeline hasn't
+# committed fresh data in >4h, the job FAILS, and GitHub emails the repo owner
+# about the failed run. No computer, no droplet, no cost.
+#
+# Notes:
+# - GitHub notifies the user who last committed this workflow file, so Andres
+#   must be the one to push it (he is).
+# - Scheduled workflows are auto-disabled after 60 days of repo inactivity;
+#   the pipeline bot commits daily in season, so this stays alive. Re-enable
+#   manually each spring if it sleeps over the winter.
+# - Nov-Feb: offseason, exits green without checking.
+name: freshness-alarm
+on:
+  schedule:
+    - cron: '15 14-23,0-3 * * *'   # hourly, ~10am-11pm ET (UTC-4)
+  workflow_dispatch: {}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if dashboard data is stale (>4h since last commit)
+        run: |
+          month=$(date -u +%m)
+          case $month in 11|12|01|02) echo "Offseason — skipping."; exit 0;; esac
+          last=$(curl -s https://api.github.com/repos/${{ github.repository }}/commits/main | jq -r '.commit.committer.date')
+          echo "Last commit to main: $last"
+          age=$(( $(date -u +%s) - $(date -u -d "$last" +%s) ))
+          echo "Age: $((age/60)) minutes"
+          if [ "$age" -gt 14400 ]; then
+            echo "::error::mlb-dashboard has not been updated in over 4 hours. Check amercado19/mlb-pipeline -> Actions, and open the 'Push dashboard' step log (runs can be green while pushes silently fail)."
+            exit 1
+          fi
