@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T21:05:27",
+ "generated_at": "2026-07-21T21:07:52",
  "version": "0.1.0",
  "games": [
   {
@@ -42,17 +42,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 9
+     "mph": 5
     },
     "cf": {
      "dir": "out",
-     "mph": 13
+     "mph": 7
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 5
     },
-    "out_mph": 13
+    "out_mph": 7
    }
   },
   {
@@ -120,7 +120,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "cf": {
      "dir": "cross",
@@ -128,9 +128,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 8
     },
-    "out_mph": 9
+    "out_mph": 8
    }
   },
   {
@@ -168,7 +168,7 @@
    "confidence": 0.534,
    "tier": "PASS",
    "total": 9.2,
-   "book_total_line": 9.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -198,15 +198,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 12
+     "mph": 6
     },
     "cf": {
      "dir": "in",
-     "mph": 17
+     "mph": 8
     },
     "rf": {
      "dir": "in",
-     "mph": 12
+     "mph": 6
     },
     "out_mph": 0
    }
@@ -276,17 +276,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 10
+     "mph": 9
     },
     "cf": {
      "dir": "out",
-     "mph": 14
+     "mph": 13
     },
     "rf": {
      "dir": "out",
-     "mph": 10
+     "mph": 9
     },
-    "out_mph": 14
+    "out_mph": 13
    }
   },
   {
@@ -351,21 +351,7 @@
    "tier": "PASS",
    "total": 8.4,
    "book_total_line": 7.5,
-   "wind": {
-    "lf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "cf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "out_mph": 0
-   }
+   "wind": null
   },
   {
    "away": "pit",
@@ -380,17 +366,17 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 7
     },
     "rf": {
-     "dir": "out",
-     "mph": 6
+     "dir": "in",
+     "mph": 5
     },
-    "out_mph": 6
+    "out_mph": 0
    }
   }
  ],
@@ -442,29 +428,6 @@
    ]
   },
   {
-   "player": "Juan Soto",
-   "team": "nym",
-   "game": "nym-mil",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 72,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 48.4,
-    "avg_exit_velo": 92.5,
-    "xiso": 0.295,
-    "recent_hr_rate": 0.0392
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Yordan Alvarez",
    "team": "hou",
    "game": "mia-hou",
@@ -488,23 +451,23 @@
    ]
   },
   {
-   "player": "Kyle Schwarber",
-   "team": "phi",
-   "game": "lad-phi",
+   "player": "Juan Soto",
+   "team": "nym",
+   "game": "nym-mil",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 68,
+   "edge_score": 70,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 19.2,
-    "hard_hit_pct": 53.3,
-    "avg_exit_velo": 93.5,
-    "xiso": 0.273,
-    "recent_hr_rate": 0.0748
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 48.4,
+    "avg_exit_velo": 92.5,
+    "xiso": 0.295,
+    "recent_hr_rate": 0.0392
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -557,29 +520,6 @@
    ]
   },
   {
-   "player": "Bryce Harper",
-   "team": "phi",
-   "game": "lad-phi",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 66,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.3,
-    "hard_hit_pct": 45.8,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.235,
-    "recent_hr_rate": 0.0526
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Zach Neto",
    "team": "laa",
    "game": "stl-laa",
@@ -603,23 +543,69 @@
    ]
   },
   {
-   "player": "Ben Rice",
-   "team": "nyy",
-   "game": "pit-nyy",
+   "player": "Griffin Conine",
+   "team": "mia",
+   "game": "mia-hou",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 66,
+   "edge_score": 65,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 15.4,
-    "hard_hit_pct": 48.5,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.253,
-    "recent_hr_rate": 0.0741
+    "barrel_pct": 15.5,
+    "hard_hit_pct": 53.4,
+    "avg_exit_velo": 89.9,
+    "xiso": 0.241,
+    "recent_hr_rate": 0.0641
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Brandon Nimmo",
+   "team": "tex",
+   "game": "cws-tex",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 64,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 52.5,
+    "avg_exit_velo": 92.6,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.023
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Willson Contreras",
+   "team": "bos",
+   "game": "bal-bos",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 63,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.5,
+    "hard_hit_pct": 47.0,
+    "avg_exit_velo": 90.7,
+    "xiso": 0.257,
+    "recent_hr_rate": 0.0714
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
