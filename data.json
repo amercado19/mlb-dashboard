@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T18:13:29",
+ "generated_at": "2026-07-21T20:03:31",
  "version": "0.1.0",
  "games": [
   {
@@ -16,7 +16,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 8
     },
     "cf": {
      "dir": "cross",
@@ -24,9 +24,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 8
     },
-    "out_mph": 6
+    "out_mph": 8
    }
   },
   {
@@ -42,43 +42,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 8
-    },
-    "cf": {
-     "dir": "out",
-     "mph": 12
-    },
-    "rf": {
-     "dir": "out",
-     "mph": 8
-    },
-    "out_mph": 12
-   }
-  },
-  {
-   "away": "pit",
-   "home": "nyy",
-   "away_win_prob": 0.413,
-   "home_win_prob": 0.527,
-   "pick": "nyy",
-   "confidence": 0.527,
-   "tier": "PASS",
-   "total": 9.4,
-   "book_total_line": 9.5,
-   "wind": {
-    "lf": {
-     "dir": "in",
      "mph": 4
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 6
     },
     "rf": {
      "dir": "out",
      "mph": 4
     },
-    "out_mph": 4
+    "out_mph": 6
    }
   },
   {
@@ -117,7 +91,21 @@
    "tier": "PASS",
    "total": 7.7,
    "book_total_line": 8.5,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "out",
+     "mph": 9
+    },
+    "cf": {
+     "dir": "out",
+     "mph": 13
+    },
+    "rf": {
+     "dir": "out",
+     "mph": 9
+    },
+    "out_mph": 13
+   }
   },
   {
    "away": "sd",
@@ -132,7 +120,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "cf": {
      "dir": "cross",
@@ -140,9 +128,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 8
     },
-    "out_mph": 9
+    "out_mph": 8
    }
   },
   {
@@ -154,7 +142,7 @@
    "confidence": 0.526,
    "tier": "PASS",
    "total": 10.1,
-   "book_total_line": 9.5,
+   "book_total_line": 9.0,
    "wind": {
     "lf": {
      "dir": "in",
@@ -210,15 +198,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 9
+     "mph": 11
     },
     "cf": {
      "dir": "in",
-     "mph": 13
+     "mph": 15
     },
     "rf": {
      "dir": "in",
-     "mph": 9
+     "mph": 11
     },
     "out_mph": 0
    }
@@ -314,17 +302,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
     "cf": {
      "dir": "out",
-     "mph": 7
+     "mph": 8
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
-    "out_mph": 7
+    "out_mph": 8
    }
   },
   {
@@ -335,9 +323,23 @@
    "pick": "ath",
    "confidence": 0.46,
    "tier": "PASS",
-   "total": 9.5,
+   "total": 10.0,
    "book_total_line": 9.5,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "cf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "rf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "out_mph": 0
+   }
   },
   {
    "away": "cin",
@@ -364,6 +366,32 @@
     },
     "out_mph": 0
    }
+  },
+  {
+   "away": "pit",
+   "home": "nyy",
+   "away_win_prob": 0.413,
+   "home_win_prob": 0.527,
+   "pick": "nyy",
+   "confidence": 0.527,
+   "tier": "PASS",
+   "total": 9.4,
+   "book_total_line": null,
+   "wind": {
+    "lf": {
+     "dir": "in",
+     "mph": 4
+    },
+    "cf": {
+     "dir": "cross",
+     "mph": 0
+    },
+    "rf": {
+     "dir": "out",
+     "mph": 4
+    },
+    "out_mph": 4
+   }
   }
  ],
  "props": [
@@ -374,20 +402,9 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2857,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 474,
-    "factors": {
-     "sp": 1.088,
-     "park": 1.2,
-     "temp": 1.12,
-     "wind": 1.08
-    },
-    "hr_rate_pa": 0.0761
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 98,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -397,7 +414,9 @@
     "xiso": 0.327,
     "recent_hr_rate": 0.0661
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Andr\u00e9s Chaparro",
@@ -406,20 +425,9 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2815,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 78,
-    "factors": {
-     "sp": 1.088,
-     "park": 1.2,
-     "temp": 1.12,
-     "wind": 1.08
-    },
-    "hr_rate_pa": 0.0555
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 96,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -429,37 +437,9 @@
     "xiso": 0.259,
     "recent_hr_rate": 0.1
    },
-   "flags": []
-  },
-  {
-   "player": "Juan Soto",
-   "team": "nym",
-   "game": "nym-mil",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2773,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 352,
-    "factors": {
-     "sp": 1.043,
-     "park": 1.07
-    },
-    "hr_rate_pa": 0.0518
-   },
-   "edge_score": 72,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 48.4,
-    "avg_exit_velo": 92.5,
-    "xiso": 0.295,
-    "recent_hr_rate": 0.0392
-   },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Yordan Alvarez",
@@ -468,18 +448,9 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2857,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 438,
-    "factors": {
-     "sp": 1.046,
-     "park": 1.105
-    },
-    "hr_rate_pa": 0.0663
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 72,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -489,99 +460,55 @@
     "xiso": 0.384,
     "recent_hr_rate": 0.0849
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
-   "player": "Joc Pederson",
-   "team": "tex",
-   "game": "cws-tex",
+   "player": "Juan Soto",
+   "team": "nym",
+   "game": "nym-mil",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2734,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 305,
-    "factors": {
-     "sp": 1.117,
-     "park": 1.0
-    },
-    "hr_rate_pa": 0.0486
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 70,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 11.8,
-    "hard_hit_pct": 49.2,
-    "avg_exit_velo": 92.0,
-    "xiso": 0.201,
-    "recent_hr_rate": 0.1013
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 48.4,
+    "avg_exit_velo": 92.5,
+    "xiso": 0.295,
+    "recent_hr_rate": 0.0392
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
-   "player": "Ben Rice",
-   "team": "nyy",
-   "game": "pit-nyy",
+   "player": "Mike Trout",
+   "team": "laa",
+   "game": "stl-laa",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2857,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 406,
-    "factors": {
-     "sp": 1.002,
-     "park": 1.175,
-     "temp": 1.024
-    },
-    "hr_rate_pa": 0.0654
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 68,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 15.4,
+    "barrel_pct": 19.3,
     "hard_hit_pct": 48.5,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.253,
-    "recent_hr_rate": 0.0741
+    "avg_exit_velo": 90.7,
+    "xiso": 0.283,
+    "recent_hr_rate": 0.0278
    },
-   "flags": []
-  },
-  {
-   "player": "Esmerlyn Valdez",
-   "team": "pit",
-   "game": "pit-nyy",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2857,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 122,
-    "factors": {
-     "sp": 1.022,
-     "park": 1.175,
-     "temp": 1.024
-    },
-    "hr_rate_pa": 0.065
-   },
-   "edge_score": 67,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 28.6,
-    "hard_hit_pct": 55.6,
-    "avg_exit_velo": 93.1,
-    "xiso": 0.337,
-    "recent_hr_rate": 0.1183
-   },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Matt Olson",
@@ -590,19 +517,9 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2857,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 434,
-    "factors": {
-     "sp": 1.025,
-     "park": 1.175,
-     "temp": 1.12
-    },
-    "hr_rate_pa": 0.0649
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 67,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -612,7 +529,9 @@
     "xiso": 0.262,
     "recent_hr_rate": 0.055
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Brandon Nimmo",
@@ -621,18 +540,9 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.187,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 401,
-    "factors": {
-     "sp": 1.117,
-     "park": 1.0
-    },
-    "hr_rate_pa": 0.0292
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 67,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -642,37 +552,78 @@
     "xiso": 0.221,
     "recent_hr_rate": 0.023
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
-   "player": "Griffin Conine",
-   "team": "mia",
-   "game": "mia-hou",
+   "player": "Justin Foscue",
+   "team": "tex",
+   "game": "cws-tex",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2644,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.25,
-    "order": 5,
-    "pa_season": 103,
-    "factors": {
-     "sp": 1.061,
-     "park": 1.105
-    },
-    "hr_rate_pa": 0.0474
-   },
-   "edge_score": 65,
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 66,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 15.5,
-    "hard_hit_pct": 53.4,
-    "avg_exit_velo": 89.9,
-    "xiso": 0.241,
-    "recent_hr_rate": 0.0641
+    "barrel_pct": 12.2,
+    "hard_hit_pct": 42.7,
+    "avg_exit_velo": 89.4,
+    "xiso": 0.218,
+    "recent_hr_rate": 0.0698
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Zach Neto",
+   "team": "laa",
+   "game": "stl-laa",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 66,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.8,
+    "hard_hit_pct": 39.0,
+    "avg_exit_velo": 89.3,
+    "xiso": 0.201,
+    "recent_hr_rate": 0.0297
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Ben Rice",
+   "team": "nyy",
+   "game": "pit-nyy",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 66,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.4,
+    "hard_hit_pct": 48.5,
+    "avg_exit_velo": 92.3,
+    "xiso": 0.253,
+    "recent_hr_rate": 0.0741
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Nolan Schanuel",
@@ -681,17 +632,9 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7176,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 337,
-    "factors": {
-     "sp": 1.053
-    },
-    "hit_rate_pa": 0.2538
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 80,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -701,36 +644,9 @@
     "xiso": 0.1,
     "recent_hr_rate": 0.0105
    },
-   "flags": []
-  },
-  {
-   "player": "Joc Pederson",
-   "team": "tex",
-   "game": "cws-tex",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6911,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 305,
-    "factors": {
-     "sp": 1.088
-    },
-    "hit_rate_pa": 0.2335
-   },
-   "edge_score": 79,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.8,
-    "hard_hit_pct": 49.2,
-    "avg_exit_velo": 92.0,
-    "xiso": 0.201,
-    "recent_hr_rate": 0.1013
-   },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Josh Jung",
@@ -739,17 +655,9 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7804,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 394,
-    "factors": {
-     "sp": 1.088
-    },
-    "hit_rate_pa": 0.2699
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 79,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -759,7 +667,32 @@
     "xiso": 0.146,
     "recent_hr_rate": 0.0104
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Brandon Nimmo",
+   "team": "tex",
+   "game": "cws-tex",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 79,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 52.5,
+    "avg_exit_velo": 92.6,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.023
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Colt Keith",
@@ -768,17 +701,9 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.692,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 282,
-    "factors": {
-     "sp": 1.056
-    },
-    "hit_rate_pa": 0.2441
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 78,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -788,7 +713,9 @@
     "xiso": 0.166,
     "recent_hr_rate": 0.0588
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Riley Greene",
@@ -797,17 +724,9 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.694,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 417,
-    "factors": {
-     "sp": 1.056
-    },
-    "hit_rate_pa": 0.2523
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 78,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -817,7 +736,9 @@
     "xiso": 0.219,
     "recent_hr_rate": 0.068
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Heriberto Hern\u00e1ndez",
@@ -826,17 +747,9 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6724,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 246,
-    "factors": {
-     "sp": 1.045
-    },
-    "hit_rate_pa": 0.226
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 78,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -846,7 +759,9 @@
     "xiso": 0.242,
     "recent_hr_rate": 0.0795
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "James Wood",
@@ -855,17 +770,9 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6928,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 474,
-    "factors": {
-     "sp": 1.066
-    },
-    "hit_rate_pa": 0.2362
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 78,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -875,7 +782,9 @@
     "xiso": 0.327,
     "recent_hr_rate": 0.0661
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Curtis Mead",
@@ -884,17 +793,9 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6931,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 314,
-    "factors": {
-     "sp": 1.066
-    },
-    "hit_rate_pa": 0.2413
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 77,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -904,7 +805,9 @@
     "xiso": 0.204,
     "recent_hr_rate": 0.0588
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Xavier Edwards",
@@ -913,17 +816,9 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7273,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 426,
-    "factors": {
-     "sp": 1.045
-    },
-    "hit_rate_pa": 0.2562
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 76,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -933,7 +828,9 @@
     "xiso": 0.113,
     "recent_hr_rate": 0.0
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Mike Trout",
@@ -942,17 +839,9 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6326,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 371,
-    "factors": {
-     "sp": 1.053
-    },
-    "hit_rate_pa": 0.2091
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 72,
    "score_type": "model_score_0_100",
    "statcast": {
@@ -962,7 +851,32 @@
     "xiso": 0.283,
     "recent_hr_rate": 0.0278
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Brewer Hicklen",
+   "team": "atl",
+   "game": "sd-atl",
+   "stat": "2B",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 1.0,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": null,
+    "hard_hit_pct": null,
+    "avg_exit_velo": null,
+    "xiso": 0.086,
+    "recent_hr_rate": 0.0
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Joshua Kuroda-Grauer",
@@ -971,17 +885,9 @@
    "stat": "2B",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.25,
-    "order": 5,
-    "pa_season": 62,
-    "factors": {
-     "park": 1.0
-    },
-    "b2_rate_pa": 0.0554
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 0.44,
    "score_type": "per_game_rate",
    "statcast": {
@@ -992,7 +898,7 @@
     "recent_hr_rate": 0.0161
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1002,20 +908,9 @@
    "stat": "2B",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.05,
-    "order": 7,
-    "pa_season": 13,
-    "factors": {
-     "sp": 1.088,
-     "park": 1.2,
-     "temp": 1.12,
-     "wind": 1.08
-    },
-    "b2_rate_pa": 0.0709
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 0.33,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1026,7 +921,7 @@
     "recent_hr_rate": 0.0769
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1036,17 +931,9 @@
    "stat": "2B",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.15,
-    "order": 6,
-    "pa_season": 45,
-    "factors": {
-     "park": 1.0
-    },
-    "b2_rate_pa": 0.0494
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 0.33,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1057,7 +944,7 @@
     "recent_hr_rate": 0.0357
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1067,18 +954,9 @@
    "stat": "2B",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.05,
-    "order": 7,
-    "pa_season": 133,
-    "factors": {
-     "sp": 1.038,
-     "park": 1.0
-    },
-    "b2_rate_pa": 0.0553
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 0.3,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1089,7 +967,7 @@
     "recent_hr_rate": 0.02
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1099,17 +977,9 @@
    "stat": "2B",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 102,
-    "factors": {
-     "sp": 0.984
-    },
-    "b2_rate_pa": 0.0491
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 0.27,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1120,7 +990,7 @@
     "recent_hr_rate": 0.0204
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1130,17 +1000,9 @@
    "stat": "2B",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 389,
-    "factors": {
-     "sp": 0.984
-    },
-    "b2_rate_pa": 0.0543
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 0.26,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1151,7 +1013,7 @@
     "recent_hr_rate": 0.0088
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1161,18 +1023,9 @@
    "stat": "2B",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 301,
-    "factors": {
-     "sp": 0.992,
-     "park": 1.07
-    },
-    "b2_rate_pa": 0.0531
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 0.26,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1183,7 +1036,7 @@
     "recent_hr_rate": 0.0254
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1193,18 +1046,9 @@
    "stat": "2B",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 429,
-    "factors": {
-     "sp": 0.992,
-     "park": 1.07
-    },
-    "b2_rate_pa": 0.054
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 0.26,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1215,7 +1059,7 @@
     "recent_hr_rate": 0.0261
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1225,19 +1069,9 @@
    "stat": "2B",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 434,
-    "factors": {
-     "sp": 1.025,
-     "park": 1.175,
-     "temp": 1.12
-    },
-    "b2_rate_pa": 0.0699
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 0.25,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1248,40 +1082,7 @@
     "recent_hr_rate": 0.055
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
-   ]
-  },
-  {
-   "player": "Rafael Devers",
-   "team": "sf",
-   "game": "sf-kc",
-   "stat": "2B",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2117,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 425,
-    "factors": {
-     "sp": 1.046,
-     "park": 0.93,
-     "temp": 1.114
-    },
-    "b2_rate_pa": 0.0569
-   },
-   "edge_score": 0.25,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 11.4,
-    "hard_hit_pct": 50.0,
-    "avg_exit_velo": 92.1,
-    "xiso": 0.219,
-    "recent_hr_rate": 0.0857
-   },
-   "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1291,20 +1092,9 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.3333,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 3.95,
-    "order": 8,
-    "pa_season": 8,
-    "factors": {
-     "sp": 0.925
-    },
-    "p1b": 0.1481,
-    "p2b": 0.0392,
-    "p3b": 0.0032,
-    "phr": 0.0309
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 3.0,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1314,7 +1104,9 @@
     "xiso": 0.192,
     "recent_hr_rate": null
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Yordan Alvarez",
@@ -1323,21 +1115,9 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4481,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 438,
-    "factors": {
-     "sp": 1.046,
-     "park": 1.105
-    },
-    "p1b": 0.147,
-    "p2b": 0.0518,
-    "p3b": 0.0016,
-    "phr": 0.0663
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.37,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1347,7 +1127,32 @@
     "xiso": 0.384,
     "recent_hr_rate": 0.0849
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Brewer Hicklen",
+   "team": "atl",
+   "game": "sd-atl",
+   "stat": "TB",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 2.67,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": null,
+    "hard_hit_pct": null,
+    "avg_exit_velo": null,
+    "xiso": 0.086,
+    "recent_hr_rate": 0.0
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Esmerlyn Valdez",
@@ -1356,22 +1161,9 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4481,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 122,
-    "factors": {
-     "sp": 1.022,
-     "park": 1.175,
-     "temp": 1.024
-    },
-    "p1b": 0.1267,
-    "p2b": 0.0584,
-    "p3b": 0.006,
-    "phr": 0.065
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.53,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1381,7 +1173,9 @@
     "xiso": 0.337,
     "recent_hr_rate": 0.1183
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Byron Buxton",
@@ -1390,22 +1184,9 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4481,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 338,
-    "factors": {
-     "sp": 0.95,
-     "park": 1.0,
-     "temp": 1.054
-    },
-    "p1b": 0.1335,
-    "p2b": 0.0456,
-    "p3b": 0.0032,
-    "phr": 0.0538
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.34,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1415,7 +1196,9 @@
     "xiso": 0.266,
     "recent_hr_rate": 0.0444
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Ben Rice",
@@ -1424,22 +1207,9 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4481,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 406,
-    "factors": {
-     "sp": 1.002,
-     "park": 1.175,
-     "temp": 1.024
-    },
-    "p1b": 0.13,
-    "p2b": 0.0513,
-    "p3b": 0.0069,
-    "phr": 0.0654
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.2,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1449,7 +1219,9 @@
     "xiso": 0.253,
     "recent_hr_rate": 0.0741
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Junior Caminero",
@@ -1458,21 +1230,9 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4408,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 433,
-    "factors": {
-     "sp": 0.987,
-     "park": 1.07
-    },
-    "p1b": 0.1434,
-    "p2b": 0.0418,
-    "p3b": 0.0015,
-    "phr": 0.0552
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.12,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1482,7 +1242,9 @@
     "xiso": 0.235,
     "recent_hr_rate": 0.1186
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "James Wood",
@@ -1491,23 +1253,9 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4481,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 474,
-    "factors": {
-     "sp": 1.088,
-     "park": 1.2,
-     "temp": 1.12,
-     "wind": 1.08
-    },
-    "p1b": 0.1214,
-    "p2b": 0.0735,
-    "p3b": 0.0042,
-    "phr": 0.0761
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.12,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1517,7 +1265,9 @@
     "xiso": 0.327,
     "recent_hr_rate": 0.0661
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Harry Ford",
@@ -1526,23 +1276,9 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4481,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.05,
-    "order": 7,
-    "pa_season": 13,
-    "factors": {
-     "sp": 1.088,
-     "park": 1.2,
-     "temp": 1.12,
-     "wind": 1.08
-    },
-    "p1b": 0.1399,
-    "p2b": 0.0709,
-    "p3b": 0.0053,
-    "phr": 0.0519
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.33,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1552,7 +1288,9 @@
     "xiso": 0.172,
     "recent_hr_rate": 0.0769
    },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Matt Olson",
@@ -1561,22 +1299,9 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4481,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 434,
-    "factors": {
-     "sp": 1.025,
-     "park": 1.175,
-     "temp": 1.12
-    },
-    "p1b": 0.1274,
-    "p2b": 0.0699,
-    "p3b": 0.0019,
-    "phr": 0.0649
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.08,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1586,42 +1311,9 @@
     "xiso": 0.262,
     "recent_hr_rate": 0.055
    },
-   "flags": []
-  },
-  {
-   "player": "Kyle Schwarber",
-   "team": "phi",
-   "game": "lad-phi",
-   "stat": "TB",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": 0.4481,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 431,
-    "factors": {
-     "sp": 1.002,
-     "park": 1.07,
-     "temp": 1.084,
-     "wind": 1.07
-    },
-    "p1b": 0.1201,
-    "p2b": 0.0392,
-    "p3b": 0.0035,
-    "phr": 0.072
-   },
-   "edge_score": 2.08,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 19.2,
-    "hard_hit_pct": 53.3,
-    "avg_exit_velo": 93.5,
-    "xiso": 0.273,
-    "recent_hr_rate": 0.0748
-   },
-   "flags": []
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
   },
   {
    "player": "Harry Ford",
@@ -1630,17 +1322,9 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.05,
-    "order": 7,
-    "pa_season": 13,
-    "factors": {
-     "sp": 1.066
-    },
-    "lambda_pg": 1.7
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 3.33,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1651,7 +1335,7 @@
     "recent_hr_rate": 0.0769
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1661,17 +1345,9 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 3.95,
-    "order": 8,
-    "pa_season": 8,
-    "factors": {
-     "sp": 0.944
-    },
-    "lambda_pg": 1.42
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 3.0,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1682,7 +1358,30 @@
     "recent_hr_rate": null
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Brewer Hicklen",
+   "team": "atl",
+   "game": "sd-atl",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 3.0,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": null,
+    "hard_hit_pct": null,
+    "avg_exit_velo": null,
+    "xiso": 0.086,
+    "recent_hr_rate": 0.0
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1692,17 +1391,9 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 122,
-    "factors": {
-     "sp": 1.016
-    },
-    "lambda_pg": 2.209
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.84,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1713,7 +1404,7 @@
     "recent_hr_rate": 0.1183
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1723,17 +1414,9 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 474,
-    "factors": {
-     "sp": 1.066
-    },
-    "lambda_pg": 2.693
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.61,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1744,7 +1427,7 @@
     "recent_hr_rate": 0.0661
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1754,17 +1437,9 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 438,
-    "factors": {
-     "sp": 1.035
-    },
-    "lambda_pg": 2.548
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.6,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1775,7 +1450,7 @@
     "recent_hr_rate": 0.0849
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1785,17 +1460,9 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 414,
-    "factors": {
-     "sp": 0.964
-    },
-    "lambda_pg": 2.243
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.57,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1806,7 +1473,7 @@
     "recent_hr_rate": 0.04
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1816,17 +1483,9 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 338,
-    "factors": {
-     "sp": 1.019
-    },
-    "lambda_pg": 2.414
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.49,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1837,7 +1496,7 @@
     "recent_hr_rate": 0.037
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1847,17 +1506,9 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 301,
-    "factors": {
-     "sp": 0.994
-    },
-    "lambda_pg": 2.266
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.48,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1868,7 +1519,7 @@
     "recent_hr_rate": 0.0254
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
@@ -1878,17 +1529,9 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 338,
-    "factors": {
-     "sp": 0.962
-    },
-    "lambda_pg": 2.211
-   },
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
    "edge_score": 2.46,
    "score_type": "per_game_rate",
    "statcast": {
@@ -1899,38 +1542,7 @@
     "recent_hr_rate": 0.0444
    },
    "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
-   ]
-  },
-  {
-   "player": "Ben Rice",
-   "team": "nyy",
-   "game": "pit-nyy",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": 0.5545,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 406,
-    "factors": {
-     "sp": 1.002
-    },
-    "lambda_pg": 2.334
-   },
-   "edge_score": 2.44,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 15.4,
-    "hard_hit_pct": 48.5,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.253,
-    "recent_hr_rate": 0.0741
-   },
-   "flags": [
-    "FLAT_MAP: model has no validated per-player resolution for this type yet \u2014 prob is the calibrated base rate of board-selected players"
+    "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   }
  ],
