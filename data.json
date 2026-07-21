@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T21:01:24",
+ "generated_at": "2026-07-21T21:05:27",
  "version": "0.1.0",
  "games": [
   {
@@ -120,7 +120,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 10
+     "mph": 9
     },
     "cf": {
      "dir": "cross",
@@ -128,9 +128,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 10
+     "mph": 9
     },
-    "out_mph": 10
+    "out_mph": 9
    }
   },
   {
@@ -198,15 +198,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 13
+     "mph": 12
     },
     "cf": {
      "dir": "in",
-     "mph": 18
+     "mph": 17
     },
     "rf": {
      "dir": "in",
-     "mph": 13
+     "mph": 12
     },
     "out_mph": 0
    }
@@ -306,13 +306,13 @@
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 9
     },
     "rf": {
      "dir": "out",
      "mph": 6
     },
-    "out_mph": 8
+    "out_mph": 9
    }
   },
   {
@@ -380,7 +380,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 6
     },
     "cf": {
      "dir": "cross",
@@ -388,9 +388,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 6
     },
-    "out_mph": 4
+    "out_mph": 6
    }
   }
  ],
@@ -442,6 +442,29 @@
    ]
   },
   {
+   "player": "Juan Soto",
+   "team": "nym",
+   "game": "nym-mil",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 72,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 48.4,
+    "avg_exit_velo": 92.5,
+    "xiso": 0.295,
+    "recent_hr_rate": 0.0392
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Yordan Alvarez",
    "team": "hou",
    "game": "mia-hou",
@@ -459,29 +482,6 @@
     "avg_exit_velo": 94.7,
     "xiso": 0.384,
     "recent_hr_rate": 0.0849
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Juan Soto",
-   "team": "nym",
-   "game": "nym-mil",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 70,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 48.4,
-    "avg_exit_velo": 92.5,
-    "xiso": 0.295,
-    "recent_hr_rate": 0.0392
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -695,7 +695,7 @@
    ]
   },
   {
-   "player": "Colt Keith",
+   "player": "Dillon Dingler",
    "team": "det",
    "game": "det-chc",
    "stat": "H",
@@ -707,34 +707,11 @@
    "edge_score": 78,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 8.1,
-    "hard_hit_pct": 43.1,
-    "avg_exit_velo": 89.3,
-    "xiso": 0.166,
-    "recent_hr_rate": 0.0588
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Riley Greene",
-   "team": "det",
-   "game": "det-chc",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 78,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.5,
-    "hard_hit_pct": 50.2,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.219,
-    "recent_hr_rate": 0.068
+    "barrel_pct": 11.0,
+    "hard_hit_pct": 46.8,
+    "avg_exit_velo": 89.7,
+    "xiso": 0.23,
+    "recent_hr_rate": 0.0521
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -781,6 +758,29 @@
     "avg_exit_velo": 95.1,
     "xiso": 0.327,
     "recent_hr_rate": 0.0661
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Gleyber Torres",
+   "team": "det",
+   "game": "det-chc",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 77,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 7.8,
+    "hard_hit_pct": 31.3,
+    "avg_exit_velo": 85.1,
+    "xiso": 0.135,
+    "recent_hr_rate": null
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
