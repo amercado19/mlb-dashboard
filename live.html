@@ -66,6 +66,11 @@ a.back{font-family:var(--mono);font-size:11px;color:var(--accent)}
 'use strict';
 const API='https://statsapi.mlb.com/api/v1';
 const POLL_MS=15000; // statsapi public feed itself lags broadcast ~15-30s; this is the floor
+const WX_MS=600000;  // weather every 10 min — forecasts don't move faster than that
+// Park coords from mlb_picks/parks.py — keep in sync
+const PARK_LL={"Coors Field":[39.7559,-104.9942],"Great American Ball Park":[39.0975,-84.5067],"Truist Park":[33.8908,-84.4678],"Yankee Stadium":[40.8296,-73.9262],"Camden Yards":[39.2839,-76.6217],"Oriole Park at Camden Yards":[39.2839,-76.6217],"Rate Field":[41.83,-87.6338],"Rogers Centre":[43.6414,-79.3894],"Globe Life Field":[32.7473,-97.0817],"Dodger Stadium":[34.0739,-118.24],"Tropicana Field":[27.7682,-82.6534],"George M. Steinbrenner Field":[27.9794,-82.5067],"Busch Stadium":[38.6226,-90.1928],"Kauffman Stadium":[39.0517,-94.4803],"Citi Field":[40.7571,-73.8458],"PNC Park":[40.4469,-80.0058],"Oracle Park":[37.7786,-122.3893],"Progressive Field":[41.4962,-81.6852],"Comerica Park":[42.339,-83.0485],"Target Field":[44.9817,-93.2776],"Citizens Bank Park":[39.9061,-75.1665],"Sutter Health Park":[38.5806,-121.5131],"Petco Park":[32.7073,-117.1566],"T-Mobile Park":[47.5914,-122.3325],"Wrigley Field":[41.9484,-87.6553],"Angel Stadium":[33.8003,-117.8827],"Minute Maid Park":[29.7572,-95.3554],"Daikin Park":[29.7572,-95.3554],"American Family Field":[43.028,-87.9712],"Nationals Park":[38.873,-77.0074],"loanDepot park":[25.7782,-80.2197],"Chase Field":[33.4453,-112.0667],"Estadio Alfredo Harp Helu":[19.403,-99.123]};
+const DOMES=new Set(["Tropicana Field","Rogers Centre","American Family Field","Minute Maid Park","Daikin Park","Globe Life Field","loanDepot park","Chase Field","T-Mobile Park"]);
+let wxByVenue={}, wxFetchedAt=0;
 const NYY_ID=147;
 let model={}, modelRaw=null, peopleCache=new Map(), feedCache=new Map(), lastPoll=null;
 
@@ -90,6 +95,31 @@ async function people(ids,hydrate){
   }
   return ids.map(i=>peopleCache.get(i+hydrate)).filter(Boolean);
 }
+const compass=d=>['N','NE','E','SE','S','SW','W','NW'][Math.round(d/45)%8];
+async function refreshWx(venues){
+  if(Date.now()-wxFetchedAt<WX_MS)return;
+  const out=[...new Set(venues)].filter(v=>PARK_LL[v]&&!DOMES.has(v));
+  if(!out.length){wxFetchedAt=Date.now();return}
+  try{
+    const lat=out.map(v=>PARK_LL[v][0]).join(','),lon=out.map(v=>PARK_LL[v][1]).join(',');
+    const d=await J(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,precipitation,wind_speed_10m,wind_direction_10m&hourly=precipitation_probability&forecast_days=1&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&cb=${Date.now()}`);
+    const arr=Array.isArray(d)?d:[d];
+    arr.forEach((w,i)=>{
+      const nowIdx=Math.max(0,w.hourly.time.findIndex(t=>new Date(t)>=new Date())-0);
+      const next3=w.hourly.precipitation_probability.slice(nowIdx,nowIdx+3);
+      wxByVenue[out[i]]={temp:Math.round(w.current.temperature_2m),wind:Math.round(w.current.wind_speed_10m),dir:compass(w.current.wind_direction_10m),raining:w.current.precipitation>0,pprob:Math.max(...next3,0)};
+    });
+    wxFetchedAt=Date.now();
+  }catch(e){console.error('wx',e)}
+}
+function wxChip(venue){
+  if(DOMES.has(venue))return `<span class="chip">⌂ roof/dome — wx n/a</span>`;
+  const w=wxByVenue[venue];
+  if(!w)return '';
+  const risk=w.raining||w.pprob>=50;
+  return `<span class="chip ${risk?'hot':''}">${w.temp}°F · wind ${w.wind} ${w.dir} · rain ${w.pprob}%${w.raining?' · RAINING':''}</span>${risk?'<span class="chip hot">☔ RAIN RISK — delay kills the starter; re-check the arm on resume</span>':''}`;
+}
+const isDelayed=st=>/Delayed|Suspended/i.test(st||'');
 const H_HYD='stats(group=[hitting],type=[season,lastXGames],limit=7,season=2026)';
 const P_HYD='stats(group=[pitching],type=[season,gameLog],season=2026)';
 const statOf=(p,type)=>{for(const s of p?.stats||[]){if(s.type.displayName===type&&s.splits?.length)return s.splits[s.splits.length-1].stat}return null};
@@ -213,9 +243,12 @@ function liveCard(r){
   const pickAb=r.pickIsHome?r.homeAb:r.awayAb;
   const tierClass={'LIVE LOOK':'b-livelook','ON SCRIPT':'b-onscript','NEUTRAL':'b-neutral','OFF SCRIPT':'b-offscript','DEAD':'b-dead'}[r.L.tier];
   const isPick=r.m&&r.m.tier&&r.m.tier!=='PASS';
+  const venue=r.g.venue?.name||'', delayed=isDelayed(r.g.status?.detailedState);
   return `<div class="card live ${isPick?'pick':''}">
     <div class="row"><span class="matchup">${r.awayAb} @ ${r.homeAb}</span>
+      ${delayed?`<span class="badge b-offscript">${esc(r.g.status.detailedState)}</span>`:''}
       <span class="badge ${tierClass}">${r.L.tier}</span></div>
+    ${(wxChip(venue)||delayed)?`<div class="dueup">${wxChip(venue)}${delayed?'<span class="chip hot">⚠ delay in progress — assume the current pitcher does not return</span>':''}</div>`:''}
     <div class="row"><span class="score">${r.runs.away}–${r.runs.home}</span>
       <span class="state">${r.isTop?'▲':'▼'} ${r.inning} · ${r.outs} out</span>
       <span class="lscore">L <b>${r.L.score.toFixed(0)}</b></span></div>
@@ -231,9 +264,12 @@ function schedCard(g){
   const m=modelFor(aAb,hAb);
   const final=g.status.abstractGameState==='Final';
   const isPick=m&&m.tier&&m.tier!=='PASS';
+  const venue=g.venue?.name||'', delayed=isDelayed(g.status?.detailedState);
   return `<div class="card ${isPick?'pick':''}">
     <div class="row"><span class="matchup">${aAb} @ ${hAb}</span>
+      ${delayed?`<span class="badge b-offscript">${esc(g.status.detailedState)}</span>`:''}
       <span class="badge ${final?'b-final':'b-sched'}">${final?`FINAL ${g.teams.away.score}–${g.teams.home.score}`:etTime(new Date(g.gameDate))}</span></div>
+    ${!final&&wxChip(venue)?`<div class="dueup">${wxChip(venue)}</div>`:''}
     ${m?`<div class="model">model: ${m.pick.toUpperCase()} ${(Math.max(m.home_win_prob,m.away_win_prob)*100).toFixed(0)}% · ${m.tier} · total ${m.total} (book ${m.book_total_line??'—'})</div>`:'<div class="model">no model row</div>'}
   </div>`;
 }
@@ -244,6 +280,7 @@ async function tick(force){
     if(!modelRaw){try{modelRaw=await J('data.json?cb='+Date.now())}catch(e){modelRaw={games:[]}}}
     const sched=await J(`${API}/schedule?sportId=1&date=${etDate()}&hydrate=linescore,team&cb=${Date.now()}`);
     const games=sched.dates?.[0]?.games||[];
+    await refreshWx(games.map(g=>g.venue?.name).filter(Boolean));
     const live=games.filter(g=>g.status.abstractGameState==='Live');
     const other=games.filter(g=>g.status.abstractGameState!=='Live');
     // all live games in parallel — sequential awaits made an 8-game slate take 15-20s per cycle
