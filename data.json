@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T20:21:23",
+ "generated_at": "2026-07-21T20:27:56",
  "version": "0.1.0",
  "games": [
   {
@@ -16,7 +16,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "cf": {
      "dir": "cross",
@@ -24,9 +24,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 8
+     "mph": 7
     },
-    "out_mph": 8
+    "out_mph": 7
    }
   },
   {
@@ -42,17 +42,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 4
+     "mph": 9
     },
     "cf": {
      "dir": "out",
-     "mph": 6
+     "mph": 13
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 9
     },
-    "out_mph": 6
+    "out_mph": 13
    }
   },
   {
@@ -120,7 +120,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 8
+     "mph": 10
     },
     "cf": {
      "dir": "cross",
@@ -128,9 +128,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 8
+     "mph": 10
     },
-    "out_mph": 8
+    "out_mph": 10
    }
   },
   {
@@ -198,15 +198,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 11
+     "mph": 13
     },
     "cf": {
      "dir": "in",
-     "mph": 15
+     "mph": 18
     },
     "rf": {
      "dir": "in",
-     "mph": 11
+     "mph": 13
     },
     "out_mph": 0
    }
@@ -276,17 +276,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 9
+     "mph": 10
     },
     "cf": {
      "dir": "out",
-     "mph": 13
+     "mph": 14
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 10
     },
-    "out_mph": 13
+    "out_mph": 14
    }
   },
   {
@@ -377,7 +377,21 @@
    "tier": "PASS",
    "total": 9.4,
    "book_total_line": null,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "in",
+     "mph": 4
+    },
+    "cf": {
+     "dir": "cross",
+     "mph": 0
+    },
+    "rf": {
+     "dir": "out",
+     "mph": 4
+    },
+    "out_mph": 4
+   }
   }
  ],
  "props": [
@@ -474,6 +488,29 @@
    ]
   },
   {
+   "player": "Kyle Schwarber",
+   "team": "phi",
+   "game": "lad-phi",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 68,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 19.2,
+    "hard_hit_pct": 53.3,
+    "avg_exit_velo": 93.5,
+    "xiso": 0.273,
+    "recent_hr_rate": 0.0748
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Mike Trout",
    "team": "laa",
    "game": "stl-laa",
@@ -520,6 +557,29 @@
    ]
   },
   {
+   "player": "Bryce Harper",
+   "team": "phi",
+   "game": "lad-phi",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 66,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 11.3,
+    "hard_hit_pct": 45.8,
+    "avg_exit_velo": 90.1,
+    "xiso": 0.235,
+    "recent_hr_rate": 0.0526
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Zach Neto",
    "team": "laa",
    "game": "stl-laa",
@@ -543,29 +603,6 @@
    ]
   },
   {
-   "player": "Griffin Conine",
-   "team": "mia",
-   "game": "mia-hou",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.5,
-    "hard_hit_pct": 53.4,
-    "avg_exit_velo": 89.9,
-    "xiso": 0.241,
-    "recent_hr_rate": 0.0641
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Ben Rice",
    "team": "nyy",
    "game": "pit-nyy",
@@ -575,7 +612,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 65,
+   "edge_score": 66,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 15.4,
@@ -583,29 +620,6 @@
     "avg_exit_velo": 92.3,
     "xiso": 0.253,
     "recent_hr_rate": 0.0741
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Brandon Nimmo",
-   "team": "tex",
-   "game": "cws-tex",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 64,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.7,
-    "hard_hit_pct": 52.5,
-    "avg_exit_velo": 92.6,
-    "xiso": 0.221,
-    "recent_hr_rate": 0.023
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
