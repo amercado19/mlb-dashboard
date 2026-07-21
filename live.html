@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MLB Live — L-Signal Board</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
+:root{--bg:#eef1f7;--panel:#ffffff;--panel2:#e6ebf4;--line:#bcc7db;--txt:#0a1a3a;--muted:#566586;--accent:#0a3161;--accent2:#bf0a30;--win:#0a3161;--lose:#bf0a30;--gold:#c8992f;--green:#0c7a43;--mono:'Space Mono','SFMono-Regular',ui-monospace,monospace;--sans:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;--card-sh:3px 3px 0 rgba(10,26,58,.16);}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--sans);background-image:radial-gradient(rgba(10,49,97,.06) 1px,transparent 1px);background-size:18px 18px;}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+h1{font-family:var(--mono);text-transform:uppercase;letter-spacing:1px;font-size:26px;margin:0 0 4px;font-weight:700}
+h1 span{color:var(--accent2)}
+.meta{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.meta button{font-family:var(--mono);background:var(--panel);border:2px solid var(--txt);color:var(--txt);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;box-shadow:2px 2px 0 rgba(44,34,24,.18)}
+.disclaimer{font-family:var(--mono);font-size:10.5px;color:var(--accent2);border:2px dashed var(--accent2);border-radius:8px;padding:8px 12px;margin:0 0 16px;background:#fff;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.card{background:var(--panel);border:2px solid var(--txt);border-radius:12px;box-shadow:var(--card-sh);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.card.live{border-color:var(--accent2)}
+.card.pick{outline:3px solid var(--gold);outline-offset:2px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.matchup{font-family:var(--mono);font-weight:700;font-size:15px;text-transform:uppercase}
+.score{font-family:var(--mono);font-weight:700;font-size:20px}
+.state{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.badge{font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:6px;border:2px solid var(--txt);white-space:nowrap}
+.b-livelook{background:var(--green);color:#fff;animation:pulse 1.6s infinite}
+.b-onscript{background:var(--accent);color:#fff}
+.b-neutral{background:var(--panel2);color:var(--txt)}
+.b-offscript{background:var(--accent2);color:#fff}
+.b-dead{background:#222;color:#999}
+.b-sched{background:var(--panel2);color:var(--muted);border-color:var(--line)}
+.b-final{background:var(--txt);color:#fff}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(12,122,67,.5)}50%{box-shadow:0 0 0 6px rgba(12,122,67,0)}}
+.lscore{font-family:var(--mono);font-size:12px}
+.lscore b{font-size:16px}
+.section-h{font-family:var(--mono);text-transform:uppercase;font-size:12px;letter-spacing:1px;color:var(--muted);margin:22px 0 10px;border-bottom:2px solid var(--line);padding-bottom:4px}
+.kv{font-size:12px;line-height:1.55}
+.kv .lbl{color:var(--muted);font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+.rules{font-family:var(--mono);font-size:10.5px;line-height:1.7;background:var(--panel2);border-radius:8px;padding:7px 9px}
+.rules .pos{color:var(--green)}
+.rules .neg{color:var(--accent2)}
+.dueup{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:10px;border:1.5px solid var(--line);border-radius:6px;padding:2px 6px;background:#fff}
+.chip.hot{border-color:var(--accent2);color:var(--accent2);font-weight:700}
+.chip.cold{border-color:var(--line);color:var(--muted)}
+.model{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.err{font-family:var(--mono);font-size:11px;color:var(--accent2)}
+a.back{font-family:var(--mono);font-size:11px;color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>MLB <span>LIVE</span> — L-SIGNAL BOARD</h1>
+<div class="meta">
+  <span id="clock"></span>
+  <span id="pollinfo">poll: —</span>
+  <button onclick="tick(true)">Refresh now</button>
+  <a class="back" href="current.html">← pregame dashboard</a>
+</div>
+<div class="disclaimer"><b>SITUATION GRADE — NOT A PRICED EDGE.</b> No live odds feed exists here; the book's live line already prices everything on this page. L1.0 is UNVALIDATED (0 graded signals) — forward-test only. Rules: 06_live_algorithm_L1.md. Tracked side = pregame model pick.</div>
+<div id="board"><div class="state">Loading…</div></div>
+</div>
+
+<script>
+'use strict';
+const API='https://statsapi.mlb.com/api/v1';
+const POLL_MS=45000;
+const NYY_ID=147;
+let model={}, modelRaw=null, peopleCache=new Map(), feedCache=new Map(), lastPoll=null;
+
+/* ---------- utils ---------- */
+const etDate=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date());
+const etTime=d=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit'}).format(d);
+const J=u=>fetch(u).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+const norm=s=>({'az':'ari','ath':'oak','oak':'ath','ari':'az','cws':'chw','chw':'cws','wsn':'wsh'}[s]||s);
+function modelFor(awayAb,homeAb){
+  const a=awayAb.toLowerCase(),h=homeAb.toLowerCase();
+  for(const g of (modelRaw?.games||[])){
+    const ga=g.away.toLowerCase(),gh=g.home.toLowerCase();
+    if((ga===a||norm(ga)===a||ga===norm(a))&&(gh===h||norm(gh)===h||gh===norm(h)))return g;
+  }
+  return null;
+}
+async function people(ids,hydrate){
+  const need=ids.filter(i=>!peopleCache.has(i+hydrate));
+  if(need.length){
+    const d=await J(`${API}/people?personIds=${need.join(',')}&hydrate=${hydrate}`);
+    for(const p of d.people||[])peopleCache.set(p.id+hydrate,p);
+  }
+  return ids.map(i=>peopleCache.get(i+hydrate)).filter(Boolean);
+}
+const H_HYD='stats(group=[hitting],type=[season,lastXGames],limit=7,season=2026)';
+const P_HYD='stats(group=[pitching],type=[season,gameLog],season=2026)';
+const statOf=(p,type)=>{for(const s of p?.stats||[]){if(s.type.displayName===type&&s.splits?.length)return s.splits[s.splits.length-1].stat}return null};
+const gameLogDates=p=>{for(const s of p?.stats||[]){if(s.type.displayName==='gameLog')return s.splits.map(x=>x.date)}return[]};
+
+/* ---------- L-scoring (L1.0 — see 06_live_algorithm_L1.md) ---------- */
+function lScore(ctx){
+  // ctx: {conf, margin, outsLeft, rp:{era,bb9,k9,pitchedYest,pitchedTwoStraight}, dueSlots:[], dueHot:n, dueCold:n, pace, modelTotal, threat, vsNYY}
+  const fired=[]; let s=50+(ctx.conf-0.5)*40;
+  fired.push(`base: conf ${(ctx.conf*100).toFixed(0)}% → ${s.toFixed(1)}`);
+  // L1
+  let l1=ctx.margin>=0?Math.min(ctx.margin*5,15):Math.max(ctx.margin*6,-15);
+  if(l1!==0){s+=l1;fired.push(`L1: margin ${ctx.margin>0?'+':''}${ctx.margin} → ${l1>0?'+':''}${l1}`)}
+  // L1-D
+  let dead=false;
+  if(ctx.margin<=-5||(ctx.margin<=-3&&ctx.outsLeft<=6)){dead=true;fired.push('L1-D: game dead');}
+  // L2
+  if(ctx.margin<0){
+    if(ctx.outsLeft>=15){s+=4;fired.push('L2: trailing, ≥15 outs left +4')}
+    else if(ctx.outsLeft<=6){s-=8;fired.push('L2: trailing, ≤6 outs left −8')}
+  }
+  // L3
+  const rp=ctx.rp;
+  if(rp&&rp.era!=null){
+    if(rp.era>=5.25){s+=9;fired.push(`L3: opp arm ERA ${rp.era} +9`)}
+    else if(rp.era>=4.60){s+=6;fired.push(`L3: opp arm ERA ${rp.era} +6`)}
+    else if(rp.era<=3.20){s-=6;fired.push(`L3: opp arm ERA ${rp.era} −6`)}
+    if(rp.bb9>4){s+=3;fired.push(`L3: BB/9 ${rp.bb9} +3`)}
+    if(rp.k9<7){s+=2;fired.push(`L3: K/9 ${rp.k9} +2`)}
+    if(rp.pitchedTwoStraight){s+=7;fired.push('L3: pitched last 2 days +7')}
+    else if(rp.pitchedYest){s+=4;fired.push('L3: pitched yesterday +4')}
+  }
+  // L4
+  if(ctx.dueSlots.length){
+    if(ctx.dueSlots.some(x=>x<=3)){s+=5;fired.push(`L4: slots ${ctx.dueSlots.join('-')} due (top) +5`)}
+    else if(ctx.dueSlots.some(x=>x<=6)){s+=2;fired.push(`L4: slots ${ctx.dueSlots.join('-')} due +2`)}
+    else{s-=3;fired.push(`L4: bottom of order due −3`)}
+    const hot=Math.min(ctx.dueHot*2,4),cold=Math.min(ctx.dueCold*2,4);
+    if(hot){s+=hot;fired.push(`L4: ${ctx.dueHot} hot bat(s) +${hot}`)}
+    if(cold){s-=cold;fired.push(`L4: ${ctx.dueCold} cold bat(s) −${cold}`)}
+  }
+  // L5
+  if(ctx.pace!=null&&ctx.modelTotal!=null&&ctx.margin<0&&ctx.pace>=ctx.modelTotal+2){s+=2;fired.push(`L5: pace ${ctx.pace.toFixed(1)} vs total ${ctx.modelTotal} +2`)}
+  // L6
+  if(ctx.threat){s+=4;fired.push('L6: RISP <2 outs +4')}
+  s=Math.max(0,Math.min(100,s));
+  let tier=dead?'DEAD':s>=70?'LIVE LOOK':s>=55?'ON SCRIPT':s>=45?'NEUTRAL':'OFF SCRIPT';
+  // L-NYY
+  if(ctx.vsNYY&&(tier==='LIVE LOOK'||tier==='ON SCRIPT')){tier='NEUTRAL';fired.push('L-NYY: no live entries against the Yankees — capped');}
+  return {score:s,tier,fired,dead};
+}
+
+/* ---------- per-game processing ---------- */
+async function processLive(g){
+  const pk=g.gamePk;
+  const feed=await J(`https://statsapi.mlb.com/api/v1.1/game/${pk}/feed/live`);
+  const ls=feed.liveData.linescore;
+  const homeId=feed.gameData.teams.home.id, awayId=feed.gameData.teams.away.id;
+  const homeAb=feed.gameData.teams.home.abbreviation, awayAb=feed.gameData.teams.away.abbreviation;
+  const m=modelFor(awayAb,homeAb);
+  const pickIsHome=m?(m.pick.toLowerCase()===m.home.toLowerCase()):true; // no model → track home
+  const conf=m?(pickIsHome?m.home_win_prob:m.away_win_prob):0.5;
+  const runs={home:ls.teams.home.runs||0,away:ls.teams.away.runs||0};
+  const margin=pickIsHome?runs.home-runs.away:runs.away-runs.home;
+  const inning=ls.currentInning||1, isTop=!!ls.isTopInning, outs=ls.outs||0;
+  // outs remaining for the tracked side's OFFENSE (regulation)
+  const trackedBatting=(isTop&&!pickIsHome)||(!isTop&&pickIsHome);
+  let outsLeft=(9-inning)*3+(trackedBatting?(3-outs):(pickIsHome?3:0));
+  if(!pickIsHome&&!trackedBatting)outsLeft+=0; // away done batting this inning
+  outsLeft=Math.max(outsLeft,0);
+  // due-up for tracked side + current opposing arm
+  const off=ls.offense||{},def=ls.defense||{};
+  const side=trackedBatting?off:def;
+  const dueIds=[side.batter,side.onDeck,side.inHole].filter(Boolean).map(x=>x.id);
+  // arm facing tracked side: if they're batting it's the defense's pitcher; otherwise the opponent's current (most recent) pitcher
+  const armId=trackedBatting?def.pitcher?.id:(feed.liveData.boxscore?.teams?.[pickIsHome?'away':'home']?.pitchers?.slice(-1)[0]);
+  // batting order slots for due-up
+  const box=feed.liveData.boxscore.teams[pickIsHome?'home':'away'];
+  const order=box.battingOrder||[];
+  const dueSlots=dueIds.map(id=>{const i=order.indexOf(id);return i>=0?i+1:null}).filter(Boolean);
+  // hitter form
+  let dueHot=0,dueCold=0,dueInfo=[];
+  try{
+    const hs=await people(dueIds,H_HYD);
+    for(const p of hs){
+      const l7=statOf(p,'lastXGames'),se=statOf(p,'season');
+      const ops7=l7?parseFloat(l7.ops):null;
+      const tag=ops7!=null?(ops7>=0.850?'hot':ops7<=0.550?'cold':''):'';
+      if(tag==='hot')dueHot++;if(tag==='cold')dueCold++;
+      dueInfo.push({name:p.lastName||p.fullName,slot:dueSlots[dueInfo.length]||'?',ops7:ops7!=null?ops7.toFixed(3):'—',avg:se?.avg||'—',tag});
+    }
+  }catch(e){}
+  // opposing arm
+  let rp=null,rpName='';
+  if(armId){
+    try{
+      const [pp]=await people([armId],P_HYD);
+      const se=statOf(pp,'season');
+      const dates=gameLogDates(pp);
+      const today=etDate();
+      const yest=new Date(Date.now()-864e5).toISOString().slice(0,10);
+      const dayBefore=new Date(Date.now()-2*864e5).toISOString().slice(0,10);
+      rpName=pp?.fullName||'';
+      rp={era:se?parseFloat(se.era):null,bb9:se?parseFloat(se.walksPer9Inn):null,k9:se?parseFloat(se.strikeoutsPer9Inn):null,
+          ip:se?.inningsPitched,pitchedYest:dates.includes(yest),pitchedTwoStraight:dates.includes(yest)&&dates.includes(dayBefore)};
+    }catch(e){}
+  }
+  // pace
+  const outsRec=(inning-1)*6+(isTop?outs:3+outs);
+  const pace=outsRec>0?(runs.home+runs.away)*54/outsRec:null; // full-game (54-out) pace
+  // threat
+  const threat=trackedBatting&&outs<2&&!!(off.second||off.third);
+  const oppIsNYY=(pickIsHome?awayId:homeId)===NYY_ID;
+  const L=lScore({conf,margin,outsLeft,rp,dueSlots,dueHot,dueCold,pace,modelTotal:m?.total??null,threat,vsNYY:oppIsNYY});
+  return {g,m,pickIsHome,homeAb,awayAb,runs,inning,isTop,outs,margin,dueInfo,rp,rpName,pace,L,trackedBatting};
+}
+
+/* ---------- render ---------- */
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function liveCard(r){
+  const pickAb=r.pickIsHome?r.homeAb:r.awayAb;
+  const tierClass={'LIVE LOOK':'b-livelook','ON SCRIPT':'b-onscript','NEUTRAL':'b-neutral','OFF SCRIPT':'b-offscript','DEAD':'b-dead'}[r.L.tier];
+  const isPick=r.m&&r.m.tier&&r.m.tier!=='PASS';
+  return `<div class="card live ${isPick?'pick':''}">
+    <div class="row"><span class="matchup">${r.awayAb} @ ${r.homeAb}</span>
+      <span class="badge ${tierClass}">${r.L.tier}</span></div>
+    <div class="row"><span class="score">${r.runs.away}–${r.runs.home}</span>
+      <span class="state">${r.isTop?'▲':'▼'} ${r.inning} · ${r.outs} out</span>
+      <span class="lscore">L <b>${r.L.score.toFixed(0)}</b></span></div>
+    <div class="kv"><span class="lbl">Tracked:</span> <b>${pickAb}</b> ${r.m?`(${(r.m.tier||'—')}, conf ${((r.pickIsHome?r.m.home_win_prob:r.m.away_win_prob)*100).toFixed(0)}%)`:'(no model row)'}
+      ${r.m?` · <span class="lbl">model total</span> ${r.m.total} · <span class="lbl">pace</span> ${r.pace?r.pace.toFixed(1):'—'}`:''}</div>
+    ${r.rpName?`<div class="kv"><span class="lbl">Arm facing ${pickAb}:</span> ${esc(r.rpName)} — ERA ${r.rp?.era??'—'}, BB/9 ${r.rp?.bb9??'—'}, K/9 ${r.rp?.k9??'—'}${r.rp?.pitchedTwoStraight?' · <b style="color:var(--accent2)">3rd straight day</b>':r.rp?.pitchedYest?' · <b style="color:var(--accent2)">pitched yesterday</b>':''}</div>`:''}
+    ${r.dueInfo.length?`<div class="kv"><span class="lbl">${pickAb} due up${r.trackedBatting?' (now)':' (next)'}:</span><div class="dueup">${r.dueInfo.map(d=>`<span class="chip ${d.tag}">#${d.slot} ${esc(d.name)} · L7 ${d.ops7}</span>`).join('')}</div></div>`:''}
+    <div class="rules">${r.L.fired.map(f=>{const neg=f.includes('−')||f.includes('L1-D')||f.includes('capped');return `<div class="${neg?'neg':'pos'}">${esc(f)}</div>`}).join('')}</div>
+  </div>`;
+}
+function schedCard(g){
+  const aAb=g.teams.away.team.abbreviation||g.teams.away.team.teamName, hAb=g.teams.home.team.abbreviation||g.teams.home.team.teamName;
+  const m=modelFor(aAb,hAb);
+  const final=g.status.abstractGameState==='Final';
+  const isPick=m&&m.tier&&m.tier!=='PASS';
+  return `<div class="card ${isPick?'pick':''}">
+    <div class="row"><span class="matchup">${aAb} @ ${hAb}</span>
+      <span class="badge ${final?'b-final':'b-sched'}">${final?`FINAL ${g.teams.away.score}–${g.teams.home.score}`:etTime(new Date(g.gameDate))}</span></div>
+    ${m?`<div class="model">model: ${m.pick.toUpperCase()} ${(Math.max(m.home_win_prob,m.away_win_prob)*100).toFixed(0)}% · ${m.tier} · total ${m.total} (book ${m.book_total_line??'—'})</div>`:'<div class="model">no model row</div>'}
+  </div>`;
+}
+
+/* ---------- main loop ---------- */
+async function tick(force){
+  try{
+    if(!modelRaw){try{modelRaw=await J('data.json?cb='+Date.now())}catch(e){modelRaw={games:[]}}}
+    const sched=await J(`${API}/schedule?sportId=1&date=${etDate()}&hydrate=linescore,team&cb=${Date.now()}`);
+    const games=sched.dates?.[0]?.games||[];
+    const live=games.filter(g=>g.status.abstractGameState==='Live');
+    const other=games.filter(g=>g.status.abstractGameState!=='Live');
+    const results=[];
+    for(const g of live){try{results.push(await processLive(g))}catch(e){console.error(g.gamePk,e)}}
+    results.sort((a,b)=>(b.L.score-a.L.score));
+    // pick games pinned first among live
+    results.sort((a,b)=>((b.m&&b.m.tier!=='PASS')?1:0)-((a.m&&a.m.tier!=='PASS')?1:0));
+    const schedG=other.filter(g=>g.status.abstractGameState==='Preview').sort((a,b)=>new Date(a.gameDate)-new Date(b.gameDate));
+    const finals=other.filter(g=>g.status.abstractGameState==='Final');
+    let html='';
+    if(results.length){html+='<div class="section-h">In progress — sorted by L-score, pick games pinned</div><div class="grid">'+results.map(liveCard).join('')+'</div>';}
+    if(schedG.length){html+='<div class="section-h">Scheduled</div><div class="grid">'+schedG.map(schedCard).join('')+'</div>';}
+    if(finals.length){html+='<div class="section-h">Final</div><div class="grid">'+finals.map(schedCard).join('')+'</div>';}
+    if(!games.length)html='<div class="state">No games today.</div>';
+    document.getElementById('board').innerHTML=html;
+    lastPoll=new Date();
+    document.getElementById('pollinfo').textContent=`poll: ${etTime(lastPoll)} ET · every ${POLL_MS/1000}s · ${live.length} live`;
+  }catch(e){
+    document.getElementById('board').innerHTML=`<div class="err">Fetch failed: ${esc(e.message)} — statsapi may be briefly down; will retry.</div>`;
+  }
+}
+setInterval(()=>document.getElementById('clock').textContent=etTime(new Date())+' ET',1000);
+tick();
+setInterval(tick,POLL_MS);
+</script>
+</body>
+</html>
