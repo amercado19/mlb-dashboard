@@ -56,6 +56,7 @@ a.back{font-family:var(--mono);font-size:11px;color:var(--accent)}
   <span id="clock"></span>
   <span id="pollinfo">poll: —</span>
   <button onclick="tick(true)">Refresh now</button>
+  <button onclick="(()=>{const a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(localStorage.getItem('lsig_log')||'[]');a.download='l_signals.json';a.click()})()">Export L-log</button>
   <a class="back" href="current.html">← pregame dashboard</a>
 </div>
 <div class="disclaimer"><b>SITUATION GRADE — NOT A PRICED EDGE.</b> No live odds feed exists here; the book's live line already prices everything on this page. L1.0 is UNVALIDATED (0 graded signals) — forward-test only. Rules: 06_live_algorithm_L1.md. Tracked side = pregame model pick.</div>
@@ -72,7 +73,7 @@ const PARK_LL={"Coors Field":[39.7559,-104.9942],"Great American Ball Park":[39.
 const DOMES=new Set(["Tropicana Field","Rogers Centre","American Family Field","Minute Maid Park","Daikin Park","Globe Life Field","loanDepot park","Chase Field","T-Mobile Park"]);
 let wxByVenue={}, wxFetchedAt=0;
 const NYY_ID=147;
-let model={}, modelRaw=null, peopleCache=new Map(), feedCache=new Map(), lastPoll=null;
+let model={}, modelRaw=null, modelAt=0, peopleCache=new Map(), feedCache=new Map(), lastPoll=null, prevTier={};
 
 /* ---------- utils ---------- */
 const etDate=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'}).format(new Date());
@@ -187,7 +188,7 @@ async function processLive(g){
   const inning=ls.currentInning||1, isTop=!!ls.isTopInning, outs=ls.outs||0;
   // outs remaining for the tracked side's OFFENSE (regulation)
   const trackedBatting=(isTop&&!pickIsHome)||(!isTop&&pickIsHome);
-  let outsLeft=(9-inning)*3+(trackedBatting?(3-outs):(pickIsHome?3:0));
+  let outsLeft=Math.max(9-inning,0)*3+(trackedBatting?(3-outs):(pickIsHome?3:0)); // extras: only current-inning outs count
   if(!pickIsHome&&!trackedBatting)outsLeft+=0; // away done batting this inning
   outsLeft=Math.max(outsLeft,0);
   // due-up for tracked side + current opposing arm
@@ -234,7 +235,8 @@ async function processLive(g){
   const threat=trackedBatting&&outs<2&&!!(off.second||off.third);
   const oppIsNYY=(pickIsHome?awayId:homeId)===NYY_ID;
   const L=lScore({conf,margin,outsLeft,rp,dueSlots,dueHot,dueCold,pace,modelTotal:m?.total??null,threat,vsNYY:oppIsNYY});
-  return {g,m,pickIsHome,homeAb,awayAb,runs,inning,isTop,outs,margin,dueInfo,rp,rpName,pace,L,trackedBatting};
+  const lastPlay=feed.liveData.plays?.currentPlay?.result?.description||'';
+  return {g,m,pickIsHome,homeAb,awayAb,runs,inning,isTop,outs,margin,dueInfo,rp,rpName,pace,L,trackedBatting,lastPlay};
 }
 
 /* ---------- render ---------- */
@@ -256,6 +258,7 @@ function liveCard(r){
       ${r.m?` · <span class="lbl">model total</span> ${r.m.total} · <span class="lbl">pace</span> ${r.pace?r.pace.toFixed(1):'—'}`:''}</div>
     ${r.rpName?`<div class="kv"><span class="lbl">Arm facing ${pickAb}:</span> ${esc(r.rpName)} — ERA ${r.rp?.era??'—'}, BB/9 ${r.rp?.bb9??'—'}, K/9 ${r.rp?.k9??'—'}${r.rp?.pitchedTwoStraight?' · <b style="color:var(--accent2)">3rd straight day</b>':r.rp?.pitchedYest?' · <b style="color:var(--accent2)">pitched yesterday</b>':''}</div>`:''}
     ${r.dueInfo.length?`<div class="kv"><span class="lbl">${pickAb} due up${r.trackedBatting?' (now)':' (next)'}:</span><div class="dueup">${r.dueInfo.map(d=>`<span class="chip ${d.tag}">#${d.slot} ${esc(d.name)} · L7 ${d.ops7}</span>`).join('')}</div></div>`:''}
+    ${r.lastPlay?`<div class="kv"><span class="lbl">Last play:</span> ${esc(r.lastPlay)}</div>`:''}
     <div class="rules">${r.L.fired.map(f=>{const neg=f.includes('−')||f.includes('L1-D')||f.includes('capped');return `<div class="${neg?'neg':'pos'}">${esc(f)}</div>`}).join('')}</div>
   </div>`;
 }
@@ -277,7 +280,8 @@ function schedCard(g){
 /* ---------- main loop ---------- */
 async function tick(force){
   try{
-    if(!modelRaw){try{modelRaw=await J('data.json?cb='+Date.now())}catch(e){modelRaw={games:[]}}}
+    if(!modelRaw||Date.now()-modelAt>3600000){ // refetch hourly — pipeline republishes every ~2h
+      try{modelRaw=await J('data.json?cb='+Date.now());modelAt=Date.now()}catch(e){if(!modelRaw)modelRaw={games:[]}}}
     const sched=await J(`${API}/schedule?sportId=1&date=${etDate()}&hydrate=linescore,team&cb=${Date.now()}`);
     const games=sched.dates?.[0]?.games||[];
     await refreshWx(games.map(g=>g.venue?.name).filter(Boolean));
@@ -298,8 +302,19 @@ async function tick(force){
     if(finals.length){html+='<div class="section-h">Final</div><div class="grid">'+finals.map(schedCard).join('')+'</div>';}
     if(!games.length)html='<div class="state">No games today.</div>';
     document.getElementById('board').innerHTML=html;
+    // L-signal log: snapshot every transition INTO LIVE LOOK (forward-test grading, rulebook §Grading)
+    for(const r of results){
+      const pk=r.g.gamePk;
+      if(r.L.tier==='LIVE LOOK'&&prevTier[pk]!=='LIVE LOOK'){
+        const log=JSON.parse(localStorage.getItem('lsig_log')||'[]');
+        log.push({ts:new Date().toISOString(),game:`${r.awayAb}@${r.homeAb}`,tracked:r.pickIsHome?r.homeAb:r.awayAb,score:`${r.runs.away}-${r.runs.home}`,inning:`${r.isTop?'T':'B'}${r.inning} ${r.outs}o`,l:Math.round(r.L.score),fired:r.L.fired});
+        localStorage.setItem('lsig_log',JSON.stringify(log));
+      }
+      prevTier[pk]=r.L.tier;
+    }
     lastPoll=new Date();
-    document.getElementById('pollinfo').textContent=`poll: ${etTime(lastPoll)} ET · every ${POLL_MS/1000}s · ${live.length} live`;
+    const nsig=JSON.parse(localStorage.getItem('lsig_log')||'[]').length;
+    document.getElementById('pollinfo').textContent=`poll: ${etTime(lastPoll)} ET · every ${POLL_MS/1000}s · ${live.length} live · ${nsig} logged signals`;
   }catch(e){
     document.getElementById('board').innerHTML=`<div class="err">Fetch failed: ${esc(e.message)} — statsapi may be briefly down; will retry.</div>`;
   }
