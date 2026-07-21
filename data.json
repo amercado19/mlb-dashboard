@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T20:57:48",
+ "generated_at": "2026-07-21T21:01:24",
  "version": "0.1.0",
  "games": [
   {
@@ -377,7 +377,21 @@
    "tier": "PASS",
    "total": 9.4,
    "book_total_line": null,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "in",
+     "mph": 4
+    },
+    "cf": {
+     "dir": "cross",
+     "mph": 0
+    },
+    "rf": {
+     "dir": "out",
+     "mph": 4
+    },
+    "out_mph": 4
+   }
   }
  ],
  "props": [
@@ -589,23 +603,23 @@
    ]
   },
   {
-   "player": "Griffin Conine",
-   "team": "mia",
-   "game": "mia-hou",
+   "player": "Ben Rice",
+   "team": "nyy",
+   "game": "pit-nyy",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 65,
+   "edge_score": 66,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 15.5,
-    "hard_hit_pct": 53.4,
-    "avg_exit_velo": 89.9,
-    "xiso": 0.241,
-    "recent_hr_rate": 0.0641
+    "barrel_pct": 15.4,
+    "hard_hit_pct": 48.5,
+    "avg_exit_velo": 92.3,
+    "xiso": 0.253,
+    "recent_hr_rate": 0.0741
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
