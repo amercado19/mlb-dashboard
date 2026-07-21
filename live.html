@@ -120,7 +120,7 @@ function wxChip(venue){
   const risk=w.raining||w.pprob>=50;
   return `<span class="chip ${risk?'hot':''}">${w.temp}°F · wind ${w.wind} ${w.dir} · rain ${w.pprob}%${w.raining?' · RAINING':''}</span>${risk?'<span class="chip hot">☔ RAIN RISK — delay kills the starter; re-check the arm on resume</span>':''}`;
 }
-const isDelayed=st=>/Delayed|Suspended/i.test(st||'');
+const isDelayed=st=>/Delayed|Suspended|Postponed/i.test(st||'');
 const H_HYD='stats(group=[hitting],type=[season,lastXGames],limit=7,season=2026)';
 const P_HYD='stats(group=[pitching],type=[season,gameLog],season=2026)';
 const statOf=(p,type)=>{for(const s of p?.stats||[]){if(s.type.displayName===type&&s.splits?.length)return s.splits[s.splits.length-1].stat}return null};
@@ -271,7 +271,7 @@ function schedCard(g){
   return `<div class="card ${isPick?'pick':''}">
     <div class="row"><span class="matchup">${aAb} @ ${hAb}</span>
       ${delayed?`<span class="badge b-offscript">${esc(g.status.detailedState)}</span>`:''}
-      <span class="badge ${final?'b-final':'b-sched'}">${final?`FINAL ${g.teams.away.score}–${g.teams.home.score}`:etTime(new Date(g.gameDate))}</span></div>
+      <span class="badge ${final?'b-final':'b-sched'}">${delayed?'PPD':final?`FINAL ${g.teams.away.score??'-'}–${g.teams.home.score??'-'}`:etTime(new Date(g.gameDate))}</span></div>
     ${!final&&wxChip(venue)?`<div class="dueup">${wxChip(venue)}</div>`:''}
     ${m?`<div class="model">model: ${m.pick.toUpperCase()} ${(Math.max(m.home_win_prob,m.away_win_prob)*100).toFixed(0)}% · ${m.tier} · total ${m.total} (book ${m.book_total_line??'—'})</div>`:'<div class="model">no model row</div>'}
   </div>`;
