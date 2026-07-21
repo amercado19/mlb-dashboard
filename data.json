@@ -1,6 +1,6 @@
 {
  "date": "2026-07-21",
- "generated_at": "2026-07-21T20:27:56",
+ "generated_at": "2026-07-21T20:38:01",
  "version": "0.1.0",
  "games": [
   {
@@ -168,7 +168,7 @@
    "confidence": 0.534,
    "tier": "PASS",
    "total": 9.2,
-   "book_total_line": 9.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -246,7 +246,7 @@
    "confidence": 0.53,
    "tier": "PASS",
    "total": 10.6,
-   "book_total_line": 9.0,
+   "book_total_line": 9.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -351,21 +351,7 @@
    "tier": "PASS",
    "total": 8.4,
    "book_total_line": 7.5,
-   "wind": {
-    "lf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "cf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "out_mph": 0
-   }
+   "wind": null
   },
   {
    "away": "pit",
@@ -451,7 +437,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 72,
+   "edge_score": 74,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 19.2,
@@ -557,6 +543,29 @@
    ]
   },
   {
+   "player": "Griffin Conine",
+   "team": "mia",
+   "game": "mia-hou",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 67,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.5,
+    "hard_hit_pct": 53.4,
+    "avg_exit_velo": 89.9,
+    "xiso": 0.241,
+    "recent_hr_rate": 0.0641
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Bryce Harper",
    "team": "phi",
    "game": "lad-phi",
@@ -597,29 +606,6 @@
     "avg_exit_velo": 89.3,
     "xiso": 0.201,
     "recent_hr_rate": 0.0297
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Ben Rice",
-   "team": "nyy",
-   "game": "pit-nyy",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 66,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.4,
-    "hard_hit_pct": 48.5,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.253,
-    "recent_hr_rate": 0.0741
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1063,23 +1049,23 @@
    ]
   },
   {
-   "player": "Matt Olson",
-   "team": "atl",
-   "game": "sd-atl",
+   "player": "Troy Johnston",
+   "team": "col",
+   "game": "wsh-col",
    "stat": "2B",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 0.25,
+   "edge_score": 0.26,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 14.1,
-    "hard_hit_pct": 51.1,
-    "avg_exit_velo": 92.6,
-    "xiso": 0.262,
-    "recent_hr_rate": 0.055
+    "barrel_pct": 2.1,
+    "hard_hit_pct": 38.4,
+    "avg_exit_velo": 89.8,
+    "xiso": 0.101,
+    "recent_hr_rate": 0.0
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
