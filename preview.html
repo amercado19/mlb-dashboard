@@ -268,8 +268,21 @@ function openProp(k,btn){
   var unit={h2:'2B/G',tb2:'TB/G',hrr:'H+R+RBI/G'}[k]||'score';
   p.innerHTML=(bf[k]||[]).map(function(r,i){var oc=r.playerId?' onclick="openMatchupModal('+r.playerId+','+r.gamePk+',&quot;'+esc(r.name).replace(/&quot;|"/g,'')+'&quot;,&quot;'+esc(r.team||'')+'&quot;)"':'';
     var px='';if(k==='hr'){var hp=((D.hrProps)||[]).filter(function(x){return x.playerId===r.playerId;})[0];
-      if(hp&&hp.bookOdds&&hp.bookOdds.price!=null){px=' <span style="font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;background:#dbeafe;color:#1e40af" title="Real book price">'+amStr(hp.bookOdds.price)+' '+esc(hp.bookOdds.book)+(hp.bookOdds.offbook?'*':'')+'</span>';}
-      else if(hp){px=' <span style="font-size:9px;color:#b45309" title="No posted FD/DK anytime-HR price yet">⚠ no price</span>';}}
+      if(hp){
+        var bks=hp.books||{};var got=false;
+        ['fanduel','draftkings'].forEach(function(bk){var o=bks[bk];if(!o||o.price==null)return;got=true;
+          var lab=(bk==='fanduel'?'FD':'DK')+' '+(o.price>0?'+':'')+o.price;
+          var st='font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;color:#fff;background:'+(bk==='fanduel'?'#1493ff':'#0c7a43');
+          px+=o.link?' <a href="'+esc(o.link)+'" target="_blank" rel="noopener" style="'+st+';text-decoration:none" title="Open this HR market at '+bk+'">'+lab+' →</a>':' <span style="'+st+'">'+lab+'</span>';});
+        var _bo=hp.bookOdds||{};
+        if(!got&&_bo.price!=null&&_bo.offbook){px=' <span style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;background:#e5e7eb;color:#6b7280" title="Reference price from '+esc(_bo.book)+' — not FD/DK">ref '+(_bo.price>0?'+':'')+_bo.price+'</span>';}
+        else if(!got&&_bo.price==null){px=' <span style="font-size:9px;color:#b45309" title="No posted FD/DK anytime-HR price yet">⚠ no price</span>';}
+        if(_bo.price!=null&&hp.model_prob!=null){
+          var _imp=_bo.price<0?(-_bo.price)/(-_bo.price+100):100/(_bo.price+100);
+          var _mp=hp.model_prob>1?hp.model_prob/100:hp.model_prob;
+          var _e=(_mp-_imp)*100;
+          px+=' <span style="font-size:9px;font-weight:800;color:'+(_e>=0?'#0c7a43':'#b91c1c')+'" title="Edge: model HR % minus the price\'s implied %">'+(_e>=0?'+':'')+_e.toFixed(1)+'%</span>';}
+      }}
     var gl=r.gamePk?' <span style="font-size:9px;color:#8893a8">'+esc((typeof gameLabelByPk==='function'&&gameLabelByPk(r.gamePk))||'')+'</span>':'';
     return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+px+gl+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+'<span class="unit"> '+unit+'</span></span></div>';}).join('')||'<div class="empty">Board posts with confirmed lineups.</div>';
 }
