@@ -189,8 +189,12 @@ async function processLive(g){
   const runs={home:ls.teams.home.runs||0,away:ls.teams.away.runs||0};
   const margin=pickIsHome?runs.home-runs.away:runs.away-runs.home;
   const inning=ls.currentInning||1, isTop=!!ls.isTopInning, outs=ls.outs||0;
-  // outs remaining for the tracked side's OFFENSE (regulation)
-  const trackedBatting=(isTop&&!pickIsHome)||(!isTop&&pickIsHome);
+  // Who's batting: use TEAM IDs from the feed, never inning-half arithmetic —
+  // statsapi updates isTopInning/offense out of sync during inning changeovers
+  // and the derived version showed NYY "facing" its own pitcher (7/22 G1 bug).
+  const trackedTeamId=pickIsHome?homeId:awayId;
+  const _offTeamId=(ls.offense&&ls.offense.team&&ls.offense.team.id)||null;
+  const trackedBatting=_offTeamId!==null?(_offTeamId===trackedTeamId):((isTop&&!pickIsHome)||(!isTop&&pickIsHome));
   let outsLeft=Math.max(9-inning,0)*3+(trackedBatting?(3-outs):(pickIsHome?3:0)); // extras: only current-inning outs count
   if(!pickIsHome&&!trackedBatting)outsLeft+=0; // away done batting this inning
   outsLeft=Math.max(outsLeft,0);
@@ -198,8 +202,11 @@ async function processLive(g){
   const off=ls.offense||{},def=ls.defense||{};
   const side=trackedBatting?off:def;
   const dueIds=[side.batter,side.onDeck,side.inHole].filter(Boolean).map(x=>x.id);
-  // arm facing tracked side: if they're batting it's the defense's pitcher; otherwise the opponent's current (most recent) pitcher
-  const armId=trackedBatting?def.pitcher?.id:(feed.liveData.boxscore?.teams?.[pickIsHome?'away':'home']?.pitchers?.slice(-1)[0]);
+  // arm facing tracked side (7/22 fix — direct from the feed, no inference):
+  // batting -> the pitcher on the mound (defense.pitcher);
+  // fielding -> the opponent's current pitcher (offense.pitcher = offense team's own arm)
+  const armId=trackedBatting?def.pitcher?.id:(off.pitcher?.id
+    ??feed.liveData.boxscore?.teams?.[pickIsHome?'away':'home']?.pitchers?.slice(-1)[0]);
   // batting order slots for due-up
   const box=feed.liveData.boxscore.teams[pickIsHome?'home':'away'];
   const order=box.battingOrder||[];
