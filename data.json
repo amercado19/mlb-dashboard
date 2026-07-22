@@ -1,6 +1,6 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T16:21:38",
+ "generated_at": "2026-07-22T16:25:15",
  "version": "0.1.0",
  "games": [
   {
@@ -361,23 +361,9 @@
    "pick": "tex",
    "confidence": 0.625,
    "tier": "LEAN",
-   "total": 9.6,
+   "total": 9.1,
    "book_total_line": 9.0,
-   "wind": {
-    "lf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "cf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "out_mph": 0
-   }
+   "wind": null
   },
   {
    "away": "det",
@@ -413,9 +399,23 @@
    "pick": "hou",
    "confidence": 0.556,
    "tier": "PASS",
-   "total": 8.5,
+   "total": 9.0,
    "book_total_line": 8.0,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "cf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "rf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "out_mph": 0
+   }
   }
  ],
  "props": [
@@ -627,9 +627,9 @@
    ]
   },
   {
-   "player": "Brandon Nimmo",
-   "team": "tex",
-   "game": "cws-tex",
+   "player": "Yordan Alvarez",
+   "team": "hou",
+   "game": "mia-hou",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -639,11 +639,11 @@
    "edge_score": 67,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.5,
-    "hard_hit_pct": 52.5,
-    "avg_exit_velo": 92.4,
-    "xiso": 0.221,
-    "recent_hr_rate": 0.0349
+    "barrel_pct": 19.0,
+    "hard_hit_pct": 53.2,
+    "avg_exit_velo": 94.6,
+    "xiso": 0.381,
+    "recent_hr_rate": 0.0841
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
