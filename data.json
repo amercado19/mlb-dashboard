@@ -1,6 +1,6 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T16:40:30",
+ "generated_at": "2026-07-22T16:44:30",
  "version": "0.1.0",
  "games": [
   {
@@ -37,22 +37,22 @@
    "pick": "nyy",
    "confidence": 0.6,
    "tier": "PASS",
-   "total": 8.4,
+   "total": 8.7,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
-     "dir": "in",
+     "dir": "out",
      "mph": 8
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 12
     },
     "rf": {
      "dir": "out",
      "mph": 8
     },
-    "out_mph": 8
+    "out_mph": 12
    }
   },
   {
@@ -110,7 +110,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "rf": {
      "dir": "in",
@@ -158,7 +158,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -166,9 +166,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 5
+    "out_mph": 4
    }
   },
   {
@@ -240,13 +240,13 @@
     },
     "cf": {
      "dir": "out",
-     "mph": 9
+     "mph": 8
     },
     "rf": {
      "dir": "out",
      "mph": 6
     },
-    "out_mph": 9
+    "out_mph": 8
    }
   },
   {
@@ -335,22 +335,22 @@
    "pick": "atl",
    "confidence": 0.49,
    "tier": "PASS",
-   "total": 9.8,
+   "total": 10.0,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 8
     },
     "cf": {
      "dir": "out",
-     "mph": 9
+     "mph": 11
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 8
     },
-    "out_mph": 9
+    "out_mph": 11
    }
   },
   {
@@ -361,23 +361,9 @@
    "pick": "tex",
    "confidence": 0.625,
    "tier": "LEAN",
-   "total": 9.6,
+   "total": 9.1,
    "book_total_line": 9.0,
-   "wind": {
-    "lf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "cf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "out_mph": 0
-   }
+   "wind": null
   },
   {
    "away": "det",
@@ -489,7 +475,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 79,
+   "edge_score": 76,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 15.2,
@@ -549,29 +535,6 @@
    ]
   },
   {
-   "player": "Tyler Soderstrom",
-   "team": "ath",
-   "game": "ath-az",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 73,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 10.2,
-    "hard_hit_pct": 44.7,
-    "avg_exit_velo": 90.2,
-    "xiso": 0.173,
-    "recent_hr_rate": 0.0526
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Kyle Schwarber",
    "team": "phi",
    "game": "lad-phi",
@@ -595,6 +558,29 @@
    ]
   },
   {
+   "player": "Tyler Soderstrom",
+   "team": "ath",
+   "game": "ath-az",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 70,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 10.2,
+    "hard_hit_pct": 44.7,
+    "avg_exit_velo": 90.2,
+    "xiso": 0.173,
+    "recent_hr_rate": 0.0526
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Hunter Goodman",
    "team": "col",
    "game": "wsh-col",
@@ -604,7 +590,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 70,
+   "edge_score": 68,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 17.5,
@@ -641,9 +627,9 @@
    ]
   },
   {
-   "player": "Brandon Nimmo",
-   "team": "tex",
-   "game": "cws-tex",
+   "player": "Yordan Alvarez",
+   "team": "hou",
+   "game": "mia-hou",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -653,11 +639,11 @@
    "edge_score": 67,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.5,
-    "hard_hit_pct": 52.5,
-    "avg_exit_velo": 92.4,
-    "xiso": 0.221,
-    "recent_hr_rate": 0.0349
+    "barrel_pct": 19.0,
+    "hard_hit_pct": 53.2,
+    "avg_exit_velo": 94.6,
+    "xiso": 0.381,
+    "recent_hr_rate": 0.0841
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
