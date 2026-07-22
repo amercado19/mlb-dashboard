@@ -312,15 +312,25 @@ function tpAutoAdd(type){var c=tpCandidates();if(!TP_WORK)TP_WORK=[];var inW={};
 function tpAddOpen(){var p=$('tpAddBox');if(!p)return;if(p.getAttribute('data-open')){p.style.display='none';p.removeAttribute('data-open');return;}p.setAttribute('data-open','1');var c=tpCandidates();window._TPC=c;var inW={};(TP_WORK||[]).forEach(function(l){inW[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;});var opts=c.map(function(x,i){var k=(x.betType)+'|'+(x.playerId||x.gamePk)+'|'+x.desc;if(inW[k])return '';return '<option value="'+i+'">'+esc(x.desc)+'</option>';}).filter(Boolean).join('');p.innerHTML='<div style="margin-bottom:6px"><select id="tpSel" class="tpsel">'+opts+'</select> <button class="rf" onclick="tpAddSel()">Add selected</button></div><div class="tpauto"><span style="font-size:10px;color:var(--muted)">🤖 Algo adds best:</span><button onclick="tpAutoAdd(\'hr\')">HR</button><button onclick="tpAutoAdd(\'hit\')">1+Hit</button><button onclick="tpAutoAdd(\'2tb\')">2TB</button><button onclick="tpAutoAdd(\'hrr\')">HRR</button><button onclick="tpAutoAdd(\'ml\')">ML</button><button onclick="tpAutoAdd(\'over\')">Over</button><button onclick="tpAutoAdd(\'\')">Any</button></div>';p.style.display='block';}
 function tpAddSel(){var s=$('tpSel');if(!s||s.value==='')return;var c=window._TPC[+s.value];if(!c)return;if(!TP_WORK)TP_WORK=[];var nl=Object.assign({},c);nl._id='m'+Date.now();TP_WORK.push(nl);renderParlay();tpAddOpen();}
 function tpRecalc(){var inputs=[].slice.call(document.querySelectorAll('#parlay .leg-od'));if(!inputs.length)return;var SGP=.62,byG={};inputs.forEach(function(i){var g=i.dataset.game;(byG[g]=byG[g]||[]).push(i);});var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(i){var a=parseFloat(i.value);gd*=isNaN(a)?1:amDec(a);});dec*=arr.length>=2?(1+(gd-1)*SGP):gd;});inputs.forEach(function(i){var a=parseFloat(i.value);var mp=parseFloat(i.dataset.prob);var ev=document.getElementById(i.dataset.ev);if(isNaN(a)){i.classList.remove('odbad');if(ev)ev.textContent='';return;}var imp=a<0?(-a)/(-a+100):100/(a+100);if(imp-mp>.07){i.classList.add('odbad');if(ev){ev.textContent='−EV';ev.style.color='var(--lose)';}}else{i.classList.remove('odbad');if(ev)ev.textContent='';}});var pay=$('tpPay');if(pay)pay.innerHTML='<b>Combined '+decToAm(dec)+'</b> · ≈'+(100/dec).toFixed(1)+'% to hit · $10→$'+Math.round(10*dec).toLocaleString()+' · $100→$'+Math.round(100*dec).toLocaleString()+'. Edit any leg to your book price; red −EV = book more confident than model. Same-game legs get a 0.62 correlation discount.';}
-function tpCopySlip(){
+function tpCopySlip(book){
   var legs=TP_WORK||[];if(!legs.length)return;
-  var txt='MLB Priced Parlay '+(D.date||'')+'\n'+legs.map(function(l){
-    var bo=l.bookOdds||{};
-    return '#'+(l.rank||'?')+' '+legDesc(l)+(l.game?' ('+l.game+')':'')+
-      (bo.price!=null?' @ '+(bo.price>0?'+':'')+bo.price+' ['+bo.book+']':' [no posted price]');
+  var nice=book==='fanduel'?'FanDuel':'DraftKings';
+  var txt='MLB Priced Parlay '+(D.date||'')+' — '+nice+'\n'+legs.map(function(l){
+    var o=(l.books||{})[book];var bo=l.bookOdds||{};
+    var px=o&&o.price!=null?' @ '+(o.price>0?'+':'')+o.price
+          :(bo.price!=null?' [not posted at '+nice+'; '+bo.book+' has '+(bo.price>0?'+':'')+bo.price+']':' [no posted price]');
+    return '#'+(l.rank||'?')+' '+legDesc(l)+(l.game?' ('+l.game+')':'')+px;
   }).join('\n');
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){alert('Slip copied — paste/search each leg in FanDuel.');});}
-  else{prompt('Copy your slip:',txt);}
+  function done(){alert(nice+' slip copied — paste/search each leg in the app.');}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done,function(){tpCopyFallback(txt,done);});
+  }else{tpCopyFallback(txt,done);}
+}
+function tpCopyFallback(txt,done){
+  var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');done();}catch(e){prompt('Copy your slip:',txt);}
+  document.body.removeChild(ta);
 }
 function renderParlay(){
   var tp=D.topParlay||{};
@@ -331,11 +341,11 @@ function renderParlay(){
     var groups={},order=[];legs.forEach(function(l){var k=l.gamePk||'x';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(l);});
     var num=0;
     order.forEach(function(pk){var gl=groups[pk];if(gl.length>=2)legHtml+='<div class="sgptag">▸ '+gl.length+'-leg same-game'+(gl[0].game?' — '+esc(gl[0].game):'')+'</div>';
-      gl.forEach(function(l){num++;var bo=(l.bookOdds&&l.bookOdds.price!=null)?l.bookOdds:null;var a=bo?bo.price:fairAmNum(l.prob);var ti=legTierInfo(l);var ev='ev'+num;var bp=bo?' <span style="font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;background:#dbeafe;color:#1e40af" title="Real book price'+(bo.offbook?' (best available, not FD/DK)':'')+'">'+esc(bo.book)+(bo.offbook?'*':'')+'</span>':(l.playerId?' <span style="font-size:9px;color:#b45309" title="No posted FD/DK price yet — model-fair shown">⚠ no price</span>':'');var gp=(l.game&&gl.length<2)?' <span style="font-size:9px;color:#8893a8">'+esc(l.game)+'</span>':'';var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:#0c7a43" title="Edge: model % minus the book price\'s implied %">+'+(l.edge*100).toFixed(1)+'%</span>':'';var lk=(bo&&bo.link)?' <a href="'+esc(bo.link)+'" target="_blank" rel="noopener" style="font-size:9px;font-weight:800;text-decoration:none;padding:1px 7px;border-radius:8px;background:#1e40af;color:#fff" title="Open this market in the book\'s app/site — you confirm the bet there">Bet '+(bo.book==='fanduel'?'FD':bo.book==='draftkings'?'DK':esc(bo.book))+' →</a>':'';
+      gl.forEach(function(l){num++;var bo=(l.bookOdds&&l.bookOdds.price!=null)?l.bookOdds:null;var a=bo?bo.price:fairAmNum(l.prob);var ti=legTierInfo(l);var ev='ev'+num;var bp=bo?' <span style="font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;background:#dbeafe;color:#1e40af" title="Real book price'+(bo.offbook?' (best available, not FD/DK)':'')+'">'+esc(bo.book)+(bo.offbook?'*':'')+'</span>':(l.playerId?' <span style="font-size:9px;color:#b45309" title="No posted FD/DK price yet — model-fair shown">⚠ no price</span>':'');var gp=(l.game&&gl.length<2)?' <span style="font-size:9px;color:#8893a8">'+esc(l.game)+'</span>':'';var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:#0c7a43" title="Edge: model % minus the book price\'s implied %">+'+(l.edge*100).toFixed(1)+'%</span>':'';var lk='';(function(){var bks=l.books||{};['fanduel','draftkings'].forEach(function(bk){var o=bks[bk];if(!o||o.price==null)return;var lab=(bk==='fanduel'?'FD':'DK')+' '+(o.price>0?'+':'')+o.price;var st='font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;color:#fff;background:'+(bk==='fanduel'?'#1493ff':'#0c7a43');lk+=o.link?' <a href="'+esc(o.link)+'" target="_blank" rel="noopener" style="'+st+';text-decoration:none" title="Open this market at '+bk+' — you confirm the bet there">'+lab+' →</a>':' <span style="'+st+'" title="Posted at '+bk+' (no deep link)">'+lab+'</span>';});if(!lk&&bo&&bo.link){lk=' <a href="'+esc(bo.link)+'" target="_blank" rel="noopener" style="font-size:9px;font-weight:800;text-decoration:none;padding:1px 7px;border-radius:8px;background:#1e40af;color:#fff">Bet '+esc(bo.book)+' →</a>';}})();
         legHtml+='<div class="leg"><span class="ln">'+(l.rank||num)+'</span><span class="ld">'+esc(legDesc(l))+' <span class="badge '+ti[1]+'">'+ti[0]+'</span>'+bp+ep+lk+gp+' <span id="'+ev+'" class="evf"></span></span><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+ev+'" value="'+amStr(a)+'" oninput="tpRecalc()" title="Your book price"><span class="tprm" onclick="tpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';});
     });
   } else { legHtml='<div class="empty" style="padding:14px">No legs — add some below or reset to the model parlay.</div>'; }
-  var ctrl='<div class="tpctrl"><button class="rf" onclick="tpAddOpen()">➕ Add leg</button><button class="rf" onclick="tpReset()">↺ Reset to model</button><button class="rf" onclick="tpCopySlip()" title="Copy the ticket as text to paste/search in FanDuel">📋 Copy slip</button></div><div id="tpAddBox" style="display:none;margin-top:8px"></div>';
+  var ctrl='<div class="tpctrl"><button class="rf" onclick="tpAddOpen()">➕ Add leg</button><button class="rf" onclick="tpReset()">↺ Reset to model</button><button class="rf" onclick="tpCopySlip(\'fanduel\')" title="Copy the ticket with FanDuel prices">📋 FD slip</button><button class="rf" onclick="tpCopySlip(\'draftkings\')" title="Copy the ticket with DraftKings prices">📋 DK slip</button></div><div id="tpAddBox" style="display:none;margin-top:8px"></div>';
   var sugg='<div class="card"><div class="card-h"><span>⭐ Suggested Parlay</span><span class="t">'+legs.length+' legs</span></div><div class="card-b">'
     +(tp.note?'<div class="note" style="margin:0 0 10px;padding:0">⚙ '+esc(tp.note)+'</div>':'')
     +legHtml+'<div class="tppay" id="tpPay"></div>'+ctrl+'</div></div>';
