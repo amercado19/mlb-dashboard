@@ -35,6 +35,13 @@ h1 span{color:var(--accent2)}
 .b-sched{background:var(--panel2);color:var(--muted);border-color:var(--line)}
 .b-final{background:var(--txt);color:#fff}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(12,122,67,.5)}50%{box-shadow:0 0 0 6px rgba(12,122,67,0)}}
+.card.flash{animation:flashbg 2.5s ease-out}
+@keyframes flashbg{0%{background:#fff3c4}100%{background:var(--panel)}}
+details.lrules{font-family:var(--mono);font-size:10.5px}
+details.lrules summary{cursor:pointer;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.5px;padding:2px 0}
+.chip.hit{border-color:#0c7a43;color:#0c7a43;font-weight:700;background:#ecfdf3}
+.chip.miss{border-color:#bf0a30;color:#bf0a30;background:#fef2f2}
+.chip.pend{border-color:#d6a520;color:#8a6d00;background:#fffbeb}
 .lscore{font-family:var(--mono);font-size:12px}
 .lscore b{font-size:16px}
 .section-h{font-family:var(--mono);text-transform:uppercase;font-size:12px;letter-spacing:1px;color:var(--muted);margin:22px 0 10px;border-bottom:2px solid var(--line);padding-bottom:4px}
@@ -280,23 +287,43 @@ async function processLive(g){
   const oppIsNYY=(pickIsHome?awayId:homeId)===NYY_ID;
   const L=lScore({conf,margin,outsLeft,rp,dueSlots,dueHot,dueCold,pace,modelTotal:m?.total??null,threat,vsNYY:oppIsNYY});
   const lastPlay=feed.liveData.plays?.currentPlay?.result?.description||'';
+  // live prop grading (2026-07-22): grade this game's model props against the
+  // in-feed boxscore — green the moment a prop cashes, red only at Final
+  const isFinal=feed.gameData?.status?.abstractGameState==='Final';
+  const boxPlayers={};
+  for(const s of ['away','home'])for(const p of Object.values(feed.liveData.boxscore?.teams?.[s]?.players||{})){
+    const b=p.stats?.batting; if(b&&Object.keys(b).length)boxPlayers[(p.person?.fullName||'').toLowerCase()]=b;
+  }
+  const NEED={HR:b=>(b.homeRuns||0)>=1,H1:b=>(b.hits||0)>=1,H2:b=>((b.doubles||0)+(b.triples||0)+(b.homeRuns||0))>=1,
+              TB2:b=>((b.totalBases??((b.hits||0)+(b.doubles||0)+2*(b.triples||0)+3*(b.homeRuns||0))))>=2,
+              HRR:b=>((b.hits||0)+(b.runs||0)+(b.rbi||0))>=2};
+  const propStat=propsFor(awayAb,homeAb,4).map(p=>{
+    const b=boxPlayers[(p.player||'').toLowerCase()];
+    const fn=NEED[(p.stat||'').toUpperCase()]||NEED.H1;
+    let st='pend';
+    if(b&&fn(b))st='hit'; else if(isFinal)st='miss'; else if(!b&&isFinal)st='miss';
+    return {player:p.player,stat:p.stat,mp:p.model_prob,st};
+  });
   // live projected winner: model prior + game state
   const outsRemTotal=(9-inning)*6+(isTop?(3-outs)+3:(3-outs));
   const trackedLiveP=liveWinProb(conf,margin,outsRemTotal);
   const liveWin=trackedLiveP>=0.5
     ?{team:pickIsHome?homeAb:awayAb,p:trackedLiveP,pre:conf}
     :{team:pickIsHome?awayAb:homeAb,p:1-trackedLiveP,pre:1-conf};
-  return {g,m,pickIsHome,homeAb,awayAb,runs,inning,isTop,outs,margin,dueInfo,rp,rpName,pace,L,trackedBatting,lastPlay,liveWin};
+  return {g,m,pickIsHome,homeAb,awayAb,runs,inning,isTop,outs,margin,dueInfo,rp,rpName,pace,L,trackedBatting,lastPlay,liveWin,propStat};
 }
 
 /* ---------- render ---------- */
 const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const PREV_SCORE={};
 function liveCard(r){
   const pickAb=r.pickIsHome?r.homeAb:r.awayAb;
   const tierClass={'LIVE LOOK':'b-livelook','ON SCRIPT':'b-onscript','NEUTRAL':'b-neutral','OFF SCRIPT':'b-offscript','DEAD':'b-dead'}[r.L.tier];
   const isPick=r.m&&r.m.tier&&r.m.tier!=='PASS';
   const venue=r.g.venue?.name||'', delayed=isDelayed(r.g.status?.detailedState);
-  return `<div class="card live ${isPick?'pick':''}">
+  const sKey=r.runs.away+'-'+r.runs.home, changed=PREV_SCORE[r.g.gamePk]!==undefined&&PREV_SCORE[r.g.gamePk]!==sKey;
+  PREV_SCORE[r.g.gamePk]=sKey;
+  return `<div class="card live ${isPick?'pick':''} ${changed?'flash':''}">
     <div class="row"><span class="matchup">${r.awayAb} @ ${r.homeAb}</span>
       ${delayed?`<span class="badge b-offscript">${esc(r.g.status.detailedState)}</span>`:''}
       <span class="badge ${tierClass}">${r.L.tier}</span></div>
@@ -310,8 +337,10 @@ function liveCard(r){
     ${r.rpName?`<div class="kv"><span class="lbl">Arm facing ${pickAb}:</span> ${esc(r.rpName)} — ERA ${r.rp?.era??'—'}, BB/9 ${r.rp?.bb9??'—'}, K/9 ${r.rp?.k9??'—'}${r.rp?.pitchedTwoStraight?' · <b style="color:var(--accent2)">3rd straight day</b>':r.rp?.pitchedYest?' · <b style="color:var(--accent2)">pitched yesterday</b>':''}</div>`:''}
     ${r.dueInfo.length?`<div class="kv"><span class="lbl">${pickAb} due up${r.trackedBatting?' (now)':' (next)'}:</span><div class="dueup">${r.dueInfo.map(d=>`<span class="chip ${d.tag}">#${d.slot} ${esc(d.name)} · L7 ${d.ops7}</span>`).join('')}</div></div>`:''}
     ${r.lastPlay?`<div class="kv"><span class="lbl">Last play:</span> ${esc(r.lastPlay)}</div>`:''}
-    ${propChips(r.awayAb,r.homeAb)}
-    <div class="rules">${r.L.fired.map(f=>{const neg=f.includes('−')||f.includes('L1-D')||f.includes('capped');return `<div class="${neg?'neg':'pos'}">${esc(f)}</div>`}).join('')}</div>
+    ${r.propStat&&r.propStat.length?`<div class="kv"><span class="lbl">Model props:</span><div class="dueup">${r.propStat.map(p=>
+      `<span class="chip ${p.st}">${p.st==='hit'?'✓ ':p.st==='miss'?'✗ ':'• '}${esc((p.player||'').split(' ').slice(-1)[0])} ${esc(p.stat||'')}${p.mp!=null?' '+(p.mp*100).toFixed(0)+'%':''}${p.st==='pend'?' — not yet':''}</span>`).join('')}</div></div>`:''}
+    <details class="lrules"><summary>L-rules (${r.L.fired.length} fired) · why this score</summary>
+    <div class="rules">${r.L.fired.map(f=>{const neg=f.includes('−')||f.includes('L1-D')||f.includes('capped');return `<div class="${neg?'neg':'pos'}">${esc(f)}</div>`}).join('')}</div></details>
   </div>`;
 }
 function schedCard(g){
