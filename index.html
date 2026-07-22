@@ -202,7 +202,7 @@ function windArrows(z){if(!z||!z.length)return '';var A={out:['⬆','var(--accen
 
 function gameProps(pk){var bf=D.boardsFull||D.boards||{};var out=[];[['hr','HR'],['h1','1+H'],['h2','2B'],['tb2','2TB'],['hrr','HRR']].forEach(function(d){(bf[d[0]]||[]).filter(function(r){return r.gamePk===pk;}).slice(0,2).forEach(function(r){out.push({lbl:d[1],name:r.name,team:r.team,pid:r.playerId,gp:r.gamePk,metric:r.metric});});});return out;}
 function renderSlate(){
-  var gc=D.gameCards||[];
+  var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});
   if(!gc.length){$('slate').innerHTML='<div class="empty">No games in today’s slate.</div>';return;}
   $('slate').innerHTML='<div class="grid">'+gc.map(function(g){
     var tm=teamsOf(g),pick=g.pick,conf=g.conf,awayFav=pick===tm.away;
@@ -230,7 +230,7 @@ function renderSlate(){
 }
 
 function renderMatchups(){
-  var gc=D.gameCards||[];var mlByPk={};(D.ml||[]).forEach(function(m){mlByPk[m.gamePk]=m;});
+  var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});var mlByPk={};(D.ml||[]).forEach(function(m){mlByPk[m.gamePk]=m;});
   var ouByPk={};((D.boardsFull||{}).ou||[]).forEach(function(o){ouByPk[o.gamePk]=o;});
   var nrByPk={};(D.nrfi||[]).forEach(function(n){nrByPk[n.gamePk]=n;});
   if(!gc.length){$('matchups').innerHTML='<div class="empty">No matchups.</div>';return;}
