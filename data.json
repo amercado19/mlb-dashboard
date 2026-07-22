@@ -1,6 +1,6 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T16:18:28",
+ "generated_at": "2026-07-22T16:21:38",
  "version": "0.1.0",
  "games": [
   {
@@ -180,7 +180,7 @@
    "confidence": 0.637,
    "tier": "LEAN",
    "total": 11.7,
-   "book_total_line": 9.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -361,9 +361,23 @@
    "pick": "tex",
    "confidence": 0.625,
    "tier": "LEAN",
-   "total": 9.1,
+   "total": 9.6,
    "book_total_line": 9.0,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "cf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "rf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "out_mph": 0
+   }
   },
   {
    "away": "det",
@@ -399,23 +413,9 @@
    "pick": "hou",
    "confidence": 0.556,
    "tier": "PASS",
-   "total": 9.0,
+   "total": 8.5,
    "book_total_line": 8.0,
-   "wind": {
-    "lf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "cf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "out_mph": 0
-   }
+   "wind": null
   }
  ],
  "props": [
@@ -627,9 +627,9 @@
    ]
   },
   {
-   "player": "Yordan Alvarez",
-   "team": "hou",
-   "game": "mia-hou",
+   "player": "Brandon Nimmo",
+   "team": "tex",
+   "game": "cws-tex",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -639,11 +639,11 @@
    "edge_score": 67,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 19.0,
-    "hard_hit_pct": 53.2,
-    "avg_exit_velo": 94.6,
-    "xiso": 0.381,
-    "recent_hr_rate": 0.0841
+    "barrel_pct": 12.5,
+    "hard_hit_pct": 52.5,
+    "avg_exit_velo": 92.4,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.0349
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
