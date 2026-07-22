@@ -1,6 +1,6 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T17:04:57",
+ "generated_at": "2026-07-22T17:11:01",
  "version": "0.1.0",
  "games": [
   {
@@ -389,7 +389,21 @@
    "tier": "PASS",
    "total": 9.2,
    "book_total_line": 8.0,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "in",
+     "mph": 6
+    },
+    "cf": {
+     "dir": "in",
+     "mph": 8
+    },
+    "rf": {
+     "dir": "in",
+     "mph": 6
+    },
+    "out_mph": 0
+   }
   },
   {
    "away": "mia",
@@ -399,23 +413,9 @@
    "pick": "hou",
    "confidence": 0.556,
    "tier": "PASS",
-   "total": 9.0,
+   "total": 8.5,
    "book_total_line": 8.0,
-   "wind": {
-    "lf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "cf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "out_mph": 0
-   }
+   "wind": null
   }
  ],
  "props": [
@@ -627,23 +627,23 @@
    ]
   },
   {
-   "player": "Yordan Alvarez",
-   "team": "hou",
-   "game": "mia-hou",
+   "player": "Mike Trout",
+   "team": "laa",
+   "game": "stl-laa",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 67,
+   "edge_score": 66,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 19.0,
-    "hard_hit_pct": 53.2,
-    "avg_exit_velo": 94.6,
-    "xiso": 0.381,
-    "recent_hr_rate": 0.0841
+    "hard_hit_pct": 48.3,
+    "avg_exit_velo": 90.7,
+    "xiso": 0.281,
+    "recent_hr_rate": 0.025
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -736,6 +736,29 @@
     "avg_exit_velo": 87.0,
     "xiso": 0.086,
     "recent_hr_rate": 0.0106
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Julio Rodr\u00edguez",
+   "team": "sea",
+   "game": "cin-sea",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 79,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.1,
+    "hard_hit_pct": 44.6,
+    "avg_exit_velo": 90.3,
+    "xiso": 0.2,
+    "recent_hr_rate": 0.0179
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -851,29 +874,6 @@
     "avg_exit_velo": 92.0,
     "xiso": 0.249,
     "recent_hr_rate": 0.0455
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Randy Arozarena",
-   "team": "sea",
-   "game": "cin-sea",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 78,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 7.8,
-    "hard_hit_pct": 42.2,
-    "avg_exit_velo": 91.3,
-    "xiso": 0.156,
-    "recent_hr_rate": 0.0404
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
