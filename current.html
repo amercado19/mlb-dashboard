@@ -312,6 +312,56 @@ function tpAutoAdd(type){var c=tpCandidates();if(!TP_WORK)TP_WORK=[];var inW={};
 function tpAddOpen(){var p=$('tpAddBox');if(!p)return;if(p.getAttribute('data-open')){p.style.display='none';p.removeAttribute('data-open');return;}p.setAttribute('data-open','1');var c=tpCandidates();window._TPC=c;var inW={};(TP_WORK||[]).forEach(function(l){inW[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;});var opts=c.map(function(x,i){var k=(x.betType)+'|'+(x.playerId||x.gamePk)+'|'+x.desc;if(inW[k])return '';return '<option value="'+i+'">'+esc(x.desc)+'</option>';}).filter(Boolean).join('');p.innerHTML='<div style="margin-bottom:6px"><select id="tpSel" class="tpsel">'+opts+'</select> <button class="rf" onclick="tpAddSel()">Add selected</button></div><div class="tpauto"><span style="font-size:10px;color:var(--muted)">🤖 Algo adds best:</span><button onclick="tpAutoAdd(\'hr\')">HR</button><button onclick="tpAutoAdd(\'hit\')">1+Hit</button><button onclick="tpAutoAdd(\'2tb\')">2TB</button><button onclick="tpAutoAdd(\'hrr\')">HRR</button><button onclick="tpAutoAdd(\'ml\')">ML</button><button onclick="tpAutoAdd(\'over\')">Over</button><button onclick="tpAutoAdd(\'\')">Any</button></div>';p.style.display='block';}
 function tpAddSel(){var s=$('tpSel');if(!s||s.value==='')return;var c=window._TPC[+s.value];if(!c)return;if(!TP_WORK)TP_WORK=[];var nl=Object.assign({},c);nl._id='m'+Date.now();TP_WORK.push(nl);renderParlay();tpAddOpen();}
 function tpRecalc(){var inputs=[].slice.call(document.querySelectorAll('#parlay .leg-od'));if(!inputs.length)return;var SGP=.62,byG={};inputs.forEach(function(i){var g=i.dataset.game;(byG[g]=byG[g]||[]).push(i);});var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(i){var a=parseFloat(i.value);gd*=isNaN(a)?1:amDec(a);});dec*=arr.length>=2?(1+(gd-1)*SGP):gd;});inputs.forEach(function(i){var a=parseFloat(i.value);var mp=parseFloat(i.dataset.prob);var ev=document.getElementById(i.dataset.ev);if(isNaN(a)){i.classList.remove('odbad');if(ev)ev.textContent='';return;}var imp=a<0?(-a)/(-a+100):100/(a+100);if(imp-mp>.07){i.classList.add('odbad');if(ev){ev.textContent='−EV';ev.style.color='var(--lose)';}}else{i.classList.remove('odbad');if(ev)ev.textContent='';}});var pay=$('tpPay');if(pay)pay.innerHTML='<b>Combined '+decToAm(dec)+'</b> · ≈'+(100/dec).toFixed(1)+'% to hit · $10→$'+Math.round(10*dec).toLocaleString()+' · $100→$'+Math.round(100*dec).toLocaleString()+'. Edit any leg to your book price; red −EV = book more confident than model. Same-game legs get a 0.62 correlation discount.';}
+/* ---- Suggested HR Parlay (2026-07-22): V-P2 discipline on anytime-HR ---- */
+var HP_WORK=null,HP_ADD={book:null,i:0};
+function hpLegs(){if(HP_WORK===null){HP_WORK=(((D.hrParlay||{}).legs)||[]).map(function(l,i){var c=Object.assign({},l);c._id='h'+i;return c;});}return HP_WORK;}
+function hpRemove(id){HP_WORK=hpLegs().filter(function(l){return l._id!==id;});renderParlay();}
+function hpReset(){HP_WORK=null;HP_ADD={book:null,i:0};renderParlay();}
+function hpAdd(){var used={};hpLegs().forEach(function(l){used[l.playerId]=1;});
+  var next=(D.hrProps||[]).filter(function(h){return h.bookOdds&&h.bookOdds.price!=null&&!used[h.playerId];})[0];
+  if(!next){alert('No more priced HR candidates today.');return;}
+  var c=Object.assign({},next);c._id='h'+Date.now();c.desc=c.desc||(c.name+' HR (anytime)');HP_WORK=hpLegs().concat([c]);renderParlay();}
+function hpAddAll(book){var nice=book==='fanduel'?'FD':'DK';
+  var legs=hpLegs().filter(function(l){return l.books&&l.books[book]&&l.books[book].link;});
+  if(!legs.length){alert('No '+nice+' deep links on the HR ticket.');return;}
+  if(HP_ADD.book!==book){HP_ADD={book:book,i:0};}
+  window.open(legs[HP_ADD.i].books[book].link,'_blank');HP_ADD.i++;
+  var btn=document.getElementById('hpAdd-'+book);
+  if(HP_ADD.i>=legs.length){if(btn)btn.textContent='✓ '+legs.length+' HR legs sent to '+nice;HP_ADD={book:null,i:0};}
+  else if(btn){btn.textContent='➕ '+nice+' next: HR leg '+(HP_ADD.i+1)+' of '+legs.length+' →';}}
+function hpCopy(book){var nice=book==='fanduel'?'FanDuel':'DraftKings';
+  var txt='MLB HR Parlay '+(D.date||'')+' — '+nice+'\n'+hpLegs().map(function(l){
+    var o=(l.books||{})[book];var bo=l.bookOdds||{};
+    return '#'+(l.rank||'?')+' '+(l.name||'')+' HR'+(l.game?' ('+l.game+')':'')+
+      (o&&o.price!=null?' @ '+(o.price>0?'+':'')+o.price:(bo.price!=null?' ['+bo.book+' '+(bo.price>0?'+':'')+bo.price+']':''));}).join('\n');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){alert(nice+' HR slip copied.');},function(){tpCopyFallback(txt,function(){alert(nice+' HR slip copied.');});});}
+  else{tpCopyFallback(txt,function(){alert(nice+' HR slip copied.');});}}
+function hpHtml(){
+  var hp=D.hrParlay||{};var legs=hpLegs();
+  var rows='',totalDec=1,byGame={};
+  legs.forEach(function(l){var pk=l.gamePk||'x';byGame[pk]=(byGame[pk]||0)+1;});
+  var seen={};
+  legs.forEach(function(l){
+    var bo=(l.bookOdds&&l.bookOdds.price!=null)?l.bookOdds:null;
+    var a=bo?bo.price:fairAmNum(l.prob||l.model_prob||0.15);
+    var d=amDec(a);var pk=l.gamePk||'x';
+    if(byGame[pk]>1&&seen[pk]){d=1+(d-1)*0.62;}seen[pk]=1;  // same-team SGP discount
+    totalDec*=d;
+    var lk='';var bks=l.books||{};['fanduel','draftkings'].forEach(function(bk){var o=bks[bk];if(!o||o.price==null)return;
+      var lab=(bk==='fanduel'?'FD':'DK')+' '+(o.price>0?'+':'')+o.price;
+      var st='font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;color:#fff;background:'+(bk==='fanduel'?'#1493ff':'#0c7a43');
+      lk+=o.link?' <a href="'+esc(o.link)+'" target="_blank" rel="noopener" style="'+st+';text-decoration:none">'+lab+' →</a>':' <span style="'+st+'">'+lab+'</span>';});
+    var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:#0c7a43">+'+(l.edge*100).toFixed(1)+'%</span>':'';
+    var gp=l.game?' <span style="font-size:9px;color:#8893a8">'+esc(l.game)+'</span>':'';
+    var storm=l.storm?' <span style="font-size:9px;font-weight:800;color:#b45309" title="PERFECT STORM (R55.1): HR score ≥95, opp SP xERA ≥4.60, weak pen, wind out to pull field, ≥72°F — same-game stacking allowed">⚡</span>':'';
+    rows+='<div class="leg"><span class="ln">'+(l.rank||'·')+'</span><span class="ld">💣 '+esc(l.name||'')+' HR'+storm+ep+lk+gp+'</span><span class="tprm" onclick="hpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';});
+  if(!rows)rows='<div class="empty" style="padding:12px">'+esc(hp.note||'No FD/DK-priced positive-edge HR legs right now.')+'</div>';
+  var pay=legs.length?'<div class="tppay"><b>Combined '+decToAm(totalDec)+'</b> · model-fair ≈ '+(100/totalDec).toFixed(1)+'% to hit · $10 → ~$'+Math.round(10*totalDec).toLocaleString()+'</div>':'';
+  var ctrl='<div class="tpctrl"><button class="rf" id="hpAdd-fanduel" onclick="hpAddAll(\'fanduel\')">➕ Build FD slip</button><button class="rf" id="hpAdd-draftkings" onclick="hpAddAll(\'draftkings\')">➕ Build DK slip</button><button class="rf" onclick="hpAdd()">➕ Add leg</button><button class="rf" onclick="hpReset()">↺ Reset</button><button class="rf" onclick="hpCopy(\'fanduel\')">📋 copy</button></div>';
+  return '<div class="card"><div class="card-h"><span>💣 Suggested HR Parlay</span><span class="t">'+legs.length+' legs</span></div><div class="card-b">'
+    +(hp.note?'<div class="note" style="margin:0 0 10px;padding:0">⚙ '+esc(hp.note)+' R55: no same-game opposite-team stacks. HR legs hit ~25-35% — this is a small-stake ticket by design.</div>':'')
+    +rows+pay+ctrl+'</div></div>';
+}
 var TP_ADD={book:null,i:0};
 function tpAddAll(book){
   var nice=book==='fanduel'?'FD':'DK';
@@ -369,7 +419,7 @@ function renderParlay(){
   var form='<div class="card"><div class="card-h">🛠 Build Your Own Parlay</div><div class="card-b"><div class="byo">'
     +BYO.map(function(b){return '<label class="byoin">'+b[1]+'<input type="number" id="byo-'+b[0]+'" min="0" max="8" value="'+b[2]+'"></label>';}).join('')
     +'<button class="rf" onclick="buildCustom()">⚡ Generate</button></div><div id="byoResult"><div class="note" style="padding:0">Set how many of each prop type, then Generate. Best available legs from today’s boards (no duplicate players).</div></div></div></div>';
-  $('parlay').innerHTML=sugg+form; tpRecalc();
+  $('parlay').innerHTML=sugg+hpHtml()+form; tpRecalc();
 }
 function buildCustom(){
   var order=['ml','over','hit','2tb','hrr','hr'];
