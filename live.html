@@ -124,6 +124,17 @@ function wxChip(venue){
   return `<span class="chip ${risk?'hot':''}">${w.temp}°F · wind ${w.wind} ${w.dir} · rain ${w.pprob}%${w.raining?' · RAINING':''}</span>${risk?'<span class="chip hot">☔ RAIN RISK — delay kills the starter; re-check the arm on resume</span>':''}`;
 }
 const isDelayed=st=>/Delayed|Suspended|Postponed/i.test(st||'');
+function liveWinProb(priorP,margin,outsRemTotal){
+  // Live projected winner (2026-07-22): pregame model prob updated by game
+  // state. Logit prior + margin weighted by how little game remains — a run
+  // is worth ~0.35 logits at first pitch, ~2.3 with 6 outs left. Heuristic,
+  // labeled as the MODEL's live estimate (not the market's).
+  const p=Math.min(0.95,Math.max(0.05,priorP||0.5));
+  let z=Math.log(p/(1-p));
+  const frac=1-Math.max(2,Math.min(54,outsRemTotal))/54;
+  z+=margin*(0.35+1.1*Math.pow(frac,1.6));  // tuned vs historical WP tables
+  return 1/(1+Math.exp(-z));
+}
 function propsFor(awayAb,homeAb,n){
   const key=(awayAb+'-'+homeAb).toLowerCase();
   return ((modelRaw&&modelRaw.props)||[]).filter(p=>(p.game||'').toLowerCase()===key)
@@ -269,7 +280,13 @@ async function processLive(g){
   const oppIsNYY=(pickIsHome?awayId:homeId)===NYY_ID;
   const L=lScore({conf,margin,outsLeft,rp,dueSlots,dueHot,dueCold,pace,modelTotal:m?.total??null,threat,vsNYY:oppIsNYY});
   const lastPlay=feed.liveData.plays?.currentPlay?.result?.description||'';
-  return {g,m,pickIsHome,homeAb,awayAb,runs,inning,isTop,outs,margin,dueInfo,rp,rpName,pace,L,trackedBatting,lastPlay};
+  // live projected winner: model prior + game state
+  const outsRemTotal=(9-inning)*6+(isTop?(3-outs)+3:(3-outs));
+  const trackedLiveP=liveWinProb(conf,margin,outsRemTotal);
+  const liveWin=trackedLiveP>=0.5
+    ?{team:pickIsHome?homeAb:awayAb,p:trackedLiveP,pre:conf}
+    :{team:pickIsHome?awayAb:homeAb,p:1-trackedLiveP,pre:1-conf};
+  return {g,m,pickIsHome,homeAb,awayAb,runs,inning,isTop,outs,margin,dueInfo,rp,rpName,pace,L,trackedBatting,lastPlay,liveWin};
 }
 
 /* ---------- render ---------- */
@@ -287,6 +304,7 @@ function liveCard(r){
     <div class="row"><span class="score">${r.runs.away}–${r.runs.home}</span>
       <span class="state">${r.isTop?'▲':'▼'} ${r.inning} · ${r.outs} out</span>
       <span class="lscore">L <b>${r.L.score.toFixed(0)}</b>${lTrend(r.g.gamePk,r.L.score)}</span></div>
+    <div class="kv"><span class="lbl">Live projected winner:</span> <b style="font-size:14px">${r.liveWin.team} ${(r.liveWin.p*100).toFixed(0)}%</b> <span style="font-size:10px;color:#8893a8" title="Model's live estimate from score/inning/outs — not the betting market">(pregame ${(r.liveWin.pre*100).toFixed(0)}%)</span></div>
     <div class="kv"><span class="lbl">Tracked:</span> <b>${pickAb}</b> ${r.m?`(${(r.m.tier||'—')}, conf ${((r.pickIsHome?r.m.home_win_prob:r.m.away_win_prob)*100).toFixed(0)}%)`:'(no model row)'}
       ${r.m?` · <span class="lbl">model total</span> ${r.m.total} · <span class="lbl">pace</span> ${r.pace?r.pace.toFixed(1):'—'}`:''}</div>
     ${r.rpName?`<div class="kv"><span class="lbl">Arm facing ${pickAb}:</span> ${esc(r.rpName)} — ERA ${r.rp?.era??'—'}, BB/9 ${r.rp?.bb9??'—'}, K/9 ${r.rp?.k9??'—'}${r.rp?.pitchedTwoStraight?' · <b style="color:var(--accent2)">3rd straight day</b>':r.rp?.pitchedYest?' · <b style="color:var(--accent2)">pitched yesterday</b>':''}</div>`:''}
