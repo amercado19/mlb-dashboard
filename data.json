@@ -1,6 +1,6 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T16:44:30",
+ "generated_at": "2026-07-22T16:48:02",
  "version": "0.1.0",
  "games": [
   {
@@ -361,9 +361,23 @@
    "pick": "tex",
    "confidence": 0.625,
    "tier": "LEAN",
-   "total": 9.1,
+   "total": 9.6,
    "book_total_line": 9.0,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "cf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "rf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "out_mph": 0
+   }
   },
   {
    "away": "det",
@@ -535,6 +549,29 @@
    ]
   },
   {
+   "player": "Donovan Walton",
+   "team": "ath",
+   "game": "ath-az",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 72,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 5.1,
+    "hard_hit_pct": 39.2,
+    "avg_exit_velo": 88.3,
+    "xiso": 0.136,
+    "recent_hr_rate": 0.025
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Kyle Schwarber",
    "team": "phi",
    "game": "lad-phi",
@@ -552,29 +589,6 @@
     "avg_exit_velo": 93.3,
     "xiso": 0.27,
     "recent_hr_rate": 0.0472
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Tyler Soderstrom",
-   "team": "ath",
-   "game": "ath-az",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 70,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 10.2,
-    "hard_hit_pct": 44.7,
-    "avg_exit_velo": 90.2,
-    "xiso": 0.173,
-    "recent_hr_rate": 0.0526
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
