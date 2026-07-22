@@ -1,6 +1,6 @@
 {
  "date": "2026-07-22",
- "generated_at": "2026-07-22T14:21:54",
+ "generated_at": "2026-07-22T14:59:31",
  "version": "0.1.0",
  "games": [
   {
@@ -16,17 +16,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 9
+     "mph": 10
     },
     "cf": {
      "dir": "out",
-     "mph": 13
+     "mph": 14
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 10
     },
-    "out_mph": 13
+    "out_mph": 14
    }
   },
   {
@@ -37,7 +37,7 @@
    "pick": "nyy",
    "confidence": 0.6,
    "tier": "PASS",
-   "total": 8.4,
+   "total": 8.7,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
@@ -106,15 +106,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "cf": {
      "dir": "in",
-     "mph": 12
+     "mph": 10
     },
     "rf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "out_mph": 0
    }
@@ -266,7 +266,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 5
+     "mph": 6
     },
     "rf": {
      "dir": "in",
@@ -288,7 +288,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -296,9 +296,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 5
+    "out_mph": 4
    }
   },
   {
@@ -340,17 +340,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 8
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 12
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 8
     },
-    "out_mph": 8
+    "out_mph": 12
    }
   },
   {
@@ -361,9 +361,23 @@
    "pick": "tex",
    "confidence": 0.625,
    "tier": "LEAN",
-   "total": 9.1,
+   "total": 9.6,
    "book_total_line": 8.5,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "cf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "rf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "out_mph": 0
+   }
   },
   {
    "away": "det",
@@ -627,9 +641,9 @@
    ]
   },
   {
-   "player": "Yordan Alvarez",
-   "team": "hou",
-   "game": "mia-hou",
+   "player": "Brandon Nimmo",
+   "team": "tex",
+   "game": "cws-tex",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -639,11 +653,11 @@
    "edge_score": 67,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 19.0,
-    "hard_hit_pct": 53.2,
-    "avg_exit_velo": 94.6,
-    "xiso": 0.381,
-    "recent_hr_rate": 0.0841
+    "barrel_pct": 12.5,
+    "hard_hit_pct": 52.5,
+    "avg_exit_velo": 92.4,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.0349
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
