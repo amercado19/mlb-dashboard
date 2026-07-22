@@ -351,6 +351,7 @@ function hpHtml(){
       var lab=(bk==='fanduel'?'FD':'DK')+' '+(o.price>0?'+':'')+o.price;
       var st='font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;color:#fff;background:'+(bk==='fanduel'?'#1493ff':'#0c7a43');
       lk+=o.link?' <a href="'+esc(o.link)+'" target="_blank" rel="noopener" style="'+st+';text-decoration:none">'+lab+' →</a>':' <span style="'+st+'">'+lab+'</span>';});
+    if(!lk&&bo&&bo.offbook){lk=' <span style="font-size:9px;font-weight:700;padding:1px 7px;border-radius:8px;background:#e5e7eb;color:#6b7280" title="Reference price from '+esc(bo.book)+' — NOT FanDuel/DraftKings; verify in your app before betting">ref '+(bo.price>0?'+':'')+bo.price+' '+esc(bo.book)+'</span>';}
     var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:#0c7a43">+'+(l.edge*100).toFixed(1)+'%</span>':'';
     var gp=l.game?' <span style="font-size:9px;color:#8893a8">'+esc(l.game)+'</span>':'';
     var storm=l.storm?' <span style="font-size:9px;font-weight:800;color:#b45309" title="PERFECT STORM (R55.1): HR score ≥95, opp SP xERA ≥4.60, weak pen, wind out to pull field, ≥72°F — same-game stacking allowed">⚡</span>':'';
