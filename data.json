@@ -1,6 +1,6 @@
 {
  "date": "2026-07-23",
- "generated_at": "2026-07-23T20:08:45",
+ "generated_at": "2026-07-23T21:59:25",
  "version": "0.1.0",
  "games": [
   {
@@ -37,7 +37,7 @@
    "pick": "cle",
    "confidence": 0.522,
    "tier": "PASS",
-   "total": 9.2,
+   "total": 9.1,
    "book_total_line": null,
    "wind": {
     "lf": {
@@ -63,7 +63,7 @@
    "pick": "tb",
    "confidence": 0.64,
    "tier": "LEAN",
-   "total": 12.0,
+   "total": 11.9,
    "book_total_line": null,
    "wind": {
     "lf": {
@@ -90,19 +90,19 @@
    "confidence": 0.585,
    "tier": "PASS",
    "total": 9.4,
-   "book_total_line": 7.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "cf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "out_mph": 0
    }
@@ -306,7 +306,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 51,
+   "edge_score": 53,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 10.4,
@@ -329,7 +329,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 51,
+   "edge_score": 53,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 11.8,
@@ -596,29 +596,6 @@
    ]
   },
   {
-   "player": "Ryan Waldschmidt",
-   "team": "az",
-   "game": "az-stl",
-   "stat": "2B",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 0.26,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 8.4,
-    "hard_hit_pct": 34.9,
-    "avg_exit_velo": 87.5,
-    "xiso": 0.133,
-    "recent_hr_rate": 0.0455
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Matt Olson",
    "team": "atl",
    "game": "sd-atl",
@@ -636,6 +613,29 @@
     "avg_exit_velo": 92.6,
     "xiso": 0.259,
     "recent_hr_rate": 0.0536
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Ryan Waldschmidt",
+   "team": "az",
+   "game": "az-stl",
+   "stat": "2B",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 0.25,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 8.4,
+    "hard_hit_pct": 34.9,
+    "avg_exit_velo": 87.5,
+    "xiso": 0.133,
+    "recent_hr_rate": 0.0455
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1148,6 +1148,29 @@
    ]
   },
   {
+   "player": "Ryan Jeffers",
+   "team": "min",
+   "game": "min-cle",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 2.34,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.233,
+    "recent_hr_rate": 0.0833
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Junior Caminero",
    "team": "tb",
    "game": "tb-tor",
@@ -1165,29 +1188,6 @@
     "avg_exit_velo": 93.2,
     "xiso": 0.231,
     "recent_hr_rate": 0.1176
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Ryan Jeffers",
-   "team": "min",
-   "game": "min-cle",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 2.32,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 41.2,
-    "avg_exit_velo": 90.4,
-    "xiso": 0.233,
-    "recent_hr_rate": 0.0833
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1226,7 +1226,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.29,
+   "edge_score": 2.28,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 11.2,
