@@ -1,6 +1,6 @@
 {
  "date": "2026-07-23",
- "generated_at": "2026-07-23T15:04:11",
+ "generated_at": "2026-07-23T16:05:02",
  "version": "0.1.0",
  "games": [
   {
@@ -15,18 +15,18 @@
    "book_total_line": 8.0,
    "wind": {
     "lf": {
-     "dir": "out",
+     "dir": "in",
      "mph": 5
     },
     "cf": {
-     "dir": "out",
-     "mph": 7
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
      "dir": "out",
      "mph": 5
     },
-    "out_mph": 7
+    "out_mph": 5
    }
   },
   {
@@ -58,12 +58,12 @@
   {
    "away": "tb",
    "home": "tor",
-   "away_win_prob": 0.735,
-   "home_win_prob": 0.235,
+   "away_win_prob": 0.54,
+   "home_win_prob": 0.287,
    "pick": "tb",
-   "confidence": 0.735,
-   "tier": "STRONG",
-   "total": 11.2,
+   "confidence": 0.54,
+   "tier": "PASS",
+   "total": 12.0,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
@@ -97,14 +97,14 @@
      "mph": 4
     },
     "cf": {
-     "dir": "in",
-     "mph": 5
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
-     "dir": "in",
+     "dir": "out",
      "mph": 4
     },
-    "out_mph": 0
+    "out_mph": 4
    }
   },
   {
@@ -116,19 +116,19 @@
    "confidence": 0.683,
    "tier": "PASS",
    "total": 9.3,
-   "book_total_line": 8.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "rf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "out_mph": 0
    }
@@ -145,7 +145,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 84,
+   "edge_score": 76,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.4,
@@ -168,7 +168,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 72,
+   "edge_score": 64,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 7.2,
@@ -191,7 +191,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 61,
+   "edge_score": 59,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 11.6,
@@ -205,9 +205,9 @@
    ]
   },
   {
-   "player": "Matt Olson",
-   "team": "atl",
-   "game": "sd-atl",
+   "player": "Ryan Jeffers",
+   "team": "min",
+   "game": "min-cle",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -217,57 +217,11 @@
    "edge_score": 56,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.8,
-    "hard_hit_pct": 50.3,
-    "avg_exit_velo": 92.6,
-    "xiso": 0.259,
-    "recent_hr_rate": 0.0536
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Michael Harris II",
-   "team": "atl",
-   "game": "sd-atl",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 54,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.1,
-    "hard_hit_pct": 50.5,
-    "avg_exit_velo": 91.3,
-    "xiso": 0.208,
-    "recent_hr_rate": 0.0348
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Spencer Torkelson",
-   "team": "det",
-   "game": "kc-det",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 54,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.6,
-    "hard_hit_pct": 42.5,
-    "avg_exit_velo": 89.8,
-    "xiso": 0.204,
-    "recent_hr_rate": 0.0693
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.233,
+    "recent_hr_rate": 0.0833
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -283,7 +237,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 51,
+   "edge_score": 56,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 10.4,
@@ -306,7 +260,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 51,
+   "edge_score": 56,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 11.8,
@@ -320,30 +274,76 @@
    ]
   },
   {
-   "player": "Kody Clemens",
-   "team": "min",
-   "game": "min-cle",
+   "player": "Matt Olson",
+   "team": "atl",
+   "game": "sd-atl",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 47,
+   "edge_score": 54,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.7,
-    "hard_hit_pct": 45.7,
+    "barrel_pct": 13.8,
+    "hard_hit_pct": 50.3,
     "avg_exit_velo": 92.6,
-    "xiso": 0.197,
-    "recent_hr_rate": 0.0714
+    "xiso": 0.259,
+    "recent_hr_rate": 0.0536
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
-   "player": "Trevor Larnach",
+   "player": "Michael Harris II",
+   "team": "atl",
+   "game": "sd-atl",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 52,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 50.5,
+    "avg_exit_velo": 91.3,
+    "xiso": 0.208,
+    "recent_hr_rate": 0.0348
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Spencer Torkelson",
+   "team": "det",
+   "game": "kc-det",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 52,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.6,
+    "hard_hit_pct": 42.5,
+    "avg_exit_velo": 89.8,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.0693
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Byron Buxton",
    "team": "min",
    "game": "min-cle",
    "stat": "HR",
@@ -352,14 +352,14 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 44,
+   "edge_score": 50,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 7.8,
-    "hard_hit_pct": 35.0,
-    "avg_exit_velo": 87.2,
-    "xiso": 0.148,
-    "recent_hr_rate": 0.0385
+    "barrel_pct": 18.1,
+    "hard_hit_pct": 47.4,
+    "avg_exit_velo": 90.8,
+    "xiso": 0.266,
+    "recent_hr_rate": 0.025
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -504,7 +504,7 @@
    ]
   },
   {
-   "player": "Trevor Larnach",
+   "player": "Ryan Jeffers",
    "team": "min",
    "game": "min-cle",
    "stat": "H",
@@ -516,11 +516,11 @@
    "edge_score": 67,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 7.8,
-    "hard_hit_pct": 35.0,
-    "avg_exit_velo": 87.2,
-    "xiso": 0.148,
-    "recent_hr_rate": 0.0385
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.233,
+    "recent_hr_rate": 0.0833
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -826,6 +826,29 @@
    ]
   },
   {
+   "player": "Byron Buxton",
+   "team": "min",
+   "game": "min-cle",
+   "stat": "TB",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 2.32,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 18.1,
+    "hard_hit_pct": 47.4,
+    "avg_exit_velo": 90.8,
+    "xiso": 0.266,
+    "recent_hr_rate": 0.025
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Junior Caminero",
    "team": "tb",
    "game": "tb-tor",
@@ -918,6 +941,29 @@
    ]
   },
   {
+   "player": "Ryan Jeffers",
+   "team": "min",
+   "game": "min-cle",
+   "stat": "TB",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 1.84,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.233,
+    "recent_hr_rate": 0.0833
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Drake Baldwin",
    "team": "atl",
    "game": "sd-atl",
@@ -981,52 +1027,6 @@
     "avg_exit_velo": 91.0,
     "xiso": 0.162,
     "recent_hr_rate": 0.0174
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Chase DeLauter",
-   "team": "cle",
-   "game": "min-cle",
-   "stat": "TB",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 1.71,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 6.5,
-    "hard_hit_pct": 44.8,
-    "avg_exit_velo": 91.0,
-    "xiso": 0.154,
-    "recent_hr_rate": 0.0449
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Kody Clemens",
-   "team": "min",
-   "game": "min-cle",
-   "stat": "TB",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 1.76,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 12.7,
-    "hard_hit_pct": 45.7,
-    "avg_exit_velo": 92.6,
-    "xiso": 0.197,
-    "recent_hr_rate": 0.0714
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1102,6 +1102,29 @@
    ]
   },
   {
+   "player": "Byron Buxton",
+   "team": "min",
+   "game": "min-cle",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 2.44,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 18.1,
+    "hard_hit_pct": 47.4,
+    "avg_exit_velo": 90.8,
+    "xiso": 0.266,
+    "recent_hr_rate": 0.025
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Yandy D\u00edaz",
    "team": "tb",
    "game": "tb-tor",
@@ -1142,6 +1165,29 @@
     "avg_exit_velo": 93.2,
     "xiso": 0.231,
     "recent_hr_rate": 0.1176
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Ryan Jeffers",
+   "team": "min",
+   "game": "min-cle",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 2.35,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.233,
+    "recent_hr_rate": 0.0833
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1217,29 +1263,6 @@
    ]
   },
   {
-   "player": "Chase DeLauter",
-   "team": "cle",
-   "game": "min-cle",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 2.06,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 6.5,
-    "hard_hit_pct": 44.8,
-    "avg_exit_velo": 91.0,
-    "xiso": 0.154,
-    "recent_hr_rate": 0.0449
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Riley Greene",
    "team": "det",
    "game": "kc-det",
@@ -1257,29 +1280,6 @@
     "avg_exit_velo": 91.6,
     "xiso": 0.22,
     "recent_hr_rate": 0.0693
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Josh Bell",
-   "team": "min",
-   "game": "min-cle",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 2.04,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 9.9,
-    "hard_hit_pct": 43.6,
-    "avg_exit_velo": 89.9,
-    "xiso": 0.192,
-    "recent_hr_rate": 0.0404
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
