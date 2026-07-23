@@ -267,6 +267,10 @@ function openProp(k,btn){
   if(k==='spread'){var rows=(D.gameCards||[]).filter(function(c){return c.away_runs!=null&&c.home_runs!=null;}).map(function(c){var tm=teamsOf(c);var m=c.home_runs-c.away_runs;var fH=m>=0;var fav=fH?tm.home:tm.away,dog=fH?tm.away:tm.home;var mm=Math.abs(m);return {pick:(mm>=1.5?fav+' -1.5':dog+' +1.5'),m:mm,team:(mm>=1.5?fav:dog)};}).sort(function(a,b){return b.m-a.m;});p.innerHTML='<div class="note">Run line derived from the model’s projected run margin.</div>'+rows.map(function(r,i){return '<div class="prow"><span class="rk">#'+(i+1)+'</span><span class="pnm" style="cursor:default;display:flex;gap:6px;align-items:center">'+teamLogo(r.team)+'<b>'+esc(r.pick)+'</b></span><span class="pmetric">'+r.m.toFixed(1)+'<span class="unit"> proj margin</span></span></div>';}).join('')||'<div class="empty">No projections.</div>';return;}
   var unit={h2:'2B/G',tb2:'TB/G',hrr:'H+R+RBI/G'}[k]||'score';
   p.innerHTML=(bf[k]||[]).map(function(r,i){var oc=r.playerId?' onclick="openMatchupModal('+r.playerId+','+r.gamePk+',&quot;'+esc(r.name).replace(/&quot;|"/g,'')+'&quot;,&quot;'+esc(r.team||'')+'&quot;)"':'';
+    var st='';var pr=r.propResult||((((D.hrProps)||[]).filter(function(x){return x.playerId===r.playerId;})[0])||{}).propResult;
+    if(pr==='hit'){st=' <span style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#0c7a43;color:#fff">✓ HIT</span>';}
+    else if(pr==='pend'){st=' <span style="font-size:9px;font-weight:700;padding:1px 7px;border-radius:8px;background:#fffbeb;color:#8a6d00;border:1px solid #d6a520">⏳ in play</span>';}
+    else if(pr==='miss'){st=' <span style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#fef2f2;color:#bf0a30">✗</span>';}
     var px='';if(k==='hr'){var hp=((D.hrProps)||[]).filter(function(x){return x.playerId===r.playerId;})[0];
       if(hp){
         var bks=hp.books||{};var got=false;
@@ -284,7 +288,7 @@ function openProp(k,btn){
           px+=' <span style="font-size:9px;font-weight:800;color:'+(_e>=0?'#0c7a43':'#b91c1c')+'" title="Edge: model HR % minus the price\'s implied %">'+(_e>=0?'+':'')+_e.toFixed(1)+'%</span>';}
       }}
     var gl=r.gamePk?' <span style="font-size:9px;color:#8893a8">'+esc((typeof gameLabelByPk==='function'&&gameLabelByPk(r.gamePk))||'')+'</span>':'';
-    return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+px+gl+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+'<span class="unit"> '+unit+'</span></span></div>';}).join('')||'<div class="empty">Board posts with confirmed lineups.</div>';
+    return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+st+px+gl+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+'<span class="unit"> '+unit+'</span></span></div>';}).join('')||'<div class="empty">Board posts with confirmed lineups.</div>';
 }
 
 function amDec(a){return a>=0?1+a/100:1+100/(-a);}
@@ -351,6 +355,30 @@ function hpCopy(ix,book){var nice=book==='fanduel'?'FanDuel':'DraftKings';
       (o&&o.price!=null?' @ '+(o.price>0?'+':'')+o.price:(bo.price!=null?' ['+bo.book+' '+(bo.price>0?'+':'')+bo.price+']':''));}).join('\n');
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){alert(nice+' slip copied.');},function(){tpCopyFallback(txt,function(){alert(nice+' slip copied.');});});}
   else{tpCopyFallback(txt,function(){alert(nice+' slip copied.');});}}
+function hpCtx(l){
+  function pill(txt,mode,tip){var st=mode==='good'?'background:#ecfdf3;color:#0c7a43;border:1px solid #0c7a43':mode==='bad'?'background:#fef2f2;color:#bf0a30;border:1px solid #bf0a30':'background:#f3f4f6;color:#566586;border:1px solid #d1d5db';
+    return '<span style="font-size:9px;font-weight:700;padding:1px 7px;border-radius:8px;'+st+'"'+(tip?' title="'+esc(tip)+'"':'')+'>'+txt+'</span>';}
+  var chips='';
+  var w=(l.wind||'').toLowerCase();
+  var gc=((D.gameCards)||[]).filter(function(c){return c.gamePk===l.gamePk;})[0]||{};
+  var wz=gc.wind_zones||{};var pulls=l.batSide==='L'?['rf']:l.batSide==='S'?['lf','rf']:['lf'];
+  var pull=pulls.some(function(z){var o=wz[z]||{};return o.dir==='out'&&(o.mph||0)>=8;});
+  if(w.indexOf('dome')>=0)chips+=pill('⌂ dome','neut','Roof/dome — wind not a factor');
+  else if(pull)chips+=pill('🌬 wind→pull field ✓','good','Wind blowing out toward the pull field for this batter');
+  else if(w.indexOf('out')>=0)chips+=pill('🌬 '+esc(l.wind),'good','Wind out — helps carry');
+  else if(w.indexOf('in')>=0)chips+=pill('🌬 '+esc(l.wind)+' ✗','bad','Wind blowing in — hurts carry');
+  else if(l.wind&&l.wind!=='—')chips+=pill('🌬 '+esc(l.wind),'neut','');
+  var x=parseFloat(l.spXera);
+  if(!isNaN(x))chips+=pill('🎯 SP '+x.toFixed(2)+(x>=4.6?' soft':x<=3.2?' tough ✗':''),x>=4.6?'good':x<=3.2?'bad':'neut','Opposing SP: '+(l.spFaced||'')+' (xERA '+x.toFixed(2)+')');
+  var f=(D.playerForm||{})[l.playerId];
+  if(f&&f.hr&&f.hr.length){var s=function(a,n){return a.slice(-n).reduce(function(p,c){return p+(c||0);},0);};
+    var hr3=s(f.hr,3),tb5=s(f.tb||[],5),h5=s(f.h||[],5);
+    if(hr3>=1)chips+=pill('🔥 '+hr3+' HR last 3','good','Homered recently');
+    else if(tb5>=9)chips+=pill('🔥 hot · '+tb5+' TB/5g','good','Big total-base output last 5 games');
+    else if(h5<=2)chips+=pill('🧊 cold · '+h5+' H/5g','bad','Barely hitting the last 5 games');
+    else chips+=pill('— even form','neut',h5+' hits last 5 games');}
+  return chips?'<div style="margin:2px 0 6px 26px;display:flex;gap:5px;flex-wrap:wrap">'+chips+'</div>':'';
+}
 function hpCardHtml(ix){
   var hp=hpTickets()[ix]||{};var legs=hpLegs(ix);
   var rows='',totalDec=1,byGame={},seen={};
@@ -369,7 +397,7 @@ function hpCardHtml(ix){
     var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:'+(l.edge>=0?'#0c7a43':'#b91c1c')+'">'+(l.edge>=0?'+':'')+(l.edge*100).toFixed(1)+'%</span>':'';
     var gp=l.game?' <span style="font-size:9px;color:#8893a8">'+esc(l.game)+'</span>':'';
     var storm=l.storm?' <span style="font-size:9px;font-weight:800;color:#b45309" title="PERFECT STORM (R55.1)">⚡</span>':'';
-    rows+='<div class="leg"><span class="ln">'+(l.rank||'·')+'</span><span class="ld">💣 '+esc(l.name||'')+' HR'+storm+ep+lk+gp+'</span><span class="tprm" onclick="hpRemove('+ix+',\''+l._id+'\')" title="Remove">✕</span></div>';});
+    rows+='<div class="leg"><span class="ln">'+(l.rank||'·')+'</span><span class="ld">💣 '+esc(l.name||'')+' HR'+storm+ep+lk+gp+'</span><span class="tprm" onclick="hpRemove('+ix+',\''+l._id+'\')" title="Remove">✕</span></div>'+hpCtx(l);});
   if(!rows)rows='<div class="empty" style="padding:12px">'+esc(hp.note||'No HR legs right now.')+'</div>';
   var pay=legs.length?'<div class="tppay"><b>Combined '+decToAm(totalDec)+'</b> · model-fair ≈ '+(100/totalDec).toFixed(1)+'% to hit · $10 → ~$'+Math.round(10*totalDec).toLocaleString()+'</div>':'';
   var ctrl='<div class="tpctrl"><button class="rf" id="hpAdd-'+ix+'-fanduel" onclick="hpAddAll('+ix+',\'fanduel\')">➕ Build FD slip</button><button class="rf" id="hpAdd-'+ix+'-draftkings" onclick="hpAddAll('+ix+',\'draftkings\')">➕ Build DK slip</button><button class="rf" onclick="hpAdd('+ix+')">➕ Add leg</button><button class="rf" onclick="hpReset('+ix+')">↺ Reset</button><button class="rf" onclick="hpCopy('+ix+',\'fanduel\')">📋 copy</button></div>';
