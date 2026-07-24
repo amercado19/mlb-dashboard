@@ -1,6 +1,6 @@
 {
  "date": "2026-07-23",
- "generated_at": "2026-07-23T23:54:11",
+ "generated_at": "2026-07-24T03:59:37",
  "version": "0.1.0",
  "games": [
   {
@@ -42,15 +42,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "out_mph": 0
    }
@@ -89,7 +89,7 @@
    "pick": "az",
    "confidence": 0.585,
    "tier": "PASS",
-   "total": 9.4,
+   "total": 9.5,
    "book_total_line": null,
    "wind": {
     "lf": {
@@ -120,7 +120,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -128,9 +128,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 3
+     "mph": 4
     },
-    "out_mph": 3
+    "out_mph": 4
    }
   }
  ],
@@ -642,6 +642,29 @@
    ]
   },
   {
+   "player": "Alec Burleson",
+   "team": "stl",
+   "game": "az-stl",
+   "stat": "2B",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 0.25,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 11.2,
+    "hard_hit_pct": 48.4,
+    "avg_exit_velo": 91.7,
+    "xiso": 0.239,
+    "recent_hr_rate": 0.0204
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Jim Jarvis",
    "team": "atl",
    "game": "sd-atl",
@@ -705,29 +728,6 @@
     "avg_exit_velo": 84.8,
     "xiso": 0.111,
     "recent_hr_rate": 0.0323
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Alec Burleson",
-   "team": "stl",
-   "game": "az-stl",
-   "stat": "2B",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 0.24,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 11.2,
-    "hard_hit_pct": 48.4,
-    "avg_exit_velo": 91.7,
-    "xiso": 0.239,
-    "recent_hr_rate": 0.0204
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -927,7 +927,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 1.97,
+   "edge_score": 2.0,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 11.6,
@@ -987,8 +987,8 @@
    ]
   },
   {
-   "player": "Ketel Marte",
-   "team": "az",
+   "player": "Alec Burleson",
+   "team": "stl",
    "game": "az-stl",
    "stat": "TB",
    "line": 1.5,
@@ -996,14 +996,14 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 1.86,
+   "edge_score": 1.8,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 10.4,
-    "hard_hit_pct": 44.6,
-    "avg_exit_velo": 91.0,
-    "xiso": 0.2,
-    "recent_hr_rate": 0.0541
+    "barrel_pct": 11.2,
+    "hard_hit_pct": 48.4,
+    "avg_exit_velo": 91.7,
+    "xiso": 0.239,
+    "recent_hr_rate": 0.0204
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1194,6 +1194,29 @@
    ]
   },
   {
+   "player": "Alec Burleson",
+   "team": "stl",
+   "game": "az-stl",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 2.31,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 11.2,
+    "hard_hit_pct": 48.4,
+    "avg_exit_velo": 91.7,
+    "xiso": 0.239,
+    "recent_hr_rate": 0.0204
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Michael Harris II",
    "team": "atl",
    "game": "sd-atl",
@@ -1217,29 +1240,6 @@
    ]
   },
   {
-   "player": "Alec Burleson",
-   "team": "stl",
-   "game": "az-stl",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 2.29,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 11.2,
-    "hard_hit_pct": 48.4,
-    "avg_exit_velo": 91.7,
-    "xiso": 0.239,
-    "recent_hr_rate": 0.0204
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Dillon Dingler",
    "team": "det",
    "game": "kc-det",
@@ -1249,7 +1249,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.26,
+   "edge_score": 2.3,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 11.6,
