@@ -1,6 +1,6 @@
 {
  "date": "2026-07-24",
- "generated_at": "2026-07-24T14:48:27",
+ "generated_at": "2026-07-24T18:13:26",
  "version": "0.1.0",
  "games": [
   {
@@ -42,15 +42,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "in",
-     "mph": 7
+     "mph": 6
     },
     "rf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "out_mph": 0
    }
@@ -119,6 +119,32 @@
    "book_total_line": 7.5,
    "wind": {
     "lf": {
+     "dir": "out",
+     "mph": 5
+    },
+    "cf": {
+     "dir": "out",
+     "mph": 7
+    },
+    "rf": {
+     "dir": "out",
+     "mph": 5
+    },
+    "out_mph": 7
+   }
+  },
+  {
+   "away": "atl",
+   "home": "bal",
+   "away_win_prob": 0.484,
+   "home_win_prob": 0.456,
+   "pick": "atl",
+   "confidence": 0.484,
+   "tier": "PASS",
+   "total": 9.2,
+   "book_total_line": 9.0,
+   "wind": {
+    "lf": {
      "dir": "in",
      "mph": 4
     },
@@ -131,32 +157,6 @@
      "mph": 4
     },
     "out_mph": 4
-   }
-  },
-  {
-   "away": "atl",
-   "home": "bal",
-   "away_win_prob": 0.496,
-   "home_win_prob": 0.344,
-   "pick": "atl",
-   "confidence": 0.496,
-   "tier": "PASS",
-   "total": 9.4,
-   "book_total_line": 9.0,
-   "wind": {
-    "lf": {
-     "dir": "in",
-     "mph": 5
-    },
-    "cf": {
-     "dir": "cross",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "out",
-     "mph": 5
-    },
-    "out_mph": 5
    }
   },
   {
@@ -194,7 +194,7 @@
    "confidence": 0.531,
    "tier": "PASS",
    "total": 8.7,
-   "book_total_line": 7.0,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -214,10 +214,10 @@
   {
    "away": "sd",
    "home": "mia",
-   "away_win_prob": 0.447,
-   "home_win_prob": 0.323,
+   "away_win_prob": 0.452,
+   "home_win_prob": 0.418,
    "pick": "sd",
-   "confidence": 0.447,
+   "confidence": 0.452,
    "tier": "PASS",
    "total": 9.9,
    "book_total_line": 9.0,
@@ -262,7 +262,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "cross",
@@ -270,9 +270,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 5
     },
-    "out_mph": 6
+    "out_mph": 5
    }
   },
   {
@@ -340,7 +340,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "cf": {
      "dir": "cross",
@@ -348,9 +348,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 3
     },
-    "out_mph": 4
+    "out_mph": 3
    }
   },
   {
@@ -366,17 +366,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 14
+     "mph": 15
     },
     "cf": {
      "dir": "out",
-     "mph": 20
+     "mph": 21
     },
     "rf": {
      "dir": "out",
-     "mph": 14
+     "mph": 15
     },
-    "out_mph": 20
+    "out_mph": 21
    }
   }
  ],
@@ -428,7 +428,7 @@
    ]
   },
   {
-   "player": "Luis Garc\u00eda",
+   "player": "Luis Garc\u00eda Jr.",
    "team": "wsh",
    "game": "az-wsh",
    "stat": "HR",
@@ -589,9 +589,9 @@
    ]
   },
   {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "lad-nym",
+   "player": "Matt Olson",
+   "team": "atl",
+   "game": "atl-bal",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -601,11 +601,11 @@
    "edge_score": 61,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 17.0,
-    "hard_hit_pct": 53.6,
-    "avg_exit_velo": 93.6,
-    "xiso": 0.282,
-    "recent_hr_rate": 0.0485
+    "barrel_pct": 13.7,
+    "hard_hit_pct": 50.2,
+    "avg_exit_velo": 92.5,
+    "xiso": 0.256,
+    "recent_hr_rate": 0.0536
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -704,7 +704,7 @@
    ]
   },
   {
-   "player": "Luis Garc\u00eda",
+   "player": "Luis Garc\u00eda Jr.",
    "team": "wsh",
    "game": "az-wsh",
    "stat": "H",
@@ -934,6 +934,29 @@
    ]
   },
   {
+   "player": "Troy Johnston",
+   "team": "col",
+   "game": "col-mil",
+   "stat": "2B",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 0.26,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 2.1,
+    "hard_hit_pct": 38.2,
+    "avg_exit_velo": 89.8,
+    "xiso": 0.101,
+    "recent_hr_rate": 0.0
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Jackson Chourio",
    "team": "mil",
    "game": "col-mil",
@@ -951,29 +974,6 @@
     "avg_exit_velo": 92.2,
     "xiso": 0.212,
     "recent_hr_rate": 0.0265
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Brice Turang",
-   "team": "mil",
-   "game": "col-mil",
-   "stat": "2B",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 0.25,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 8.5,
-    "hard_hit_pct": 43.8,
-    "avg_exit_velo": 90.6,
-    "xiso": 0.185,
-    "recent_hr_rate": 0.0273
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1279,23 +1279,23 @@
    ]
   },
   {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "lad-nym",
+   "player": "Matt Olson",
+   "team": "atl",
+   "game": "atl-bal",
    "stat": "TB",
    "line": 1.5,
    "side": "over",
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 1.93,
+   "edge_score": 2.05,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 17.0,
-    "hard_hit_pct": 53.6,
-    "avg_exit_velo": 93.6,
-    "xiso": 0.282,
-    "recent_hr_rate": 0.0485
+    "barrel_pct": 13.7,
+    "hard_hit_pct": 50.2,
+    "avg_exit_velo": 92.5,
+    "xiso": 0.256,
+    "recent_hr_rate": 0.0536
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
