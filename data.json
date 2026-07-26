@@ -1,6 +1,6 @@
 {
  "date": "2026-07-26",
- "generated_at": "2026-07-26T21:53:22",
+ "generated_at": "2026-07-26T23:55:36",
  "version": "0.1.0",
  "games": [
   {
@@ -376,7 +376,7 @@
    "confidence": 0.487,
    "tier": "PASS",
    "total": 8.6,
-   "book_total_line": 8.0,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "out",
@@ -482,6 +482,29 @@
     "avg_exit_velo": 89.8,
     "xiso": 0.205,
     "recent_hr_rate": 0.0808
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Mike Trout",
+   "team": "laa",
+   "game": "laa-sf",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 70,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 18.8,
+    "hard_hit_pct": 48.4,
+    "avg_exit_velo": 90.7,
+    "xiso": 0.276,
+    "recent_hr_rate": 0.0189
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -597,29 +620,6 @@
     "avg_exit_velo": 93.0,
     "xiso": 0.314,
     "recent_hr_rate": 0.1028
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Mike Trout",
-   "team": "laa",
-   "game": "laa-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 18.8,
-    "hard_hit_pct": 48.4,
-    "avg_exit_velo": 90.7,
-    "xiso": 0.276,
-    "recent_hr_rate": 0.0189
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1233,7 +1233,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.15,
+   "edge_score": 2.13,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 15.7,
