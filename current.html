@@ -163,6 +163,10 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
   <h1>MLB <span>2026</span> — DAILY EDGE</h1>
   <div class="meta" id="meta"></div>
   <nav id="nav"></nav>
+  <div id="oddsbar" style="max-width:1100px;margin:6px auto 0;padding:6px 0;font-family:var(--mono);font-size:11px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+    <a href="https://github.com/amercado19/mlb-pipeline/actions/workflows/daily-picks.yml" target="_blank" rel="noopener" title="Opens the pipeline's Actions page — click 'Run workflow' to re-pull odds and republish (~1–2 min)." style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1.5px solid #3a8fff;border-radius:7px;color:#3a8fff;text-decoration:none;font-weight:700">&#8635; Refresh odds</a>
+    <span id="oddsfresh" style="color:var(--muted)">props post ~3&ndash;4h before first pitch</span>
+  </div>
 </header>
 <main>
   <section id="slate" class="active"></section>
@@ -603,6 +607,34 @@ function mxRecent(bip){
   return '<div class="mx-h2">Recent Batted Balls (EV mph)</div><div class="mx-bb">'+cards+'</div>';
 }
 
+</script>
+<script>
+/* Odds freshness bar (V-P4, 2026-07-27): shows when odds were last pulled +
+   API credits left, so a stale slate ("hit Refresh") is distinguishable from
+   "books haven't posted props yet". Self-contained + defensive — never throws
+   into the page; if D.odds is absent it degrades to the static hint. */
+(function(){
+  try{
+    var el=document.getElementById('oddsfresh'); if(!el) return;
+    var D=window.D||window.MODEL_DATA||{}; var o=D.odds||{};
+    function ago(iso){
+      if(!iso) return null;
+      var m=(Date.now()-new Date(iso).getTime())/60000;
+      if(isNaN(m)) return null;
+      if(m<1) return 'just now';
+      if(m<60) return Math.round(m)+'m ago';
+      return Math.floor(m/60)+'h '+Math.round(m%60)+'m ago';
+    }
+    var parts=[];
+    if(o.pulledAt) parts.push('odds pulled '+ago(o.pulledAt));
+    else if(o.note) parts.push('odds: '+o.note);
+    else parts.push('odds not pulled this run');
+    if(o.remaining!=null) parts.push(o.remaining+' API credits left');
+    if(o.pricedLegs!=null && o.totalLegs) parts.push(o.pricedLegs+'/'+o.totalLegs+' legs priced');
+    parts.push('props post ~3–4h before first pitch');
+    el.textContent=parts.join('  ·  ');
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
