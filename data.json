@@ -1,6 +1,6 @@
 {
  "date": "2026-07-28",
- "generated_at": "2026-07-28T18:16:14",
+ "generated_at": "2026-07-28T18:36:34",
  "version": "0.1.0",
  "games": [
   {
@@ -1560,7 +1560,7 @@
  ],
  "prop_calibration": {
   "hr": {
-   "n": 322,
+   "n": 471,
    "status": "ok",
    "buckets": [
     {
@@ -1573,103 +1573,103 @@
     {
      "lo": 0.1,
      "hi": 0.2,
-     "n": 231,
+     "n": 319,
      "pred": 0.162,
-     "actual": 0.234
+     "actual": 0.232
     },
     {
      "lo": 0.2,
      "hi": 0.3,
-     "n": 90,
-     "pred": 0.227,
-     "actual": 0.256
+     "n": 151,
+     "pred": 0.228,
+     "actual": 0.212
     }
    ],
-   "oos_brier_raw": 0.2006,
-   "oos_brier_calibrated": 0.1946
+   "oos_brier_raw": 0.1623,
+   "oos_brier_calibrated": 0.1645
   },
   "h1": {
-   "n": 1230,
+   "n": 1843,
    "status": "ok",
    "buckets": [
     {
      "lo": 0.5,
      "hi": 0.6,
-     "n": 8,
+     "n": 11,
      "pred": 0.588,
-     "actual": 0.5
+     "actual": 0.636
     },
     {
      "lo": 0.6,
      "hi": 0.7,
-     "n": 732,
+     "n": 1098,
      "pred": 0.67,
-     "actual": 0.658
+     "actual": 0.662
     },
     {
      "lo": 0.7,
      "hi": 0.8,
-     "n": 490,
-     "pred": 0.72,
-     "actual": 0.692
+     "n": 734,
+     "pred": 0.721,
+     "actual": 0.691
     }
    ],
-   "oos_brier_raw": 0.2179,
-   "oos_brier_calibrated": 0.2205
+   "oos_brier_raw": 0.213,
+   "oos_brier_calibrated": 0.2132
   },
   "h2": {
-   "n": 326,
+   "n": 477,
    "status": "ok",
    "buckets": [
     {
      "lo": 0.1,
      "hi": 0.2,
-     "n": 132,
-     "pred": 0.177,
-     "actual": 0.273
+     "n": 192,
+     "pred": 0.18,
+     "actual": 0.292
     },
     {
      "lo": 0.2,
      "hi": 0.3,
-     "n": 194,
-     "pred": 0.226,
-     "actual": 0.17
+     "n": 285,
+     "pred": 0.225,
+     "actual": 0.182
     }
    ],
-   "oos_brier_raw": 0.1585,
-   "oos_brier_calibrated": 0.1586
+   "oos_brier_raw": 0.2043,
+   "oos_brier_calibrated": 0.2015
   },
   "tb2": {
-   "n": 318,
+   "n": 462,
    "status": "ok",
    "buckets": [
     {
      "lo": 0.3,
      "hi": 0.4,
-     "n": 29,
-     "pred": 0.382,
-     "actual": 0.379
+     "n": 42,
+     "pred": 0.383,
+     "actual": 0.524
     },
     {
      "lo": 0.4,
      "hi": 0.5,
-     "n": 253,
-     "pred": 0.456,
-     "actual": 0.443
+     "n": 360,
+     "pred": 0.454,
+     "actual": 0.439
     },
     {
      "lo": 0.5,
      "hi": 0.6,
-     "n": 36,
+     "n": 60,
      "pred": 0.513,
-     "actual": 0.389
+     "actual": 0.45
     }
    ],
-   "oos_brier_raw": 0.2421,
-   "oos_brier_calibrated": 0.2444
+   "oos_brier_raw": 0.2519,
+   "oos_brier_calibrated": 0.2537
   },
   "hrr": {
-   "n": 321,
+   "n": 464,
    "status": "ok",
    "buckets": [
     {
@@ -1682,36 +1682,36 @@
     {
      "lo": 0.4,
      "hi": 0.5,
-     "n": 33,
+     "n": 51,
      "pred": 0.46,
-     "actual": 0.576
+     "actual": 0.588
     },
     {
      "lo": 0.5,
      "hi": 0.6,
-     "n": 21,
-     "pred": 0.544,
-     "actual": 0.667
+     "n": 25,
+     "pred": 0.546,
+     "actual": 0.64
     },
     {
      "lo": 0.6,
      "hi": 0.7,
-     "n": 257,
+     "n": 359,
      "pred": 0.666,
-     "actual": 0.541
+     "actual": 0.563
     },
     {
      "lo": 0.7,
      "hi": 0.8,
-     "n": 9,
-     "pred": 0.704,
-     "actual": 0.556
+     "n": 28,
+     "pred": 0.711,
+     "actual": 0.571
     }
    ],
-   "oos_brier_raw": 0.249,
-   "oos_brier_calibrated": 0.2446
+   "oos_brier_raw": 0.2455,
+   "oos_brier_calibrated": 0.2408
   },
-  "fitted_through": "2026-07-08"
+  "fitted_through": "2026-07-27"
  },
  "notes": [
   "Venue-agnostic model output. No betting-venue logic.",
