@@ -177,6 +177,7 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
   <section id="parlay"></section>
   <section id="performance"></section>
   <section id="library"></section>
+  <section id="method"></section>
 </main>
 <div id="mxOverlay" onclick="if(event.target===this)closeMatchupModal()"><div id="mxModal"><div id="mxClose" onclick="closeMatchupModal()">&#10005;</div><div id="mxBody"></div></div></div>
 <footer id="foot" style="max-width:1100px;margin:0 auto;padding:10px 16px 40px;font-family:var(--mono);font-size:10px;color:var(--muted)"></footer>
@@ -508,11 +509,40 @@ function renderLibrary(){
   }).join('');
 }
 
-var TABS=[['slate','Slate'],['picks','Picks'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['library','Library']];
+var TABS=[['slate','Slate'],['picks','Picks'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['library','Library'],['method','How it works']];
 function buildNav(){$('nav').innerHTML=TABS.map(function(t,i){return '<button class="'+(i===0?'active':'')+'" data-s="'+t[0]+'" onclick="showTab(\''+t[0]+'\',this)">'+esc(t[1])+'</button>';}).join('');}
 function showTab(id,btn){var ss=document.querySelectorAll('main section');for(var i=0;i<ss.length;i++)ss[i].classList.remove('active');$(id).classList.add('active');var bs=document.querySelectorAll('nav button');for(var j=0;j<bs.length;j++)bs[j].classList.remove('active');if(btn)btn.classList.add('active');}
 function renderMeta(){var n=(D.gameCards||[]).length;var upd=D.generatedAt?new Date(D.generatedAt).toLocaleString():'—';$('meta').innerHTML='<span>'+esc(D.date||'')+'</span><span>'+n+' games today</span><span>updated '+esc(upd)+'</span><span>'+esc(D.version||'')+'</span><button class="rf" onclick="refresh()">↻ Refresh</button>';$('foot').textContent='Model output presented as-is · '+esc(D.version||'')+' · click a player for the Statcast deep-dive · not financial advice';}
-function renderAll(){renderMeta();renderSlate();renderPicks();renderMatchups();renderProps();renderParlay();renderPerformance();renderLibrary();}
+function renderMethod(){
+  var mc="color:var(--muted);font-size:11.5px;line-height:1.65";
+  var card="background:var(--panel2,#12161d);border:1px solid var(--line,#222);border-left:3px solid #4dc870;border-radius:8px;padding:12px 15px;margin:10px 0";
+  var h="color:#4dc870;font-weight:700;font-size:13px;margin-bottom:5px";
+  $('method').innerHTML=''+
+  '<div style="max-width:840px;margin:0 auto">'+
+  '<h2 style="color:#fff">How each pick is calculated</h2>'+
+  '<p style="'+mc+';margin-bottom:6px">Plain-English summary of the live algorithms. These are explicit rule sets, not a trained model. Many thresholds are still being calibrated from real results — treat the numbers as a disciplined starting point, not a proven edge (measured CLV is roughly break-even).</p>'+
+
+  '<div style="'+card+'"><div style="'+h+'">Moneyline (V3.3/V3.4)</div><p style="'+mc+'">'+
+  'Start at 50% confidence, +4 if home. The biggest mover is the starting-pitcher gap: (opponent xERA − our xERA) × 4 — a much better starter is a big edge. Then subtract for warning signs (a bad last start, a 5+ game losing skid, being swept, an elite opposing starter, a top-10 opposing offense, a lockdown opposing bullpen) and add for tailwinds (facing elimination, an opposing starter due to regress, a fresh coaching change). Team form (R71) adds a small ±2 nudge for hot/cold teams — a tiebreaker, never a driver. '+
+  'Then compare confidence to the price\'s implied odds: BET STRONG at 72%+ confidence with 5+ points of edge; LEAN at 63%+ with 5+ edge (or a big-edge underdog). Hard rules: never bet against the Yankees, never on a TBD starter.</p></div>'+
+
+  '<div style="'+card+'"><div style="'+h+'">NRFI / YRFI — no/yes run in the 1st inning (V4)</div><p style="'+mc+'">'+
+  'Blend both starting pitchers\' first-inning scores (xERA, strikeout & walk rates, recent form) — 55% of the score. Add both lineups\' first-inning offense — 25% — now driven by the on-base % of the batters actually hitting 1-2-3 in today\'s posted lineup (a weak or short-handed top of the order means fewer baserunners → better NRFI; before lineups post it falls back to a season team rating). Add the park\'s first-inning run factor — 15%. Then adjust for weather (cold air and wind blowing in favor NRFI; heat and wind blowing out favor YRFI), an elite-pitcher bonus, and a blow-up-risk penalty. 72+ = strong NRFI, very low = strong YRFI. Rain over 40% voids the game.</p></div>'+
+
+  '<div style="'+card+'"><div style="'+h+'">Home Runs (V4.2)</div><p style="'+mc+'">'+
+  'A 0–100 score from six pieces: the hitter\'s raw power (ISO, up to 20), how hittable the opposing starter is by xERA (up to 25), wind (up to 20 — out-and-hot is the jackpot, wind blowing in nearly zeroes it), the ballpark (15), where he bats in the order (10), and recent form (10) — plus a small pitch-matchup nudge. 85+ is Tier A, 75+ Tier B. Finally the score is turned into a fair probability and compared to the book\'s home-run price to show the edge.</p></div>'+
+
+  '<div style="'+card+'"><div style="'+h+'">Hits — 1+ Hit / 2B+ (V3.1)</div><p style="'+mc+'">'+
+  'Driven mostly by how hittable the opposing starter is (xERA, up to 30 — the single biggest factor). Then the hitter\'s own quality (up to 25 = batting avg × 50 + extra-base-hits-per-game × 20 + hits-per-game × 15), wind (up to 20, and it mainly matters for 2B+ where fly balls carry into gaps), batting-order slot (15, top-4 bats best for volume), and recent form (10). A cold streak overrides down.</p></div>'+
+
+  '<div style="'+card+';border-left-color:#e8a030"><div style="'+h+';color:#e8a030">Parlay tickets (V-P4)</div><p style="'+mc+'">'+
+  'Three tickets daily. <b>Ticket 1 — Safe Parlay</b> (max 3 legs, no HR): only 1+ hit, NRFI/YRFI ≥75%, and strong Over/Unders. It BANS 2+ total bases and 2+ hits+runs+RBI, which historically hit only ~45% and ~22% and were the recurring ticket-killers. <b>Tickets 2 & 3 — HR Top-2 and HR Lotto</b> (6-leg, correlated slugfests). '+
+  'Two honesty layers sit on top: (1) a <b>calibration haircut</b> — the model overrates its most confident picks, so a raw 70–80% is treated as ~52–62% and anything 80%+ as 55% before it\'s ranked; 1+ hit is capped at its real ~72% rate. (2) a <b>price gate</b> — every leg shows a real sportsbook price and only positive-edge legs survive; player props post late, so unpriced legs are kept but flagged "verify price." The <b>Over rule (R72)</b>: an Over only qualifies with a wind boost AND a projection at least 1.5 runs above the line AND lineups that aren\'t cold. Legs are ordered most-to-least confident so you trim from the bottom.</p></div>'+
+
+  '<p style="'+mc+';margin-top:10px;color:#777">The honest caveat: these rules reduce obvious mistakes and enforce discipline, but none of them has yet been proven to beat the closing line. The next real improvement is the weekly recalibration loop that re-derives these thresholds from settled results.</p>'+
+  '</div>';
+}
+function renderAll(){renderMeta();renderSlate();renderPicks();renderMatchups();renderProps();renderParlay();renderPerformance();renderLibrary();renderMethod();}
 async function refresh(){if(!DATA_URL){location.reload();return;}try{var r=await fetch(DATA_URL+(DATA_URL.indexOf('?')<0?'?':'&')+'_='+Date.now());D=await r.json();MODEL_DATA=D;renderAll();}catch(e){location.reload();}}
 buildNav();renderAll();
 </script>
