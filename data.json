@@ -1,6 +1,6 @@
 {
  "date": "2026-07-30",
- "generated_at": "2026-07-30T15:06:52",
+ "generated_at": "2026-07-30T15:24:23",
  "version": "0.1.0",
  "games": [
   {
@@ -246,7 +246,7 @@
    "confidence": 0.507,
    "tier": "PASS",
    "total": 8.4,
-   "book_total_line": 8.5,
+   "book_total_line": 9.0,
    "wind": null
   }
  ],
@@ -643,6 +643,29 @@
    ]
   },
   {
+   "player": "Ryan Jeffers",
+   "team": "min",
+   "game": "kc-min",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 69,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.0,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 90.0,
+    "xiso": 0.216,
+    "recent_hr_rate": 0.0476
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Jordan Walker",
    "team": "stl",
    "game": "chc-stl",
@@ -683,29 +706,6 @@
     "avg_exit_velo": 92.3,
     "xiso": 0.21,
     "recent_hr_rate": 0.0253
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Miguel Vargas",
-   "team": "cws",
-   "game": "nyy-cws",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 68,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.5,
-    "hard_hit_pct": 46.7,
-    "avg_exit_velo": 90.6,
-    "xiso": 0.254,
-    "recent_hr_rate": 0.0268
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1310,6 +1310,29 @@
    ]
   },
   {
+   "player": "Ryan Jeffers",
+   "team": "min",
+   "game": "kc-min",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 2.36,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 13.0,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 90.0,
+    "xiso": 0.216,
+    "recent_hr_rate": 0.0476
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Shohei Ohtani",
    "team": "lad",
    "game": "sea-lad",
@@ -1373,29 +1396,6 @@
     "avg_exit_velo": 91.0,
     "xiso": 0.204,
     "recent_hr_rate": 0.02
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Munetaka Murakami",
-   "team": "cws",
-   "game": "nyy-cws",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 2.32,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 20.3,
-    "hard_hit_pct": 60.1,
-    "avg_exit_velo": 94.2,
-    "xiso": 0.298,
-    "recent_hr_rate": 0.0448
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
