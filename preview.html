@@ -412,13 +412,37 @@ function hpCardHtml(ix){
     +(hp.note?'<div class="note" style="margin:0 0 10px;padding:0">⚙ '+esc(hp.note)+'</div>':'')
     +rows+pay+ctrl+'</div></div>';
 }
+var MLP_STAKE=10;
+function mlpAm(a){return a==null?'—':(a>0?'+':'')+a;}
+function mlpDec(l){var bo=l.bookOdds||{};if(bo.price!=null){return l.decimalOdds||(bo.price>0?1+bo.price/100:1+100/Math.abs(bo.price));}if(l.decimalOdds)return l.decimalOdds;var p=Math.max(l.prob||0.5,0.05);return 1/p;}
+function mlpCalc(v){
+  if(v!=null){var f=parseFloat(v);if(!isNaN(f)&&f>=0)MLP_STAKE=f;}
+  var t=D.mlParlay;if(!t)return;
+  var legs=t.legs||[];var d5=1,d4=1;
+  for(var i=0;i<legs.length;i++){var d=mlpDec(legs[i]);d5*=d;if(i<4)d4*=d;}
+  var el=document.getElementById('mlpPay');
+  if(el)el.innerHTML='Bet $'+MLP_STAKE.toFixed(2)+' → <b>$'+(MLP_STAKE*d5).toFixed(2)+'</b> payout ('+legs.length+'-leg, profit $'+(MLP_STAKE*(d5-1)).toFixed(2)+')'
+    +(legs.length>=5?' · <b>$'+(MLP_STAKE*d4).toFixed(2)+'</b> if you drop leg 5':'');
+}
 function mlpHtml(){
   var t=D.mlParlay;if(!t||!(t.legs||[]).length)return '';
   var n=t.legs.length;
-  var legs=t.legs.map(function(l){var last=l.rank===n&&n>1?' <span style="font-size:9px;color:#b45309" title="Lowest-confidence leg — drop this one for the shorter ticket">▾ drop for '+(n-1)+'-leg</span>':'';return '<div class="prow"><span class="pnm" style="cursor:default">'+l.rank+'. '+esc(l.desc||((l.team||'')+' ML'))+last+'</span><span class="pmetric">'+Math.round((l.prob||0)*100)+'%</span></div>';}).join('');
+  var legs=t.legs.map(function(l){
+    var last=l.rank===n&&n>1?' <span style="font-size:9px;color:#b45309" title="Lowest-confidence leg — drop this one for the shorter ticket">▾ drop for '+(n-1)+'-leg</span>':'';
+    var bo=l.bookOdds||{};
+    var px=bo.price!=null?' <span style="font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;background:#dbeafe;color:#1e40af">'+esc(bo.book||'book')+' '+mlpAm(bo.price)+'</span>':' <span style="font-size:9px;color:#b45309" title="No FD/DK price posted yet — model-fair estimate">est '+mlpAm((function(p){p=Math.max(Math.min(p||0.5,0.95),0.05);return p>=0.5?-Math.round(100*p/(1-p)):Math.round(100*(1-p)/p);})(l.prob))+'</span>';
+    return '<div class="prow"><span class="pnm" style="cursor:default">'+l.rank+'. '+esc(l.desc||((l.team||'')+' ML'))+px+last+'</span><span class="pmetric">'+Math.round((l.prob||0)*100)+'%</span></div>';
+  }).join('');
   var c=t.combined||{};
   var hits=(c.hitPct!=null?'~'+c.hitPct+'% ('+n+'-leg)':'')+(c.hitPct4!=null?' · ~'+c.hitPct4+'% ('+(n-1)+'-leg)':'');
-  return '<div class="card"><div class="card-h"><span>💰 '+esc(t.name||'Moneyline Parlay')+'</span><span class="t">'+esc(t.strategy||'')+(hits?' · '+hits:'')+'</span></div><div class="card-b">'+legs+'<div class="note" style="margin-top:8px;padding:0">⚙ '+esc(t.note||'')+'</div></div></div>';
+  var oddsline=(c.americanOdds!=null?'Combined: <b>'+mlpAm(c.americanOdds)+'</b>':'Combined: <b>est</b>')
+    +(c.americanOdds4!=null?' ('+n+'-leg) · <b>'+mlpAm(c.americanOdds4)+'</b> (4-leg)':'')
+    +(c.estimated?' <span style="font-size:9px;color:#b45309">'+(c.pricedLegs||0)+'/'+n+' legs priced — rest model-fair</span>':'');
+  var calc='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px">'
+    +'<label style="font-size:11px;font-weight:700">Payout calc: $<input type="number" min="0" step="1" value="'+MLP_STAKE+'" oninput="mlpCalc(this.value)" style="width:70px;padding:3px 6px;border:1px solid #cbd5e1;border-radius:6px"></label>'
+    +'<span id="mlpPay" style="font-size:11px"></span></div>';
+  setTimeout(mlpCalc,0);
+  return '<div class="card"><div class="card-h"><span>💰 '+esc(t.name||'Moneyline Parlay')+'</span><span class="t">'+esc(t.strategy||'')+(hits?' · '+hits:'')+'</span></div><div class="card-b">'+legs+'<div class="note" style="margin:8px 0 0;padding:0">'+oddsline+'</div>'+calc+'<div class="note" style="margin-top:8px;padding:0">⚙ '+esc(t.note||'')+'</div></div></div>';
 }
 function hpHtml(){return hpTickets().map(function(_,ix){return hpCardHtml(ix);}).join('');}
 var TP_ADD={book:null,i:0};
