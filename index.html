@@ -500,13 +500,26 @@ function renderPerformance(){
 }
 
 function renderLibrary(){
-  var hist=D.parlayHistory||[];
-  if(!hist.length){$('library').innerHTML='<div class="empty">No graded suggested parlays yet — each day appears here after it’s graded.</div>';return;}
-  $('library').innerHTML=hist.map(function(p){
-    var badge=p.result==='win'?'<span class="badge b-win">✓ HIT</span>':p.result==='loss'?'<span class="badge b-loss">✗ MISS</span>':'<span class="badge b-pass">⏳ pending</span>';
-    var legs=(p.legs||[]).map(function(l){var ic=l.result==='win'?'<span style="color:var(--accent)">✓</span>':l.result==='loss'?'<span style="color:var(--lose)">✗</span>':'<span style="color:var(--muted)">·</span>';return '<div class="pl-leg">'+ic+' '+esc(l.desc)+'</div>';}).join('');
-    return '<details class="pl-day"><summary>'+esc(p.date)+' '+badge+' <span style="color:var(--muted)">'+p.wins+'/'+p.n+' legs</span></summary><div class="pl-legs">'+legs+'</div></details>';
-  }).join('');
+  var hist=D.parlayHistory||[];var mlh=D.mlHistory||[];
+  if(!hist.length&&!mlh.length){$('library').innerHTML='<div class="empty">No graded picks yet — each day appears here after it’s graded.</div>';return;}
+  var html='';
+  if(mlh.length){
+    html+='<div style="font-weight:700;color:var(--muted);margin:6px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em">Moneyline record (slate sides, by day)</div>';
+    html+=mlh.map(function(d){
+      var picks=(d.picks||[]).map(function(p){var ic=p.hit?'<span style="color:var(--accent)">✓</span>':'<span style="color:var(--lose)">✗</span>';var tag=(p.tier==='STRONG'||p.tier==='LEAN')?' <span class="badge '+(p.tier==='STRONG'?'b-strong':'b-lean')+'">'+esc(p.tier)+'</span>':'';return '<div class="pl-leg">'+ic+' '+esc(p.pick||'')+' ML — '+esc(p.game||'')+(p.conf!=null?' <span style="color:var(--muted)">'+p.conf+'%</span>':'')+tag+'</div>';}).join('');
+      var cls=(d.n>0&&d.w*2>=d.n)?'b-win':'b-loss';
+      return '<details class="pl-day"><summary>'+esc(d.date)+' <span class="badge '+cls+'">'+d.w+'/'+d.n+'</span> <span style="color:var(--muted)">ML board</span></summary><div class="pl-legs">'+picks+'</div></details>';
+    }).join('');
+  }
+  if(hist.length){
+    html+='<div style="font-weight:700;color:var(--muted);margin:12px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em">Parlay tickets (incl. HR tickets)</div>';
+    html+=hist.map(function(p){
+      var badge=p.result==='win'?'<span class="badge b-win">✓ HIT</span>':p.result==='loss'?'<span class="badge b-loss">✗ MISS</span>':p.result==='void'?'<span class="badge b-pass">∅ void</span>':'<span class="badge b-pass">⏳ pending</span>';
+      var legs=(p.legs||[]).map(function(l){var ic=l.result==='win'?'<span style="color:var(--accent)">✓</span>':l.result==='loss'?'<span style="color:var(--lose)">✗</span>':l.result==='void'?'<span style="color:var(--muted)">∅</span>':'<span style="color:var(--muted)">·</span>';return '<div class="pl-leg">'+ic+' '+esc(l.desc)+(l.result==='void'?' <span style="color:var(--muted)">(game postponed — leg voided)</span>':'')+'</div>';}).join('');
+      return '<details class="pl-day"><summary>'+esc(p.date)+' · '+esc(p.name||'Parlay')+' '+badge+' <span style="color:var(--muted)">'+p.wins+'/'+p.n+' legs</span></summary><div class="pl-legs">'+legs+'</div></details>';
+    }).join('');
+  }
+  $('library').innerHTML=html;
 }
 
 var TABS=[['slate','Slate'],['picks','Picks'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['library','Library'],['method','How it works']];
