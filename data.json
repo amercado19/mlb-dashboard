@@ -1,6 +1,6 @@
 {
  "date": "2026-07-30",
- "generated_at": "2026-07-30T17:25:33",
+ "generated_at": "2026-07-30T18:10:58",
  "version": "0.1.0",
  "games": [
   {
@@ -38,7 +38,7 @@
    "confidence": 0.512,
    "tier": "PASS",
    "total": 10.6,
-   "book_total_line": 9.0,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -68,7 +68,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 6
     },
     "cf": {
      "dir": "cross",
@@ -76,9 +76,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
-    "out_mph": 5
+    "out_mph": 6
    }
   },
   {
@@ -94,7 +94,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 2
     },
     "cf": {
      "dir": "cross",
@@ -102,9 +102,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 3
+     "mph": 2
     },
-    "out_mph": 3
+    "out_mph": 2
    }
   },
   {
@@ -145,16 +145,16 @@
    "book_total_line": 7.0,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 10
+     "dir": "cross",
+     "mph": 1
     },
     "cf": {
-     "dir": "in",
-     "mph": 14
+     "dir": "cross",
+     "mph": 2
     },
     "rf": {
-     "dir": "in",
-     "mph": 10
+     "dir": "cross",
+     "mph": 1
     },
     "out_mph": 0
    }
@@ -198,17 +198,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 7
     },
     "cf": {
      "dir": "out",
-     "mph": 9
+     "mph": 10
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 7
     },
-    "out_mph": 9
+    "out_mph": 10
    }
   },
   {
@@ -275,29 +275,6 @@
    ]
   },
   {
-   "player": "Matt Olson",
-   "team": "atl",
-   "game": "wsh-atl",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 73,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.4,
-    "hard_hit_pct": 50.7,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.261,
-    "recent_hr_rate": 0.0678
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Willson Contreras",
    "team": "bos",
    "game": "bos-ath",
@@ -321,8 +298,8 @@
    ]
   },
   {
-   "player": "James Wood",
-   "team": "wsh",
+   "player": "Matt Olson",
+   "team": "atl",
    "game": "wsh-atl",
    "stat": "HR",
    "line": 0.5,
@@ -333,11 +310,11 @@
    "edge_score": 71,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 21.5,
-    "hard_hit_pct": 58.5,
-    "avg_exit_velo": 95.2,
-    "xiso": 0.32,
-    "recent_hr_rate": 0.0855
+    "barrel_pct": 14.4,
+    "hard_hit_pct": 50.7,
+    "avg_exit_velo": 92.7,
+    "xiso": 0.261,
+    "recent_hr_rate": 0.0678
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -361,6 +338,29 @@
     "avg_exit_velo": 91.0,
     "xiso": 0.204,
     "recent_hr_rate": 0.02
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "James Wood",
+   "team": "wsh",
+   "game": "wsh-atl",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 69,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 21.5,
+    "hard_hit_pct": 58.5,
+    "avg_exit_velo": 95.2,
+    "xiso": 0.32,
+    "recent_hr_rate": 0.0855
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1089,7 +1089,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.02,
+   "edge_score": 2.05,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 8.7,
@@ -1310,29 +1310,6 @@
    ]
   },
   {
-   "player": "Ryan Jeffers",
-   "team": "min",
-   "game": "kc-min",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 2.36,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 13.0,
-    "hard_hit_pct": 41.2,
-    "avg_exit_velo": 90.0,
-    "xiso": 0.216,
-    "recent_hr_rate": 0.0476
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Shohei Ohtani",
    "team": "lad",
    "game": "sea-lad",
@@ -1396,6 +1373,29 @@
     "avg_exit_velo": 91.0,
     "xiso": 0.204,
     "recent_hr_rate": 0.02
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Munetaka Murakami",
+   "team": "cws",
+   "game": "nyy-cws",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 2.32,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 20.3,
+    "hard_hit_pct": 60.1,
+    "avg_exit_velo": 94.2,
+    "xiso": 0.298,
+    "recent_hr_rate": 0.0448
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
