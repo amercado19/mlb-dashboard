@@ -1,6 +1,6 @@
 {
  "date": "2026-07-30",
- "generated_at": "2026-07-30T22:08:24",
+ "generated_at": "2026-07-30T23:57:03",
  "version": "0.1.0",
  "games": [
   {
@@ -115,12 +115,12 @@
    "pick": "cin",
    "confidence": 0.418,
    "tier": "PASS",
-   "total": 10.4,
-   "book_total_line": 9.5,
+   "total": 10.7,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -128,9 +128,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 5
+    "out_mph": 4
    }
   },
   {
@@ -142,7 +142,7 @@
    "confidence": 0.559,
    "tier": "PASS",
    "total": 7.9,
-   "book_total_line": 7.0,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "cross",
@@ -150,7 +150,7 @@
     },
     "cf": {
      "dir": "cross",
-     "mph": 0
+     "mph": 2
     },
     "rf": {
      "dir": "cross",
@@ -168,7 +168,7 @@
    "confidence": 0.561,
    "tier": "PASS",
    "total": 10.9,
-   "book_total_line": 10.0,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -198,17 +198,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 7
+     "mph": 8
     },
     "cf": {
      "dir": "out",
-     "mph": 10
+     "mph": 11
     },
     "rf": {
      "dir": "out",
-     "mph": 7
+     "mph": 8
     },
-    "out_mph": 10
+    "out_mph": 11
    }
   },
   {
@@ -275,7 +275,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 81,
+   "edge_score": 79,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 26.9,
@@ -312,8 +312,8 @@
    ]
   },
   {
-   "player": "Matt Olson",
-   "team": "atl",
+   "player": "James Wood",
+   "team": "wsh",
    "game": "wsh-atl",
    "stat": "HR",
    "line": 0.5,
@@ -324,43 +324,20 @@
    "edge_score": 71,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 14.4,
-    "hard_hit_pct": 50.7,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.261,
-    "recent_hr_rate": 0.0678
+    "barrel_pct": 21.5,
+    "hard_hit_pct": 58.5,
+    "avg_exit_velo": 95.2,
+    "xiso": 0.32,
+    "recent_hr_rate": 0.0855
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
    ]
   },
   {
-   "player": "Drake Baldwin",
+   "player": "Matt Olson",
    "team": "atl",
    "game": "wsh-atl",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 70,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.7,
-    "hard_hit_pct": 50.6,
-    "avg_exit_velo": 91.5,
-    "xiso": 0.239,
-    "recent_hr_rate": 0.0508
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Brandon Lowe",
-   "team": "pit",
-   "game": "pit-cin",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -370,11 +347,11 @@
    "edge_score": 69,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.0,
-    "hard_hit_pct": 44.9,
-    "avg_exit_velo": 91.0,
-    "xiso": 0.204,
-    "recent_hr_rate": 0.02
+    "barrel_pct": 14.4,
+    "hard_hit_pct": 50.7,
+    "avg_exit_velo": 92.7,
+    "xiso": 0.261,
+    "recent_hr_rate": 0.0678
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -398,6 +375,29 @@
     "avg_exit_velo": 89.7,
     "xiso": 0.205,
     "recent_hr_rate": 0.0455
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Brandon Lowe",
+   "team": "pit",
+   "game": "pit-cin",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 67,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.0,
+    "hard_hit_pct": 44.9,
+    "avg_exit_velo": 91.0,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.02
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -450,6 +450,29 @@
    ]
   },
   {
+   "player": "Dominic Canzone",
+   "team": "sea",
+   "game": "sea-lad",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 63,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.8,
+    "hard_hit_pct": 48.1,
+    "avg_exit_velo": 92.3,
+    "xiso": 0.253,
+    "recent_hr_rate": 0.0698
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Miguel Vargas",
    "team": "cws",
    "game": "nyy-cws",
@@ -467,29 +490,6 @@
     "avg_exit_velo": 90.6,
     "xiso": 0.254,
     "recent_hr_rate": 0.0268
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Dominic Canzone",
-   "team": "sea",
-   "game": "sea-lad",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 61,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.8,
-    "hard_hit_pct": 48.1,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.253,
-    "recent_hr_rate": 0.0698
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -795,29 +795,6 @@
    ]
   },
   {
-   "player": "Keibert Ruiz",
-   "team": "wsh",
-   "game": "wsh-atl",
-   "stat": "2B",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 0.29,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 5.0,
-    "hard_hit_pct": 37.5,
-    "avg_exit_velo": 88.3,
-    "xiso": 0.124,
-    "recent_hr_rate": 0.0179
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Anthony Seigler",
    "team": "bos",
    "game": "bos-ath",
@@ -835,6 +812,29 @@
     "avg_exit_velo": 88.3,
     "xiso": 0.15,
     "recent_hr_rate": 0.0244
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Keibert Ruiz",
+   "team": "wsh",
+   "game": "wsh-atl",
+   "stat": "2B",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 0.28,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 5.0,
+    "hard_hit_pct": 37.5,
+    "avg_exit_velo": 88.3,
+    "xiso": 0.124,
+    "recent_hr_rate": 0.0179
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -988,7 +988,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.23,
+   "edge_score": 2.17,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 26.9,
@@ -1011,7 +1011,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.13,
+   "edge_score": 2.11,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 21.5,
@@ -1080,7 +1080,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.1,
+   "edge_score": 2.08,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 11.2,
@@ -1218,7 +1218,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.61,
+   "edge_score": 2.58,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 21.5,
@@ -1241,7 +1241,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.52,
+   "edge_score": 2.5,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 11.2,
@@ -1249,29 +1249,6 @@
     "avg_exit_velo": 89.7,
     "xiso": 0.209,
     "recent_hr_rate": 0.0971
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Esmerlyn Valdez",
-   "team": "pit",
-   "game": "pit-cin",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 2.48,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 26.9,
-    "hard_hit_pct": 53.8,
-    "avg_exit_velo": 92.9,
-    "xiso": 0.314,
-    "recent_hr_rate": 0.0818
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1295,6 +1272,29 @@
     "avg_exit_velo": 93.2,
     "xiso": 0.214,
     "recent_hr_rate": 0.0354
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Esmerlyn Valdez",
+   "team": "pit",
+   "game": "pit-cin",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 2.41,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 26.9,
+    "hard_hit_pct": 53.8,
+    "avg_exit_velo": 92.9,
+    "xiso": 0.314,
+    "recent_hr_rate": 0.0818
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1402,7 +1402,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.34,
+   "edge_score": 2.32,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 12.0,
