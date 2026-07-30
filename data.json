@@ -1,6 +1,6 @@
 {
  "date": "2026-07-30",
- "generated_at": "2026-07-30T15:36:45",
+ "generated_at": "2026-07-30T17:25:33",
  "version": "0.1.0",
  "games": [
   {
@@ -11,8 +11,8 @@
    "pick": "tb",
    "confidence": 0.531,
    "tier": "PASS",
-   "total": 9.5,
-   "book_total_line": 7.5,
+   "total": 9.2,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -94,7 +94,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 2
+     "mph": 3
     },
     "cf": {
      "dir": "cross",
@@ -102,9 +102,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 2
+     "mph": 3
     },
-    "out_mph": 2
+    "out_mph": 3
    }
   },
   {
@@ -145,16 +145,16 @@
    "book_total_line": 7.0,
    "wind": {
     "lf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "in",
+     "mph": 10
     },
     "cf": {
-     "dir": "cross",
-     "mph": 2
+     "dir": "in",
+     "mph": 14
     },
     "rf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "in",
+     "mph": 10
     },
     "out_mph": 0
    }
@@ -224,7 +224,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -232,9 +232,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 3
+     "mph": 4
     },
-    "out_mph": 3
+    "out_mph": 4
    }
   },
   {
@@ -275,6 +275,29 @@
    ]
   },
   {
+   "player": "Matt Olson",
+   "team": "atl",
+   "game": "wsh-atl",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 73,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.4,
+    "hard_hit_pct": 50.7,
+    "avg_exit_velo": 92.7,
+    "xiso": 0.261,
+    "recent_hr_rate": 0.0678
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Willson Contreras",
    "team": "bos",
    "game": "bos-ath",
@@ -298,8 +321,8 @@
    ]
   },
   {
-   "player": "Matt Olson",
-   "team": "atl",
+   "player": "James Wood",
+   "team": "wsh",
    "game": "wsh-atl",
    "stat": "HR",
    "line": 0.5,
@@ -310,11 +333,11 @@
    "edge_score": 71,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 14.4,
-    "hard_hit_pct": 50.7,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.261,
-    "recent_hr_rate": 0.0678
+    "barrel_pct": 21.5,
+    "hard_hit_pct": 58.5,
+    "avg_exit_velo": 95.2,
+    "xiso": 0.32,
+    "recent_hr_rate": 0.0855
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -338,29 +361,6 @@
     "avg_exit_velo": 91.0,
     "xiso": 0.204,
     "recent_hr_rate": 0.02
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "James Wood",
-   "team": "wsh",
-   "game": "wsh-atl",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 69,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 21.5,
-    "hard_hit_pct": 58.5,
-    "avg_exit_velo": 95.2,
-    "xiso": 0.32,
-    "recent_hr_rate": 0.0855
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -399,7 +399,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 61,
+   "edge_score": 63,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.0,
@@ -422,7 +422,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 61,
+   "edge_score": 63,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 20.3,
@@ -430,6 +430,29 @@
     "avg_exit_velo": 94.2,
     "xiso": 0.298,
     "recent_hr_rate": 0.0448
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Miguel Vargas",
+   "team": "cws",
+   "game": "nyy-cws",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 61,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.5,
+    "hard_hit_pct": 46.7,
+    "avg_exit_velo": 90.6,
+    "xiso": 0.254,
+    "recent_hr_rate": 0.0268
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -453,29 +476,6 @@
     "avg_exit_velo": 92.3,
     "xiso": 0.253,
     "recent_hr_rate": 0.0698
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Miguel Vargas",
-   "team": "cws",
-   "game": "nyy-cws",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 59,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.5,
-    "hard_hit_pct": 46.7,
-    "avg_exit_velo": 90.6,
-    "xiso": 0.254,
-    "recent_hr_rate": 0.0268
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -1020,7 +1020,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.07,
+   "edge_score": 2.06,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 13.0,
@@ -1089,7 +1089,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.05,
+   "edge_score": 2.02,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 8.7,
@@ -1365,7 +1365,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 2.34,
+   "edge_score": 2.35,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 7.1,
