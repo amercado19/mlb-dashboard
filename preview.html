@@ -412,6 +412,12 @@ function hpCardHtml(ix){
     +(hp.note?'<div class="note" style="margin:0 0 10px;padding:0">⚙ '+esc(hp.note)+'</div>':'')
     +rows+pay+ctrl+'</div></div>';
 }
+function mlpHtml(){
+  var t=D.mlParlay;if(!t||!(t.legs||[]).length)return '';
+  var legs=t.legs.map(function(l){return '<div class="prow"><span class="pnm" style="cursor:default">'+l.rank+'. '+esc(l.team||'')+' ML <span style="font-size:9px;color:#8893a8">'+esc(l.game||'')+'</span></span><span class="pmetric">'+Math.round((l.prob||0)*100)+'%</span></div>';}).join('');
+  var hp=(t.combined||{}).hitPct;
+  return '<div class="card"><div class="card-h"><span>💰 Moneyline Parlay</span><span class="t">'+t.legs.length+' legs · '+esc(t.strategy||'')+(hp!=null?' · ~'+hp+'% hit':'')+'</span></div><div class="card-b">'+legs+'<div class="note" style="margin-top:8px;padding:0">⚙ '+esc(t.note||'')+'</div></div></div>';
+}
 function hpHtml(){return hpTickets().map(function(_,ix){return hpCardHtml(ix);}).join('');}
 var TP_ADD={book:null,i:0};
 function tpAddAll(book){
@@ -470,7 +476,7 @@ function renderParlay(){
   var form='<div class="card"><div class="card-h">🛠 Build Your Own Parlay</div><div class="card-b"><div class="byo">'
     +BYO.map(function(b){return '<label class="byoin">'+b[1]+'<input type="number" id="byo-'+b[0]+'" min="0" max="8" value="'+b[2]+'"></label>';}).join('')
     +'<button class="rf" onclick="buildCustom()">⚡ Generate</button></div><div id="byoResult"><div class="note" style="padding:0">Set how many of each prop type, then Generate. Best available legs from today’s boards (no duplicate players).</div></div></div></div>';
-  $('parlay').innerHTML=sugg+hpHtml()+form; tpRecalc();
+  $('parlay').innerHTML=sugg+mlpHtml()+hpHtml()+form; tpRecalc();
 }
 function buildCustom(){
   var order=['ml','over','hit','2tb','hrr','hr'];
