@@ -1,6 +1,6 @@
 {
  "date": "2026-07-31",
- "generated_at": "2026-07-31T20:15:53",
+ "generated_at": "2026-07-31T20:29:02",
  "version": "0.1.0",
  "games": [
   {
@@ -58,12 +58,12 @@
   {
    "away": "phi",
    "home": "bal",
-   "away_win_prob": 0.364,
-   "home_win_prob": 0.556,
+   "away_win_prob": 0.436,
+   "home_win_prob": 0.584,
    "pick": "bal",
-   "confidence": 0.556,
+   "confidence": 0.584,
    "tier": "PASS",
-   "total": 9.8,
+   "total": 10.2,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
@@ -474,6 +474,52 @@
    ]
   },
   {
+   "player": "Griffin Conine",
+   "team": "mia",
+   "game": "mia-nym",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 68,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.8,
+    "hard_hit_pct": 56.6,
+    "avg_exit_velo": 91.1,
+    "xiso": 0.246,
+    "recent_hr_rate": 0.0741
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Pete Alonso",
+   "team": "bal",
+   "game": "phi-bal",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 67,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 54.7,
+    "avg_exit_velo": 93.9,
+    "xiso": 0.236,
+    "recent_hr_rate": 0.0288
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Ty France",
    "team": "sd",
    "game": "sf-sd",
@@ -520,29 +566,6 @@
    ]
   },
   {
-   "player": "Griffin Conine",
-   "team": "mia",
-   "game": "mia-nym",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.8,
-    "hard_hit_pct": 56.6,
-    "avg_exit_velo": 91.1,
-    "xiso": 0.246,
-    "recent_hr_rate": 0.0741
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Manny Machado",
    "team": "sd",
    "game": "sf-sd",
@@ -583,29 +606,6 @@
     "avg_exit_velo": 92.3,
     "xiso": 0.25,
     "recent_hr_rate": 0.0575
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Heriberto Hern\u00e1ndez",
-   "team": "mia",
-   "game": "mia-nym",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 63,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.2,
-    "hard_hit_pct": 51.1,
-    "avg_exit_velo": 92.2,
-    "xiso": 0.247,
-    "recent_hr_rate": 0.0851
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -704,6 +704,29 @@
    ]
   },
   {
+   "player": "Pete Alonso",
+   "team": "bal",
+   "game": "phi-bal",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 76,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 54.7,
+    "avg_exit_velo": 93.9,
+    "xiso": 0.236,
+    "recent_hr_rate": 0.0288
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Nathan Lukes",
    "team": "tor",
    "game": "stl-tor",
@@ -796,9 +819,9 @@
    ]
   },
   {
-   "player": "Yohendrick Pi\u00f1ango",
-   "team": "tor",
-   "game": "stl-tor",
+   "player": "Dylan Beavers",
+   "team": "bal",
+   "game": "phi-bal",
    "stat": "H",
    "line": 0.5,
    "side": "over",
@@ -808,34 +831,11 @@
    "edge_score": 75,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 8.0,
-    "hard_hit_pct": 45.6,
-    "avg_exit_velo": 90.9,
-    "xiso": 0.136,
+    "barrel_pct": 5.6,
+    "hard_hit_pct": 38.4,
+    "avg_exit_velo": 88.6,
+    "xiso": 0.135,
     "recent_hr_rate": 0.0
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "John Rave",
-   "team": "kc",
-   "game": "kc-col",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 75,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": null,
-    "hard_hit_pct": null,
-    "avg_exit_velo": null,
-    "xiso": 0.371,
-    "recent_hr_rate": null
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
