@@ -1,6 +1,6 @@
 {
  "date": "2026-07-31",
- "generated_at": "2026-07-31T21:59:56",
+ "generated_at": "2026-07-31T22:14:49",
  "version": "0.1.0",
  "games": [
   {
@@ -38,7 +38,7 @@
    "confidence": 0.504,
    "tier": "PASS",
    "total": 9.7,
-   "book_total_line": 8.0,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -349,9 +349,23 @@
    "pick": "bos",
    "confidence": 0.435,
    "tier": "PASS",
-   "total": 7.2,
-   "book_total_line": 8.5,
-   "wind": null
+   "total": 7.5,
+   "book_total_line": 8.0,
+   "wind": {
+    "lf": {
+     "dir": "out",
+     "mph": 5
+    },
+    "cf": {
+     "dir": "out",
+     "mph": 7
+    },
+    "rf": {
+     "dir": "out",
+     "mph": 5
+    },
+    "out_mph": 7
+   }
   },
   {
    "away": "min",
@@ -1210,6 +1224,29 @@
    ]
   },
   {
+   "player": "Shohei Ohtani",
+   "team": "lad",
+   "game": "bos-lad",
+   "stat": "TB",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 1.98,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 16.7,
+    "hard_hit_pct": 53.7,
+    "avg_exit_velo": 93.7,
+    "xiso": 0.28,
+    "recent_hr_rate": 0.0515
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "CJ Abrams",
    "team": "wsh",
    "game": "wsh-atl",
@@ -1273,29 +1310,6 @@
     "avg_exit_velo": 94.1,
     "xiso": 0.293,
     "recent_hr_rate": 0.0417
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Kyle Schwarber",
-   "team": "phi",
-   "game": "phi-bal",
-   "stat": "TB",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 2.04,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 17.8,
-    "hard_hit_pct": 52.2,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.26,
-    "recent_hr_rate": 0.0312
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
