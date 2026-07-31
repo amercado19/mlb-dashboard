@@ -1,6 +1,6 @@
 {
  "date": "2026-07-31",
- "generated_at": "2026-07-31T17:03:56",
+ "generated_at": "2026-07-31T18:16:04",
  "version": "0.1.0",
  "games": [
   {
@@ -37,7 +37,7 @@
    "pick": "pit",
    "confidence": 0.504,
    "tier": "PASS",
-   "total": 9.9,
+   "total": 9.7,
    "book_total_line": 8.0,
    "wind": {
     "lf": {
@@ -46,7 +46,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "rf": {
      "dir": "in",
@@ -63,22 +63,22 @@
    "pick": "bal",
    "confidence": 0.556,
    "tier": "PASS",
-   "total": 9.5,
+   "total": 9.8,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 6
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 8
     },
     "rf": {
-     "dir": "out",
-     "mph": 3
+     "dir": "in",
+     "mph": 6
     },
-    "out_mph": 3
+    "out_mph": 0
    }
   },
   {
@@ -162,12 +162,12 @@
   {
    "away": "mia",
    "home": "nym",
-   "away_win_prob": 0.482,
-   "home_win_prob": 0.548,
-   "pick": "nym",
-   "confidence": 0.548,
+   "away_win_prob": 0.509,
+   "home_win_prob": 0.421,
+   "pick": "mia",
+   "confidence": 0.509,
    "tier": "PASS",
-   "total": 8.0,
+   "total": 8.4,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
@@ -245,22 +245,22 @@
    "pick": "kc",
    "confidence": 0.61,
    "tier": "PASS",
-   "total": 12.4,
+   "total": 12.7,
    "book_total_line": 11.0,
    "wind": {
     "lf": {
-     "dir": "out",
-     "mph": 7
+     "dir": "in",
+     "mph": 8
     },
     "cf": {
-     "dir": "out",
-     "mph": 10
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
      "dir": "out",
-     "mph": 7
+     "mph": 8
     },
-    "out_mph": 10
+    "out_mph": 8
    }
   },
   {
@@ -302,17 +302,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 7
     },
     "cf": {
      "dir": "out",
-     "mph": 9
+     "mph": 10
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 7
     },
-    "out_mph": 9
+    "out_mph": 10
    }
   },
   {
@@ -391,7 +391,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 88,
+   "edge_score": 83,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": null,
@@ -414,7 +414,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 83,
+   "edge_score": 78,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.8,
@@ -589,9 +589,9 @@
    ]
   },
   {
-   "player": "Jake Bauers",
-   "team": "mil",
-   "game": "mil-laa",
+   "player": "Ben Rice",
+   "team": "nyy",
+   "game": "nyy-chc",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -601,11 +601,11 @@
    "edge_score": 60,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.5,
-    "hard_hit_pct": 53.9,
-    "avg_exit_velo": 92.8,
-    "xiso": 0.211,
-    "recent_hr_rate": 0.0408
+    "barrel_pct": 15.9,
+    "hard_hit_pct": 48.8,
+    "avg_exit_velo": 92.2,
+    "xiso": 0.254,
+    "recent_hr_rate": 0.0818
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
