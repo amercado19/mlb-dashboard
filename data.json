@@ -1,6 +1,6 @@
 {
  "date": "2026-08-01",
- "generated_at": "2026-08-01T14:23:55",
+ "generated_at": "2026-08-01T15:56:35",
  "version": "0.1.0",
  "games": [
   {
@@ -89,22 +89,22 @@
    "pick": "mia",
    "confidence": 0.534,
    "tier": "PASS",
-   "total": 8.8,
+   "total": 9.1,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 9
+     "dir": "out",
+     "mph": 10
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 14
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 10
     },
-    "out_mph": 9
+    "out_mph": 14
    }
   },
   {
@@ -116,7 +116,7 @@
    "confidence": 0.48,
    "tier": "PASS",
    "total": 9.8,
-   "book_total_line": 8.5,
+   "book_total_line": 8.0,
    "wind": {
     "lf": {
      "dir": "in",
@@ -168,7 +168,7 @@
    "confidence": 0.62,
    "tier": "PASS",
    "total": 11.0,
-   "book_total_line": 8.5,
+   "book_total_line": 8.0,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -197,18 +197,18 @@
    "book_total_line": 8.5,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 2
+     "dir": "out",
+     "mph": 3
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 4
     },
     "rf": {
      "dir": "out",
-     "mph": 2
+     "mph": 3
     },
-    "out_mph": 2
+    "out_mph": 4
    }
   },
   {
@@ -219,22 +219,22 @@
    "pick": "atl",
    "confidence": 0.584,
    "tier": "PASS",
-   "total": 10.4,
+   "total": 10.7,
    "book_total_line": 9.5,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 4
+     "dir": "out",
+     "mph": 6
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 9
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 6
     },
-    "out_mph": 4
+    "out_mph": 9
    }
   },
   {
@@ -250,15 +250,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 12
+     "mph": 11
     },
     "cf": {
      "dir": "in",
-     "mph": 17
+     "mph": 16
     },
     "rf": {
      "dir": "in",
-     "mph": 12
+     "mph": 11
     },
     "out_mph": 0
    }
@@ -276,7 +276,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "cf": {
      "dir": "cross",
@@ -284,9 +284,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 7
     },
-    "out_mph": 6
+    "out_mph": 7
    }
   },
   {
@@ -382,6 +382,52 @@
  ],
  "props": [
   {
+   "player": "Matt Olson",
+   "team": "atl",
+   "game": "wsh-atl",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 88,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.5,
+    "hard_hit_pct": 50.5,
+    "avg_exit_velo": 92.7,
+    "xiso": 0.262,
+    "recent_hr_rate": 0.0744
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
+   "player": "Ronald Acu\u00f1a Jr.",
+   "team": "atl",
+   "game": "wsh-atl",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 82,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.0,
+    "hard_hit_pct": 43.3,
+    "avg_exit_velo": 89.9,
+    "xiso": 0.235,
+    "recent_hr_rate": 0.0476
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Jac Caglianone",
    "team": "kc",
    "game": "kc-col",
@@ -422,29 +468,6 @@
     "avg_exit_velo": null,
     "xiso": 0.333,
     "recent_hr_rate": null
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Matt Olson",
-   "team": "atl",
-   "game": "wsh-atl",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 76,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.5,
-    "hard_hit_pct": 50.5,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.262,
-    "recent_hr_rate": 0.0744
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -520,23 +543,23 @@
    ]
   },
   {
-   "player": "Ronald Acu\u00f1a Jr.",
-   "team": "atl",
-   "game": "wsh-atl",
+   "player": "Griffin Conine",
+   "team": "mia",
+   "game": "mia-nym",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 70,
+   "edge_score": 66,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 14.0,
-    "hard_hit_pct": 43.3,
-    "avg_exit_velo": 89.9,
-    "xiso": 0.235,
-    "recent_hr_rate": 0.0476
+    "barrel_pct": 15.4,
+    "hard_hit_pct": 56.4,
+    "avg_exit_velo": 91.2,
+    "xiso": 0.241,
+    "recent_hr_rate": 0.0759
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -583,29 +606,6 @@
     "avg_exit_velo": 89.6,
     "xiso": 0.176,
     "recent_hr_rate": 0.0519
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Max Clark",
-   "team": "det",
-   "game": "det-ath",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 62,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": null,
-    "hard_hit_pct": null,
-    "avg_exit_velo": null,
-    "xiso": 0.189,
-    "recent_hr_rate": null
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
