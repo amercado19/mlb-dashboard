@@ -1,6 +1,6 @@
 {
  "date": "2026-08-03",
- "generated_at": "2026-08-03T20:03:54",
+ "generated_at": "2026-08-03T20:21:57",
  "version": "0.1.0",
  "games": [
   {
@@ -84,12 +84,12 @@
   {
    "away": "lad",
    "home": "chc",
-   "away_win_prob": 0.497,
-   "home_win_prob": 0.433,
-   "pick": "lad",
-   "confidence": 0.497,
+   "away_win_prob": 0.44,
+   "home_win_prob": 0.49,
+   "pick": "chc",
+   "confidence": 0.49,
    "tier": "PASS",
-   "total": 8.2,
+   "total": 9.0,
    "book_total_line": 8.0,
    "wind": {
     "lf": {
@@ -306,6 +306,37 @@
    "flags": []
   },
   {
+   "player": "Luis Garc\u00eda Jr.",
+   "team": "nyy",
+   "game": "stl-nyy",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2461,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 0,
+    "factors": {
+     "sp": 1.094,
+     "park": 1.175,
+     "temp": 1.036
+    },
+    "hr_rate_pa": 0.1433
+   },
+   "edge_score": 71,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.5,
+    "hard_hit_pct": 45.8,
+    "avg_exit_velo": 91.6,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.0753
+   },
+   "flags": []
+  },
+  {
    "player": "Esmerlyn Valdez",
    "team": "pit",
    "game": "pit-mil",
@@ -393,37 +424,6 @@
     "avg_exit_velo": 88.5,
     "xiso": 0.154,
     "recent_hr_rate": 0.0897
-   },
-   "flags": []
-  },
-  {
-   "player": "Amed Rosario",
-   "team": "nyy",
-   "game": "stl-nyy",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2461,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 0,
-    "factors": {
-     "sp": 1.094,
-     "park": 1.175,
-     "temp": 1.036
-    },
-    "hr_rate_pa": 0.0856
-   },
-   "edge_score": 63,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.5,
-    "hard_hit_pct": 39.2,
-    "avg_exit_velo": 90.6,
-    "xiso": 0.183,
-    "recent_hr_rate": 0.0256
    },
    "flags": []
   },
@@ -547,7 +547,36 @@
    "flags": []
   },
   {
-   "player": "Vladimir Guerrero",
+   "player": "Luis Garc\u00eda Jr.",
+   "team": "nyy",
+   "game": "stl-nyy",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6834,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 0,
+    "factors": {
+     "sp": 1.07
+    },
+    "hit_rate_pa": 0.2376
+   },
+   "edge_score": 81,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.5,
+    "hard_hit_pct": 45.8,
+    "avg_exit_velo": 91.6,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.0753
+   },
+   "flags": []
+  },
+  {
+   "player": "Vladimir Guerrero Jr.",
    "team": "tor",
    "game": "tor-hou",
    "stat": "H",
@@ -659,35 +688,6 @@
     "avg_exit_velo": 92.9,
     "xiso": 0.23,
     "recent_hr_rate": 0.0522
-   },
-   "flags": []
-  },
-  {
-   "player": "Trent Grisham",
-   "team": "nyy",
-   "game": "stl-nyy",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6935,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 0,
-    "factors": {
-     "sp": 1.07
-    },
-    "hit_rate_pa": 0.2376
-   },
-   "edge_score": 75,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 9.7,
-    "hard_hit_pct": 44.4,
-    "avg_exit_velo": 90.8,
-    "xiso": 0.183,
-    "recent_hr_rate": 0.0297
    },
    "flags": []
   },
@@ -1435,36 +1435,36 @@
    "flags": []
   },
   {
-   "player": "Pete Crow-Armstrong",
-   "team": "chc",
-   "game": "lad-chc",
+   "player": "Luis Garc\u00eda Jr.",
+   "team": "nyy",
+   "game": "stl-nyy",
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4374,
+   "model_prob": 0.5312,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 492,
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 374,
     "factors": {
-     "sp": 0.927,
-     "park": 1.0,
-     "temp": 1.006
+     "sp": 1.094,
+     "park": 1.175,
+     "temp": 1.036
     },
-    "p1b": 0.137,
-    "p2b": 0.0401,
-    "p3b": 0.0095,
-    "phr": 0.0392
+    "p1b": 0.1425,
+    "p2b": 0.0653,
+    "p3b": 0.0119,
+    "phr": 0.0638
    },
-   "edge_score": 2.01,
+   "edge_score": 1.92,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 11.6,
-    "hard_hit_pct": 49.0,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.215,
-    "recent_hr_rate": 0.0439
+    "barrel_pct": 12.5,
+    "hard_hit_pct": 45.8,
+    "avg_exit_velo": 91.6,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.0753
    },
    "flags": []
   },
