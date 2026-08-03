@@ -1,6 +1,6 @@
 {
  "date": "2026-08-03",
- "generated_at": "2026-08-03T15:39:40",
+ "generated_at": "2026-08-03T18:45:04",
  "version": "0.1.0",
  "games": [
   {
@@ -64,7 +64,7 @@
    "confidence": 0.526,
    "tier": "PASS",
    "total": 9.4,
-   "book_total_line": 8.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -172,7 +172,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 10
+     "mph": 6
     },
     "cf": {
      "dir": "cross",
@@ -180,9 +180,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 10
+     "mph": 6
     },
-    "out_mph": 10
+    "out_mph": 6
    }
   },
   {
@@ -214,6 +214,29 @@
  ],
  "props": [
   {
+   "player": "Yordan Alvarez",
+   "team": "hou",
+   "game": "tor-hou",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 83,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 18.3,
+    "hard_hit_pct": 53.6,
+    "avg_exit_velo": 94.5,
+    "xiso": 0.374,
+    "recent_hr_rate": 0.0818
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Junior Caminero",
    "team": "tb",
    "game": "tb-col",
@@ -231,29 +254,6 @@
     "avg_exit_velo": 92.9,
     "xiso": 0.23,
     "recent_hr_rate": 0.0522
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Yordan Alvarez",
-   "team": "hou",
-   "game": "tor-hou",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 81,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 18.3,
-    "hard_hit_pct": 53.6,
-    "avg_exit_velo": 94.5,
-    "xiso": 0.374,
-    "recent_hr_rate": 0.0818
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
@@ -283,6 +283,29 @@
    ]
   },
   {
+   "player": "Esmerlyn Valdez",
+   "team": "pit",
+   "game": "pit-mil",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 73,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 24.1,
+    "hard_hit_pct": 50.6,
+    "avg_exit_velo": 92.4,
+    "xiso": 0.293,
+    "recent_hr_rate": 0.0741
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Ben Rice",
    "team": "nyy",
    "game": "stl-nyy",
@@ -306,29 +329,6 @@
    ]
   },
   {
-   "player": "Esmerlyn Valdez",
-   "team": "pit",
-   "game": "pit-mil",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 71,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 24.1,
-    "hard_hit_pct": 50.6,
-    "avg_exit_velo": 92.4,
-    "xiso": 0.293,
-    "recent_hr_rate": 0.0741
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
    "player": "Jeremy Pe\u00f1a",
    "team": "hou",
    "game": "tor-hou",
@@ -338,7 +338,7 @@
    "model_prob": null,
    "method": null,
    "prob_inputs": null,
-   "edge_score": 67,
+   "edge_score": 69,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 5.9,
@@ -375,6 +375,29 @@
    ]
   },
   {
+   "player": "Brandon Lowe",
+   "team": "pit",
+   "game": "pit-mil",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": null,
+   "prob_inputs": null,
+   "edge_score": 60,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.3,
+    "hard_hit_pct": 45.1,
+    "avg_exit_velo": 90.9,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.0294
+   },
+   "flags": [
+    "NO_PROB: row predates the rate model (p_raw not logged)"
+   ]
+  },
+  {
    "player": "Corbin Carroll",
    "team": "az",
    "game": "sd-az",
@@ -392,29 +415,6 @@
     "avg_exit_velo": 91.9,
     "xiso": 0.2,
     "recent_hr_rate": 0.0261
-   },
-   "flags": [
-    "NO_PROB: row predates the rate model (p_raw not logged)"
-   ]
-  },
-  {
-   "player": "Brandon Lowe",
-   "team": "pit",
-   "game": "pit-mil",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": null,
-   "prob_inputs": null,
-   "edge_score": 58,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 45.1,
-    "avg_exit_velo": 90.9,
-    "xiso": 0.204,
-    "recent_hr_rate": 0.0294
    },
    "flags": [
     "NO_PROB: row predates the rate model (p_raw not logged)"
