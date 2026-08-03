@@ -672,8 +672,9 @@ function mxOppSP(c,team){if(c.away_sp&&c.away_sp.team===team)return c.home_sp;if
 function openMatchupModal(pid,gamePk,name,team){
   var ov=document.getElementById('mxOverlay');var body=document.getElementById('mxBody');ov.style.display='block';window.scrollTo(0,0);
   var c=mxGc(gamePk);var opp=mxOppSP(c,team)||{};
-  var hr=((MODEL_DATA.hrProps)||[]).filter(function(x){return x.playerId===pid;})[0]||{};
-  var hit=((MODEL_DATA.hitProps)||[]).filter(function(x){return x.playerId===pid;})[0]||{};
+  function _bfRow(k,id){var bf=(MODEL_DATA.boardsFull)||(MODEL_DATA.boards)||{};return ((bf[k]||[]).filter(function(r){return r.playerId===id;})[0])||null;}
+  var hr=((MODEL_DATA.hrProps)||[]).filter(function(x){return x.playerId===pid;})[0]||_bfRow('hr',pid)||{};
+  var hit=((MODEL_DATA.hitProps)||[]).filter(function(x){return x.playerId===pid;})[0]||_bfRow('h1',pid)||{};
   var head='<div class="mx-head"><div class="mx-bat">'+hs(pid,true)+'<div><div class="mx-nm">'+esc(name)+'</div><div class="mx-sub">'+esc(team)+'</div></div></div>'
     +'<div class="mx-sub">vs</div>'
     +'<div class="mx-pit">'+(opp.id?hs(opp.id,true):'')+'<div><div class="mx-nm">'+esc(opp.name||'TBD')+'</div><div class="mx-sub">'+(opp.throws||'')+'HP'+(opp.arsenal?' &middot; '+esc(opp.arsenal):'')+(opp.fb_pct!=null?' &middot; '+opp.fb_pct+'% FB':'')+'</div></div></div></div>';
