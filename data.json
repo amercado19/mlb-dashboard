@@ -1,6 +1,6 @@
 {
  "date": "2026-08-10",
- "generated_at": "2026-08-10T17:44:54",
+ "generated_at": "2026-08-10T19:50:23",
  "version": "0.1.0",
  "games": [
   {
@@ -94,7 +94,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "cf": {
      "dir": "cross",
@@ -102,9 +102,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 8
+     "mph": 7
     },
-    "out_mph": 8
+    "out_mph": 7
    }
   },
   {
@@ -167,7 +167,7 @@
    "pick": "ath",
    "confidence": 0.457,
    "tier": "PASS",
-   "total": 9.7,
+   "total": 9.4,
    "book_total_line": 10.0,
    "wind": {
     "lf": {
@@ -224,17 +224,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 8
+     "mph": 9
     },
     "cf": {
      "dir": "out",
-     "mph": 12
+     "mph": 13
     },
     "rf": {
      "dir": "out",
-     "mph": 8
+     "mph": 9
     },
-    "out_mph": 12
+    "out_mph": 13
    }
   },
   {
@@ -328,10 +328,10 @@
     "factors": {
      "sp": 0.965,
      "park": 1.105,
-     "temp": 1.09,
+     "temp": 1.084,
      "wind": 1.06
     },
-    "hr_rate_pa": 0.0643
+    "hr_rate_pa": 0.0639
    },
    "edge_score": 67,
    "score_type": "model_score_0_100",
@@ -341,6 +341,38 @@
     "avg_exit_velo": 93.0,
     "xiso": 0.239,
     "recent_hr_rate": 0.0531
+   },
+   "flags": []
+  },
+  {
+   "player": "Osleivis Basabe",
+   "team": "sf",
+   "game": "hou-sf",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.1878,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.25,
+    "order": 5,
+    "pa_season": 33,
+    "factors": {
+     "sp": 1.093,
+     "park": 0.85,
+     "temp": 0.934,
+     "wind": 1.08
+    },
+    "hr_rate_pa": 0.0346
+   },
+   "edge_score": 67,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.4,
+    "hard_hit_pct": 38.5,
+    "avg_exit_velo": 89.1,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.0909
    },
    "flags": []
   },
@@ -406,6 +438,38 @@
    "flags": []
   },
   {
+   "player": "Willy Adames",
+   "team": "sf",
+   "game": "hou-sf",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.1893,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 473,
+    "factors": {
+     "sp": 1.093,
+     "park": 0.85,
+     "temp": 0.934,
+     "wind": 1.08
+    },
+    "hr_rate_pa": 0.0343
+   },
+   "edge_score": 64,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 8.5,
+    "hard_hit_pct": 38.4,
+    "avg_exit_velo": 87.3,
+    "xiso": 0.162,
+    "recent_hr_rate": 0.0392
+   },
+   "flags": []
+  },
+  {
    "player": "Hunter Goodman",
    "team": "col",
    "game": "col-az",
@@ -432,38 +496,6 @@
     "avg_exit_velo": 90.5,
     "xiso": 0.231,
     "recent_hr_rate": 0.0814
-   },
-   "flags": []
-  },
-  {
-   "player": "Osleivis Basabe",
-   "team": "sf",
-   "game": "hou-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.1878,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.25,
-    "order": 5,
-    "pa_season": 33,
-    "factors": {
-     "sp": 1.093,
-     "park": 0.85,
-     "temp": 0.94,
-     "wind": 1.07
-    },
-    "hr_rate_pa": 0.0345
-   },
-   "edge_score": 62,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.4,
-    "hard_hit_pct": 38.5,
-    "avg_exit_velo": 89.1,
-    "xiso": 0.204,
-    "recent_hr_rate": 0.0909
    },
    "flags": []
   },
@@ -503,7 +535,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2148,
+   "model_prob": 0.2137,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
@@ -512,10 +544,10 @@
     "factors": {
      "sp": 0.965,
      "park": 1.105,
-     "temp": 1.09,
+     "temp": 1.084,
      "wind": 1.06
     },
-    "hr_rate_pa": 0.0377
+    "hr_rate_pa": 0.0375
    },
    "edge_score": 59,
    "score_type": "model_score_0_100",
@@ -525,38 +557,6 @@
     "avg_exit_velo": 90.9,
     "xiso": 0.155,
     "recent_hr_rate": 0.0174
-   },
-   "flags": []
-  },
-  {
-   "player": "Willy Adames",
-   "team": "sf",
-   "game": "hou-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.1888,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 473,
-    "factors": {
-     "sp": 1.093,
-     "park": 0.85,
-     "temp": 0.94,
-     "wind": 1.07
-    },
-    "hr_rate_pa": 0.0342
-   },
-   "edge_score": 59,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 8.5,
-    "hard_hit_pct": 38.4,
-    "avg_exit_velo": 87.3,
-    "xiso": 0.162,
-    "recent_hr_rate": 0.0392
    },
    "flags": []
   },
@@ -857,7 +857,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4306,
+   "model_prob": 0.4309,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.55,
@@ -866,13 +866,13 @@
     "factors": {
      "sp": 0.952,
      "park": 0.85,
-     "temp": 0.94,
-     "wind": 1.07
+     "temp": 0.934,
+     "wind": 1.08
     },
     "p1b": 0.149,
-    "p2b": 0.0369,
+    "p2b": 0.037,
     "p3b": 0.001,
-    "phr": 0.0441
+    "phr": 0.0443
    },
    "edge_score": 2.27,
    "score_type": "per_game_rate",
@@ -927,7 +927,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4667,
+   "model_prob": 0.4665,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.35,
@@ -936,13 +936,13 @@
     "factors": {
      "sp": 0.965,
      "park": 1.105,
-     "temp": 1.09,
+     "temp": 1.084,
      "wind": 1.06
     },
     "p1b": 0.1404,
-    "p2b": 0.0472,
+    "p2b": 0.0469,
     "p3b": 0.0031,
-    "phr": 0.0643
+    "phr": 0.0639
    },
    "edge_score": 2.07,
    "score_type": "per_game_rate",
