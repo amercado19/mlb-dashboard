@@ -1,0 +1,12 @@
+Library: summary header per tab + ML/RL Parlay third tab + units @ $10
+
+- Every tab opens with a summary: record, hit%, last-7, and units at $10/u
+- Ticket tabs compute REAL units from logged ticket odds (settled tickets
+  without odds are counted and excluded, never faked)
+- Prop-board tabs show units at clearly-labeled ASSUMED average prices
+  (board prices aren't logged) — rough gauge, flagged amber
+- New third tab 'ML/RL Parlay' collects the V-MLP tickets (ML / +1.5 / F5)
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01ANJSLwtfnVuf8PPgpvpWtb
+

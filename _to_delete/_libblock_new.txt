@@ -1,0 +1,75 @@
+var LIB_TAB='safe';
+function libTab(k){LIB_TAB=k;renderLibrary();}
+function libA2D(a){return a>0?1+a/100:1+100/Math.abs(a);}
+function libTicketCards(list){
+  return list.map(function(p){
+    var badge=p.result==='win'?'<span class="badge b-win">✓ HIT</span>':p.result==='loss'?'<span class="badge b-loss">✗ MISS</span>':p.result==='void'?'<span class="badge b-pass">∅ void</span>':'<span class="badge b-pass">⏳ pending</span>';
+    var legs=(p.legs||[]).map(function(l){var ic=l.result==='win'?'<span style="color:var(--accent)">✓</span>':l.result==='loss'?'<span style="color:var(--lose)">✗</span>':l.result==='void'?'<span style="color:var(--muted)">∅</span>':'<span style="color:var(--muted)">·</span>';return '<div class="pl-leg">'+ic+' '+esc(l.desc)+(l.result==='void'?' <span style="color:var(--muted)">(game postponed — leg voided)</span>':'')+'</div>';}).join('');
+    var oddsTag=p.odds!=null?' <span style="color:var(--muted);font-size:10px">'+(p.odds>0?'+':'')+p.odds+'</span>':'';
+    return '<details class="pl-day"><summary>'+esc(p.date)+' · '+esc(p.name||'Parlay')+oddsTag+' '+badge+' <span style="color:var(--muted)">'+p.wins+'/'+p.n+' legs</span></summary><div class="pl-legs">'+legs+'</div></details>';
+  }).join('')||'<div class="empty">Nothing logged here yet.</div>';
+}
+function libSum(html){return '<div class="note" style="margin:0 0 8px;padding:8px 10px;background:var(--panel,#f1f5f9);border-radius:8px">'+html+'</div>';}
+function libTicketSummary(list){
+  var w=0,l=0,pend=0,u=0,np=0,unpriced=0;
+  list.forEach(function(p){
+    if(p.result==='win')w++;else if(p.result==='loss')l++;else pend++;
+    if(p.result==='win'||p.result==='loss'){
+      if(p.odds!=null){u+=p.result==='win'?(libA2D(p.odds)-1):-1;np++;}
+      else unpriced++;
+    }
+  });
+  if(!(w+l+pend))return '';
+  var uStr=np?((u>=0?'+':'')+u.toFixed(1)+'u ('+(u>=0?'+$':'-$')+Math.abs(u*10).toFixed(0)+' at $10/u, '+np+' priced tickets)'):'— no ticket odds logged yet';
+  return libSum('<b>Record:</b> '+w+'-'+l+(pend?' · '+pend+' pending':'')+' ('+(w+l?Math.round(w/(w+l)*100):0)+'% hit) · <b>Units @ $10:</b> '+uStr+(unpriced?' · '+unpriced+' settled tickets had no logged odds (excluded)':''));
+}
+var LIB_ASSUME={ml:-120,hr:425,h1:-280,h2:230,tb2:120,hrr:-140,ou:-110};
+function libPropSummary(bh,cat){
+  var w=0,n=0,w7=0,n7=0,days=0;
+  bh.forEach(function(d){var c=(d.cats||{})[cat];if(!c)return;days++;w+=c.w;n+=c.n;if(days<=7){w7+=c.w;n7+=c.n;}});
+  if(!n)return '';
+  var a=LIB_ASSUME[cat],dcm=libA2D(a);
+  var u=w*(dcm-1)-(n-w);
+  return libSum('<b>Last '+days+' logged days:</b> '+w+'/'+n+' ('+Math.round(w/n*100)+'%)'
+    +' · <b>last 7:</b> '+w7+'/'+n7
+    +' · <b>Units @ $10, 1u/pick:</b> '+(u>=0?'+':'')+u.toFixed(1)+'u ('+(u>=0?'+$':'-$')+Math.abs(u*10).toFixed(0)+')'
+    +' <span style="font-size:9px;color:#b45309">at ASSUMED avg price '+(a>0?'+':'')+a+' — board prices are not logged; treat as a rough gauge, not your book</span>');
+}
+function renderLibrary(){
+  var hist=D.parlayHistory||[];var mlh=D.mlHistory||[];var bh=D.boardHistory||[];
+  var TABS=[['safe','Suggested Parlay'],['hrpar','HR Parlays'],['mlp','ML/RL Parlay'],['ml','Moneyline'],['hr','HR'],['h1','1+ Hit'],['h2','2B'],['tb2','2+ TB'],['hrr','HRR'],['ou','O/U']];
+  var bar='<div style="display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 10px">'+TABS.map(function(t){
+    return '<span class="badge '+(LIB_TAB===t[0]?'b-lean':'b-pass')+'" style="cursor:pointer" onclick="libTab(\''+t[0]+'\')">'+t[1]+'</span>';
+  }).join('')+'</div>';
+  var isHRT=function(p){return /HR (Top|Lotto)|HR Parlay/i.test(p.name||'');};
+  var isMLP=function(p){return /^(Moneyline|ML|\+1\.5 run line|F5 ML) Parlay/i.test(p.name||'');};
+  var body='';
+  if(LIB_TAB==='safe'){
+    var sl=hist.filter(function(p){return !isHRT(p)&&!isMLP(p);});
+    body=libTicketSummary(sl)+libTicketCards(sl);
+  }else if(LIB_TAB==='hrpar'){
+    var hl=hist.filter(isHRT);
+    body=hl.length?(libTicketSummary(hl)+libTicketCards(hl)):'<div class="empty">HR tickets log daily from 7/28 on — they appear here once graded.</div>';
+  }else if(LIB_TAB==='mlp'){
+    var ol=hist.filter(isMLP);
+    body=ol.length?(libTicketSummary(ol)+libTicketCards(ol)):'<div class="empty">The ML / +1.5 / F5 parlay logs daily from 7/30 on — first graded ticket appears tomorrow morning.</div>';
+  }else if(LIB_TAB==='ml'&&mlh.length){
+    body=libPropSummary(bh,'ml')+mlh.map(function(d){
+      var picks=(d.picks||[]).map(function(p){var ic=p.hit?'<span style="color:var(--accent)">✓</span>':'<span style="color:var(--lose)">✗</span>';var tag=(p.tier==='STRONG'||p.tier==='LEAN')?' <span class="badge '+(p.tier==='STRONG'?'b-strong':'b-lean')+'">'+esc(p.tier)+'</span>':'';return '<div class="pl-leg">'+ic+' '+esc(p.pick||'')+' ML — '+esc(p.game||'')+(p.conf!=null?' <span style="color:var(--muted)">'+p.conf+'%</span>':'')+tag+'</div>';}).join('');
+      var cls=(d.n>0&&d.w*2>=d.n)?'b-win':'b-loss';
+      return '<details class="pl-day"><summary>'+esc(d.date)+' <span class="badge '+cls+'">'+d.w+'/'+d.n+'</span> <span style="color:var(--muted)">slate sides</span></summary><div class="pl-legs">'+picks+'</div></details>';
+    }).join('');
+  }else{
+    var lbl={hr:'HR board',h1:'1+ hit board',h2:'2B board',tb2:'2+ TB board',hrr:'2+ H/R/RBI board',ou:'O/U leans',ml:'ML board'};
+    body=libPropSummary(bh,LIB_TAB)+bh.map(function(d){
+      var c=(d.cats||{})[LIB_TAB];if(!c)return '';
+      var rows=(c.rows||[]).map(function(r){var ic=r.hit?'<span style="color:var(--accent)">✓</span>':'<span style="color:var(--lose)">✗</span>';
+        var txt=LIB_TAB==='ou'?(esc(r.lean||'')+' — '+esc(r.game||'')):(esc(r.name||'')+(r.team?' <span style="color:var(--muted)">'+esc(r.team)+'</span>':'')+(r.game?' <span style="color:var(--muted)">'+esc(r.game)+'</span>':''));
+        return '<div class="pl-leg">'+ic+' '+txt+'</div>';}).join('');
+      var cls=(c.n>0&&c.w*2>=c.n)?'b-win':'b-loss';
+      return '<details class="pl-day"><summary>'+esc(d.date)+' <span class="badge '+cls+'">'+c.w+'/'+c.n+'</span> <span style="color:var(--muted)">'+(lbl[LIB_TAB]||'board')+'</span></summary><div class="pl-legs">'+rows+'</div></details>';
+    }).join('')||'<div class="empty">No graded days for this board yet.</div>';
+  }
+  if(!body)body='<div class="empty">No graded picks yet — each day appears here after it’s graded.</div>';
+  $('library').innerHTML=bar+body;
+}
