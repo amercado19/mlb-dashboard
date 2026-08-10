@@ -207,7 +207,7 @@ function handBadge(t){if(!t)return '';var c=t==='L'?'b-loss':'b-strong';return '
 function spTierBadge(tier){if(!tier)return '';var t=(''+tier).toUpperCase();var c=(t.indexOf('ELITE')>=0||t.indexOf('GOOD')>=0)?'b-strong':(t.indexOf('POOR')>=0||t.indexOf('BELOW')>=0||t.indexOf('BAD')>=0)?'b-loss':'b-pass';return '<span class="badge '+c+'">'+esc(tier)+'</span>';}
 function windArrows(z){if(!z||!z.length)return '';var A={out:['⬆','var(--accent)'],in:['⬇','var(--lose)'],cross:['⬌','var(--draw)']};return '<div class="wind">'+z.map(function(w){var a=A[w.dir]||['·','var(--muted)'];return '<span class="wz"><span class="wzl">'+esc(w.zone)+'</span><span class="wza" style="color:'+a[1]+'">'+a[0]+'</span><span class="wzm">'+w.mph+'</span></span>';}).join('')+'</div>';}
 
-function gameProps(pk){var bf=D.boardsFull||D.boards||{};var out=[];[['hr','HR'],['h1','1+H'],['h2','2B'],['tb2','2TB'],['hrr','HRR']].forEach(function(d){(bf[d[0]]||[]).filter(function(r){return r.gamePk===pk;}).slice(0,2).forEach(function(r){out.push({lbl:d[1],name:r.name,team:r.team,pid:r.playerId,gp:r.gamePk,metric:r.metric});});});return out;}
+function gameProps(pk){var bf=D.boardsFull||D.boards||{};var out=[];[['hr','HR'],['h1','1+H'],['tb2','2TB'],['hrr','HRR']].forEach(function(d){(bf[d[0]]||[]).filter(function(r){return r.gamePk===pk;}).slice(0,2).forEach(function(r){out.push({lbl:d[1],name:r.name,team:r.team,pid:r.playerId,gp:r.gamePk,metric:r.metric});});});return out;}
 function renderSlate(){
   var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});
   if(!gc.length){$('slate').innerHTML='<div class="empty">No games in today’s slate.</div>';return;}
@@ -257,7 +257,7 @@ function renderMatchups(){
   }).join('')+'</div>';
 }
 
-var PROP_SQ=[['hr','HR','⚾'],['h1','1+ Hit','🎯'],['h2','2B','↔'],['tb2','2+ TB','💥'],['hrr','2+ HRR','🔢'],['nrfi','NRFI/YRFI','🅾'],['ou','Over/Under','📊'],['ml','Moneyline','💰'],['spread','Spread','📏']];
+var PROP_SQ=[['hr','HR','⚾'],['h1','1+ Hit','🎯'],['tb2','2+ TB','💥'],['hrr','2+ HRR','🔢'],['nrfi','NRFI/YRFI','🅾'],['ml','Moneyline','💰'],['spread','Spread','📏']];
 function propCount(k){var bf=D.boardsFull||D.boards||{};if(k==='nrfi')return (D.nrfi||[]).length;if(k==='ou')return (bf.ou||[]).length;if(k==='ml')return (D.ml||[]).filter(function(p){return p.tier==='STRONG'||p.tier==='LEAN';}).length;if(k==='spread')return (D.gameCards||[]).length;return (bf[k]||[]).length;}
 function renderProps(){
   var sq=PROP_SQ.map(function(d){var n=propCount(d[0]);var sub=d[0]==='ml'?(n+' actionable'):d[0]==='spread'?(n+' games'):(n+' picks');return '<div class="psq" onclick="openProp(\''+d[0]+'\',this)"><div class="ic">'+d[2]+'</div><div class="lb">'+d[1]+'</div><div class="ct">'+sub+'</div></div>';}).join('');
@@ -568,21 +568,40 @@ function libTicketSummary(list){
   var uStr=np?((u>=0?'+':'')+u.toFixed(1)+'u ('+(u>=0?'+$':'-$')+Math.abs(u*10).toFixed(0)+' at $10/u, '+np+' priced tickets)'):'— no ticket odds logged yet';
   return libSum('<b>Record:</b> '+w+'-'+l+(pend?' · '+pend+' pending':'')+' ('+(w+l?Math.round(w/(w+l)*100):0)+'% hit) · <b>Units @ $10:</b> '+uStr+(unpriced?' · '+unpriced+' settled tickets had no logged odds (excluded)':''));
 }
-var LIB_ASSUME={ml:-120,hr:425,h1:-280,h2:230,tb2:120,hrr:-140,ou:-110};
+/* 2026-08-07: the hardcoded LIB_ASSUME price table is GONE. Units were being
+   computed at invented prices (1+hit at an assumed -280 etc.), which produced a
+   confident dollar figure for a market whose real prices were never logged.
+   Units now come only from learn/'s ledger — real logged prices, real CLV — and
+   a market with no priced history says so instead of guessing. */
+function libStatusPill(s){
+  var m={BET:['#0c7a43','#dcfce7'],WATCH:['#92400e','#fef3c7'],
+         KILL:['#b91c1c','#fee2e2'],BLIND:['#475569','#e2e8f0']}[s]||['#475569','#e2e8f0'];
+  return '<span class="badge" style="color:'+m[0]+';background:'+m[1]+'">'+esc(s||'BLIND')+'</span>';
+}
 function libPropSummary(bh,cat){
   var w=0,n=0,w7=0,n7=0,days=0;
   bh.forEach(function(d){var c=(d.cats||{})[cat];if(!c)return;days++;w+=c.w;n+=c.n;if(days<=7){w7+=c.w;n7+=c.n;}});
-  if(!n)return '';
-  var a=LIB_ASSUME[cat],dcm=libA2D(a);
-  var u=w*(dcm-1)-(n-w);
-  return libSum('<b>Last '+days+' logged days:</b> '+w+'/'+n+' ('+Math.round(w/n*100)+'%)'
-    +' · <b>last 7:</b> '+w7+'/'+n7
-    +' · <b>Units @ $10, 1u/pick:</b> '+(u>=0?'+':'')+u.toFixed(1)+'u ('+(u>=0?'+$':'-$')+Math.abs(u*10).toFixed(0)+')'
-    +' <span style="font-size:9px;color:#b45309">at ASSUMED avg price '+(a>0?'+':'')+a+' — board prices are not logged; treat as a rough gauge, not your book</span>');
+  var L=((D.learned||{}).markets||{})[cat]||{};
+  var st=L.status||'BLIND';
+  var head=libStatusPill(st)+(L.reason?' <span style="font-size:10px;color:var(--muted)">'+esc(L.reason)+'</span>':'');
+  var rec=n?('<b>Last '+days+' logged days:</b> '+w+'/'+n+' ('+Math.round(w/n*100)+'%) · <b>last 7:</b> '+w7+'/'+n7):'';
+  var money;
+  if(L.n_priced&&L.units!=null){
+    var u=L.units;
+    money='<b>Units @ $10:</b> '+(u>=0?'+':'')+u.toFixed(1)+'u ('+(u>=0?'+$':'-$')+Math.abs(u*10).toFixed(0)+')'
+      +(L.roi_pct!=null?' · ROI '+L.roi_pct+'%':'')
+      +(L.mean_clv_pp!=null?' · CLV '+L.mean_clv_pp+'pp':'')
+      +' <span style="font-size:9px;color:var(--muted)">from '+L.n_priced+' logged prices</span>';
+  }else{
+    money='<b>Units: not measurable yet</b> <span style="font-size:9px;color:#b45309">no logged prices for this market — a units figure would be an assumption, not a measurement</span>';
+  }
+  return libSum(head+'<br>'+(rec?rec+'<br>':'')+money);
 }
 function renderLibrary(){
   var hist=D.parlayHistory||[];var mlh=D.mlHistory||[];var bh=D.boardHistory||[];
-  var TABS=[['safe','Suggested Parlay'],['hrpar','HR Parlays'],['mlp','ML/RL Parlay'],['ml','Moneyline'],['hr','HR'],['h1','1+ Hit'],['h2','2B'],['tb2','2+ TB'],['hrr','HRR'],['ou','O/U']];
+  /* 2B and O/U boards disabled 2026-08-07: 23.7% and 42.5% over 30 days,
+     unprofitable at any realistic price. */
+  var TABS=[['safe','Suggested Parlay'],['hrpar','HR Parlays'],['mlp','ML/RL Parlay'],['ml','Moneyline'],['hr','HR'],['h1','1+ Hit'],['tb2','2+ TB'],['hrr','HRR']];
   var bar='<div style="display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 10px">'+TABS.map(function(t){
     return '<span class="badge '+(LIB_TAB===t[0]?'b-lean':'b-pass')+'" style="cursor:pointer" onclick="libTab(\''+t[0]+'\')">'+t[1]+'</span>';
   }).join('')+'</div>';
@@ -622,7 +641,7 @@ function renderLibrary(){
 var TABS=[['slate','Slate'],['picks','Picks'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['library','Library'],['method','How it works']];
 function buildNav(){$('nav').innerHTML=TABS.map(function(t,i){return '<button class="'+(i===0?'active':'')+'" data-s="'+t[0]+'" onclick="showTab(\''+t[0]+'\',this)">'+esc(t[1])+'</button>';}).join('');}
 function showTab(id,btn){var ss=document.querySelectorAll('main section');for(var i=0;i<ss.length;i++)ss[i].classList.remove('active');$(id).classList.add('active');var bs=document.querySelectorAll('nav button');for(var j=0;j<bs.length;j++)bs[j].classList.remove('active');if(btn)btn.classList.add('active');}
-function renderMeta(){var n=(D.gameCards||[]).length;var upd=D.generatedAt?new Date(D.generatedAt).toLocaleString():'—';var ageM=D.generatedAt?Math.round((Date.now()-new Date(D.generatedAt).getTime())/60000):null;var ageCol=ageM==null?'var(--muted)':ageM>90?'#b45309':ageM>150?'#b91c1c':'var(--accent)';var ageChip=ageM==null?'':'<span style="font-weight:800;color:'+ageCol+'" title="How old this page\'s data is. Lineups/SPs posted after this moment are NOT here yet — hit Pull fresh.">data '+(ageM<60?ageM+'m':Math.floor(ageM/60)+'h'+(ageM%60)+'m')+' old</span>';var lu=D.lineupsProjected?'<span style="font-weight:800;color:#b45309" title="At least one lineup was still unposted at run time — props/tickets used season stats for those teams">lineups: PROJECTED</span>':'<span style="font-weight:800;color:var(--accent)">lineups: OFFICIAL</span>';var pull='<a href="https://github.com/amercado19/mlb-pipeline/actions/workflows/daily-picks.yml" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1.5px solid var(--accent,#0c7a43);border-radius:7px;background:none;color:var(--accent,#0c7a43);font-family:var(--mono);font-weight:700;font-size:11px;cursor:pointer;text-decoration:none" title="Runs the FULL pipeline now — fresh lineups, starting pitchers, odds, weather (~2–3 min). On the GitHub page press the green Run workflow button, wait, then reload this page.">🔄 Pull fresh lineups</a>';$('meta').innerHTML='<span>'+esc(D.date||'')+'</span><span>'+n+' games today</span><span>updated '+esc(upd)+'</span>'+ageChip+lu+'<span>'+esc(D.version||'')+'</span>'+pull+'<button class="rf" onclick="refresh()">↻ Refresh</button>';$('foot').textContent='Model output presented as-is · '+esc(D.version||'')+' · click a player for the Statcast deep-dive · not financial advice';}
+function renderMeta(){var n=(D.gameCards||[]).length;var upd=D.generatedAt?new Date(D.generatedAt).toLocaleString():'—';var ageM=D.generatedAt?Math.round((Date.now()-new Date(D.generatedAt).getTime())/60000):null;var ageCol=ageM==null?'var(--muted)':ageM>90?'#b45309':ageM>150?'#b91c1c':'var(--accent)';var ageChip=ageM==null?'':'<span style="font-weight:800;color:'+ageCol+'" title="How old this page\'s data is. Lineups/SPs posted after this moment are NOT here yet — hit Pull fresh.">data '+(ageM<60?ageM+'m':Math.floor(ageM/60)+'h'+(ageM%60)+'m')+' old</span>';var lu=D.lineupsProjected?'<span style="font-weight:800;color:#b45309" title="At least one lineup was still unposted at run time — props/tickets used season stats for those teams">lineups: PROJECTED</span>':'<span style="font-weight:800;color:var(--accent)">lineups: OFFICIAL</span>';var pull='<a href="https://github.com/amercado19/mlb-pipeline/actions/workflows/daily-picks.yml" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1.5px solid var(--accent,#0c7a43);border-radius:7px;background:none;color:var(--accent,#0c7a43);font-family:var(--mono);font-weight:700;font-size:11px;cursor:pointer;text-decoration:none" title="Runs the FULL pipeline now — fresh lineups, starting pitchers, odds, weather (~2–3 min). On the GitHub page press the green Run workflow button, wait, then reload this page.">🔄 Pull fresh lineups</a>';var dh=D.dataHealth||{};var dhChip='';if(dh.sources){var ss=Object.keys(dh.sources).map(function(k){return dh.sources[k];});var okN=ss.filter(function(s){return s.status==='OK'||s.status==='N/A';}).length;var bad=ss.filter(function(s){return s.status==='MISSING';}),thin=ss.filter(function(s){return s.status==='THIN';});var col=bad.length?'#b91c1c':(thin.length?'#b45309':'var(--accent,#0c7a43)');var tip=ss.map(function(s){return s.label+': '+s.status+' '+(s.coverage==null?'':Math.round(s.coverage*100)+'%')+(s.note?' — '+s.note:'');}).join('\n');dhChip='<span style="font-weight:800;color:'+col+';cursor:help" title="'+esc(tip)+'" onclick="alert(this.getAttribute(\'title\'))">data '+okN+'/'+ss.length+' sources'+(bad.length?' · '+bad.length+' MISSING':(thin.length?' · '+thin.length+' thin':' OK'))+'</span>';}$('meta').innerHTML='<span>'+esc(D.date||'')+'</span><span>'+n+' games today</span><span>updated '+esc(upd)+'</span>'+ageChip+lu+dhChip+'<span>'+esc(D.version||'')+'</span>'+pull+'<button class="rf" onclick="refresh()">↻ Refresh</button>';$('foot').textContent='Model output presented as-is · '+esc(D.version||'')+' · click a player for the Statcast deep-dive · not financial advice';}
 function renderMethod(){
   var mc="color:var(--muted);font-size:11.5px;line-height:1.65";
   var card="background:var(--panel2,#12161d);border:1px solid var(--line,#222);border-left:3px solid #4dc870;border-radius:8px;padding:12px 15px;margin:10px 0";
@@ -698,7 +717,7 @@ function openMatchupModal(pid,gamePk,name,team){
 }
 function mxProbs(pid){
   var bf=(MODEL_DATA.boardsFull)||(MODEL_DATA.boards)||{};
-  var defs=[['hr','HR'],['h1','1+ Hit'],['h2','2B'],['tb2','2+ TB'],['hrr','2+ HRR']];
+  var defs=[['hr','HR'],['h1','1+ Hit'],['tb2','2+ TB'],['hrr','2+ HRR']];
   var rt={};defs.forEach(function(d){rt[d[0]]=rate10fn(bf[d[0]]||[],function(r){return r.metric;});});
   var rows=defs.map(function(d){var row=(bf[d[0]]||[]).filter(function(r){return r.playerId===pid;})[0];if(!row)return '';return '<tr><td>'+d[1]+'</td><td>'+ratePill(rt[d[0]](row.metric))+'</td><td>'+(row.metric!=null?row.metric:'—')+'</td></tr>';}).filter(Boolean).join('');
   return rows?'<table class="mx-tbl"><tr><th>Prop</th><th>Rating</th><th>Metric</th></tr>'+rows+'</table>':'<div class="mx-sub">Not on any board today.</div>';
