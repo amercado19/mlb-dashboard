@@ -1,6 +1,6 @@
 {
  "date": "2026-08-10",
- "generated_at": "2026-08-10T20:33:26",
+ "generated_at": "2026-08-10T21:34:42",
  "version": "0.1.0",
  "games": [
   {
@@ -37,22 +37,22 @@
    "pick": "atl",
    "confidence": 0.544,
    "tier": "PASS",
-   "total": 9.3,
+   "total": 9.1,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
      "dir": "out",
-     "mph": 5
+     "mph": 7
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
-    "out_mph": 5
+    "out_mph": 7
    }
   },
   {
@@ -72,7 +72,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "rf": {
      "dir": "in",
@@ -94,7 +94,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 7
+     "mph": 6
     },
     "cf": {
      "dir": "cross",
@@ -102,9 +102,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
-    "out_mph": 7
+    "out_mph": 6
    }
   },
   {
@@ -224,17 +224,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 9
+     "mph": 8
     },
     "cf": {
      "dir": "out",
-     "mph": 13
+     "mph": 12
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 8
     },
-    "out_mph": 13
+    "out_mph": 12
    }
   },
   {
@@ -270,7 +270,7 @@
     },
     "hr_rate_pa": 0.044
    },
-   "edge_score": 68,
+   "edge_score": 70,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.9,
@@ -313,6 +313,36 @@
    "flags": []
   },
   {
+   "player": "Willson Contreras",
+   "team": "bos",
+   "game": "bos-tor",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.246,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 439,
+    "factors": {
+     "sp": 1.118,
+     "park": 1.07
+    },
+    "hr_rate_pa": 0.0523
+   },
+   "edge_score": 67,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 46.3,
+    "avg_exit_velo": 90.8,
+    "xiso": 0.244,
+    "recent_hr_rate": 0.04
+   },
+   "flags": []
+  },
+  {
    "player": "Junior Caminero",
    "team": "tb",
    "game": "tb-ath",
@@ -341,38 +371,6 @@
     "avg_exit_velo": 93.0,
     "xiso": 0.239,
     "recent_hr_rate": 0.0531
-   },
-   "flags": []
-  },
-  {
-   "player": "Osleivis Basabe",
-   "team": "sf",
-   "game": "hou-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.1878,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.25,
-    "order": 5,
-    "pa_season": 33,
-    "factors": {
-     "sp": 1.093,
-     "park": 0.85,
-     "temp": 0.934,
-     "wind": 1.08
-    },
-    "hr_rate_pa": 0.0346
-   },
-   "edge_score": 67,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.4,
-    "hard_hit_pct": 38.5,
-    "avg_exit_velo": 89.1,
-    "xiso": 0.204,
-    "recent_hr_rate": 0.0909
    },
    "flags": []
   },
@@ -408,68 +406,6 @@
    "flags": []
   },
   {
-   "player": "Willson Contreras",
-   "team": "bos",
-   "game": "bos-tor",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.246,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 439,
-    "factors": {
-     "sp": 1.118,
-     "park": 1.07
-    },
-    "hr_rate_pa": 0.0523
-   },
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 46.3,
-    "avg_exit_velo": 90.8,
-    "xiso": 0.244,
-    "recent_hr_rate": 0.04
-   },
-   "flags": []
-  },
-  {
-   "player": "Willy Adames",
-   "team": "sf",
-   "game": "hou-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.1893,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 473,
-    "factors": {
-     "sp": 1.093,
-     "park": 0.85,
-     "temp": 0.934,
-     "wind": 1.08
-    },
-    "hr_rate_pa": 0.0343
-   },
-   "edge_score": 64,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 8.5,
-    "hard_hit_pct": 38.4,
-    "avg_exit_velo": 87.3,
-    "xiso": 0.162,
-    "recent_hr_rate": 0.0392
-   },
-   "flags": []
-  },
-  {
    "player": "Hunter Goodman",
    "team": "col",
    "game": "col-az",
@@ -496,6 +432,38 @@
     "avg_exit_velo": 90.5,
     "xiso": 0.231,
     "recent_hr_rate": 0.0814
+   },
+   "flags": []
+  },
+  {
+   "player": "Osleivis Basabe",
+   "team": "sf",
+   "game": "hou-sf",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.1878,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.25,
+    "order": 5,
+    "pa_season": 33,
+    "factors": {
+     "sp": 1.093,
+     "park": 0.85,
+     "temp": 0.934,
+     "wind": 1.07
+    },
+    "hr_rate_pa": 0.0343
+   },
+   "edge_score": 62,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.4,
+    "hard_hit_pct": 38.5,
+    "avg_exit_velo": 89.1,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.0909
    },
    "flags": []
   },
@@ -557,6 +525,38 @@
     "avg_exit_velo": 90.9,
     "xiso": 0.155,
     "recent_hr_rate": 0.0174
+   },
+   "flags": []
+  },
+  {
+   "player": "Willy Adames",
+   "team": "sf",
+   "game": "hou-sf",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.1878,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 473,
+    "factors": {
+     "sp": 1.093,
+     "park": 0.85,
+     "temp": 0.934,
+     "wind": 1.07
+    },
+    "hr_rate_pa": 0.034
+   },
+   "edge_score": 59,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 8.5,
+    "hard_hit_pct": 38.4,
+    "avg_exit_velo": 87.3,
+    "xiso": 0.162,
+    "recent_hr_rate": 0.0392
    },
    "flags": []
   },
@@ -857,7 +857,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4309,
+   "model_prob": 0.4301,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.55,
@@ -867,12 +867,12 @@
      "sp": 0.952,
      "park": 0.85,
      "temp": 0.934,
-     "wind": 1.08
+     "wind": 1.07
     },
     "p1b": 0.149,
-    "p2b": 0.037,
+    "p2b": 0.0367,
     "p3b": 0.001,
-    "phr": 0.0443
+    "phr": 0.0438
    },
    "edge_score": 2.27,
    "score_type": "per_game_rate",
@@ -901,13 +901,13 @@
     "factors": {
      "sp": 0.981,
      "park": 1.175,
-     "temp": 1.12,
-     "wind": 1.0
+     "temp": 1.102,
+     "wind": 1.02
     },
     "p1b": 0.1226,
-    "p2b": 0.0665,
+    "p2b": 0.0668,
     "p3b": 0.0017,
-    "phr": 0.0685
+    "phr": 0.0687
    },
    "edge_score": 2.14,
    "score_type": "per_game_rate",
@@ -1036,13 +1036,13 @@
     "factors": {
      "sp": 0.981,
      "park": 1.175,
-     "temp": 1.12,
-     "wind": 1.0
+     "temp": 1.102,
+     "wind": 1.02
     },
     "p1b": 0.1664,
-    "p2b": 0.0639,
-    "p3b": 0.0035,
-    "phr": 0.0506
+    "p2b": 0.0642,
+    "p3b": 0.0036,
+    "phr": 0.0507
    },
    "edge_score": 1.88,
    "score_type": "per_game_rate",
