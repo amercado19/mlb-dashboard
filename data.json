@@ -1,13 +1,13 @@
 {
  "date": "2026-08-12",
- "generated_at": "2026-08-12T19:59:51",
+ "generated_at": "2026-08-12T20:36:10",
  "version": "0.1.0",
  "games": [
   {
    "away": "bal",
    "home": "min",
    "away_win_prob": 0.526,
-   "home_win_prob": 0.454,
+   "home_win_prob": 0.464,
    "pick": "bal",
    "confidence": 0.526,
    "tier": "LEAN",
@@ -38,7 +38,7 @@
    "confidence": 0.64,
    "tier": "LEAN",
    "total": 9.2,
-   "book_total_line": 7.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -64,7 +64,7 @@
    "confidence": 0.564,
    "tier": "PASS",
    "total": 9.4,
-   "book_total_line": 9.5,
+   "book_total_line": 13.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -90,7 +90,7 @@
    "confidence": 0.55,
    "tier": "PASS",
    "total": 12.0,
-   "book_total_line": 10.5,
+   "book_total_line": 11.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -116,7 +116,7 @@
    "confidence": 0.501,
    "tier": "PASS",
    "total": 8.7,
-   "book_total_line": 7.5,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -142,7 +142,7 @@
    "confidence": 0.479,
    "tier": "PASS",
    "total": 8.2,
-   "book_total_line": 8.0,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -457,7 +457,7 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 457,
+    "pa_season": 458,
     "factors": {
      "sp": 1.172,
      "park": 1.0
@@ -487,12 +487,12 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 205,
+    "pa_season": 206,
     "factors": {
      "sp": 1.172,
      "park": 1.0
     },
-    "hr_rate_pa": 0.0332
+    "hr_rate_pa": 0.0331
    },
    "edge_score": 70,
    "score_type": "model_score_0_100",
@@ -601,70 +601,6 @@
    "flags": []
   },
   {
-   "player": "Junior Caminero",
-   "team": "tb",
-   "game": "tb-ath",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2581,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 522,
-    "factors": {
-     "sp": 1.004,
-     "park": 1.105,
-     "temp": 1.078,
-     "wind": 1.0
-    },
-    "hr_rate_pa": 0.0645
-   },
-   "edge_score": 66,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.0,
-    "hard_hit_pct": 51.1,
-    "avg_exit_velo": 93.1,
-    "xiso": 0.242,
-    "recent_hr_rate": 0.0619
-   },
-   "flags": []
-  },
-  {
-   "player": "Pete Alonso",
-   "team": "bal",
-   "game": "bal-min",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2446,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 524,
-    "factors": {
-     "sp": 1.041,
-     "park": 1.0,
-     "temp": 1.102,
-     "wind": 1.0
-    },
-    "hr_rate_pa": 0.0491
-   },
-   "edge_score": 64,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.1,
-    "hard_hit_pct": 56.4,
-    "avg_exit_velo": 94.1,
-    "xiso": 0.259,
-    "recent_hr_rate": 0.0472
-   },
-   "flags": []
-  },
-  {
    "player": "Kyle Schwarber",
    "team": "phi",
    "game": "phi-stl",
@@ -676,15 +612,15 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 515,
+    "pa_season": 516,
     "factors": {
      "sp": 1.067,
      "park": 0.93,
      "temp": 1.12
     },
-    "hr_rate_pa": 0.0604
+    "hr_rate_pa": 0.0603
    },
-   "edge_score": 64,
+   "edge_score": 66,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 17.5,
@@ -692,6 +628,69 @@
     "avg_exit_velo": 93.2,
     "xiso": 0.259,
     "recent_hr_rate": 0.0291
+   },
+   "flags": []
+  },
+  {
+   "player": "Bryce Harper",
+   "team": "phi",
+   "game": "phi-stl",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2395,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 517,
+    "factors": {
+     "sp": 1.067,
+     "park": 0.93,
+     "temp": 1.12
+    },
+    "hr_rate_pa": 0.0467
+   },
+   "edge_score": 66,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 11.5,
+    "hard_hit_pct": 44.9,
+    "avg_exit_velo": 90.2,
+    "xiso": 0.234,
+    "recent_hr_rate": 0.045
+   },
+   "flags": []
+  },
+  {
+   "player": "Junior Caminero",
+   "team": "tb",
+   "game": "tb-ath",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2581,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 523,
+    "factors": {
+     "sp": 1.004,
+     "park": 1.105,
+     "temp": 1.078,
+     "wind": 1.0
+    },
+    "hr_rate_pa": 0.0644
+   },
+   "edge_score": 66,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.0,
+    "hard_hit_pct": 51.1,
+    "avg_exit_velo": 93.1,
+    "xiso": 0.242,
+    "recent_hr_rate": 0.0619
    },
    "flags": []
   },
@@ -731,16 +730,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6928,
+   "model_prob": 0.6917,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 382,
+    "pa_season": 383,
     "factors": {
      "sp": 1.061
     },
-    "hit_rate_pa": 0.2633
+    "hit_rate_pa": 0.2628
    },
    "edge_score": 79,
    "score_type": "model_score_0_100",
@@ -760,16 +759,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6712,
+   "model_prob": 0.6706,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 510,
+    "pa_season": 511,
     "factors": {
      "sp": 1.061
     },
-    "hit_rate_pa": 0.2397
+    "hit_rate_pa": 0.2394
    },
    "edge_score": 79,
    "score_type": "model_score_0_100",
@@ -1099,19 +1098,19 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 522,
+    "pa_season": 523,
     "factors": {
      "sp": 1.004,
      "park": 1.105,
      "temp": 1.078,
      "wind": 1.0
     },
-    "p1b": 0.1396,
-    "p2b": 0.0452,
+    "p1b": 0.1408,
+    "p2b": 0.0451,
     "p3b": 0.003,
-    "phr": 0.0645
+    "phr": 0.0644
    },
-   "edge_score": 2.09,
+   "edge_score": 2.1,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 14.0,
@@ -1267,18 +1266,18 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4576,
+   "model_prob": 0.4571,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 457,
+    "pa_season": 458,
     "factors": {
      "sp": 1.172,
      "park": 1.0
     },
-    "p1b": 0.1245,
-    "p2b": 0.045,
+    "p1b": 0.1243,
+    "p2b": 0.0449,
     "p3b": 0.0032,
     "phr": 0.067
    },
@@ -1426,7 +1425,7 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 498,
+    "pa_season": 499,
     "factors": {
      "sp": 0.938
     },
@@ -1529,31 +1528,31 @@
    "flags": []
   },
   {
-   "player": "Jackson Chourio",
-   "team": "mil",
-   "game": "mil-sd",
+   "player": "Yandy D\u00edaz",
+   "team": "tb",
+   "game": "tb-ath",
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5809,
+   "model_prob": 0.5811,
    "method": "poisson_ge2",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 387,
+    "pa_season": 508,
     "factors": {
-     "sp": 1.022
+     "sp": 1.003
     },
-    "lambda_pg": 2.359
+    "lambda_pg": 2.369
    },
    "edge_score": 2.37,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 13.8,
+    "barrel_pct": 7.1,
     "hard_hit_pct": 47.9,
-    "avg_exit_velo": 92.1,
-    "xiso": 0.225,
-    "recent_hr_rate": 0.0367
+    "avg_exit_velo": 91.0,
+    "xiso": 0.161,
+    "recent_hr_rate": 0.0348
    },
    "flags": []
   },
@@ -1587,31 +1586,31 @@
    "flags": []
   },
   {
-   "player": "Brice Turang",
-   "team": "mil",
-   "game": "mil-sd",
+   "player": "Otto Lopez",
+   "team": "mia",
+   "game": "pit-mia",
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5807,
+   "model_prob": 0.5814,
    "method": "poisson_ge2",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 517,
+    "pa_season": 503,
     "factors": {
-     "sp": 1.022
+     "sp": 1.038
     },
-    "lambda_pg": 2.352
+    "lambda_pg": 2.384
    },
-   "edge_score": 2.36,
+   "edge_score": 2.35,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 8.0,
-    "hard_hit_pct": 42.7,
-    "avg_exit_velo": 90.6,
-    "xiso": 0.181,
-    "recent_hr_rate": 0.0286
+    "barrel_pct": 6.1,
+    "hard_hit_pct": 41.3,
+    "avg_exit_velo": 89.1,
+    "xiso": 0.14,
+    "recent_hr_rate": 0.0
    },
    "flags": []
   }
