@@ -1,6 +1,6 @@
 {
  "date": "2026-08-14",
- "generated_at": "2026-08-14T19:43:24",
+ "generated_at": "2026-08-14T20:23:24",
  "version": "0.1.0",
  "games": [
   {
@@ -168,7 +168,7 @@
    "confidence": 0.557,
    "tier": "PASS",
    "total": 9.7,
-   "book_total_line": 8.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -550,12 +550,12 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2426,
+   "model_prob": 0.2425,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 544,
+    "pa_season": 545,
     "factors": {
      "sp": 1.055,
      "park": 1.0,
@@ -571,6 +571,66 @@
     "avg_exit_velo": 90.2,
     "xiso": 0.216,
     "recent_hr_rate": 0.0484
+   },
+   "flags": []
+  },
+  {
+   "player": "Coby Mayo",
+   "team": "bal",
+   "game": "bal-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.216,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 307,
+    "factors": {
+     "sp": 1.063,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0396
+   },
+   "edge_score": 63,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 11.6,
+    "hard_hit_pct": 48.1,
+    "avg_exit_velo": 92.3,
+    "xiso": 0.197,
+    "recent_hr_rate": 0.0492
+   },
+   "flags": []
+  },
+  {
+   "player": "Pete Alonso",
+   "team": "bal",
+   "game": "bal-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2318,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 524,
+    "factors": {
+     "sp": 1.063,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0424
+   },
+   "edge_score": 62,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.0,
+    "hard_hit_pct": 56.5,
+    "avg_exit_velo": 94.2,
+    "xiso": 0.258,
+    "recent_hr_rate": 0.0476
    },
    "flags": []
   },
@@ -610,74 +670,14 @@
    "player": "Pete Alonso",
    "team": "bal",
    "game": "bal-tb",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2288,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 524,
-    "factors": {
-     "sp": 1.063,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0424
-   },
-   "edge_score": 61,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.0,
-    "hard_hit_pct": 56.5,
-    "avg_exit_velo": 94.2,
-    "xiso": 0.258,
-    "recent_hr_rate": 0.0476
-   },
-   "flags": []
-  },
-  {
-   "player": "Yordan Alvarez",
-   "team": "hou",
-   "game": "sea-hou",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2577,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 530,
-    "factors": {
-     "sp": 0.986,
-     "park": 1.105
-    },
-    "hr_rate_pa": 0.0582
-   },
-   "edge_score": 61,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 18.1,
-    "hard_hit_pct": 53.4,
-    "avg_exit_velo": 94.5,
-    "xiso": 0.355,
-    "recent_hr_rate": 0.0364
-   },
-   "flags": []
-  },
-  {
-   "player": "Pete Alonso",
-   "team": "bal",
-   "game": "bal-tb",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6757,
+   "model_prob": 0.677,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
+    "epa": 4.65,
+    "order": 1,
     "pa_season": 524,
     "factors": {
      "sp": 1.047
@@ -934,16 +934,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.68,
+   "model_prob": 0.6799,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 544,
+    "pa_season": 545,
     "factors": {
      "sp": 1.041
     },
-    "hit_rate_pa": 0.2441
+    "hit_rate_pa": 0.2438
    },
    "edge_score": 76,
    "score_type": "model_score_0_100",
@@ -1267,18 +1267,18 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4651,
+   "model_prob": 0.4647,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 544,
+    "pa_season": 545,
     "factors": {
      "sp": 1.055,
      "park": 1.0,
      "temp": 1.03
     },
-    "p1b": 0.1355,
+    "p1b": 0.1353,
     "p2b": 0.0477,
     "p3b": 0.0104,
     "phr": 0.0467
@@ -1422,7 +1422,7 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 501,
+    "pa_season": 502,
     "factors": {
      "sp": 1.006
     },
@@ -1527,31 +1527,31 @@
    "flags": []
   },
   {
-   "player": "Pete Crow-Armstrong",
+   "player": "Seiya Suzuki",
    "team": "chc",
    "game": "stl-chc",
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5828,
+   "model_prob": 0.5813,
    "method": "poisson_ge2",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 544,
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 459,
     "factors": {
      "sp": 1.041
     },
-    "lambda_pg": 2.454
+    "lambda_pg": 2.382
    },
-   "edge_score": 2.35,
+   "edge_score": 2.36,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 48.7,
-    "avg_exit_velo": 90.2,
-    "xiso": 0.216,
-    "recent_hr_rate": 0.0484
+    "barrel_pct": 10.2,
+    "hard_hit_pct": 39.2,
+    "avg_exit_velo": 88.9,
+    "xiso": 0.176,
+    "recent_hr_rate": 0.0442
    },
    "flags": []
   },
