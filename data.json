@@ -1,6 +1,6 @@
 {
  "date": "2026-08-16",
- "generated_at": "2026-08-16T22:13:34",
+ "generated_at": "2026-08-16T23:13:21",
  "version": "0.1.0",
  "games": [
   {
@@ -32,13 +32,13 @@
   {
    "away": "bos",
    "home": "pit",
-   "away_win_prob": 0.463,
-   "home_win_prob": 0.467,
+   "away_win_prob": 0.453,
+   "home_win_prob": 0.477,
    "pick": "pit",
-   "confidence": 0.467,
+   "confidence": 0.477,
    "tier": "PASS",
    "total": 8.0,
-   "book_total_line": 11.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -136,13 +136,13 @@
   {
    "away": "sd",
    "home": "cle",
-   "away_win_prob": 0.436,
+   "away_win_prob": 0.536,
    "home_win_prob": 0.454,
-   "pick": "cle",
-   "confidence": 0.454,
+   "pick": "sd",
+   "confidence": 0.536,
    "tier": "PASS",
    "total": 8.3,
-   "book_total_line": 7.5,
+   "book_total_line": 4.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -240,10 +240,10 @@
   {
    "away": "stl",
    "home": "chc",
-   "away_win_prob": 0.493,
+   "away_win_prob": 0.503,
    "home_win_prob": 0.497,
-   "pick": "chc",
-   "confidence": 0.497,
+   "pick": "stl",
+   "confidence": 0.503,
    "tier": "PASS",
    "total": 9.1,
    "book_total_line": null,
@@ -270,9 +270,9 @@
    "home_win_prob": 0.535,
    "pick": "sf",
    "confidence": 0.535,
-   "tier": "LEAN",
+   "tier": "PASS",
    "total": 7.4,
-   "book_total_line": 19.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "cross",
@@ -293,12 +293,12 @@
    "away": "tex",
    "home": "ath",
    "away_win_prob": 0.384,
-   "home_win_prob": 0.526,
+   "home_win_prob": 0.536,
    "pick": "ath",
-   "confidence": 0.526,
+   "confidence": 0.536,
    "tier": "PASS",
    "total": 10.3,
-   "book_total_line": 7.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -318,13 +318,13 @@
   {
    "away": "kc",
    "home": "laa",
-   "away_win_prob": 0.435,
+   "away_win_prob": 0.445,
    "home_win_prob": 0.495,
    "pick": "laa",
    "confidence": 0.495,
    "tier": "PASS",
    "total": 10.4,
-   "book_total_line": 3.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "out",
@@ -350,7 +350,7 @@
    "confidence": 0.477,
    "tier": "PASS",
    "total": 7.2,
-   "book_total_line": 6.5,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -396,6 +396,38 @@
  ],
  "props": [
   {
+   "player": "Jac Caglianone",
+   "team": "kc",
+   "game": "kc-laa",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2452,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 450,
+    "factors": {
+     "sp": 1.086,
+     "park": 1.0,
+     "temp": 1.084,
+     "wind": 1.03
+    },
+    "hr_rate_pa": 0.0506
+   },
+   "edge_score": 70,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.8,
+    "hard_hit_pct": 55.4,
+    "avg_exit_velo": 93.3,
+    "xiso": 0.236,
+    "recent_hr_rate": 0.0722
+   },
+   "flags": []
+  },
+  {
    "player": "Heriberto Hern\u00e1ndez",
    "team": "mia",
    "game": "mia-cin",
@@ -428,34 +460,34 @@
    "flags": []
   },
   {
-   "player": "Jac Caglianone",
+   "player": "Carter Jensen",
    "team": "kc",
    "game": "kc-laa",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2452,
+   "model_prob": 0.2254,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 450,
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 459,
     "factors": {
      "sp": 1.086,
      "park": 1.0,
      "temp": 1.084,
      "wind": 1.03
     },
-    "hr_rate_pa": 0.0506
+    "hr_rate_pa": 0.0404
    },
    "edge_score": 68,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 14.8,
-    "hard_hit_pct": 55.4,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.236,
-    "recent_hr_rate": 0.0722
+    "barrel_pct": 9.9,
+    "hard_hit_pct": 43.2,
+    "avg_exit_velo": 90.7,
+    "xiso": 0.153,
+    "recent_hr_rate": 0.0278
    },
    "flags": []
   },
@@ -488,38 +520,6 @@
     "avg_exit_velo": 91.6,
     "xiso": 0.21,
     "recent_hr_rate": 0.0579
-   },
-   "flags": []
-  },
-  {
-   "player": "Carter Jensen",
-   "team": "kc",
-   "game": "kc-laa",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2256,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 458,
-    "factors": {
-     "sp": 1.086,
-     "park": 1.0,
-     "temp": 1.084,
-     "wind": 1.03
-    },
-    "hr_rate_pa": 0.0405
-   },
-   "edge_score": 66,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 9.9,
-    "hard_hit_pct": 43.2,
-    "avg_exit_velo": 90.7,
-    "xiso": 0.153,
-    "recent_hr_rate": 0.0278
    },
    "flags": []
   },
@@ -717,16 +717,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.693,
+   "model_prob": 0.6921,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 465,
+    "pa_season": 466,
     "factors": {
      "sp": 1.065
     },
-    "hit_rate_pa": 0.2584
+    "hit_rate_pa": 0.258
    },
    "edge_score": 80,
    "score_type": "model_score_0_100",
@@ -949,16 +949,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6793,
+   "model_prob": 0.6796,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 540,
+    "pa_season": 541,
     "factors": {
      "sp": 1.009
     },
-    "hit_rate_pa": 0.2418
+    "hit_rate_pa": 0.2428
    },
    "edge_score": 71,
    "score_type": "model_score_0_100",
@@ -1177,18 +1177,18 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4489,
+   "model_prob": 0.4485,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 524,
+    "pa_season": 525,
     "factors": {
      "sp": 0.915,
      "temp": 1.078,
      "wind": 1.02
     },
-    "p1b": 0.142,
+    "p1b": 0.1418,
     "p2b": 0.0452,
     "p3b": 0.0049,
     "phr": 0.0443
