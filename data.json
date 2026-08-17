@@ -1,17 +1,17 @@
 {
  "date": "2026-08-17",
- "generated_at": "2026-08-17T13:34:14",
+ "generated_at": "2026-08-17T15:18:43",
  "version": "0.1.0",
  "games": [
   {
    "away": "stl",
    "home": "cin",
-   "away_win_prob": 0.36,
-   "home_win_prob": 0.38,
-   "pick": "cin",
-   "confidence": 0.38,
+   "away_win_prob": 0.396,
+   "home_win_prob": 0.344,
+   "pick": "stl",
+   "confidence": 0.396,
    "tier": "PASS",
-   "total": 10.2,
+   "total": 9.5,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
@@ -32,12 +32,12 @@
   {
    "away": "stl",
    "home": "cin",
-   "away_win_prob": 0.389,
-   "home_win_prob": 0.451,
-   "pick": "cin",
-   "confidence": 0.451,
+   "away_win_prob": 0.515,
+   "home_win_prob": 0.425,
+   "pick": "stl",
+   "confidence": 0.515,
    "tier": "PASS",
-   "total": 10.6,
+   "total": 10.2,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
@@ -206,7 +206,7 @@
    "confidence": 0.517,
    "tier": "PASS",
    "total": 9.4,
-   "book_total_line": 9.0,
+   "book_total_line": 9.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -372,6 +372,37 @@
    "flags": []
   },
   {
+   "player": "Matt Olson",
+   "team": "atl",
+   "game": "atl-min",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2566,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 541,
+    "factors": {
+     "sp": 1.037,
+     "park": 1.0,
+     "temp": 1.066
+    },
+    "hr_rate_pa": 0.0596
+   },
+   "edge_score": 67,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.8,
+    "hard_hit_pct": 50.0,
+    "avg_exit_velo": 92.5,
+    "xiso": 0.275,
+    "recent_hr_rate": 0.088
+   },
+   "flags": []
+  },
+  {
    "player": "Joshua B\u00e1ez",
    "team": "stl",
    "game": "stl-cin",
@@ -400,37 +431,6 @@
     "avg_exit_velo": null,
     "xiso": 0.613,
     "recent_hr_rate": null
-   },
-   "flags": []
-  },
-  {
-   "player": "Matt Olson",
-   "team": "atl",
-   "game": "atl-min",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2566,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 541,
-    "factors": {
-     "sp": 1.037,
-     "park": 1.0,
-     "temp": 1.066
-    },
-    "hr_rate_pa": 0.0596
-   },
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.8,
-    "hard_hit_pct": 50.0,
-    "avg_exit_velo": 92.5,
-    "xiso": 0.275,
-    "recent_hr_rate": 0.088
    },
    "flags": []
   },
@@ -498,6 +498,37 @@
    "flags": []
   },
   {
+   "player": "Drake Baldwin",
+   "team": "atl",
+   "game": "atl-min",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2229,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 448,
+    "factors": {
+     "sp": 1.037,
+     "park": 1.0,
+     "temp": 1.066
+    },
+    "hr_rate_pa": 0.0433
+   },
+   "edge_score": 58,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.2,
+    "hard_hit_pct": 51.2,
+    "avg_exit_velo": 91.6,
+    "xiso": 0.217,
+    "recent_hr_rate": 0.0388
+   },
+   "flags": []
+  },
+  {
    "player": "Pete Crow-Armstrong",
    "team": "chc",
    "game": "cws-chc",
@@ -556,37 +587,6 @@
     "avg_exit_velo": 93.1,
     "xiso": 0.261,
     "recent_hr_rate": 0.0442
-   },
-   "flags": []
-  },
-  {
-   "player": "Drake Baldwin",
-   "team": "atl",
-   "game": "atl-min",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2229,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 448,
-    "factors": {
-     "sp": 1.037,
-     "park": 1.0,
-     "temp": 1.066
-    },
-    "hr_rate_pa": 0.0433
-   },
-   "edge_score": 56,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.2,
-    "hard_hit_pct": 51.2,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.217,
-    "recent_hr_rate": 0.0388
    },
    "flags": []
   },
@@ -887,22 +887,21 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.45,
+   "model_prob": 0.4456,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.25,
     "order": 5,
     "pa_season": 9,
     "factors": {
-     "sp": 1.024,
      "park": 1.175,
      "temp": 1.072,
      "wind": 1.02
     },
     "p1b": 0.1378,
-    "p2b": 0.0556,
-    "p3b": 0.0045,
-    "phr": 0.0524
+    "p2b": 0.0543,
+    "p3b": 0.0044,
+    "phr": 0.0511
    },
    "edge_score": 6.0,
    "score_type": "per_game_rate",
@@ -1154,6 +1153,41 @@
    "flags": []
   },
   {
+   "player": "Elly De La Cruz",
+   "team": "cin",
+   "game": "stl-cin",
+   "stat": "TB",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": 0.467,
+   "method": "tb_dp_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 465,
+    "factors": {
+     "sp": 0.97,
+     "park": 1.175,
+     "temp": 1.072,
+     "wind": 1.02
+    },
+    "p1b": 0.1395,
+    "p2b": 0.0506,
+    "p3b": 0.0099,
+    "phr": 0.0477
+   },
+   "edge_score": 1.88,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 13.5,
+    "hard_hit_pct": 51.0,
+    "avg_exit_velo": 93.7,
+    "xiso": 0.203,
+    "recent_hr_rate": 0.04
+   },
+   "flags": []
+  },
+  {
    "player": "Kyle Schwarber",
    "team": "phi",
    "game": "mia-phi",
@@ -1188,55 +1222,20 @@
    "flags": []
   },
   {
-   "player": "Pete Alonso",
-   "team": "bal",
-   "game": "bal-tb",
-   "stat": "TB",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": 0.4295,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 538,
-    "factors": {
-     "sp": 1.001,
-     "park": 0.93
-    },
-    "p1b": 0.1379,
-    "p2b": 0.04,
-    "p3b": 0.0012,
-    "phr": 0.0403
-   },
-   "edge_score": 1.83,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 56.5,
-    "avg_exit_velo": 94.2,
-    "xiso": 0.259,
-    "recent_hr_rate": 0.0504
-   },
-   "flags": []
-  },
-  {
    "player": "Joshua B\u00e1ez",
    "team": "stl",
    "game": "stl-cin",
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5598,
+   "model_prob": 0.5587,
    "method": "poisson_ge2",
    "prob_inputs": {
     "epa": 4.25,
     "order": 5,
     "pa_season": 9,
-    "factors": {
-     "sp": 1.018
-    },
-    "lambda_pg": 1.769
+    "factors": {},
+    "lambda_pg": 1.738
    },
    "edge_score": 5.5,
    "score_type": "per_game_rate",
@@ -1343,16 +1342,14 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5761,
+   "model_prob": 0.5755,
    "method": "poisson_ge2",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
     "pa_season": 512,
-    "factors": {
-     "sp": 1.018
-    },
-    "lambda_pg": 2.311
+    "factors": {},
+    "lambda_pg": 2.27
    },
    "edge_score": 2.44,
    "score_type": "per_game_rate",
