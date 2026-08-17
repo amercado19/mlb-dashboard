@@ -1,6 +1,6 @@
 {
  "date": "2026-08-16",
- "generated_at": "2026-08-17T02:12:20",
+ "generated_at": "2026-08-17T03:39:05",
  "version": "0.1.0",
  "games": [
   {
@@ -63,7 +63,7 @@
    "pick": "atl",
    "confidence": 0.543,
    "tier": "PASS",
-   "total": 9.6,
+   "total": 9.8,
    "book_total_line": null,
    "wind": {
     "lf": {
@@ -371,12 +371,12 @@
    "away": "sea",
    "home": "hou",
    "away_win_prob": 0.502,
-   "home_win_prob": 0.538,
+   "home_win_prob": 0.528,
    "pick": "hou",
-   "confidence": 0.538,
-   "tier": "LEAN",
+   "confidence": 0.528,
+   "tier": "PASS",
    "total": 8.9,
-   "book_total_line": 5.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -411,10 +411,10 @@
     "factors": {
      "sp": 1.125,
      "park": 1.175,
-     "temp": 1.066,
+     "temp": 1.072,
      "wind": 1.02
     },
-    "hr_rate_pa": 0.0615
+    "hr_rate_pa": 0.0618
    },
    "edge_score": 69,
    "score_type": "model_score_0_100",
@@ -456,36 +456,6 @@
     "avg_exit_velo": 93.3,
     "xiso": 0.236,
     "recent_hr_rate": 0.0722
-   },
-   "flags": []
-  },
-  {
-   "player": "Yordan Alvarez",
-   "team": "hou",
-   "game": "sea-hou",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2568,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 543,
-    "factors": {
-     "sp": 0.97,
-     "park": 1.105
-    },
-    "hr_rate_pa": 0.0576
-   },
-   "edge_score": 64,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 17.7,
-    "hard_hit_pct": 53.5,
-    "avg_exit_velo": 94.5,
-    "xiso": 0.354,
-    "recent_hr_rate": 0.042
    },
    "flags": []
   },
@@ -537,9 +507,9 @@
     "factors": {
      "sp": 1.004,
      "park": 1.175,
-     "temp": 1.114
+     "temp": 1.12
     },
-    "hr_rate_pa": 0.0708
+    "hr_rate_pa": 0.0712
    },
    "edge_score": 61,
    "score_type": "model_score_0_100",
@@ -568,10 +538,10 @@
     "factors": {
      "sp": 1.125,
      "park": 1.175,
-     "temp": 1.066,
+     "temp": 1.072,
      "wind": 1.02
     },
-    "hr_rate_pa": 0.0319
+    "hr_rate_pa": 0.0321
    },
    "edge_score": 61,
    "score_type": "model_score_0_100",
@@ -591,7 +561,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2214,
+   "model_prob": 0.2222,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
@@ -600,9 +570,9 @@
     "factors": {
      "sp": 1.047,
      "park": 1.0,
-     "temp": 1.06
+     "temp": 1.066
     },
-    "hr_rate_pa": 0.041
+    "hr_rate_pa": 0.0412
    },
    "edge_score": 61,
    "score_type": "model_score_0_100",
@@ -622,7 +592,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2255,
+   "model_prob": 0.2263,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.25,
@@ -631,9 +601,9 @@
     "factors": {
      "sp": 1.047,
      "park": 1.0,
-     "temp": 1.06
+     "temp": 1.066
     },
-    "hr_rate_pa": 0.0442
+    "hr_rate_pa": 0.0444
    },
    "edge_score": 61,
    "score_type": "model_score_0_100",
@@ -653,7 +623,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.1986,
+   "model_prob": 0.1996,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
@@ -662,10 +632,10 @@
     "factors": {
      "sp": 1.076,
      "park": 0.86,
-     "temp": 1.018,
+     "temp": 1.024,
      "wind": 1.05
     },
-    "hr_rate_pa": 0.0353
+    "hr_rate_pa": 0.0355
    },
    "edge_score": 60,
    "score_type": "model_score_0_100",
@@ -675,6 +645,36 @@
     "avg_exit_velo": 91.6,
     "xiso": 0.21,
     "recent_hr_rate": 0.0579
+   },
+   "flags": []
+  },
+  {
+   "player": "Yordan Alvarez",
+   "team": "hou",
+   "game": "sea-hou",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2568,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 543,
+    "factors": {
+     "sp": 0.97,
+     "park": 1.105
+    },
+    "hr_rate_pa": 0.0576
+   },
+   "edge_score": 59,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 17.7,
+    "hard_hit_pct": 53.5,
+    "avg_exit_velo": 94.5,
+    "xiso": 0.354,
+    "recent_hr_rate": 0.042
    },
    "flags": []
   },
@@ -1005,7 +1005,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4296,
+   "model_prob": 0.4302,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.25,
@@ -1014,12 +1014,12 @@
     "factors": {
      "sp": 1.047,
      "park": 1.0,
-     "temp": 1.06
+     "temp": 1.066
     },
     "p1b": 0.1378,
-    "p2b": 0.0469,
+    "p2b": 0.0471,
     "p3b": 0.0038,
-    "phr": 0.0442
+    "phr": 0.0444
    },
    "edge_score": 6.0,
    "score_type": "per_game_rate",
@@ -1115,12 +1115,12 @@
     "factors": {
      "sp": 1.004,
      "park": 1.175,
-     "temp": 1.114
+     "temp": 1.12
     },
     "p1b": 0.1212,
-    "p2b": 0.0673,
+    "p2b": 0.0676,
     "p3b": 0.0016,
-    "phr": 0.0708
+    "phr": 0.0712
    },
    "edge_score": 2.14,
    "score_type": "per_game_rate",
@@ -1140,7 +1140,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4243,
+   "model_prob": 0.4247,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.55,
@@ -1149,13 +1149,13 @@
     "factors": {
      "sp": 0.981,
      "park": 0.86,
-     "temp": 1.018,
+     "temp": 1.024,
      "wind": 1.05
     },
     "p1b": 0.1444,
-    "p2b": 0.0371,
+    "p2b": 0.0374,
     "p3b": 0.0028,
-    "phr": 0.0378
+    "phr": 0.038
    },
    "edge_score": 2.0,
    "score_type": "per_game_rate",
@@ -1218,13 +1218,13 @@
     "factors": {
      "sp": 0.943,
      "park": 0.85,
-     "temp": 0.976,
+     "temp": 0.988,
      "wind": 1.06
     },
     "p1b": 0.1399,
-    "p2b": 0.0346,
+    "p2b": 0.035,
     "p3b": 0.0028,
-    "phr": 0.0299
+    "phr": 0.0303
    },
    "edge_score": 2.25,
    "score_type": "per_game_rate",
@@ -1277,7 +1277,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.459,
+   "model_prob": 0.4615,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.55,
@@ -1286,12 +1286,12 @@
     "factors": {
      "sp": 1.049,
      "park": 1.0,
-     "temp": 1.048
+     "temp": 1.06
     },
     "p1b": 0.1281,
-    "p2b": 0.0489,
-    "p3b": 0.0033,
-    "phr": 0.0558
+    "p2b": 0.0494,
+    "p3b": 0.0034,
+    "phr": 0.0564
    },
    "edge_score": 2.14,
    "score_type": "per_game_rate",
