@@ -1,6 +1,6 @@
 {
  "date": "2026-08-17",
- "generated_at": "2026-08-17T21:18:43",
+ "generated_at": "2026-08-17T22:16:08",
  "version": "0.1.0",
  "games": [
   {
@@ -272,7 +272,7 @@
    "confidence": 0.59,
    "tier": "PASS",
    "total": 11.1,
-   "book_total_line": 11.0,
+   "book_total_line": 10.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -1044,22 +1044,22 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4314,
+   "model_prob": 0.4312,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 538,
+    "pa_season": 539,
     "factors": {
      "sp": 1.004,
      "park": 0.93
     },
-    "p1b": 0.1393,
+    "p1b": 0.1391,
     "p2b": 0.0346,
     "p3b": 0.0023,
-    "phr": 0.0494
+    "phr": 0.0493
    },
-   "edge_score": 2.06,
+   "edge_score": 2.04,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 13.6,
@@ -1140,40 +1140,6 @@
    "flags": []
   },
   {
-   "player": "Hunter Goodman",
-   "team": "col",
-   "game": "lad-col",
-   "stat": "TB",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": 0.4622,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 460,
-    "factors": {
-     "sp": 0.894,
-     "park": 1.2,
-     "temp": 1.12
-    },
-    "p1b": 0.1239,
-    "p2b": 0.0459,
-    "p3b": 0.0032,
-    "phr": 0.0685
-   },
-   "edge_score": 2.02,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 16.6,
-    "hard_hit_pct": 46.0,
-    "avg_exit_velo": 90.6,
-    "xiso": 0.236,
-    "recent_hr_rate": 0.0833
-   },
-   "flags": []
-  },
-  {
    "player": "Elly De La Cruz",
    "team": "cin",
    "game": "stl-cin",
@@ -1240,6 +1206,40 @@
     "avg_exit_velo": 93.1,
     "xiso": 0.261,
     "recent_hr_rate": 0.0442
+   },
+   "flags": []
+  },
+  {
+   "player": "Adael Amador",
+   "team": "col",
+   "game": "lad-col",
+   "stat": "TB",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": 0.43,
+   "method": "tb_dp_over_PA",
+   "prob_inputs": {
+    "epa": 4.05,
+    "order": 7,
+    "pa_season": 4,
+    "factors": {
+     "sp": 0.894,
+     "park": 1.2,
+     "temp": 1.12
+    },
+    "p1b": 0.1412,
+    "p2b": 0.0516,
+    "p3b": 0.0042,
+    "phr": 0.0407
+   },
+   "edge_score": 2.0,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": null,
+    "hard_hit_pct": null,
+    "avg_exit_velo": null,
+    "xiso": 0.546,
+    "recent_hr_rate": null
    },
    "flags": []
   },
@@ -1311,13 +1311,13 @@
    "model_prob": 0.5532,
    "method": "poisson_ge2",
    "prob_inputs": {
-    "epa": 3.85,
-    "order": 9,
+    "epa": 4.05,
+    "order": 7,
     "pa_season": 4,
     "factors": {
      "sp": 0.921
     },
-    "lambda_pg": 1.37
+    "lambda_pg": 1.442
    },
    "edge_score": 3.5,
    "score_type": "per_game_rate",
@@ -1356,35 +1356,6 @@
     "avg_exit_velo": 92.7,
     "xiso": 0.213,
     "recent_hr_rate": 0.0171
-   },
-   "flags": []
-  },
-  {
-   "player": "Yandy D\u00edaz",
-   "team": "tb",
-   "game": "bal-tb",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": 0.5761,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 525,
-    "factors": {
-     "sp": 1.003
-    },
-    "lambda_pg": 2.365
-   },
-   "edge_score": 2.36,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 6.8,
-    "hard_hit_pct": 47.6,
-    "avg_exit_velo": 90.9,
-    "xiso": 0.157,
-    "recent_hr_rate": 0.0305
    },
    "flags": []
   },
@@ -1472,6 +1443,35 @@
     "avg_exit_velo": 93.5,
     "xiso": 0.274,
     "recent_hr_rate": 0.042
+   },
+   "flags": []
+  },
+  {
+   "player": "Yandy D\u00edaz",
+   "team": "tb",
+   "game": "bal-tb",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": 0.5761,
+   "method": "poisson_ge2",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 526,
+    "factors": {
+     "sp": 1.003
+    },
+    "lambda_pg": 2.35
+   },
+   "edge_score": 2.34,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 6.8,
+    "hard_hit_pct": 47.6,
+    "avg_exit_velo": 90.9,
+    "xiso": 0.157,
+    "recent_hr_rate": 0.0305
    },
    "flags": []
   },
