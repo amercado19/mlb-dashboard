@@ -1,6 +1,6 @@
 {
  "date": "2026-08-18",
- "generated_at": "2026-08-18T13:36:52",
+ "generated_at": "2026-08-18T15:24:40",
  "version": "0.1.0",
  "games": [
   {
@@ -11,22 +11,22 @@
    "pick": "nyy",
    "confidence": 0.522,
    "tier": "PASS",
-   "total": 9.0,
+   "total": 8.7,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 4
+     "dir": "cross",
+     "mph": 1
     },
     "cf": {
      "dir": "cross",
-     "mph": 0
+     "mph": 2
     },
     "rf": {
-     "dir": "out",
-     "mph": 4
+     "dir": "cross",
+     "mph": 1
     },
-    "out_mph": 4
+    "out_mph": 0
    }
   },
   {
@@ -68,7 +68,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
      "dir": "cross",
@@ -76,9 +76,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
-    "out_mph": 4
+    "out_mph": 5
    }
   },
   {
@@ -90,7 +90,7 @@
    "confidence": 0.544,
    "tier": "PASS",
    "total": 10.6,
-   "book_total_line": 8.5,
+   "book_total_line": 9.0,
    "wind": {
     "lf": {
      "dir": "in",
@@ -146,7 +146,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -154,9 +154,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 5
+    "out_mph": 4
    }
   },
   {
@@ -183,18 +183,18 @@
    "book_total_line": 8.5,
    "wind": {
     "lf": {
-     "dir": "out",
-     "mph": 5
+     "dir": "in",
+     "mph": 4
     },
     "cf": {
-     "dir": "out",
-     "mph": 7
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 7
+    "out_mph": 4
    }
   },
   {
@@ -205,22 +205,22 @@
    "pick": "ath",
    "confidence": 0.46,
    "tier": "PASS",
-   "total": 10.5,
-   "book_total_line": 9.5,
+   "total": 10.3,
+   "book_total_line": 9.0,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 3
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 4
     },
     "rf": {
-     "dir": "out",
-     "mph": 5
+     "dir": "in",
+     "mph": 3
     },
-    "out_mph": 5
+    "out_mph": 0
    }
   },
   {
@@ -240,13 +240,13 @@
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 9
     },
     "rf": {
      "dir": "out",
      "mph": 6
     },
-    "out_mph": 8
+    "out_mph": 9
    }
   },
   {
@@ -335,7 +335,7 @@
    "pick": "hou",
    "confidence": 0.507,
    "tier": "PASS",
-   "total": 11.9,
+   "total": 12.1,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
@@ -366,7 +366,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "cross",
@@ -374,9 +374,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 5
     },
-    "out_mph": 6
+    "out_mph": 5
    }
   }
  ],
@@ -578,9 +578,9 @@
      "sp": 1.035,
      "park": 1.0,
      "temp": 1.066,
-     "wind": 1.03
+     "wind": 1.04
     },
-    "hr_rate_pa": 0.0609
+    "hr_rate_pa": 0.0615
    },
    "edge_score": 71,
    "score_type": "model_score_0_100",
@@ -600,7 +600,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2261,
+   "model_prob": 0.2276,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
@@ -610,9 +610,9 @@
      "sp": 1.035,
      "park": 1.0,
      "temp": 1.066,
-     "wind": 1.03
+     "wind": 1.04
     },
-    "hr_rate_pa": 0.0442
+    "hr_rate_pa": 0.0447
    },
    "edge_score": 62,
    "score_type": "model_score_0_100",
@@ -1017,7 +1017,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4663,
+   "model_prob": 0.4675,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.45,
@@ -1027,12 +1027,12 @@
      "sp": 1.035,
      "park": 1.0,
      "temp": 1.066,
-     "wind": 1.03
+     "wind": 1.04
     },
     "p1b": 0.1205,
-    "p2b": 0.0593,
+    "p2b": 0.0598,
     "p3b": 0.0014,
-    "phr": 0.0609
+    "phr": 0.0615
    },
    "edge_score": 2.14,
    "score_type": "per_game_rate",
@@ -1086,7 +1086,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4505,
+   "model_prob": 0.4524,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.55,
@@ -1096,12 +1096,12 @@
      "sp": 0.989,
      "park": 1.0,
      "temp": 1.066,
-     "wind": 1.03
+     "wind": 1.04
     },
     "p1b": 0.1287,
-    "p2b": 0.0479,
+    "p2b": 0.0484,
     "p3b": 0.0033,
-    "phr": 0.0547
+    "phr": 0.0552
    },
    "edge_score": 2.13,
    "score_type": "per_game_rate",
@@ -1154,7 +1154,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4697,
+   "model_prob": 0.4676,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
@@ -1163,12 +1163,13 @@
     "factors": {
      "sp": 1.006,
      "park": 1.105,
-     "temp": 1.09
+     "temp": 1.072,
+     "wind": 1.0
     },
     "p1b": 0.1182,
-    "p2b": 0.0495,
-    "p3b": 0.0061,
-    "phr": 0.0634
+    "p2b": 0.0487,
+    "p3b": 0.006,
+    "phr": 0.0623
    },
    "edge_score": 1.98,
    "score_type": "per_game_rate",
@@ -1188,7 +1189,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4527,
+   "model_prob": 0.4496,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.55,
@@ -1197,12 +1198,13 @@
     "factors": {
      "sp": 0.973,
      "park": 1.105,
-     "temp": 1.09
+     "temp": 1.072,
+     "wind": 1.0
     },
     "p1b": 0.1384,
-    "p2b": 0.0501,
-    "p3b": 0.0015,
-    "phr": 0.0519
+    "p2b": 0.0493,
+    "p3b": 0.0014,
+    "phr": 0.051
    },
    "edge_score": 1.86,
    "score_type": "per_game_rate",
@@ -1222,7 +1224,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.462,
+   "model_prob": 0.4642,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
@@ -1231,13 +1233,13 @@
     "factors": {
      "sp": 1.024,
      "park": 1.0,
-     "temp": 1.024,
+     "temp": 1.036,
      "wind": 1.03
     },
     "p1b": 0.1338,
-    "p2b": 0.0477,
-    "p3b": 0.0101,
-    "phr": 0.0493
+    "p2b": 0.0483,
+    "p3b": 0.0102,
+    "phr": 0.0499
    },
    "edge_score": 2.1,
    "score_type": "per_game_rate",
