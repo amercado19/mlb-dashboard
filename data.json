@@ -1,6 +1,6 @@
 {
  "date": "2026-08-18",
- "generated_at": "2026-08-18T20:14:28",
+ "generated_at": "2026-08-18T21:16:44",
  "version": "0.1.0",
  "games": [
   {
@@ -146,17 +146,17 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 2
+     "mph": 4
     },
     "cf": {
-     "dir": "in",
-     "mph": 3
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
-     "dir": "in",
-     "mph": 2
+     "dir": "out",
+     "mph": 4
     },
-    "out_mph": 0
+    "out_mph": 4
    }
   },
   {
@@ -214,27 +214,27 @@
   {
    "away": "ath",
    "home": "kc",
-   "away_win_prob": 0.424,
-   "home_win_prob": 0.416,
-   "pick": "ath",
-   "confidence": 0.424,
+   "away_win_prob": 0.35,
+   "home_win_prob": 0.39,
+   "pick": "kc",
+   "confidence": 0.39,
    "tier": "PASS",
-   "total": 9.6,
+   "total": 9.5,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "cf": {
-     "dir": "in",
-     "mph": 5
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
-     "dir": "in",
-     "mph": 4
+     "dir": "out",
+     "mph": 3
     },
-    "out_mph": 0
+    "out_mph": 3
    }
   },
   {
@@ -254,13 +254,13 @@
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 9
     },
     "rf": {
      "dir": "out",
      "mph": 6
     },
-    "out_mph": 8
+    "out_mph": 9
    }
   },
   {
@@ -328,17 +328,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 7
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 5
     },
-    "out_mph": 8
+    "out_mph": 7
    }
   },
   {
@@ -380,7 +380,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 6
     },
     "cf": {
      "dir": "cross",
@@ -388,9 +388,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 6
     },
-    "out_mph": 4
+    "out_mph": 6
    }
   }
  ],
@@ -411,9 +411,9 @@
     "factors": {
      "sp": 1.078,
      "park": 1.2,
-     "temp": 1.102
+     "temp": 1.096
     },
-    "hr_rate_pa": 0.0658
+    "hr_rate_pa": 0.0654
    },
    "edge_score": 89,
    "score_type": "model_score_0_100",
@@ -442,9 +442,9 @@
     "factors": {
      "sp": 1.078,
      "park": 1.2,
-     "temp": 1.102
+     "temp": 1.096
     },
-    "hr_rate_pa": 0.0665
+    "hr_rate_pa": 0.0662
    },
    "edge_score": 77,
    "score_type": "model_score_0_100",
@@ -565,9 +565,9 @@
      "sp": 1.035,
      "park": 1.0,
      "temp": 1.06,
-     "wind": 1.03
+     "wind": 1.04
     },
-    "hr_rate_pa": 0.0606
+    "hr_rate_pa": 0.0612
    },
    "edge_score": 71,
    "score_type": "model_score_0_100",
@@ -618,7 +618,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2311,
+   "model_prob": 0.2305,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.25,
@@ -627,9 +627,9 @@
     "factors": {
      "sp": 1.037,
      "park": 1.175,
-     "temp": 1.072
+     "temp": 1.066
     },
-    "hr_rate_pa": 0.0504
+    "hr_rate_pa": 0.0501
    },
    "edge_score": 64,
    "score_type": "model_score_0_100",
@@ -649,7 +649,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2414,
+   "model_prob": 0.2407,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
@@ -658,9 +658,9 @@
     "factors": {
      "sp": 1.059,
      "park": 1.175,
-     "temp": 1.072
+     "temp": 1.066
     },
-    "hr_rate_pa": 0.0505
+    "hr_rate_pa": 0.0502
    },
    "edge_score": 64,
    "score_type": "model_score_0_100",
@@ -680,7 +680,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2004,
+   "model_prob": 0.2001,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
@@ -689,9 +689,9 @@
     "factors": {
      "sp": 1.102,
      "park": 1.0,
-     "temp": 1.048
+     "temp": 1.042
     },
-    "hr_rate_pa": 0.0373
+    "hr_rate_pa": 0.0371
    },
    "edge_score": 62,
    "score_type": "model_score_0_100",
@@ -1001,7 +1001,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.441,
+   "model_prob": 0.4406,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.25,
@@ -1010,12 +1010,12 @@
     "factors": {
      "sp": 1.037,
      "park": 1.175,
-     "temp": 1.072
+     "temp": 1.066
     },
     "p1b": 0.1315,
-    "p2b": 0.0534,
+    "p2b": 0.0531,
     "p3b": 0.0043,
-    "phr": 0.0504
+    "phr": 0.0501
    },
    "edge_score": 3.0,
    "score_type": "per_game_rate",
@@ -1103,7 +1103,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4656,
+   "model_prob": 0.4668,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.45,
@@ -1113,12 +1113,12 @@
      "sp": 1.035,
      "park": 1.0,
      "temp": 1.06,
-     "wind": 1.03
+     "wind": 1.04
     },
     "p1b": 0.1205,
-    "p2b": 0.0589,
+    "p2b": 0.0595,
     "p3b": 0.0014,
-    "phr": 0.0606
+    "phr": 0.0612
    },
    "edge_score": 2.14,
    "score_type": "per_game_rate",
@@ -1147,12 +1147,12 @@
     "factors": {
      "sp": 1.078,
      "park": 1.2,
-     "temp": 1.102
+     "temp": 1.096
     },
     "p1b": 0.1436,
-    "p2b": 0.0636,
-    "p3b": 0.007,
-    "phr": 0.0658
+    "p2b": 0.0633,
+    "p3b": 0.0069,
+    "phr": 0.0654
    },
    "edge_score": 2.08,
    "score_type": "per_game_rate",
@@ -1240,7 +1240,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4467,
+   "model_prob": 0.4449,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
@@ -1250,12 +1250,12 @@
      "sp": 0.943,
      "park": 1.0,
      "temp": 1.024,
-     "wind": 1.03
+     "wind": 1.02
     },
     "p1b": 0.1338,
-    "p2b": 0.044,
-    "p3b": 0.0093,
-    "phr": 0.0454
+    "p2b": 0.0435,
+    "p3b": 0.0092,
+    "phr": 0.045
    },
    "edge_score": 2.1,
    "score_type": "per_game_rate",
@@ -1319,12 +1319,12 @@
     "factors": {
      "sp": 1.037,
      "park": 1.175,
-     "temp": 1.072
+     "temp": 1.066
     },
     "p1b": 0.1578,
-    "p2b": 0.0653,
+    "p2b": 0.065,
     "p3b": 0.0017,
-    "phr": 0.053
+    "phr": 0.0527
    },
    "edge_score": 1.94,
    "score_type": "per_game_rate",
@@ -1334,35 +1334,6 @@
     "avg_exit_velo": 92.6,
     "xiso": 0.21,
     "recent_hr_rate": 0.0165
-   },
-   "flags": []
-  },
-  {
-   "player": "Adael Amador",
-   "team": "col",
-   "game": "lad-col",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": 0.556,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.05,
-    "order": 7,
-    "pa_season": 8,
-    "factors": {
-     "sp": 1.028
-    },
-    "lambda_pg": 1.663
-   },
-   "edge_score": 3.67,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": null,
-    "hard_hit_pct": null,
-    "avg_exit_velo": null,
-    "xiso": 0.225,
-    "recent_hr_rate": null
    },
    "flags": []
   },
@@ -1624,6 +1595,35 @@
     "avg_exit_velo": 93.5,
     "xiso": 0.284,
     "recent_hr_rate": 0.0583
+   },
+   "flags": []
+  },
+  {
+   "player": "Pete Crow-Armstrong",
+   "team": "chc",
+   "game": "cws-chc",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": 0.5761,
+   "method": "poisson_ge2",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 561,
+    "factors": {
+     "sp": 0.957
+    },
+    "lambda_pg": 2.299
+   },
+   "edge_score": 2.4,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 48.8,
+    "avg_exit_velo": 90.3,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.0647
    },
    "flags": []
   }
