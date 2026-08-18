@@ -1,6 +1,6 @@
 {
  "date": "2026-08-18",
- "generated_at": "2026-08-18T19:22:25",
+ "generated_at": "2026-08-18T20:14:28",
  "version": "0.1.0",
  "games": [
   {
@@ -42,17 +42,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 3
+     "mph": 4
     },
     "cf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
     "rf": {
      "dir": "out",
-     "mph": 3
+     "mph": 4
     },
-    "out_mph": 4
+    "out_mph": 5
    }
   },
   {
@@ -94,7 +94,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -102,9 +102,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 4
     },
-    "out_mph": 6
+    "out_mph": 4
    }
   },
   {
@@ -149,14 +149,14 @@
      "mph": 2
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 3
     },
     "rf": {
-     "dir": "out",
+     "dir": "in",
      "mph": 2
     },
-    "out_mph": 2
+    "out_mph": 0
    }
   },
   {
@@ -197,44 +197,44 @@
    "book_total_line": 8.5,
    "wind": {
     "lf": {
-     "dir": "in",
+     "dir": "out",
      "mph": 5
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 7
     },
     "rf": {
      "dir": "out",
      "mph": 5
     },
-    "out_mph": 5
+    "out_mph": 7
    }
   },
   {
    "away": "ath",
    "home": "kc",
-   "away_win_prob": 0.46,
-   "home_win_prob": 0.38,
+   "away_win_prob": 0.424,
+   "home_win_prob": 0.416,
    "pick": "ath",
-   "confidence": 0.46,
+   "confidence": 0.424,
    "tier": "PASS",
-   "total": 10.5,
+   "total": 9.6,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 2
+     "mph": 4
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 5
     },
     "rf": {
-     "dir": "out",
-     "mph": 2
+     "dir": "in",
+     "mph": 4
     },
-    "out_mph": 2
+    "out_mph": 0
    }
   },
   {
@@ -246,7 +246,7 @@
    "confidence": 0.399,
    "tier": "PASS",
    "total": 9.1,
-   "book_total_line": 9.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -318,27 +318,27 @@
   {
    "away": "cws",
    "home": "chc",
-   "away_win_prob": 0.326,
-   "home_win_prob": 0.564,
+   "away_win_prob": 0.48,
+   "home_win_prob": 0.51,
    "pick": "chc",
-   "confidence": 0.564,
+   "confidence": 0.51,
    "tier": "PASS",
-   "total": 8.8,
+   "total": 8.1,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
     "cf": {
      "dir": "out",
-     "mph": 7
+     "mph": 8
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
-    "out_mph": 7
+    "out_mph": 8
    }
   },
   {
@@ -380,7 +380,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -388,9 +388,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 4
     },
-    "out_mph": 6
+    "out_mph": 4
    }
   }
  ],
@@ -914,11 +914,11 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6923,
+   "model_prob": 0.682,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
+    "epa": 4.35,
+    "order": 4,
     "pa_season": 502,
     "factors": {
      "sp": 1.05
@@ -1166,41 +1166,6 @@
    "flags": []
   },
   {
-   "player": "Byron Buxton",
-   "team": "min",
-   "game": "atl-min",
-   "stat": "TB",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": 0.4495,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 381,
-    "factors": {
-     "sp": 0.989,
-     "park": 1.0,
-     "temp": 1.06,
-     "wind": 1.03
-    },
-    "p1b": 0.1287,
-    "p2b": 0.0477,
-    "p3b": 0.0033,
-    "phr": 0.0544
-   },
-   "edge_score": 2.13,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 16.9,
-    "hard_hit_pct": 47.1,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.249,
-    "recent_hr_rate": 0.0
-   },
-   "flags": []
-  },
-  {
    "player": "Junior Caminero",
    "team": "tb",
    "game": "tor-tb",
@@ -1240,22 +1205,22 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4717,
+   "model_prob": 0.4674,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
+    "epa": 4.55,
+    "order": 2,
     "pa_season": 509,
     "factors": {
      "sp": 1.006,
      "park": 1.105,
-     "temp": 1.096,
+     "temp": 1.09,
      "wind": 1.01
     },
     "p1b": 0.1182,
-    "p2b": 0.0503,
-    "p3b": 0.0062,
-    "phr": 0.0643
+    "p2b": 0.05,
+    "p3b": 0.0061,
+    "phr": 0.064
    },
    "edge_score": 1.98,
    "score_type": "per_game_rate",
@@ -1269,13 +1234,48 @@
    "flags": []
   },
   {
+   "player": "Pete Crow-Armstrong",
+   "team": "chc",
+   "game": "cws-chc",
+   "stat": "TB",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": 0.4467,
+   "method": "tb_dp_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 561,
+    "factors": {
+     "sp": 0.943,
+     "park": 1.0,
+     "temp": 1.024,
+     "wind": 1.03
+    },
+    "p1b": 0.1338,
+    "p2b": 0.044,
+    "p3b": 0.0093,
+    "phr": 0.0454
+   },
+   "edge_score": 2.1,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 48.8,
+    "avg_exit_velo": 90.3,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.0647
+   },
+   "flags": []
+  },
+  {
    "player": "Pete Alonso",
    "team": "bal",
    "game": "nyy-bal",
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4556,
+   "model_prob": 0.4545,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.55,
@@ -1284,13 +1284,13 @@
     "factors": {
      "sp": 0.973,
      "park": 1.105,
-     "temp": 1.096,
+     "temp": 1.09,
      "wind": 1.01
     },
     "p1b": 0.1384,
-    "p2b": 0.0509,
+    "p2b": 0.0506,
     "p3b": 0.0015,
-    "phr": 0.0527
+    "phr": 0.0524
    },
    "edge_score": 1.86,
    "score_type": "per_game_rate",
@@ -1304,37 +1304,36 @@
    "flags": []
   },
   {
-   "player": "Pete Crow-Armstrong",
-   "team": "chc",
-   "game": "cws-chc",
+   "player": "Jordan Walker",
+   "team": "stl",
+   "game": "stl-cin",
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4601,
+   "model_prob": 0.4737,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 561,
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 521,
     "factors": {
-     "sp": 1.024,
-     "park": 1.0,
-     "temp": 1.024,
-     "wind": 1.02
+     "sp": 1.037,
+     "park": 1.175,
+     "temp": 1.072
     },
-    "p1b": 0.1338,
-    "p2b": 0.0473,
-    "p3b": 0.01,
-    "phr": 0.0488
+    "p1b": 0.1578,
+    "p2b": 0.0653,
+    "p3b": 0.0017,
+    "phr": 0.053
    },
-   "edge_score": 2.1,
+   "edge_score": 1.94,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 12.7,
-    "hard_hit_pct": 48.8,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.221,
-    "recent_hr_rate": 0.0647
+    "barrel_pct": 13.1,
+    "hard_hit_pct": 47.4,
+    "avg_exit_velo": 92.6,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0165
    },
    "flags": []
   },
