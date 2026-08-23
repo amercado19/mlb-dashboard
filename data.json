@@ -1,6 +1,6 @@
 {
  "date": "2026-08-23",
- "generated_at": "2026-08-23T21:14:23",
+ "generated_at": "2026-08-23T22:14:05",
  "version": "0.1.0",
  "games": [
   {
@@ -137,7 +137,7 @@
    "away": "ath",
    "home": "hou",
    "away_win_prob": 0.524,
-   "home_win_prob": 0.466,
+   "home_win_prob": 0.456,
    "pick": "ath",
    "confidence": 0.524,
    "tier": "PASS",
@@ -241,9 +241,9 @@
    "away": "sf",
    "home": "bos",
    "away_win_prob": 0.24,
-   "home_win_prob": 0.49,
+   "home_win_prob": 0.5,
    "pick": "bos",
-   "confidence": 0.49,
+   "confidence": 0.5,
    "tier": "PASS",
    "total": 6.6,
    "book_total_line": null,
@@ -331,14 +331,14 @@
      "mph": 6
     },
     "cf": {
-     "dir": "in",
-     "mph": 9
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
-     "dir": "in",
+     "dir": "out",
      "mph": 6
     },
-    "out_mph": 0
+    "out_mph": 6
    }
   },
   {
@@ -402,19 +402,19 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2514,
+   "model_prob": 0.251,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 68,
+    "pa_season": 69,
     "factors": {
      "sp": 1.177,
      "park": 1.2,
      "temp": 1.12,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0572
+    "hr_rate_pa": 0.057
    },
    "edge_score": 81,
    "score_type": "model_score_0_100",
@@ -434,19 +434,19 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.233,
+   "model_prob": 0.2327,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 57,
+    "pa_season": 58,
     "factors": {
      "sp": 1.177,
      "park": 1.2,
      "temp": 1.12,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0501
+    "hr_rate_pa": 0.0499
    },
    "edge_score": 75,
    "score_type": "model_score_0_100",
@@ -466,12 +466,12 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.227,
+   "model_prob": 0.2267,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 302,
+    "pa_season": 303,
     "factors": {
      "sp": 1.086,
      "park": 1.105
@@ -777,11 +777,11 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 464,
+    "pa_season": 466,
     "factors": {
      "sp": 1.133
     },
-    "hit_rate_pa": 0.2788
+    "hit_rate_pa": 0.2779
    },
    "edge_score": 78,
    "score_type": "model_score_0_100",
@@ -801,16 +801,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6964,
+   "model_prob": 0.6943,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 57,
+    "pa_season": 58,
     "factors": {
      "sp": 1.133
     },
-    "hit_rate_pa": 0.2574
+    "hit_rate_pa": 0.2564
    },
    "edge_score": 78,
    "score_type": "model_score_0_100",
@@ -859,16 +859,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6349,
+   "model_prob": 0.6342,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 404,
+    "pa_season": 405,
     "factors": {
      "sp": 1.064
     },
-    "hit_rate_pa": 0.2157
+    "hit_rate_pa": 0.2153
    },
    "edge_score": 75,
    "score_type": "model_score_0_100",
@@ -888,16 +888,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7055,
+   "model_prob": 0.7038,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 424,
+    "pa_season": 426,
     "factors": {
      "sp": 1.025
     },
-    "hit_rate_pa": 0.2568
+    "hit_rate_pa": 0.256
    },
    "edge_score": 71,
    "score_type": "model_score_0_100",
@@ -946,16 +946,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6671,
+   "model_prob": 0.6661,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 499,
+    "pa_season": 501,
     "factors": {
      "sp": 0.998
     },
-    "hit_rate_pa": 0.229
+    "hit_rate_pa": 0.2283
    },
    "edge_score": 70,
    "score_type": "model_score_0_100",
@@ -1037,19 +1037,19 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4343,
+   "model_prob": 0.4341,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 581,
+    "pa_season": 582,
     "factors": {
      "sp": 0.936,
      "park": 0.93
     },
-    "p1b": 0.1303,
-    "p2b": 0.0386,
-    "p3b": 0.008,
+    "p1b": 0.1302,
+    "p2b": 0.0385,
+    "p3b": 0.0079,
     "phr": 0.0408
    },
    "edge_score": 2.09,
@@ -1139,22 +1139,21 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.432,
+   "model_prob": 0.4345,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 398,
+    "pa_season": 399,
     "factors": {
      "sp": 1.009,
      "park": 0.86,
-     "temp": 1.108,
-     "wind": 0.964
+     "temp": 1.108
     },
-    "p1b": 0.1284,
-    "p2b": 0.0399,
-    "p3b": 0.0027,
-    "phr": 0.0455
+    "p1b": 0.1282,
+    "p2b": 0.0413,
+    "p3b": 0.0028,
+    "phr": 0.0472
    },
    "edge_score": 2.03,
    "score_type": "per_game_rate",
@@ -1209,21 +1208,21 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4585,
+   "model_prob": 0.4582,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 552,
+    "pa_season": 553,
     "factors": {
      "sp": 0.969,
      "temp": 1.12,
      "wind": 1.0
     },
-    "p1b": 0.1407,
+    "p1b": 0.1405,
     "p2b": 0.0472,
     "p3b": 0.0052,
-    "phr": 0.0501
+    "phr": 0.05
    },
    "edge_score": 2.03,
    "score_type": "per_game_rate",
@@ -1243,20 +1242,20 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4377,
+   "model_prob": 0.4374,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 499,
+    "pa_season": 501,
     "factors": {
      "sp": 0.997,
      "park": 1.0
     },
-    "p1b": 0.1399,
-    "p2b": 0.0425,
+    "p1b": 0.1395,
+    "p2b": 0.0424,
     "p3b": 0.0075,
-    "phr": 0.0378
+    "phr": 0.0377
    },
    "edge_score": 1.88,
    "score_type": "per_game_rate",
@@ -1436,7 +1435,7 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 68,
+    "pa_season": 69,
     "factors": {
      "sp": 1.133
     },
@@ -1465,7 +1464,7 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 552,
+    "pa_season": 553,
     "factors": {
      "sp": 0.977
     },
@@ -1547,18 +1546,18 @@
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5752,
+   "model_prob": 0.5754,
    "method": "poisson_ge2",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 581,
+    "pa_season": 582,
     "factors": {
      "sp": 0.952
     },
-    "lambda_pg": 2.26
+    "lambda_pg": 2.268
    },
-   "edge_score": 2.36,
+   "edge_score": 2.37,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 12.2,
