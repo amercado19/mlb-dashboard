@@ -1,6 +1,6 @@
 {
  "date": "2026-08-24",
- "generated_at": "2026-08-24T13:44:03",
+ "generated_at": "2026-08-24T15:31:50",
  "version": "0.1.0",
  "games": [
   {
@@ -15,16 +15,16 @@
    "book_total_line": null,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 6
+     "dir": "out",
+     "mph": 4
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 6
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 4
     },
     "out_mph": 6
    }
@@ -84,12 +84,12 @@
   {
    "away": "tex",
    "home": "cws",
-   "away_win_prob": 0.491,
-   "home_win_prob": 0.399,
-   "pick": "tex",
-   "confidence": 0.491,
+   "away_win_prob": 0.42,
+   "home_win_prob": 0.47,
+   "pick": "cws",
+   "confidence": 0.47,
    "tier": "PASS",
-   "total": 9.8,
+   "total": 8.8,
    "book_total_line": null,
    "wind": {
     "lf": {
@@ -120,17 +120,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
     "cf": {
      "dir": "out",
-     "mph": 7
+     "mph": 8
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
-    "out_mph": 7
+    "out_mph": 8
    }
   },
   {
@@ -172,7 +172,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 2
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -180,9 +180,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 2
+     "mph": 4
     },
-    "out_mph": 2
+    "out_mph": 4
    }
   },
   {
@@ -250,17 +250,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 11
+     "mph": 10
     },
     "cf": {
      "dir": "out",
-     "mph": 15
+     "mph": 14
     },
     "rf": {
      "dir": "out",
-     "mph": 11
+     "mph": 10
     },
-    "out_mph": 15
+    "out_mph": 14
    }
   }
  ],
@@ -396,7 +396,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.218,
+   "model_prob": 0.2184,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
@@ -405,9 +405,9 @@
     "factors": {
      "sp": 1.088,
      "park": 1.0,
-     "temp": 1.054
+     "temp": 1.06
     },
-    "hr_rate_pa": 0.0449
+    "hr_rate_pa": 0.0452
    },
    "edge_score": 66,
    "score_type": "model_score_0_100",
@@ -427,7 +427,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2115,
+   "model_prob": 0.2117,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
@@ -436,12 +436,12 @@
     "factors": {
      "sp": 1.071,
      "park": 1.0,
-     "temp": 1.042,
-     "wind": 1.02
+     "temp": 1.036,
+     "wind": 1.03
     },
-    "hr_rate_pa": 0.0409
+    "hr_rate_pa": 0.0411
    },
-   "edge_score": 63,
+   "edge_score": 66,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 10.0,
@@ -459,7 +459,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2108,
+   "model_prob": 0.2111,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.05,
@@ -468,9 +468,9 @@
     "factors": {
      "sp": 1.088,
      "park": 1.0,
-     "temp": 1.054
+     "temp": 1.06
     },
-    "hr_rate_pa": 0.0443
+    "hr_rate_pa": 0.0445
    },
    "edge_score": 59,
    "score_type": "model_score_0_100",
@@ -516,6 +516,38 @@
    "flags": []
   },
   {
+   "player": "Chase DeLauter",
+   "team": "cle",
+   "game": "cle-laa",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.1909,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 466,
+    "factors": {
+     "sp": 1.071,
+     "park": 1.0,
+     "temp": 1.036,
+     "wind": 1.03
+    },
+    "hr_rate_pa": 0.0333
+   },
+   "edge_score": 58,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 6.3,
+    "hard_hit_pct": 45.6,
+    "avg_exit_velo": 91.2,
+    "xiso": 0.15,
+    "recent_hr_rate": 0.0196
+   },
+   "flags": []
+  },
+  {
    "player": "Munetaka Murakami",
    "team": "cws",
    "game": "tex-cws",
@@ -544,38 +576,6 @@
     "avg_exit_velo": 94.0,
     "xiso": 0.285,
     "recent_hr_rate": 0.0692
-   },
-   "flags": []
-  },
-  {
-   "player": "Chase DeLauter",
-   "team": "cle",
-   "game": "cle-laa",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.1909,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 466,
-    "factors": {
-     "sp": 1.071,
-     "park": 1.0,
-     "temp": 1.042,
-     "wind": 1.02
-    },
-    "hr_rate_pa": 0.0331
-   },
-   "edge_score": 55,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 6.3,
-    "hard_hit_pct": 45.6,
-    "avg_exit_velo": 91.2,
-    "xiso": 0.15,
-    "recent_hr_rate": 0.0196
    },
    "flags": []
   },
@@ -876,7 +876,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4277,
+   "model_prob": 0.4278,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.35,
@@ -885,12 +885,13 @@
     "factors": {
      "sp": 0.941,
      "park": 0.93,
-     "temp": 1.03
+     "temp": 1.024,
+     "wind": 1.01
     },
     "p1b": 0.1448,
-    "p2b": 0.0467,
+    "p2b": 0.0469,
     "p3b": 0.0026,
-    "phr": 0.0375
+    "phr": 0.0376
    },
    "edge_score": 2.0,
    "score_type": "per_game_rate",
@@ -978,7 +979,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.429,
+   "model_prob": 0.4291,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.45,
@@ -987,12 +988,13 @@
     "factors": {
      "sp": 1.02,
      "park": 0.93,
-     "temp": 1.03
+     "temp": 1.024,
+     "wind": 1.01
     },
     "p1b": 0.1432,
-    "p2b": 0.0373,
+    "p2b": 0.0374,
     "p3b": 0.0023,
-    "phr": 0.0499
+    "phr": 0.0501
    },
    "edge_score": 2.03,
    "score_type": "per_game_rate",
@@ -1054,13 +1056,13 @@
     "factors": {
      "sp": 0.93,
      "park": 1.0,
-     "temp": 1.042,
-     "wind": 1.02
+     "temp": 1.036,
+     "wind": 1.03
     },
     "p1b": 0.1488,
-    "p2b": 0.0453,
+    "p2b": 0.0454,
     "p3b": 0.0034,
-    "phr": 0.03
+    "phr": 0.0301
    },
    "edge_score": 2.0,
    "score_type": "per_game_rate",
@@ -1080,7 +1082,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4304,
+   "model_prob": 0.4305,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.45,
@@ -1089,13 +1091,13 @@
     "factors": {
      "sp": 1.071,
      "park": 1.0,
-     "temp": 1.042,
-     "wind": 1.02
+     "temp": 1.036,
+     "wind": 1.03
     },
     "p1b": 0.1326,
-    "p2b": 0.0555,
+    "p2b": 0.0557,
     "p3b": 0.0032,
-    "phr": 0.0409
+    "phr": 0.0411
    },
    "edge_score": 1.94,
    "score_type": "per_game_rate",
