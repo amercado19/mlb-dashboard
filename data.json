@@ -1,6 +1,6 @@
 {
  "date": "2026-08-25",
- "generated_at": "2026-08-25T20:20:03",
+ "generated_at": "2026-08-25T21:21:06",
  "version": "0.1.0",
  "games": [
   {
@@ -63,7 +63,7 @@
    "pick": "wsh",
    "confidence": 0.482,
    "tier": "PASS",
-   "total": 9.9,
+   "total": 9.7,
    "book_total_line": null,
    "wind": {
     "lf": {
@@ -172,7 +172,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -180,9 +180,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 5
+    "out_mph": 4
    }
   },
   {
@@ -198,7 +198,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -206,9 +206,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 4
     },
-    "out_mph": 6
+    "out_mph": 4
    }
   },
   {
@@ -250,17 +250,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 7
+    "out_mph": 6
    }
   },
   {
@@ -497,7 +497,7 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2473,
+   "model_prob": 0.2462,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
@@ -506,10 +506,10 @@
     "factors": {
      "sp": 1.134,
      "park": 0.93,
-     "temp": 1.048,
+     "temp": 1.042,
      "wind": 0.973
     },
-    "hr_rate_pa": 0.0547
+    "hr_rate_pa": 0.0544
    },
    "edge_score": 62,
    "score_type": "model_score_0_100",
@@ -550,37 +550,6 @@
     "avg_exit_velo": 90.6,
     "xiso": 0.237,
     "recent_hr_rate": 0.0638
-   },
-   "flags": []
-  },
-  {
-   "player": "Joc Pederson",
-   "team": "tex",
-   "game": "tex-cws",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2493,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 391,
-    "factors": {
-     "sp": 1.045,
-     "park": 1.105,
-     "temp": 1.012
-    },
-    "hr_rate_pa": 0.0529
-   },
-   "edge_score": 62,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 10.9,
-    "hard_hit_pct": 50.8,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.198,
-    "recent_hr_rate": 0.061
    },
    "flags": []
   },
@@ -708,6 +677,36 @@
     "avg_exit_velo": 94.1,
     "xiso": 0.261,
     "recent_hr_rate": 0.0789
+   },
+   "flags": []
+  },
+  {
+   "player": "Bobby Witt Jr.",
+   "team": "kc",
+   "game": "kc-tor",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.1964,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 499,
+    "factors": {
+     "sp": 1.035,
+     "park": 1.07
+    },
+    "hr_rate_pa": 0.0351
+   },
+   "edge_score": 57,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 11.5,
+    "hard_hit_pct": 51.5,
+    "avg_exit_velo": 92.5,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.0353
    },
    "flags": []
   },
@@ -1077,7 +1076,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4284,
+   "model_prob": 0.4283,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.25,
@@ -1086,13 +1085,13 @@
     "factors": {
      "sp": 1.019,
      "park": 0.93,
-     "temp": 1.048,
+     "temp": 1.042,
      "wind": 0.973
     },
     "p1b": 0.1448,
-    "p2b": 0.05,
-    "p3b": 0.0028,
-    "phr": 0.0402
+    "p2b": 0.0497,
+    "p3b": 0.0027,
+    "phr": 0.0399
    },
    "edge_score": 2.0,
    "score_type": "per_game_rate",
@@ -1181,7 +1180,7 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.431,
+   "model_prob": 0.4309,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.45,
@@ -1190,13 +1189,13 @@
     "factors": {
      "sp": 1.134,
      "park": 0.93,
-     "temp": 1.048,
+     "temp": 1.042,
      "wind": 0.973
     },
     "p1b": 0.1437,
-    "p2b": 0.0408,
+    "p2b": 0.0406,
     "p3b": 0.0025,
-    "phr": 0.0547
+    "phr": 0.0544
    },
    "edge_score": 2.02,
    "score_type": "per_game_rate",
@@ -1414,10 +1413,8 @@
     "epa": 4.65,
     "order": 1,
     "pa_season": 539,
-    "factors": {
-     "sp": 1.018
-    },
-    "lambda_pg": 2.461
+    "factors": {},
+    "lambda_pg": 2.417
    },
    "edge_score": 2.42,
    "score_type": "per_game_rate",
