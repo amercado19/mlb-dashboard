@@ -1,6 +1,6 @@
 {
  "date": "2026-08-25",
- "generated_at": "2026-08-26T02:17:27",
+ "generated_at": "2026-08-26T03:43:24",
  "version": "0.1.0",
  "games": [
   {
@@ -188,10 +188,10 @@
   {
    "away": "tex",
    "home": "cws",
-   "away_win_prob": 0.56,
+   "away_win_prob": 0.55,
    "home_win_prob": 0.44,
    "pick": "tex",
-   "confidence": 0.56,
+   "confidence": 0.55,
    "tier": "PASS",
    "total": 9.3,
    "book_total_line": null,
@@ -250,17 +250,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
      "dir": "out",
-     "mph": 5
+     "mph": 7
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
-    "out_mph": 5
+    "out_mph": 7
    }
   },
   {
@@ -302,17 +302,17 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 2
     },
     "cf": {
-     "dir": "in",
-     "mph": 5
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
-     "dir": "in",
-     "mph": 4
+     "dir": "out",
+     "mph": 2
     },
-    "out_mph": 0
+    "out_mph": 2
    }
   },
   {
@@ -323,22 +323,22 @@
    "pick": "min",
    "confidence": 0.471,
    "tier": "PASS",
-   "total": 10.6,
+   "total": 10.8,
    "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 4
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 6
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 4
     },
-    "out_mph": 8
+    "out_mph": 6
    }
   },
   {
@@ -380,17 +380,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 11
+     "mph": 10
     },
     "cf": {
      "dir": "out",
-     "mph": 16
+     "mph": 14
     },
     "rf": {
      "dir": "out",
-     "mph": 11
+     "mph": 10
     },
-    "out_mph": 16
+    "out_mph": 14
    }
   }
  ],
@@ -459,34 +459,34 @@
    "flags": []
   },
   {
-   "player": "Byron Buxton",
-   "team": "min",
-   "game": "min-ath",
+   "player": "Rafael Devers",
+   "team": "sf",
+   "game": "cin-sf",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2645,
+   "model_prob": 0.2134,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 406,
+    "pa_season": 559,
     "factors": {
-     "sp": 1.022,
-     "park": 1.105,
-     "temp": 1.108,
-     "wind": 1.03
+     "sp": 1.056,
+     "park": 0.85,
+     "temp": 0.976,
+     "wind": 1.09
     },
-    "hr_rate_pa": 0.0626
+    "hr_rate_pa": 0.0415
    },
-   "edge_score": 66,
+   "edge_score": 64,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 15.8,
-    "hard_hit_pct": 46.7,
-    "avg_exit_velo": 90.2,
-    "xiso": 0.242,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 10.8,
+    "hard_hit_pct": 50.4,
+    "avg_exit_velo": 92.6,
+    "xiso": 0.214,
+    "recent_hr_rate": 0.0513
    },
    "flags": []
   },
@@ -554,66 +554,34 @@
    "flags": []
   },
   {
-   "player": "Rafael Devers",
-   "team": "sf",
-   "game": "cin-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2125,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 556,
-    "factors": {
-     "sp": 1.056,
-     "park": 0.85,
-     "temp": 0.964,
-     "wind": 1.11
-    },
-    "hr_rate_pa": 0.0407
-   },
-   "edge_score": 62,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 10.8,
-    "hard_hit_pct": 50.4,
-    "avg_exit_velo": 92.6,
-    "xiso": 0.214,
-    "recent_hr_rate": 0.0513
-   },
-   "flags": []
-  },
-  {
-   "player": "Ryan Jeffers",
+   "player": "Byron Buxton",
    "team": "min",
    "game": "min-ath",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2146,
+   "model_prob": 0.2645,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 275,
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 408,
     "factors": {
      "sp": 1.022,
      "park": 1.105,
-     "temp": 1.108,
-     "wind": 1.03
+     "temp": 1.12,
+     "wind": 1.01
     },
-    "hr_rate_pa": 0.0433
+    "hr_rate_pa": 0.0619
    },
    "edge_score": 61,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 11.1,
-    "hard_hit_pct": 40.0,
-    "avg_exit_velo": 88.9,
-    "xiso": 0.186,
-    "recent_hr_rate": 0.0108
+    "barrel_pct": 15.8,
+    "hard_hit_pct": 46.7,
+    "avg_exit_velo": 90.2,
+    "xiso": 0.242,
+    "recent_hr_rate": 0.0
    },
    "flags": []
   },
@@ -624,21 +592,21 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.202,
+   "model_prob": 0.2009,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 507,
+    "pa_season": 509,
     "factors": {
      "sp": 1.053,
      "park": 0.85,
-     "temp": 0.964,
-     "wind": 1.11
+     "temp": 0.976,
+     "wind": 1.09
     },
-    "hr_rate_pa": 0.036
+    "hr_rate_pa": 0.0357
    },
-   "edge_score": 59,
+   "edge_score": 61,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.5,
@@ -708,6 +676,38 @@
     "avg_exit_velo": 88.4,
     "xiso": 0.14,
     "recent_hr_rate": 0.0463
+   },
+   "flags": []
+  },
+  {
+   "player": "Ryan Jeffers",
+   "team": "min",
+   "game": "min-ath",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2139,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 277,
+    "factors": {
+     "sp": 1.022,
+     "park": 1.105,
+     "temp": 1.12,
+     "wind": 1.01
+    },
+    "hr_rate_pa": 0.0427
+   },
+   "edge_score": 56,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 11.1,
+    "hard_hit_pct": 40.0,
+    "avg_exit_velo": 88.9,
+    "xiso": 0.186,
+    "recent_hr_rate": 0.0108
    },
    "flags": []
   },
@@ -863,16 +863,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.732,
+   "model_prob": 0.7328,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 489,
+    "pa_season": 492,
     "factors": {
      "sp": 1.042
     },
-    "hit_rate_pa": 0.2669
+    "hit_rate_pa": 0.2672
    },
    "edge_score": 77,
    "score_type": "model_score_0_100",
@@ -921,16 +921,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6585,
+   "model_prob": 0.6596,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 320,
+    "pa_season": 323,
     "factors": {
      "sp": 1.042
     },
-    "hit_rate_pa": 0.2233
+    "hit_rate_pa": 0.224
    },
    "edge_score": 76,
    "score_type": "model_score_0_100",
@@ -950,16 +950,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6865,
+   "model_prob": 0.6846,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 432,
+    "pa_season": 434,
     "factors": {
      "sp": 0.998
     },
-    "hit_rate_pa": 0.2469
+    "hit_rate_pa": 0.2461
    },
    "edge_score": 73,
    "score_type": "model_score_0_100",
@@ -1151,17 +1151,17 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 406,
+    "pa_season": 408,
     "factors": {
      "sp": 1.022,
      "park": 1.105,
-     "temp": 1.108,
-     "wind": 1.03
+     "temp": 1.12,
+     "wind": 1.01
     },
-    "p1b": 0.13,
-    "p2b": 0.0567,
+    "p1b": 0.1296,
+    "p2b": 0.056,
     "p3b": 0.0037,
-    "phr": 0.0626
+    "phr": 0.0619
    },
    "edge_score": 2.03,
    "score_type": "per_game_rate",
@@ -1216,20 +1216,20 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4311,
+   "model_prob": 0.431,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 591,
+    "pa_season": 593,
     "factors": {
      "sp": 0.968,
      "park": 1.0
     },
-    "p1b": 0.13,
-    "p2b": 0.0424,
+    "p1b": 0.1296,
+    "p2b": 0.0423,
     "p3b": 0.0087,
-    "phr": 0.046
+    "phr": 0.0459
    },
    "edge_score": 2.1,
    "score_type": "per_game_rate",
@@ -1532,7 +1532,7 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 591,
+    "pa_season": 593,
     "factors": {
      "sp": 0.976
     },
@@ -1561,7 +1561,7 @@
    "prob_inputs": {
     "epa": 4.25,
     "order": 5,
-    "pa_season": 307,
+    "pa_season": 309,
     "factors": {
      "sp": 1.011
     },
@@ -1608,31 +1608,31 @@
    "flags": []
   },
   {
-   "player": "Junior Caminero",
-   "team": "tb",
-   "game": "tb-det",
+   "player": "Seiya Suzuki",
+   "team": "chc",
+   "game": "chc-az",
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.5822,
+   "model_prob": 0.5814,
    "method": "poisson_ge2",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 575,
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 507,
     "factors": {
-     "sp": 1.1
+     "sp": 0.976
     },
-    "lambda_pg": 2.458
+    "lambda_pg": 2.24
    },
-   "edge_score": 2.31,
+   "edge_score": 2.35,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 13.1,
-    "hard_hit_pct": 50.6,
-    "avg_exit_velo": 93.1,
-    "xiso": 0.223,
-    "recent_hr_rate": 0.0504
+    "barrel_pct": 10.4,
+    "hard_hit_pct": 38.5,
+    "avg_exit_velo": 88.4,
+    "xiso": 0.176,
+    "recent_hr_rate": 0.0394
    },
    "flags": []
   }
