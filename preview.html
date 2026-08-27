@@ -295,9 +295,10 @@ function openProp(k,btn){
           px+=' <span style="font-size:9px;font-weight:800;color:'+(_e>=0?'#0c7a43':'#b91c1c')+'" title="Edge: model HR % minus the price\'s implied %">'+(_e>=0?'+':'')+_e.toFixed(1)+'%</span>';}
       }}
     var gl=r.gamePk?' <span style="font-size:9px;color:#8893a8">'+esc((typeof gameLabelByPk==='function'&&gameLabelByPk(r.gamePk))||'')+'</span>':'';
-    return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+st+px+gl+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+'<span class="unit"> '+unit+'</span></span></div>';}).join('')||'<div class="empty">Board posts with confirmed lineups.</div>';
+    return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+st+(r.eligible!==false?px:'')+gl+lineupTag(r)+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+'<span class="unit"> '+unit+'</span></span></div>';}).join('')||'<div class="empty">Board posts with confirmed lineups.</div>';
 }
 
+function lineupTag(r){if(!r||r.eligible!==false)return '';var s=(r.lineupStatus||'UNKNOWN');if(s==='PROJECTED'||s==='UNKNOWN'){return ' <span title="Not a bet yet — projected lineup. Waiting for the official lineup to post." style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#fffbeb;color:#8a6d00;border:1px solid #d6a520">WATCH · waiting for official lineup</span>';}return ' <span title="Removed automatically — not in the confirmed starting lineup." style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#fef2f2;color:#bf0a30;border:1px solid #f3b4b4">NOT STARTING · removed</span>';}
 function amDec(a){return a>=0?1+a/100:1+100/(-a);}
 function decToAm(d){return d>=2?('+'+Math.round((d-1)*100)):('-'+Math.round(100/(d-1)));}
 function fairAmNum(p){p=Math.max(.05,Math.min(.95,p||.5));return p>=.5?-Math.round(100*p/(1-p)):Math.round(100*(1-p)/p);}
@@ -343,7 +344,7 @@ function hpLegs(ix){if(HP_WORK[ix]===undefined){HP_WORK[ix]=((hpTickets()[ix]||{
 function hpRemove(ix,id){HP_WORK[ix]=hpLegs(ix).filter(function(l){return l._id!==id;});renderParlay();}
 function hpReset(ix){delete HP_WORK[ix];HP_ADD={};renderParlay();}
 function hpAdd(ix){var used={};[0,1].forEach(function(j){hpLegs(j).forEach(function(l){used[l.playerId]=1;});});
-  var next=(D.hrProps||[]).filter(function(hh){return hh.name&&!used[hh.playerId];})[0];
+  var next=(D.hrProps||[]).filter(function(hh){return hh.name&&!used[hh.playerId]&&hh.eligible!==false;})[0];
   if(!next){alert('No more HR candidates today.');return;}
   var c=Object.assign({},next);c._id='h'+ix+'_'+Date.now();c.desc=c.desc||(c.name+' HR (anytime)');HP_WORK[ix]=hpLegs(ix).concat([c]);renderParlay();}
 function hpAddAll(ix,book){var nice=book==='fanduel'?'FD':'DK';
