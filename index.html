@@ -537,10 +537,17 @@ function renderPerformance(){
   var cards='';
   cards+= ml.n?('<div class="kbox '+((ml.units||0)>=0?'kpos':'kneg')+'"><div class="kv2">'+((ml.units>0?'+':'')+(ml.units||0).toFixed(1))+'u</div><div class="kl">Moneyline net ('+ml.w+'-'+ml.l+')</div></div>'):'<div class="kbox"><div class="kv2">—</div><div class="kl">ML net (no graded bets)</div></div>';
   cards+= par.n?('<div class="kbox '+((par.units||0)>=0?'kpos':'kneg')+'"><div class="kv2">'+((par.units>0?'+':'')+(par.units||0).toFixed(1))+'u</div><div class="kl">Parlay net ('+par.w+'-'+par.l+')</div></div>'):'<div class="kbox"><div class="kv2">—</div><div class="kl">Parlay net</div></div>';
-  cards+= (clv&&clv.n)?('<div class="kbox"><div class="kv2">'+(clv.avg_cents>0?'+':'')+clv.avg_cents+'¢</div><div class="kl">Avg CLV ('+clv.beat_pct+'% beat)</div></div>'):'<div class="kbox"><div class="kv2">—</div><div class="kl">CLV (accruing)</div></div>';
+  cards+= (clv&&clv.n)?('<div class="kbox"><div class="kv2">'+(clv.avg_cents>0?'+':'')+clv.avg_cents+'¢</div><div class="kl">CLV · legacy ML sample ('+clv.beat_pct+'% beat)</div></div>'):'<div class="kbox"><div class="kv2">—</div><div class="kl">CLV (accruing)</div></div>';
   var cal=(D.calibration||[]).filter(function(b){return b.n;});
   var calHtml=cal.length?('<div class="card"><div class="card-h">Calibration — predicted vs actual</div>'+cal.map(function(b){var pa=b.actual||0;return '<div class="calrow"><span class="cbucket">'+b.lo+'-'+b.hi+'%</span><span class="caltrack"><i style="width:'+pa+'%;background:var(--accent)"></i></span><span>'+b.actual+'% act / '+b.pred+'% pred (n='+b.n+')</span></div>';}).join('')+'</div>'):'';
-  $('performance').innerHTML='<div class="kpi">'+cards+'</div><div class="note">Units = 1u flat at recorded price. ROI tracked only on bets with real odds (ML + parlay). Small sample — read with caution.</div>'+calHtml;
+    var _lrn=D.learned||{}, _mk=_lrn.markets||{}, _nset=0,_npri=0;
+  Object.keys(_mk).forEach(function(k){_nset+=(_mk[k].n_settled||0);_npri+=(_mk[k].n_priced||0);});
+  var _health='<div class="card"><div class="card-h">Measurement health</div><div class="note">'
+    +'Ledger rows published: '+( _lrn.published!=null?_lrn.published:'Unavailable')
+    +' · Settled: '+_nset+' · Priced w/ CLV: '+_npri
+    +' — '+(_npri>0?'price metrics measurable':'BLIND — no recorded closing prices yet, so ROI/CLV are '+NOT_MEASURABLE)
+    +'</div></div>';
+$('performance').innerHTML='<div class="kpi">'+cards+'</div><div class="note">Units = 1u flat at recorded price. ROI tracked only on bets with real odds (ML + parlay). Small sample — read with caution.</div>'+_health+calHtml;
 }
 
 var LIB_TAB='safe';
@@ -573,6 +580,17 @@ function libTicketSummary(list){
    confident dollar figure for a market whose real prices were never logged.
    Units now come only from learn/'s ledger — real logged prices, real CLV — and
    a market with no priced history says so instead of guessing. */
+/* Centralized price-measurability gate (2026-08-27). A price-based metric
+   (units, ROI, CLV, avg price) is shown ONLY when the backend says the market
+   is measurable AND carries priced rows. Compatible with BOTH the current
+   payload (n_priced only) and the proposed pipeline payload (measurement_status
+   + roi_pct:null). Missing/ambiguous -> NOT measurable. Honesty is the default. */
+function isPriceMeasurable(m){
+  if(!m) return false;
+  if(m.measurement_status==='NOT_MEASURABLE') return false;
+  return Number(m.n_priced)>0;            // MEASURABLE and legacy both gate here
+}
+var NOT_MEASURABLE='NOT MEASURABLE — NO RECORDED PRICES';
 function libStatusPill(s){
   var m={BET:['#0c7a43','#dcfce7'],WATCH:['#92400e','#fef3c7'],
          KILL:['#b91c1c','#fee2e2'],BLIND:['#475569','#e2e8f0']}[s]||['#475569','#e2e8f0'];
@@ -586,7 +604,7 @@ function libPropSummary(bh,cat){
   var head=libStatusPill(st)+(L.reason?' <span style="font-size:10px;color:var(--muted)">'+esc(L.reason)+'</span>':'');
   var rec=n?('<b>Last '+days+' logged days:</b> '+w+'/'+n+' ('+Math.round(w/n*100)+'%) · <b>last 7:</b> '+w7+'/'+n7):'';
   var money;
-  if(L.n_priced&&L.units!=null){
+  if(isPriceMeasurable(L)&&L.units!=null){
     var u=L.units;
     money='<b>Units @ $10:</b> '+(u>=0?'+':'')+u.toFixed(1)+'u ('+(u>=0?'+$':'-$')+Math.abs(u*10).toFixed(0)+')'
       +(L.roi_pct!=null?' · ROI '+L.roi_pct+'%':'')
