@@ -298,7 +298,13 @@ function openProp(k,btn){
     return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+st+(r.eligible!==false?px:'')+gl+lineupTag(r)+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+'<span class="unit"> '+unit+'</span></span></div>';}).join('')||'<div class="empty">Board posts with confirmed lineups.</div>';
 }
 
-function lineupTag(r){if(!r||r.eligible!==false)return '';var s=(r.lineupStatus||'UNKNOWN');if(s==='PROJECTED'||s==='UNKNOWN'){return ' <span title="Not a bet yet — projected lineup. Waiting for the official lineup to post." style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#fffbeb;color:#8a6d00;border:1px solid #d6a520">WATCH · waiting for official lineup</span>';}return ' <span title="Removed automatically — not in the confirmed starting lineup." style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#fef2f2;color:#bf0a30;border:1px solid #f3b4b4">NOT STARTING · removed</span>';}
+function lineupTag(r){if(!r)return '';var s=r.lineupStatus,el=r.eligible;if(s===undefined&&el===undefined)return '';/* legacy row */
+ if(el===true){return ' <span title="Confirmed starter in the official lineup — bettable." style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#ecfdf3;color:#0c7a43;border:1px solid #63d095">BET</span>';}
+ var why=r.lineupReason||({PROJECTED:'Projected lineup — official not released',NO_LINEUP:'Official lineup not released',UNKNOWN:'Not in the official lineup',BENCHED:'On the bench',SCRATCHED:'Scratched',LATE_SCRATCH:'Late scratch',INVALID_ORDER:'No batting order',POSTPONED:'Game postponed',DUPLICATE:'Duplicate selection'}[s]||'Not a confirmed starter');
+ var hard=(s==='BENCHED'||s==='SCRATCHED'||s==='LATE_SCRATCH'||s==='POSTPONED'||s==='DUPLICATE'||s==='INVALID_ORDER');
+ var lbl=hard?'NOT STARTING':'WATCH';
+ var css=hard?'background:#fef2f2;color:#bf0a30;border:1px solid #f3b4b4':'background:#fffbeb;color:#8a6d00;border:1px solid #d6a520';
+ return ' <span title="'+esc(why)+'" style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;'+css+'">'+lbl+' · '+esc(why)+'</span>';}
 function amDec(a){return a>=0?1+a/100:1+100/(-a);}
 function decToAm(d){return d>=2?('+'+Math.round((d-1)*100)):('-'+Math.round(100/(d-1)));}
 function fairAmNum(p){p=Math.max(.05,Math.min(.95,p||.5));return p>=.5?-Math.round(100*p/(1-p)):Math.round(100*(1-p)/p);}
