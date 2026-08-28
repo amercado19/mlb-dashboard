@@ -1,6 +1,6 @@
 {
  "date": "2026-08-28",
- "generated_at": "2026-08-28T22:48:10",
+ "generated_at": "2026-08-28T22:50:40",
  "version": "0.1.0",
  "games": [
   {
@@ -38,7 +38,7 @@
    "confidence": 0.53,
    "tier": "PASS",
    "total": 7.6,
-   "book_total_line": 7.5,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -64,7 +64,7 @@
    "confidence": 0.597,
    "tier": "PASS",
    "total": 10.0,
-   "book_total_line": 8.5,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -646,38 +646,6 @@
    "flags": []
   },
   {
-   "player": "Heriberto Hern\u00e1ndez",
-   "team": "mia",
-   "game": "mia-wsh",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2433,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 378,
-    "factors": {
-     "sp": 1.119,
-     "park": 1.0,
-     "temp": 1.06,
-     "wind": 1.0
-    },
-    "hr_rate_pa": 0.0513
-   },
-   "edge_score": 56,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.1,
-    "hard_hit_pct": 48.3,
-    "avg_exit_velo": 91.5,
-    "xiso": 0.23,
-    "recent_hr_rate": 0.0472
-   },
-   "flags": []
-  },
-  {
    "player": "Ryan Jeffers",
    "team": "min",
    "game": "cws-min",
@@ -705,6 +673,37 @@
     "avg_exit_velo": 88.9,
     "xiso": 0.185,
     "recent_hr_rate": 0.0104
+   },
+   "flags": []
+  },
+  {
+   "player": "Elly De La Cruz",
+   "team": "cin",
+   "game": "cin-chc",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2118,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 521,
+    "factors": {
+     "sp": 1.046,
+     "park": 1.0,
+     "temp": 1.042
+    },
+    "hr_rate_pa": 0.0402
+   },
+   "edge_score": 54,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.4,
+    "hard_hit_pct": 51.2,
+    "avg_exit_velo": 93.9,
+    "xiso": 0.199,
+    "recent_hr_rate": 0.0222
    },
    "flags": []
   },
