@@ -1,6 +1,6 @@
 {
  "date": "2026-08-28",
- "generated_at": "2026-08-29T02:38:09",
+ "generated_at": "2026-08-29T03:59:07",
  "version": "0.1.0",
  "games": [
   {
@@ -266,13 +266,13 @@
   {
    "away": "cws",
    "home": "min",
-   "away_win_prob": 0.475,
+   "away_win_prob": 0.485,
    "home_win_prob": 0.505,
    "pick": "min",
    "confidence": 0.505,
-   "tier": "LEAN",
+   "tier": "PASS",
    "total": 9.6,
-   "book_total_line": 12.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -292,13 +292,13 @@
   {
    "away": "pit",
    "home": "stl",
-   "away_win_prob": 0.478,
+   "away_win_prob": 0.468,
    "home_win_prob": 0.562,
    "pick": "stl",
    "confidence": 0.562,
    "tier": "PASS",
    "total": 8.0,
-   "book_total_line": 4.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -324,7 +324,7 @@
    "confidence": 0.579,
    "tier": "PASS",
    "total": 9.3,
-   "book_total_line": 7.5,
+   "book_total_line": 4.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -348,23 +348,23 @@
    "home_win_prob": 0.53,
    "pick": "ath",
    "confidence": 0.53,
-   "tier": "LEAN",
+   "tier": "PASS",
    "total": 9.5,
-   "book_total_line": 7.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 4
+     "mph": 6
     },
     "cf": {
      "dir": "out",
-     "mph": 6
+     "mph": 8
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 6
     },
-    "out_mph": 6
+    "out_mph": 8
    }
   },
   {
@@ -376,7 +376,7 @@
    "confidence": 0.8,
    "tier": "STRONG",
    "total": 10.3,
-   "book_total_line": 8.5,
+   "book_total_line": 15.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -458,6 +458,70 @@
    "flags": []
   },
   {
+   "player": "Rafael Devers",
+   "team": "sf",
+   "game": "az-sf",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2186,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 571,
+    "factors": {
+     "sp": 1.22,
+     "park": 0.85,
+     "temp": 0.976,
+     "wind": 1.02
+    },
+    "hr_rate_pa": 0.0454
+   },
+   "edge_score": 69,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 11.0,
+    "hard_hit_pct": 50.4,
+    "avg_exit_velo": 92.7,
+    "xiso": 0.218,
+    "recent_hr_rate": 0.0593
+   },
+   "flags": []
+  },
+  {
+   "player": "Shay Whitcomb",
+   "team": "sf",
+   "game": "az-sf",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.1909,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.15,
+    "order": 6,
+    "pa_season": 17,
+    "factors": {
+     "sp": 1.22,
+     "park": 0.85,
+     "temp": 0.976,
+     "wind": 1.02
+    },
+    "hr_rate_pa": 0.0335
+   },
+   "edge_score": 69,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": null,
+    "hard_hit_pct": null,
+    "avg_exit_velo": null,
+    "xiso": 0.258,
+    "recent_hr_rate": 0.0667
+   },
+   "flags": []
+  },
+  {
    "player": "Jake Bauers",
    "team": "mil",
    "game": "tex-mil",
@@ -484,70 +548,6 @@
     "avg_exit_velo": 92.4,
     "xiso": 0.222,
     "recent_hr_rate": 0.0526
-   },
-   "flags": []
-  },
-  {
-   "player": "Rafael Devers",
-   "team": "sf",
-   "game": "az-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2184,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 569,
-    "factors": {
-     "sp": 1.22,
-     "park": 0.85,
-     "temp": 0.97,
-     "wind": 1.02
-    },
-    "hr_rate_pa": 0.0452
-   },
-   "edge_score": 67,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.0,
-    "hard_hit_pct": 50.4,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.218,
-    "recent_hr_rate": 0.0593
-   },
-   "flags": []
-  },
-  {
-   "player": "Shay Whitcomb",
-   "team": "sf",
-   "game": "az-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.1909,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.15,
-    "order": 6,
-    "pa_season": 15,
-    "factors": {
-     "sp": 1.22,
-     "park": 0.85,
-     "temp": 0.97,
-     "wind": 1.02
-    },
-    "hr_rate_pa": 0.0335
-   },
-   "edge_score": 67,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": null,
-    "hard_hit_pct": null,
-    "avg_exit_velo": null,
-    "xiso": 0.258,
-    "recent_hr_rate": 0.0667
    },
    "flags": []
   },
@@ -579,68 +579,6 @@
     "avg_exit_velo": 92.2,
     "xiso": 0.246,
     "recent_hr_rate": 0.0342
-   },
-   "flags": []
-  },
-  {
-   "player": "Kody Clemens",
-   "team": "min",
-   "game": "cws-min",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.2144,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 475,
-    "factors": {
-     "sp": 1.049,
-     "park": 1.0,
-     "temp": 1.042
-    },
-    "hr_rate_pa": 0.0441
-   },
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.6,
-    "hard_hit_pct": 45.9,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.196,
-    "recent_hr_rate": 0.0294
-   },
-   "flags": []
-  },
-  {
-   "player": "Ryan Jeffers",
-   "team": "min",
-   "game": "cws-min",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.1971,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 285,
-    "factors": {
-     "sp": 1.049,
-     "park": 1.0,
-     "temp": 1.042
-    },
-    "hr_rate_pa": 0.036
-   },
-   "edge_score": 62,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.3,
-    "hard_hit_pct": 40.0,
-    "avg_exit_velo": 88.9,
-    "xiso": 0.185,
-    "recent_hr_rate": 0.0104
    },
    "flags": []
   },
@@ -703,6 +641,68 @@
     "avg_exit_velo": 94.5,
     "xiso": 0.337,
     "recent_hr_rate": 0.0172
+   },
+   "flags": []
+  },
+  {
+   "player": "Jackson Chourio",
+   "team": "mil",
+   "game": "tex-mil",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2155,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 452,
+    "factors": {
+     "sp": 1.068,
+     "park": 1.07
+    },
+    "hr_rate_pa": 0.043
+   },
+   "edge_score": 59,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.3,
+    "hard_hit_pct": 47.7,
+    "avg_exit_velo": 91.9,
+    "xiso": 0.22,
+    "recent_hr_rate": 0.05
+   },
+   "flags": []
+  },
+  {
+   "player": "Heriberto Hern\u00e1ndez",
+   "team": "mia",
+   "game": "mia-wsh",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.2488,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 381,
+    "factors": {
+     "sp": 1.119,
+     "park": 1.0,
+     "temp": 1.06,
+     "wind": 1.0
+    },
+    "hr_rate_pa": 0.0528
+   },
+   "edge_score": 58,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.1,
+    "hard_hit_pct": 48.3,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.23,
+    "recent_hr_rate": 0.0472
    },
    "flags": []
   },
@@ -916,16 +916,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7348,
+   "model_prob": 0.7374,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 361,
+    "pa_season": 363,
     "factors": {
      "sp": 1.209
     },
-    "hit_rate_pa": 0.2681
+    "hit_rate_pa": 0.2693
    },
    "edge_score": 76,
    "score_type": "model_score_0_100",
@@ -945,16 +945,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.701,
+   "model_prob": 0.6959,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.05,
     "order": 7,
-    "pa_season": 31,
+    "pa_season": 33,
     "factors": {
      "sp": 1.209
     },
-    "hit_rate_pa": 0.2743
+    "hit_rate_pa": 0.272
    },
    "edge_score": 76,
    "score_type": "model_score_0_100",
@@ -1276,22 +1276,22 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4382,
+   "model_prob": 0.4406,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 582,
+    "pa_season": 584,
     "factors": {
      "sp": 0.956,
      "park": 1.105,
-     "temp": 1.042,
-     "wind": 1.01
+     "temp": 1.036,
+     "wind": 1.03
     },
-    "p1b": 0.1417,
-    "p2b": 0.0467,
+    "p1b": 0.1413,
+    "p2b": 0.0472,
     "p3b": 0.0013,
-    "phr": 0.052
+    "phr": 0.0526
    },
    "edge_score": 1.91,
    "score_type": "per_game_rate",
@@ -1311,24 +1311,24 @@
    "stat": "TB",
    "line": 1.5,
    "side": "over",
-   "model_prob": 0.4298,
+   "model_prob": 0.4301,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 575,
+    "pa_season": 577,
     "factors": {
      "sp": 0.954,
      "park": 1.0,
-     "temp": 1.096,
+     "temp": 1.108,
      "wind": 1.02
     },
-    "p1b": 0.1133,
-    "p2b": 0.0354,
+    "p1b": 0.1143,
+    "p2b": 0.0357,
     "p3b": 0.0025,
-    "phr": 0.0601
+    "phr": 0.0606
    },
-   "edge_score": 1.97,
+   "edge_score": 1.98,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 17.8,
@@ -1336,6 +1336,35 @@
     "avg_exit_velo": 92.7,
     "xiso": 0.264,
     "recent_hr_rate": 0.0603
+   },
+   "flags": []
+  },
+  {
+   "player": "Jordan Walker",
+   "team": "stl",
+   "game": "pit-stl",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": 0.5822,
+   "method": "poisson_ge2",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 564,
+    "factors": {
+     "sp": 0.981
+    },
+    "lambda_pg": 2.295
+   },
+   "edge_score": 2.51,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 13.5,
+    "hard_hit_pct": 48.0,
+    "avg_exit_velo": 92.4,
+    "xiso": 0.211,
+    "recent_hr_rate": 0.0427
    },
    "flags": []
   },
@@ -1365,35 +1394,6 @@
     "avg_exit_velo": 94.5,
     "xiso": 0.337,
     "recent_hr_rate": 0.0172
-   },
-   "flags": []
-  },
-  {
-   "player": "Jordan Walker",
-   "team": "stl",
-   "game": "pit-stl",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": 0.5821,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 564,
-    "factors": {
-     "sp": 0.981
-    },
-    "lambda_pg": 2.288
-   },
-   "edge_score": 2.5,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 13.5,
-    "hard_hit_pct": 48.0,
-    "avg_exit_velo": 92.4,
-    "xiso": 0.211,
-    "recent_hr_rate": 0.0427
    },
    "flags": []
   },
