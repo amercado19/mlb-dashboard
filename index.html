@@ -209,6 +209,102 @@ table.aht tr:last-child td{border-bottom:none}
 .sevrow:last-child{border-bottom:none}
 .sevrow .sevw{flex:1;min-width:180px}
 .sevrow .seva{font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+
+/* ================================================================
+   SLATE REBUILD v2 (2026-09-02)
+   Light theme only. One card = one game, read top-to-bottom:
+   who / prediction / pitching / bet decision / lineups.
+   ================================================================ */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(430px,100%),1fr));gap:14px}
+@media(max-width:920px){.sgrid{grid-template-columns:1fr}}
+
+.sbar{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;box-shadow:var(--card-sh);padding:11px 14px;margin-bottom:6px}
+.sbar-row{display:flex;gap:12px 22px;flex-wrap:wrap;align-items:flex-start}
+.sstat{display:flex;flex-direction:column;line-height:1.2;min-width:64px}
+.sstat .sv{font-family:var(--mono);font-weight:700;font-size:18px;white-space:nowrap}
+.sstat .sl{font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:700;font-family:var(--mono);margin-top:3px}
+.sstat.q .sv{color:var(--accent)}
+.sbar-b{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);display:flex;gap:10px 18px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.sbar-b b{color:var(--txt)}
+.hbtn{background:none;border:0;padding:0;cursor:pointer;font:inherit}
+.sfil{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+.sfil button{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;background:var(--panel);border:1.5px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer;color:var(--txt);box-shadow:2px 2px 0 rgba(10,26,58,.10)}
+.sfil button.on{background:var(--accent);color:#fdf8ec;border-color:var(--accent)}
+.ghead{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:20px 0 10px;display:flex;align-items:center;gap:10px}
+.ghead:after{content:'';flex:1;height:1px;background:var(--line)}
+.ghead .gn{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:1px 9px;font-size:10px;color:var(--txt)}
+
+.gcard{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;box-shadow:var(--card-sh);overflow:hidden}
+.gcard.st-live{border-left:5px solid var(--gold)}
+.gcard.st-final{border-left:5px solid var(--draw)}
+.gcard.st-ppd{border-left:5px solid var(--lose)}
+.gcard.st-pre{border-left:5px solid var(--accent)}
+.gc-top{padding:12px 14px 10px;border-bottom:1px solid var(--line)}
+.gc-l1{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.gc-mu{font-family:var(--mono);font-weight:700;font-size:16px;letter-spacing:.4px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.gc-when{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.gc-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.gc-b{padding:13px 14px}
+
+.blk{margin-bottom:14px}
+.blk:last-child{margin-bottom:0}
+.blab{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+
+.hero{background:var(--panel2);border:1.5px solid var(--line);border-radius:11px;padding:12px 13px}
+.hero-w{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.hero-w .hw-t{font-family:var(--mono);font-weight:700;font-size:27px;letter-spacing:.5px;line-height:1}
+.hero-w .hw-p{font-family:var(--mono);font-weight:700;font-size:19px;color:var(--accent);line-height:1}
+.hero-w .hw-u{font-size:9.5px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.7px;line-height:1.3}
+.hero-sc{font-family:var(--mono);font-size:12.5px;margin-top:9px;color:var(--txt)}
+.hero-sc span{color:var(--muted)}
+.pbar{display:flex;height:8px;border-radius:5px;overflow:hidden;border:1px solid var(--line);margin:10px 0 4px;background:var(--panel)}
+.pbar i{display:block;height:100%}
+.pbar-l{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--muted)}
+
+.spwrap{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:600px){.spwrap{grid-template-columns:1fr}}
+.spcol{border:1.5px solid var(--line);border-radius:10px;padding:10px 11px;background:var(--panel)}
+.spcol .spteam{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+.spcol .spname{font-size:13.5px;font-weight:700;margin:3px 0 8px;line-height:1.25;word-break:break-word}
+.spfact{display:flex;justify-content:space-between;gap:8px;align-items:baseline;padding:3px 0;border-bottom:1px dotted var(--line)}
+.spfact:last-of-type{border-bottom:none}
+.spfact .fk{color:var(--muted);font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap}
+.spfact .fv{font-family:var(--mono);font-weight:700;font-size:12px;text-align:right}
+.spconf{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:7px;line-height:1.55}
+
+.bet{border-radius:11px;padding:11px 12px;border:1.5px solid var(--line);background:var(--panel)}
+.bet.is-bet{background:#ecfdf3;border-color:#63d095}
+.bet.is-watch{background:#fffbeb;border-color:#dfb63f}
+.bet.is-pass{background:#f2f5fa;border-color:#c3ccdd}
+.bet.is-closed{background:#eef2f7;border-color:#94a3b8;border-style:dashed}
+.bet-v{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.6px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.bet-v.c-bet{color:#0c7a43}.bet-v.c-watch{color:#8a6d00}.bet-v.c-pass{color:#475569}.bet-v.c-closed{color:#475569}
+.bet-line{font-family:var(--mono);font-size:12px;margin-top:7px;line-height:1.65;word-break:break-word}
+.bet-why{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55}
+.bet-why b{color:var(--txt)}
+
+.fin{display:flex;gap:10px 20px;flex-wrap:wrap;align-items:center}
+.fin .fsc{font-family:var(--mono);font-size:22px;font-weight:700;line-height:1}
+.fin .fl{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}
+
+details.gdet{margin-top:10px;border-top:1px dashed var(--line);padding-top:9px}
+details.gdet>summary{cursor:pointer;font-family:var(--mono);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);list-style:none}
+details.gdet>summary::-webkit-details-marker{display:none}
+details.gdet>summary:before{content:'\25B8  '}
+details.gdet[open]>summary:before{content:'\25BE  '}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 20px;margin-top:9px}
+.drow{display:flex;justify-content:space-between;gap:12px;font-size:11.5px;padding:4px 0;border-bottom:1px dotted var(--line)}
+.drow .dk{color:var(--muted)}
+.drow .dv{font-family:var(--mono);font-weight:700;text-align:right;word-break:break-word}
+.luhead{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:700;margin:10px 0 3px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.lurow2{display:flex;align-items:baseline;gap:8px;font-size:11.5px;padding:3px 0;flex-wrap:wrap;border-bottom:1px dotted var(--line)}
+.lurow2 .lo{font-family:var(--mono);color:var(--muted);width:14px;flex:0 0 14px;font-size:10px}
+.lurow2 .lnm{flex:1;min-width:100px}
+.lurow2.bad .lnm{opacity:.6;text-decoration:line-through}
+
+.npar{background:#f2f5fa;border:1.5px dashed #94a3b8;border-radius:10px;padding:12px 14px}
+.npar .nph{font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:.6px;color:#475569}
+.npar .npr{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55}
 @media(max-width:520px){.pred .pwin{font-size:16px}.ahgrid{grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}}
 </style>
 </head>
@@ -299,7 +395,8 @@ function statusPill(s){
   var m={OK:'b-ok',LIVE:'b-ok',HEALTHY:'b-ok',PASS:'b-ok',
          'N/A':'b-unk','TRACKING ONLY':'b-unk','INSUFFICIENT DATA':'b-unk',UNKNOWN:'b-unk',BLIND:'b-unk',
          THIN:'b-warn',STALE:'b-warn',DEGRADED:'b-warn',PARTIAL:'b-warn',
-         MISSING:'b-crit',CRITICAL:'b-crit',FAILED:'b-crit','BLOCKED BY CREDENTIAL':'b-crit'}[S];
+         MISSING:'b-crit',CRITICAL:'b-crit',FAILED:'b-crit','BLOCKED BY CREDENTIAL':'b-crit',
+         'NO VALID PARLAY':'b-crit','NO ODDS':'b-warn',UNVERIFIED:'b-unk'}[S];
   /* unrecognised -> UNKNOWN -> grey. Never fall through to a green class. */
   return pill(m?S:'UNKNOWN',m||'b-unk',m?'':'Source reported "'+S+'", which this page does not recognise — treated as UNKNOWN.');
 }
@@ -393,121 +490,181 @@ function lineupFor(row,gamePk){
   var ix=lineupIndex();
   return ix[(gamePk!=null?gamePk:row.gamePk)+'|'+row.playerId]||ix[row.playerId]||null;
 }
-/* Game-level fallback marker. Deliberately visually distinct from the
-   per-player chip so nobody reads it as a confirmed individual status. */
-function gameLevelTag(g){
-  if(g&&g.lineups_official===true)
-    return ' <span class="badge b-ok" title="No per-player status for this batter in the payload. The GAME’s lineup is official, so this is the game-level state, not an individual confirmation.">CONFIRMED · game-level</span>';
-  if(g&&(g.lineups_projected===true||g.lineups_official===false))
-    return ' <span class="badge b-warn" title="No per-player status for this batter. The GAME’s lineup was still projected at run time — treat this batter as unconfirmed.">PROJECTED · game-level</span>';
-  return ' <span class="badge b-unk" title="The payload does not say whether this game’s lineup is official.">LINEUP UNKNOWN</span>';
-}
-function gameLineupChip(g){
-  if(g.lineups_official===true)return pill('LINEUP CONFIRMED','b-ok','Official lineup posted for this game.');
-  if(g.lineups_projected===true||g.lineups_official===false)return pill('LINEUP PROJECTED','b-warn','Official lineup was not posted at run time — batters and props for this game use projections.');
-  return pill('LINEUP UNKNOWN','b-unk','The payload did not state whether this game’s lineup is official.');
-}
-
 /* ---------- canonical prediction ----------
-   MODEL PREDICTION and BET/WATCH/PASS are different questions and are rendered
-   as different things. The prediction says who wins; the recommendation is a
-   verdict on the PRICE. A PASS therefore never means "no opinion". */
+   The Slate NEVER chooses a winner. predictions[] is the canonical prediction
+   object; ml[] and gameCards[] carry mirrors of the same fields and are read
+   only when predictions[] is absent from an older payload — and when they are,
+   the card says so.
+
+   MODEL PREDICTION and BET / WATCH / PASS answer two different questions and
+   are rendered as two different things. The prediction says who wins. The
+   recommendation is a verdict on the PRICE. A PASS therefore never means
+   "no projected winner". */
+function predIndex(){
+  if(window._PIX)return window._PIX;
+  var ix={};
+  (D.predictions||[]).forEach(function(p){
+    if(!p)return;
+    if(p.gamePk!=null)ix['pk:'+p.gamePk]=p;
+    if(p.gameId)ix['id:'+p.gameId]=p;
+  });
+  window._PIX=ix;return ix;
+}
+function predOf(g,m){
+  g=g||{};m=m||{};var ix=predIndex();
+  var pk=(g.gamePk!=null)?g.gamePk:m.gamePk;
+  if(pk!=null&&ix['pk:'+pk])return ix['pk:'+pk];
+  var id=g.game||m.gameId||((m.away&&m.home)?(m.away+'@'+m.home):'');
+  return ix['id:'+id]||null;
+}
+function p100(v){return isNum(v)?((v>=0&&v<=1)?v*100:v):null;}
 function predictionFor(g,m){
-  g=g||{};m=m||{};var tm=teamsOf(g);
-  /* When called with only an ml entry (no game card), take the sides from it. */
-  if(!g.game&&!g.away_sp&&(m.away||m.home))tm={away:m.away||tm.away,home:m.home||tm.home};
-  var src='canonical';
-  var winner=g.projectedWinner||m.projectedWinner||null;
-  var aw=isNum(g.awayWinProb)?g.awayWinProb:(isNum(m.awayWinProb)?m.awayWinProb:null);
-  var hw=isNum(g.homeWinProb)?g.homeWinProb:(isNum(m.homeWinProb)?m.homeWinProb:null);
-  if(aw!=null&&aw<=1)aw=aw*100;
-  if(hw!=null&&hw<=1)hw=hw*100;
+  g=g||{};m=m||{};
+  var P=predOf(g,m)||{};
+  var tm=teamsOf(g);
+  if(P.awayTeam||P.homeTeam)tm={away:P.awayTeam||tm.away,home:P.homeTeam||tm.home};
+  else if(!g.game&&!g.away_sp&&(m.away||m.home))tm={away:m.away||tm.away,home:m.home||tm.home};
+
+  var winner=P.projectedWinner||null,src='canonical',disagree=null;
+  var aw=p100(P.awayWinProb),hw=p100(P.homeWinProb);
+  var conf=isNum(P.confidence)?P.confidence:null;
+  var confSide=P.displayTeam||P.betTeam||null;
+
+  if(!winner){
+    src='mirror';
+    winner=g.projectedWinner||m.projectedWinner||null;
+    if(aw==null)aw=p100(isNum(g.awayWinProb)?g.awayWinProb:m.awayWinProb);
+    if(hw==null)hw=p100(isNum(g.homeWinProb)?g.homeWinProb:m.homeWinProb);
+  }else{
+    var mir=g.projectedWinner||m.projectedWinner;
+    if(mir&&mir!==winner)
+      disagree='predictions[] projects '+winner+', but the mirrored field on the '
+        +((g.projectedWinner&&g.projectedWinner!==winner)?'game card':'moneyline row')
+        +' says '+mir+'. The canonical predictions[] value is the one shown.';
+  }
   if(aw==null&&hw!=null)aw=100-hw;
   if(hw==null&&aw!=null)hw=100-aw;
-  /* A (side, confidence) pair must come from ONE object. gameCards.pick/conf and
-     ml.pickSide/conf disagree on some games in real payloads, and splicing a
-     side from one onto a confidence from the other invents a third answer. */
-  function pairOf(o,sideVal){
-    var c=isNum(o.confidence)?o.confidence:isNum(o.conf)?o.conf:null;
-    return (sideVal&&isNum(c))?{side:sideVal,conf:c}:null;
+
+  if(conf==null){
+    var pairOf=function(o,sideVal){
+      var c=isNum(o.confidence)?o.confidence:isNum(o.conf)?o.conf:null;
+      return (sideVal&&isNum(c))?{side:sideVal,conf:c}:null;
+    };
+    var mSide=m.team||(m.pickSide==='home'?tm.home:m.pickSide==='away'?tm.away:null);
+    var pair=pairOf(m,mSide)||pairOf(g,g.pick);
+    if(pair){conf=pair.conf;if(!confSide)confSide=pair.side;
+      if(!winner&&aw==null){src='derived';aw=(pair.side===tm.away)?pair.conf:100-pair.conf;hw=100-aw;}}
   }
-  var mSide=m.team||(m.pickSide==='home'?tm.home:m.pickSide==='away'?tm.away:null);
-  var pML=pairOf(m,mSide),pGC=pairOf(g,g.pick);
-  var pair=pML||pGC;
-  var conf=pair?pair.conf:null;
-  /* Do the two sources imply different winners? Say so rather than pick one. */
-  var disagree=null;
-  if(pML&&pGC){
-    var wML=(pML.side===tm.away?pML.conf:100-pML.conf)>=50?tm.away:tm.home;
-    var wGC=(pGC.side===tm.away?pGC.conf:100-pGC.conf)>=50?tm.away:tm.home;
-    if(wML!==wGC)disagree='The moneyline row implies '+wML+' and the game card implies '+wGC+'. Showing the moneyline row, which is the priced one.';
-  }
-  if(winner==null||aw==null){
-    /* Canonical fields are not in this build yet — derive the same shape and
-       label it DERIVED rather than pretend it came from the model. */
-    src='derived';
-    if(!pair)return {ok:false,src:'none',away:tm.away,home:tm.home};
-    if(aw==null){aw=(pair.side===tm.away)?pair.conf:100-pair.conf;hw=100-aw;}
-    /* The projected winner is the side above 50% — NOT whichever side the pick
-       field names. A PASS game often names a side the model has at 47%. */
-    winner=isNum(aw)?(aw>=50?tm.away:tm.home):null;
-  }
-  if(winner==null&&isNum(aw))winner=aw>=50?tm.away:tm.home;
-  var wp=winner===tm.away?aw:winner===tm.home?hw:null;
+  if(!winner&&isNum(aw)){src='derived';winner=aw>=50?tm.away:tm.home;}
+  if(!winner&&aw==null)return {ok:false,src:'none',away:tm.away,home:tm.home,pred:P};
+
+  var wp=(winner===tm.away)?aw:(winner===tm.home)?hw:null;
+  var ar=isNum(P.awayProjectedRuns)?P.awayProjectedRuns:(isNum(g.away_runs)?g.away_runs:null);
+  var hr=isNum(P.homeProjectedRuns)?P.homeProjectedRuns:(isNum(g.home_runs)?g.home_runs:null);
   return {ok:true,src:src,winner:winner,away:tm.away,home:tm.home,aw:aw,hw:hw,wp:wp,conf:conf,
-    confSide:pair?pair.side:null,disagree:disagree,
-    version:g.predictionVersion||m.predictionVersion||g.modelVersion||m.modelVersion||null};
+    confSide:confSide||null,disagree:disagree,pred:P,awayRuns:ar,homeRuns:hr,
+    version:P.predictionVersion||g.predictionVersion||m.predictionVersion||P.modelVersion||g.modelVersion||m.modelVersion||null,
+    modelVersion:P.modelVersion||g.modelVersion||m.modelVersion||D.version||null,
+    generatedAt:P.generatedAt||D.generatedAt||null,
+    probSource:P.probSource||null};
+}
+/* Model confidence for one named side, taken from the canonical sides{} block
+   when it exists so a BET on the underdog quotes the underdog's number. */
+function modelPctFor(P,side,fallback){
+  P=P||{};
+  var S=P.sides||{};
+  var k=(P.awayTeam===side)?'away':(P.homeTeam===side)?'home':null;
+  if(k&&S[k]&&isNum(S[k].conf))return S[k].conf;
+  if(P.betSide&&S[P.betSide]&&P.betTeam===side&&isNum(S[P.betSide].conf))return S[P.betSide].conf;
+  return isNum(fallback)?fallback:null;
 }
 function recFor(g,m){
   g=g||{};m=m||{};
-  var r=g.moneylineRecommendation||m.moneylineRecommendation;
-  if(r)return {rec:String(r).toUpperCase(),src:'canonical'};
-  var t=String(g.tier||m.tier||'').toUpperCase();
+  var P=predOf(g,m)||{};
+  var r=P.moneylineRecommendation||g.moneylineRecommendation||m.moneylineRecommendation;
+  if(r)return {rec:String(r).toUpperCase(),src:P.moneylineRecommendation?'canonical':'mirror'};
+  var t=String(P.moneylineTier||g.tier||m.tier||'').toUpperCase();
   if(!t)return null;
   return {rec:t==='STRONG'?'BET':t==='LEAN'?'WATCH':'PASS',src:'derived'};
 }
 function recPill(r){
   var tip={BET:'The model’s edge clears the bet threshold at the posted price.',
     WATCH:'The model has a side, but the edge is too thin to bet at this price.',
-    PASS:'No bet at this price. This is a verdict on the PRICE — the model still has a projected winner above.'}[r]||'';
+    PASS:'No bet at this price. This is a verdict on the PRICE — the model still has a projected winner.'}[r]||'';
   return pill(r,{BET:'b-ok',WATCH:'b-warn',PASS:'b-unk'}[r]||'b-unk',tip);
 }
-function predBlock(g,m){
-  var p=predictionFor(g,m);
-  if(!p.ok)return '<div class="pred"><div class="plab">Model prediction — projected winner</div>'
-    +'<div class="pwin" style="font-size:13px;color:var(--muted)">'+INS+'</div>'
-    +'<div class="psc">This payload carries no pick, confidence or win probability for this game.</div></div>';
-  var derived=p.src==='derived'?' '+pill('DERIVED','b-unk','Win probability derived from the model pick + confidence. The pipeline’s canonical projectedWinner / awayWinProb / homeWinProb fields are '+NOT_IN_BUILD+'.'):'';
-  var sc=(g.away_runs!=null&&g.home_runs!=null)
-    ?('Projected score <b>'+esc(p.away)+' '+g.away_runs+'</b> — <b>'+esc(p.home)+' '+g.home_runs+'</b>')
-    :('Projected score '+INS);
-  return '<div class="pred"><div class="plab">Model prediction — projected winner'+derived+'</div>'
-    +'<div class="pwin">'+teamLogo(p.winner)+'<span>'+esc(p.winner||'—')+'</span>'
-    +'<span class="pwp">'+(isNum(p.wp)?p.wp.toFixed(0)+'% to win':INS)+'</span></div>'
-    +'<div class="psc">'+esc(p.away)+' '+(isNum(p.aw)?p.aw.toFixed(0)+'%':'—')+' · '+esc(p.home)+' '+(isNum(p.hw)?p.hw.toFixed(0)+'%':'—')
-    +' &nbsp;|&nbsp; '+sc+(p.version?' &nbsp;|&nbsp; '+esc(p.version):'')+'</div></div>';
-}
-function recBlock(g,m){
-  m=m||{};
-  var p=predictionFor(g,m),r=recFor(g,m);
-  var imp=isNum(m.implied)?m.implied:null,edge=isNum(m.edge)?m.edge:null;
-  var tail=r?recPill(r.rec)+(r.src==='derived'?' '+pill('FROM TIER','b-unk','moneylineRecommendation is '+NOT_IN_BUILD+' — mapped from the pick tier (STRONG→BET, LEAN→WATCH, PASS→PASS).'):'')
-           :pill('NO RECOMMENDATION','b-unk','No tier or recommendation for this game.');
-  /* MODEL, MARKET and EDGE all describe the SAME side — name it, so a card whose
-     projected winner differs from the priced side can never read as a
-     contradiction. */
-  var side=p.confSide||m.team||(m.pickSide==='home'?m.home:m.pickSide==='away'?m.away:null)||p.winner;
-  var sideTxt=side?' ('+esc(side)+')':'';
-  var mismatch=(side&&p.winner&&side!==p.winner)
-    ?' '+pill('EVALUATED SIDE: '+side,'b-info','The model’s projected winner is '+p.winner+'. The side being priced and evaluated for value here is '+side+' — that is normal for a value play on the underdog. All three numbers below describe '+side+'.'):'';
-  var dis=p.disagree?' '+pill('SOURCES DISAGREE','b-warn',p.disagree):'';
-  return '<div class="recrow"><span class="plab" style="flex:0 0 100%">Bet recommendation — a verdict on the PRICE, not on the winner above'+mismatch+dis+'</span>'
-    +'<span title="Model confidence in '+esc(side||'the priced side')+', independent of price."><b>MODEL'+sideTxt+'</b> '+(isNum(p.conf)?p.conf+'%':INS)+'</span>'
-    +'<span title="What the posted price implies for '+esc(side||'the same side')+'."><b>MARKET'+sideTxt+'</b> '+(imp!=null?imp+'%':INS)+'</span>'
-    +'<span title="Model confidence minus the price’s implied probability."><b>EDGE</b> '+(edge!=null?(edge>0?'+':'')+edge+'pt':INS)+'</span>'
-    +tail+'</div>';
-}
 
+/* ---------- game state ----------
+   PREGAME / LIVE / FINAL / POSTPONED, plus whether the MARKET is still open.
+   marketState (PREGAME / STARTED / IN_PLAY_PRICE) decides the market; the game
+   status decides the label. A started game never shows an actionable edge. */
+function gameStateOf(g,m){
+  g=g||{};m=m||{};
+  var P=predOf(g,m)||{};
+  var raw=((P.lineupState||{}).gameStatus)||g.gameStatus||g.status||m.gameStatus||m.status||null;
+  var S=String(raw||'').toUpperCase(),k=null;
+  if(/POSTPON|CANCEL|SUSPEND/.test(S))k='POSTPONED';
+  else if(/FINAL|GAME OVER|COMPLET/.test(S))k='FINAL';
+  else if(/IN[- ]PROGRESS|LIVE|MANAGER CHALLENGE|REVIEW|DELAY/.test(S))k='LIVE';
+  else if(/PRE[- ]?GAME|SCHEDULED|WARMUP/.test(S))k='PREGAME';
+  var ms=String(P.marketState||'').toUpperCase()||null;
+  if(!k&&ms)k=(ms==='PREGAME')?'PREGAME':(ms==='STARTED'||ms==='IN_PLAY_PRICE')?'LIVE':null;
+  if(!k){var t=tms(g.time||m.time||P.time);if(t!=null)k=(t>Date.now())?'PREGAME':'LIVE';}
+  k=k||'UNKNOWN';
+  var open=(k==='PREGAME')&&(!ms||ms==='PREGAME');
+  return {key:k,raw:raw||null,marketState:ms,marketOpen:open,
+    label:{PREGAME:'UPCOMING',LIVE:'IN PROGRESS',FINAL:'FINAL',POSTPONED:'POSTPONED',UNKNOWN:'GAME STATE UNKNOWN'}[k],
+    group:{PREGAME:'UPCOMING',LIVE:'IN PROGRESS',FINAL:'FINAL',POSTPONED:'POSTPONED',UNKNOWN:'UPCOMING'}[k]};
+}
+function stateChip(st){
+  var c={PREGAME:'b-info',LIVE:'b-warn',FINAL:'b-unk',POSTPONED:'b-crit',UNKNOWN:'b-unk'}[st.key]||'b-unk';
+  var tip={PREGAME:'Scheduled — first pitch has not happened yet.',
+    LIVE:'The game has started. Pre-game markets are closed.',
+    FINAL:'The game is over.',
+    POSTPONED:'This game will not be played as scheduled. Betting is unavailable.',
+    UNKNOWN:'The payload does not state this game’s status, so it is treated as unknown — not as playable.'}[st.key];
+  return pill(st.label,c,tip);
+}
+/* Actual score, if the payload carries one. Deliberately narrow: away_runs /
+   home_runs on the game card are PROJECTIONS and must never be read as a
+   result. Only explicit score fields count. */
+function actualScore(g,m){
+  var P=predOf(g,m)||{};
+  var cands=[P.linescore,P.finalScore,P.score,P.result,P,g,m,D.linescores&&D.linescores[g.gamePk]];
+  for(var i=0;i<cands.length;i++){
+    var o=cands[i];if(!o||typeof o!=='object')continue;
+    var a=isNum(o.awayScore)?o.awayScore:isNum(o.away_score)?o.away_score:isNum(o.awayRuns)?o.awayRuns:null;
+    var h=isNum(o.homeScore)?o.homeScore:isNum(o.home_score)?o.home_score:isNum(o.homeRuns)?o.homeRuns:null;
+    if((a==null||h==null)&&o.teams){
+      if(a==null&&o.teams.away&&isNum(o.teams.away.runs))a=o.teams.away.runs;
+      if(h==null&&o.teams.home&&isNum(o.teams.home.runs))h=o.teams.home.runs;
+    }
+    if(a!=null&&h!=null)return {away:a,home:h};
+  }
+  return null;
+}
+/* One object per game holding everything the card and the Admin diagnostics
+   both need, so the two can never drift apart. */
+function betFor(g,m){
+  g=g||{};m=m||{};
+  var P=predOf(g,m)||{},st=gameStateOf(g,m),r=recFor(g,m),p=predictionFor(g,m);
+  var canon=('betTeam' in P)||('betEdge' in P)||('betImplied' in P);
+  var team=canon?(P.betTeam||null):null,odds=canon?P.betOdds:null,
+      imp=canon?P.betImplied:null,edge=canon?P.betEdge:null;
+  if(!canon){
+    team=m.team||(m.pickSide==='home'?m.home:m.pickSide==='away'?m.away:null);
+    odds=isNum(m.odds)?m.odds:null;
+    imp=isNum(m.implied)?m.implied:null;
+    edge=isNum(m.edge)?m.edge:null;
+  }
+  /* Dead market: the edge is not actionable, so it is not shown as one. */
+  if(!st.marketOpen){imp=null;edge=null;}
+  var side=team||P.bestValueTeam||p.confSide||p.winner||null;
+  return {state:st,rec:r?r.rec:null,recSrc:r?r.src:null,team:side,betTeam:team,
+    odds:isNum(odds)?odds:null,implied:isNum(imp)?imp:null,edge:isNum(edge)?edge:null,
+    oddsNote:(typeof m.odds==='string')?m.odds:null,pred:p,P:P,canon:canon,
+    modelPct:modelPctFor(P,side,p.conf)};
+}
 /* ---------- starting pitcher role + workload ----------
    Quality, role and workload are three separate facts. A GOOD pitcher opening
    for 1.7 innings is not a good start, so they never collapse into one badge. */
@@ -560,58 +717,344 @@ function gameProps(pk){var bf=D.boardsFull||D.boards||{};var out=[];
         lineupSource:r.lineupSource,battingOrder:r.battingOrder,rosterStatus:r.rosterStatus,
         projectionSourceGame:r.projectionSourceGame,lineupAgeHours:r.lineupAgeHours});});});
   return out;}
-/* Batting order with a per-player lineup marker. Uses the row's own status when
-   the pipeline supplies it on away_bat/home_bat, else the same player's status
-   from the prop boards, else the game-level state clearly labelled as such. */
-function batBlock(label,rows,g){
-  rows=rows||[];
-  if(!rows.length)return '<div class="luteam">'+esc(label)+'</div><div class="lurow"><span class="lnm" style="color:var(--muted)">No batting order in this payload for '+esc(label)+'.</span></div>';
-  return '<div class="luteam">'+esc(label)+'</div>'+rows.slice(0,9).map(function(b){
-    var lu=lineupFor(b,g.gamePk);
-    var tag=lu?lineupTag(lu,'CONFIRMED'):gameLevelTag(g);
-    var age=(lu&&isNum(lu.lineupAgeHours))?' <span style="font-family:var(--mono);font-size:9px;color:var(--muted)" title="Age of the lineup this status came from">'+lu.lineupAgeHours.toFixed(1)+'h</span>':'';
-    var prov=(lu&&lu.projectionSourceGame)?' <span style="font-family:var(--mono);font-size:9px;color:var(--muted)" title="Projection carried over from this game">from '+esc(lu.projectionSourceGame)+'</span>':'';
-    return '<div class="lurow"><span class="lo">'+(b.order!=null?b.order:(lu&&lu.battingOrder!=null?lu.battingOrder:'·'))+'</span>'
-      +'<span class="lnm">'+esc(b.name||'')+'</span>'+tag+age+prov+'</div>';}).join('');
+/* ---------- lineups on the card ----------
+   Three visible states only: CONFIRMED / PROJECTED / UNKNOWN. A projection must
+   never look confirmed, and a player who is on the IL, optioned, traded,
+   scratched, benched or otherwise inactive is struck through and labelled
+   NOT A STARTER so it can never be read as a legitimate projected starter. */
+function badStarter(r){
+  if(!r)return null;
+  var rs=String(r.rosterStatus||'').toUpperCase();
+  if(/\bIL\b|INJUR|OPTION|MINOR|TRIPLE-A|DFA|DESIGNAT|TRADE|RELEAS|SUSPEND|RESTRICT|INACTIVE|BEREAV|PATERN/.test(rs))
+    return rs.replace(/_/g,' ');
+  var ls=String(r.lineupStatus||'').toUpperCase();
+  if(/BENCH|SCRATCH|INACTIVE|POSTPONED|DUPLICATE|INVALID|NOT_ON_ROSTER|TRADED|OPTIONED/.test(ls))
+    return ls.replace(/_/g,' ');
+  return null;
 }
-function renderSlate(){
-  var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});
-  if(!gc.length){$('slate').innerHTML='<div class="empty">No games in today’s slate.</div>';return;}
-  var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
-  $('slate').innerHTML=slateBanner()+'<div class="grid">'+gc.map(function(g){
-    var tm=teamsOf(g),pick=g.pick,conf=g.conf,awayFav=pick===tm.away;
-    var _p=predictionFor(g,mlByPk[g.gamePk]||{});
-    var aPct=isNum(_p.aw)?_p.aw:(conf==null?50:(awayFav?conf:100-conf)),hPct=100-aPct;
-    var ar=(g.away_runs!=null)?g.away_runs:'—',hr=(g.home_runs!=null)?g.home_runs:'—';
-    var asp=g.away_sp||{},hspx=g.home_sp||{};
-    var lu=gameLineupChip(g);
-    var m=mlByPk[g.gamePk]||{};
-    var gp=gameProps(g.gamePk);
-    var gpHtml=gp.length?('<details class="gprops"><summary>Best props in this game ('+gp.length+')</summary><div class="pl-legs">'+gp.map(function(x){var oc=x.pid?' onclick="openMatchupModal('+x.pid+','+x.gp+',&quot;'+esc(x.name).replace(/&quot;|"/g,'')+'&quot;,&quot;'+esc(x.team||'')+'&quot;)" style="cursor:pointer;color:var(--accent2)"':'';return '<div class="pl-leg"><span class="badge b-rank">'+x.lbl+'</span> <span'+oc+'>'+esc(x.name)+'</span> <span class="unit">'+(x.metric!=null?x.metric:'')+'</span>'+lineupTag(x)+'</div>';}).join('')+'</div></details>'):'';
-    var luHtml='<details class="lucard"><summary>Lineup status — '+esc(tm.away)+' / '+esc(tm.home)+'</summary>'
-      +batBlock(tm.away+' (away)',g.away_bat,g)+batBlock(tm.home+' (home)',g.home_bat,g)+'</details>';
-    return '<div class="card game">'
-      +'<div class="card-h"><span>'+esc(tm.away)+' @ '+esc(tm.home)+'</span><span class="t">'+esc(fmtTime(g.time))+'</span></div>'
-      +'<div class="card-b">'
-        +'<div class="teams">'
-          +'<div class="team'+(awayFav&&pick?' fav':'')+'">'+teamLogo(tm.away)+'<span class="abbr">'+esc(tm.away)+'</span><span class="nm">'+esc(asp.name||'TBD')+' '+handBadge(asp.throws)+'</span><span class="rs">'+ar+'</span></div>'
-          +spWorkload(asp)
-          +'<div class="team'+(!awayFav&&pick?' fav':'')+'">'+teamLogo(tm.home)+'<span class="abbr">'+esc(tm.home)+'</span><span class="nm">'+esc(hspx.name||'TBD')+' '+handBadge(hspx.throws)+'</span><span class="rs">'+hr+'</span></div>'
-          +spWorkload(hspx)
-        +'</div>'
-        +predBlock(g,m)
-        +'<div class="probbar"><i style="width:'+aPct.toFixed(0)+'%;background:var(--accent)"></i><i style="width:'+hPct.toFixed(0)+'%;background:var(--lose)"></i></div>'
-        +'<div class="probrow"><span>'+esc(tm.away)+' '+aPct.toFixed(0)+'%</span><span>'+hPct.toFixed(0)+'% '+esc(tm.home)+'</span></div>'
-        +recBlock(g,m)
-        +windArrows(g.wind_zones)
-        +'<div class="subrow"><span>'+(g.temp!=null?'🌡 '+g.temp+'°F':'')+(g.venue?' · '+esc(g.venue):'')+'</span><span>PEN '+(g.away_pen!=null?g.away_pen:'—')+'/'+(g.home_pen!=null?g.home_pen:'—')+'</span></div>'
-        +'<div class="pickline">'+(g.total!=null?'<span class="badge b-pass">O/U '+g.total+'</span>':'')+lu+(m.odds?'<span style="color:var(--muted)">'+esc(m.odds)+'</span>':'')+'</div>'
-        +luHtml
-        +gpHtml
-      +'</div></div>';
-  }).join('')+'</div>';
+function batRow(b,g,gState){
+  var lu=lineupFor(b,g.gamePk)||{};
+  var bad=badStarter(lu)||badStarter(b);
+  var ord=(b.order!=null)?b.order:(lu.battingOrder!=null?lu.battingOrder:'·');
+  var chip,cls='';
+  if(bad){
+    cls=' bad';
+    chip=pill('NOT A STARTER · '+bad,'b-crit',
+      lu.lineupReason||'This player is not an eligible starter for this game and must not be treated as one.');
+  }else if(lu.eligible===true){
+    chip=pill('CONFIRMED','b-ok','Confirmed starter in the official lineup.');
+  }else if(lu.lineupStatus!==undefined||lu.eligible===false){
+    chip=pill('PROJECTED','b-warn',lu.lineupReason||'Projected — the official lineup has not posted. Not a confirmed starter.');
+  }else{
+    chip=gState==='CONFIRMED'
+      ?pill('CONFIRMED · game-level','b-ok','No per-player status in this payload. The GAME’s lineup is official, so this is the game-level state, not an individual confirmation.')
+      :gState==='PROJECTED'
+      ?pill('PROJECTED · game-level','b-warn','No per-player status in this payload, and the game’s lineup was still projected at run time. Treat this batter as unconfirmed.')
+      :pill('UNKNOWN','b-unk','The payload says nothing about this batter’s lineup status.');
+  }
+  var age=isNum(lu.lineupAgeHours)?' <span style="font-family:var(--mono);font-size:9px;color:var(--muted)" title="Age of the lineup this status came from">'+lu.lineupAgeHours.toFixed(1)+'h</span>':'';
+  return '<div class="lurow2'+cls+'"><span class="lo">'+esc(String(ord))+'</span>'
+    +'<span class="lnm">'+esc(b.name||INS)+'</span>'+chip+age+'</div>';
+}
+function batBlock(label,rows,g,gState){
+  rows=rows||[];
+  var head='<div class="luhead"><span>'+esc(label)+'</span>'
+    +(gState==='CONFIRMED'?pill('CONFIRMED','b-ok','Official lineup posted.')
+      :gState==='PROJECTED'?pill('PROJECTED','b-warn','Official lineup not posted — every name below is a projection.')
+      :pill('UNKNOWN','b-unk','The payload does not state whether this lineup is official.'))+'</div>';
+  if(!rows.length)return head+'<div class="lurow2"><span class="lnm" style="color:var(--muted)">No batting order in this payload.</span></div>';
+  return head+rows.slice(0,9).map(function(b){return batRow(b,g,gState);}).join('');
 }
 
+/* ---------- starting pitching on the card ----------
+   Quality, Role, Expected IP and Game impact are four separate facts. A GOOD
+   pitcher opening for 1.7 innings is not a good start, so they never collapse
+   into a single "ELITE SP" badge. Confidences are shown, compactly. */
+function spIndex(){
+  if(window._SPIX)return window._SPIX;
+  var ix={};
+  (D.startingPitchers||[]).forEach(function(s){if(s&&s.gamePk!=null)ix[s.gamePk]=s;});
+  window._SPIX=ix;return ix;
+}
+function spFor(g,m,side){
+  g=g||{};
+  var rich=(spIndex()[g.gamePk]||{})[side]||null;
+  var card=g[side+'_sp']||null;
+  var ps=((predOf(g,m)||{}).pitcherState||{})[side]||null;
+  if(!rich&&!card&&!ps)return null;
+  var out={};
+  [card,ps,rich].forEach(function(o){if(o)for(var k in o){if(o[k]!==undefined&&o[k]!==null)out[k]=o[k];}});
+  return out;
+}
+function spFact(k,v){return '<div class="spfact"><span class="fk">'+esc(k)+'</span><span class="fv">'+v+'</span></div>';}
+function spCol(team,sp){
+  var unk=pill('UNKNOWN','b-unk','Not published for this start — treated as unknown, never as fine.');
+  if(!sp)return '<div class="spcol"><div class="spteam">'+esc(team||'—')+'</div>'
+    +'<div class="spname" style="color:var(--muted)">'+INS+'</div>'
+    +spFact('Quality',unk)+spFact('Role',unk)+spFact('Expected IP',unk)+spFact('Game impact',unk)+'</div>';
+  var name=(sp.tbd===true||!sp.name)?'TBD':sp.name;
+  var hand=sp.throws?(sp.throws==='L'?'LHP':'RHP'):'';
+  var role=sp.role?String(sp.role).replace(/_/g,' '):null;
+  var roleCls=!role?'b-unk':(sp.isTrueStarter===false||/OPENER|BULLPEN|TANDEM|LIMITED|PIGGY/.test(role))?'b-warn':'b-good';
+  var imp=sp.impactLabel?String(sp.impactLabel).toUpperCase():null;
+  var impCls=!imp?'b-unk':/FULL/.test(imp)?'b-good':/MODERATE|MEDIUM/.test(imp)?'b-info':/LOW|MINIMAL|SHORT/.test(imp)?'b-warn':'b-unk';
+  var conf=[];
+  if(sp.roleConfidence)conf.push('role confidence '+String(sp.roleConfidence).toLowerCase());
+  if(sp.workloadConfidence)conf.push('workload confidence '+String(sp.workloadConfidence).toLowerCase());
+  if((sp.workloadFlags||[]).length)conf.push(sp.workloadFlags.join(', ').replace(/_/g,' ').toLowerCase());
+  return '<div class="spcol">'
+    +'<div class="spteam">'+esc(team||'—')+(hand?' &middot; '+hand:'')+'</div>'
+    +'<div class="spname">'+esc(name)+'</div>'
+    +spFact('Quality',spTierBadge(sp.tier||'UNKNOWN'))
+    +spFact('Role',role?pill(role,roleCls,'Role classification from the pipeline. An opener or bullpen day means the starter’s xERA covers only a fraction of the game.'):unk)
+    +spFact('Expected IP',isNum(sp.expIp)?sp.expIp.toFixed(1):unk)
+    +spFact('Game impact',imp?pill(imp,impCls,'Share of the game this starter is expected to account for'+(isNum(sp.impactShare)?' ('+Math.round(sp.impactShare*100)+'%).':'.')):(isNum(sp.impactShare)?Math.round(sp.impactShare*100)+'%':unk))
+    +(conf.length?'<div class="spconf">'+esc(conf.join(' · '))+'</div>':'')
+    +'</div>';
+}
+
+/* ---------- the four blocks of a slate card ---------- */
+function heroBlock(p,st){
+  if(!p||!p.ok)
+    return '<div class="blk"><div class="blab">Model prediction</div><div class="hero">'
+      +'<div class="hero-w"><span class="hw-t" style="font-size:15px;color:var(--muted)">'+INS+'</span></div>'
+      +'<div class="hero-sc"><span>This payload carries no projected winner or win probability for this game.</span></div></div></div>';
+  var pre=(st.key==='LIVE'||st.key==='FINAL')
+    ?' '+pill('PRE-GAME','b-info','This is the prediction the model made BEFORE first pitch. It is not a live in-game number and it is not being updated.'):'';
+  var prov=p.src==='derived'
+    ?' '+pill('DERIVED','b-unk','No canonical projectedWinner in this payload — the winner was derived from the pick and confidence. Treat it as unverified.')
+    :p.src==='mirror'?' '+pill('MIRRORED','b-unk','predictions[] is '+NOT_IN_BUILD+' — read from the mirrored field on the game card / moneyline row.'):'';
+  var dis=p.disagree?' '+pill('SOURCES DISAGREE','b-warn',p.disagree):'';
+  var sc=(isNum(p.awayRuns)&&isNum(p.homeRuns))
+    ?('<span>Projected score</span> '+esc(p.away)+' <b>'+p.awayRuns.toFixed(1)+'</b> &mdash; '+esc(p.home)+' <b>'+p.homeRuns.toFixed(1)+'</b>')
+    :('<span>Projected score '+INS+'</span>');
+  var aw=isNum(p.aw)?p.aw:50,hw=isNum(p.hw)?p.hw:50;
+  return '<div class="blk"><div class="blab">'+((st.key==='LIVE'||st.key==='FINAL')?'Pre-game model prediction':'Model prediction')+prov+dis+'</div>'
+    +'<div class="hero">'
+      +'<div class="hero-w">'+teamLogo(p.winner)
+        +'<span class="hw-t">'+esc(p.winner||'—')+'</span>'
+        +'<span><span class="hw-p">'+(isNum(p.wp)?p.wp.toFixed(0)+'%':INS)+'</span><br><span class="hw-u">to win</span></span>'
+        +pre+'</div>'
+      +'<div class="hero-sc">'+sc+'</div>'
+      +'<div class="pbar"><i style="width:'+aw.toFixed(0)+'%;background:var(--accent)"></i><i style="width:'+hw.toFixed(0)+'%;background:var(--accent2)"></i></div>'
+      +'<div class="pbar-l"><span>'+esc(p.away)+' '+(isNum(p.aw)?p.aw.toFixed(0)+'%':'—')+'</span><span>'+(isNum(p.hw)?p.hw.toFixed(0)+'%':'—')+' '+esc(p.home)+'</span></div>'
+    +'</div></div>';
+}
+function pitchBlock(g,m,tm){
+  return '<div class="blk"><div class="blab">Starting pitching</div>'
+    +'<div class="spwrap">'+spCol(tm.away,spFor(g,m,'away'))+spCol(tm.home,spFor(g,m,'home'))+'</div></div>';
+}
+function betBlock(g,m){
+  var b=betFor(g,m),p=b.pred,st=b.state;
+  var favLine=p.ok
+    ?'Model favours <b>'+esc(p.winner)+'</b> at <b>'+(isNum(p.wp)?p.wp.toFixed(0)+'%':INS)+'</b>'
+    :'The model has no projected winner for this game';
+  function shell(cls,vcls,verdict,body){
+    return '<div class="blk"><div class="blab">Bet decision — a verdict on the price, not on the winner</div>'
+      +'<div class="bet '+cls+'"><div class="bet-v '+vcls+'">'+verdict+'</div>'+body+'</div></div>';
+  }
+  if(st.key==='POSTPONED')
+    return shell('is-closed','c-closed','BETTING UNAVAILABLE — GAME POSTPONED',
+      '<div class="bet-why">'+favLine+', but the game is not being played as scheduled.</div>');
+  if(st.key==='FINAL')return '';
+  if(st.key==='LIVE')
+    return shell('is-closed','c-closed','BETTING CLOSED — GAME IN PROGRESS',
+      '<div class="bet-why">'+favLine+' before first pitch. The market is '
+      +(st.marketState==='IN_PLAY_PRICE'?'showing an in-play price, which this model does not evaluate':'closed for pre-game bets')
+      +', so no edge is shown and nothing here is actionable.</div>');
+  if(!st.marketOpen)
+    return shell('is-closed','c-closed','BETTING STATUS UNKNOWN',
+      '<div class="bet-why">'+favLine+'. The payload does not confirm that a pre-game market is open for this game'
+      +(st.marketState?' (market state '+esc(st.marketState)+')':'')+', so no edge is shown.</div>');
+
+  var side=b.team,mp=b.modelPct,imp=b.implied,edge=b.edge;
+  var oddsTxt=isNum(b.odds)?((b.odds>0?'+':'')+b.odds):null;
+  var nums='market <b>'+(oddsTxt||INS)+'</b>, model <b>'+(isNum(mp)?mp.toFixed(1).replace(/\.0$/,'')+'%':INS)+'</b>'
+    +', implied <b>'+(isNum(imp)?imp.toFixed(1).replace(/\.0$/,'')+'%':INS)+'</b>'
+    +', edge <b>'+(isNum(edge)?((edge>0?'+':'')+edge.toFixed(1).replace(/\.0$/,'')+'pt'):INS)+'</b>';
+  var derived=(b.recSrc==='derived')?' '+pill('FROM TIER','b-unk','moneylineRecommendation is '+NOT_IN_BUILD+' — mapped from the pick tier (STRONG→BET, LEAN→WATCH, PASS→PASS).'):'';
+
+  if(b.rec==='BET')
+    return shell('is-bet','c-bet','BET'+derived,
+      '<div class="bet-line"><b>'+esc(side||'—')+' ML</b>, '+nums+'</div>'
+      +'<div class="bet-why">'+favLine+'.</div>');
+  if(b.rec==='WATCH')
+    return shell('is-watch','c-watch','WATCH'+derived,
+      '<div class="bet-line"><b>'+esc(side||'—')+' ML</b>, '+nums+'</div>'
+      +'<div class="bet-why">'+favLine+', and there is a side here — but the edge is below the bet threshold at this price.</div>');
+  var why;
+  if(isNum(edge))why='the '+((edge>0?'+':'')+edge.toFixed(1).replace(/\.0$/,''))+'pt edge on '+esc(side||'that side')+(oddsTxt?' at '+oddsTxt:'')+' is not enough value to bet.';
+  else if(!oddsTxt)why='no market price was published for this game, so there is nothing to measure value against.';
+  else why='the price does not offer enough value.';
+  return shell('is-pass','c-pass','PASS'+derived,
+    '<div class="bet-why">'+favLine+', but '+why+'</div>'
+    +(oddsTxt||isNum(imp)?'<div class="bet-line">'+esc(side||'—')+' ML, '+nums+'</div>':''));
+}
+function resultBlock(g,m){
+  var p=predictionFor(g,m),sc=actualScore(g,m);
+  var proj=(p.ok&&isNum(p.awayRuns)&&isNum(p.homeRuns))
+    ?(esc(p.away)+' '+p.awayRuns.toFixed(1)+' — '+esc(p.home)+' '+p.homeRuns.toFixed(1)):INS;
+  var body='';
+  if(sc){
+    var win=sc.away===sc.home?null:(sc.away>sc.home?p.away:p.home);
+    var right=(p.ok&&win)?(win===p.winner):null;
+    body='<div class="fin">'
+      +'<span><span class="fl">Final score</span><br><span class="fsc">'+esc(p.away)+' '+sc.away+' — '+esc(p.home)+' '+sc.home+'</span></span>'
+      +'<span><span class="fl">Pre-game projected winner</span><br><span class="fsc" style="font-size:15px">'+esc(p.winner||INS)+(isNum(p.wp)?' '+p.wp.toFixed(0)+'%':'')+'</span></span>'
+      +'<span><span class="fl">Pre-game projected score</span><br><span style="font-family:var(--mono);font-size:13px">'+proj+'</span></span>'
+      +'<span>'+(right===true?pill('CORRECT','b-ok','The pre-game projected winner won.')
+        :right===false?pill('INCORRECT','b-crit','The pre-game projected winner lost.')
+        :pill('NOT GRADED','b-unk','No projected winner to grade this result against.'))+'</span></div>';
+  }else{
+    body='<div class="fin">'
+      +'<span><span class="fl">Final score</span><br><span class="fsc" style="font-size:15px;color:var(--muted)">'+INS+'</span></span>'
+      +'<span><span class="fl">Pre-game projected winner</span><br><span class="fsc" style="font-size:15px">'+esc(p.winner||INS)+(isNum(p.wp)?' '+p.wp.toFixed(0)+'%':'')+'</span></span>'
+      +'<span><span class="fl">Pre-game projected score</span><br><span style="font-family:var(--mono);font-size:13px">'+proj+'</span></span>'
+      +'<span>'+pill('RESULT NOT IN PAYLOAD','b-unk','This build publishes no final score, so the pre-game prediction cannot be graded on this page.')+'</span></div>';
+  }
+  return '<div class="blk"><div class="blab">Result — no betting recommendation for a completed game</div>'
+    +'<div class="bet is-closed">'+body+'</div></div>';
+}
+function drow(k,v){return '<div class="drow"><span class="dk">'+esc(k)+'</span><span class="dv">'+v+'</span></div>';}
+function detailsBlock(g,m){
+  var b=betFor(g,m),p=b.pred,P=b.P||{};
+  var wind=(g.wind_zones||[]).map(function(w){return w.zone+' '+w.dir+' '+w.mph;}).join(' · ');
+  var d='';
+  d+=drow('Venue',esc(nz(g.venue||P.venue)));
+  d+=drow('Weather',(g.temp!=null?g.temp+'&deg;F':INS)+(wind?' · '+esc(wind):''));
+  d+=drow('Bullpen ERA',(g.away_pen!=null?esc(teamsOf(g).away)+' '+g.away_pen:INS)+' · '+(g.home_pen!=null?esc(teamsOf(g).home)+' '+g.home_pen:INS));
+  d+=drow('Projected total',isNum(P.projectedTotal)?P.projectedTotal.toFixed(1):(g.total!=null?g.total:INS));
+  d+=drow('Market total line',isNum(P.marketTotalLine)?P.marketTotalLine:(g.line!=null?g.line:INS));
+  d+=drow('Series',esc(nz(m.series)));
+  d+=drow('Park HR factor',g.park_hr!=null?g.park_hr:INS);
+  d+=drow('Model / prediction version',esc(nz(p.modelVersion))+' / '+esc(nz(p.version)));
+  d+=drow('Prediction generated',esc(etStamp(p.generatedAt)));
+  d+=drow('Win-prob source',esc(nz(p.probSource)));
+  d+=drow('Market state',P.marketState?pill(String(P.marketState).replace(/_/g,' '),b.state.marketOpen?'b-ok':'b-unk'):pill('UNKNOWN','b-unk','marketState is not in this payload.'));
+  var gp=gameProps(g.gamePk);
+  var props=gp.length
+    ?'<div class="luhead">Best props in this game</div>'+gp.map(function(x){
+        return '<div class="lurow2"><span class="lnm">'+esc(x.name)+' <span style="color:var(--muted)">'+esc(x.lbl)+(x.metric!=null?' '+x.metric:'')+'</span></span>'+lineupTag(x,'CONFIRMED')+'</div>';}).join('')
+    :'';
+  return '<details class="gdet"><summary>Details</summary><div class="dgrid">'+d+'</div>'+props+'</details>';
+}
+function lineupDetails(g,m,gState,tm){
+  return '<details class="gdet"><summary>Lineups — '+esc(tm.away)+' / '+esc(tm.home)+'</summary>'
+    +batBlock(tm.away+' (away)',g.away_bat,g,gState)
+    +batBlock(tm.home+' (home)',g.home_bat,g,gState)+'</details>';
+}
+function lineupStateOf(g,m){
+  var L=(predOf(g,m)||{}).lineupState||{};
+  var off=(L.official===true)||(g.lineups_official===true);
+  var proj=(L.projected===true)||(g.lineups_projected===true)||(L.official===false)||(g.lineups_official===false);
+  return off?'CONFIRMED':proj?'PROJECTED':'UNKNOWN';
+}
+function lineupChipOf(s){
+  return s==='CONFIRMED'?pill('LINEUPS CONFIRMED','b-ok','Official lineups posted for this game.')
+    :s==='PROJECTED'?pill('LINEUPS PROJECTED','b-warn','Official lineups had not posted at run time — every batter is a projection, not a confirmed starter.')
+    :pill('LINEUPS UNKNOWN','b-unk','The payload does not state whether this game’s lineup is official.');
+}
+function slateCard(g,m){
+  var b=betFor(g,m),st=b.state,p=b.pred;
+  var tm={away:p.away||teamsOf(g).away,home:p.home||teamsOf(g).home};
+  var gState=lineupStateOf(g,m);
+  var cls={PREGAME:'st-pre',LIVE:'st-live',FINAL:'st-final',POSTPONED:'st-ppd'}[st.key]||'st-pre';
+  return '<div class="gcard '+cls+'">'
+    +'<div class="gc-top">'
+      +'<div class="gc-l1">'
+        +'<div class="gc-mu">'+teamLogo(tm.away)+'<span>'+esc(tm.away)+'</span>'
+          +'<span style="color:var(--muted);font-weight:400">@</span>'
+          +teamLogo(tm.home)+'<span>'+esc(tm.home)+'</span></div>'
+        +'<div class="gc-when">'+esc(etTime(g.time||m.time||p.pred.time))+'</div>'
+      +'</div>'
+      +'<div class="gc-chips">'+stateChip(st)+lineupChipOf(gState)+'</div>'
+    +'</div>'
+    +'<div class="gc-b">'
+      +heroBlock(p,st)
+      +pitchBlock(g,m,tm)
+      +(st.key==='FINAL'?resultBlock(g,m):betBlock(g,m))
+      +lineupDetails(g,m,gState,tm)
+      +detailsBlock(g,m)
+    +'</div></div>';
+}
+
+/* ---------- summary bar, filters, grouping ---------- */
+var SLATE_FILTER='ALL';
+function slateFilter(f){SLATE_FILTER=f;renderSlate();try{window.scrollTo(0,0);}catch(e){}}
+function etTime(iso){
+  try{return new Date(iso).toLocaleTimeString('en-US',{timeZone:'America/New_York',hour:'numeric',minute:'2-digit'})+' ET';}
+  catch(e){return INS;}
+}
+function etStamp(iso){
+  var t=tms(iso);if(t==null)return INS;
+  try{return new Date(t).toLocaleString('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+' ET';}
+  catch(e){return stampTxt(iso);}
+}
+function sstat(v,l,q){return '<div class="sstat'+(q?' q':'')+'"><span class="sv">'+v+'</span><span class="sl">'+esc(l)+'</span></div>';}
+function slateSummary(rows){
+  var cnt={BET:0,WATCH:0,PASS:0,CLOSED:0,NONE:0},lu={CONFIRMED:0,PROJECTED:0,UNKNOWN:0},grp={};
+  rows.forEach(function(r){
+    grp[r.st.group]=(grp[r.st.group]||0)+1;
+    lu[r.lineup]=(lu[r.lineup]||0)+1;
+    if(!r.b.state.marketOpen){cnt.CLOSED++;return;}
+    if(r.b.rec&&cnt[r.b.rec]!==undefined)cnt[r.b.rec]++;else cnt.NONE++;
+  });
+  var hs=systemHealth();
+  var hcls={HEALTHY:'b-ok',DEGRADED:'b-warn',CRITICAL:'b-crit'}[hs.level]||'b-unk';
+  var health='<button class="hbtn" onclick="showTab(\'admin\')" title="Open Admin / Health for the detail behind this verdict">'
+    +pill('SYSTEM '+hs.level,hcls,'Click to open Admin / Health.')
+    +' <span style="font-family:var(--mono);font-size:10.5px;color:var(--muted);text-decoration:underline">'
+    +hs.counts.ok+'/'+hs.counts.total+' sources OK'+(hs.top.length?' · '+hs.top.length+' warning(s)':'')+'</span></button>';
+  var bar='<div class="sbar"><div class="sbar-row">'
+    +sstat(rows.length,'games')
+    +sstat(cnt.BET,'bet',cnt.BET>0)
+    +sstat(cnt.WATCH,'watch')
+    +sstat(cnt.PASS,'pass')
+    +sstat(cnt.CLOSED,'market closed')
+    +sstat(lu.CONFIRMED+' <span style="font-size:12px;color:var(--muted)">/ '+(lu.PROJECTED+lu.UNKNOWN)+'</span>','lineups confirmed / projected')
+    +'</div><div class="sbar-b">'
+    +'<span><b>Last refreshed</b> '+esc(etStamp(D.generatedAt))+'</span>'
+    +'<span>'+ageChipHtml()+'</span>'
+    +'<span>'+health+'</span>'
+    +'</div></div>';
+  var F=[['ALL','All'],['BET','Bet'],['WATCH','Watch'],['PASS','Pass'],['UPCOMING','Upcoming']];
+  var fil='<div class="sfil">'+F.map(function(f){
+    return '<button class="'+(SLATE_FILTER===f[0]?'on':'')+'" onclick="slateFilter(\''+f[0]+'\')">'+esc(f[1])+'</button>';}).join('')+'</div>';
+  return bar+fil;
+}
+function renderSlate(){
+  var gc=(D.gameCards||[]).slice();
+  var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
+  /* gameCards is the usual source; fall back to predictions[] so the page still
+     renders a full slate if only the canonical block is present. */
+  if(!gc.length&&(D.predictions||[]).length)
+    gc=(D.predictions||[]).map(function(p){
+      return {gamePk:p.gamePk,game:p.gameId,time:p.time,venue:p.venue,
+        away_sp:{team:p.awayTeam},home_sp:{team:p.homeTeam}};});
+  if(!gc.length){$('slate').innerHTML='<div class="empty">No games in today’s slate.</div>';return;}
+
+  var rows=gc.map(function(g){
+    var m=mlByPk[g.gamePk]||{};
+    return {g:g,m:m,b:betFor(g,m),st:gameStateOf(g,m),lineup:lineupStateOf(g,m),t:tms(g.time||m.time)||0};
+  });
+  var head=slateSummary(rows);
+  var vis=rows.filter(function(r){
+    if(SLATE_FILTER==='ALL')return true;
+    if(SLATE_FILTER==='UPCOMING')return r.st.group==='UPCOMING';
+    return r.b.state.marketOpen&&r.b.rec===SLATE_FILTER;
+  });
+  var ORDER=['UPCOMING','IN PROGRESS','FINAL','POSTPONED'];
+  var body='';
+  ORDER.forEach(function(k){
+    var g2=vis.filter(function(r){return r.st.group===k;}).sort(function(a,b){return a.t-b.t;});
+    if(!g2.length)return;
+    body+='<div class="ghead"><span>'+esc(k)+'</span><span class="gn">'+g2.length+'</span></div>'
+      +'<div class="sgrid">'+g2.map(function(r){return slateCard(r.g,r.m);}).join('')+'</div>';
+  });
+  if(!body)body='<div class="empty">No games match the '+esc(SLATE_FILTER)+' filter. '
+    +(SLATE_FILTER==='BET'?'The model still projects a winner in every game — switch to ALL to see them.':'Switch to ALL to see the full slate.')+'</div>';
+  $('slate').innerHTML=head+body;
+}
 function renderMatchups(){
   var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});var mlByPk={};(D.ml||[]).forEach(function(m){mlByPk[m.gamePk]=m;});
   var ouByPk={};((D.boardsFull||{}).ou||[]).forEach(function(o){ouByPk[o.gamePk]=o;});
@@ -666,6 +1109,7 @@ function openProp(k,btn){
         var _bo=hp.bookOdds||{};
         if(!got&&_bo.price!=null&&_bo.offbook){px=' <span style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;background:#e5e7eb;color:#6b7280" title="Reference price from '+esc(_bo.book)+' — not FD/DK">ref '+(_bo.price>0?'+':'')+_bo.price+'</span>';}
         else if(!got&&_bo.price==null){px=' <span style="font-size:9px;color:#b45309" title="No posted FD/DK anytime-HR price yet">⚠ no price</span>';}
+        if(hp.model_prob==null){px+=' '+pill(String(hp.probStatus||'').toUpperCase()==='UNVERIFIED'?'PROB UNVERIFIED':'NO PROB','b-unk','No home-run probability was published for this candidate'+(hp.probStatus?' (probStatus '+hp.probStatus+')':'')+'. The score and rank are real; no probability is shown because none exists.');}
         if(_bo.price!=null&&hp.model_prob!=null){
           var _imp=_bo.price<0?(-_bo.price)/(-_bo.price+100):100/(_bo.price+100);
           var _mp=hp.model_prob>1?hp.model_prob/100:hp.model_prob;
@@ -741,7 +1185,7 @@ function tpReset(){TP_WORK=null;renderParlay();}
 function tpAutoAdd(type){var c=tpCandidates();if(!TP_WORK)TP_WORK=[];var inW={};TP_WORK.forEach(function(l){inW[(l.betType)+'|'+(l.playerId||l.gamePk)]=1;});var TW={ml:1,over:1.05,'2tb':1.3,hrr:1.2,hr:1,hit:.7};var best=null,bv=-1;c.forEach(function(x){if(type&&x.betType!==type)return;var k=(x.betType)+'|'+(x.playerId||x.gamePk);if(inW[k])return;var v=(x.prob||0)*(TW[x.betType]||1);if(v>bv){bv=v;best=x;}});if(!best)return;var nl=Object.assign({},best);nl._id='a'+Date.now();TP_WORK.push(nl);renderParlay();}
 function tpAddOpen(){var p=$('tpAddBox');if(!p)return;if(p.getAttribute('data-open')){p.style.display='none';p.removeAttribute('data-open');return;}p.setAttribute('data-open','1');var c=tpCandidates();window._TPC=c;var inW={};(TP_WORK||[]).forEach(function(l){inW[(l.betType)+'|'+(l.playerId||l.gamePk)+'|'+l.desc]=1;});var opts=c.map(function(x,i){var k=(x.betType)+'|'+(x.playerId||x.gamePk)+'|'+x.desc;if(inW[k])return '';return '<option value="'+i+'">'+esc(x.desc)+'</option>';}).filter(Boolean).join('');p.innerHTML='<div style="margin-bottom:6px"><select id="tpSel" class="tpsel">'+opts+'</select> <button class="rf" onclick="tpAddSel()">Add selected</button></div><div class="tpauto"><span style="font-size:10px;color:var(--muted)">🤖 Algo adds best:</span><button onclick="tpAutoAdd(\'hr\')">HR</button><button onclick="tpAutoAdd(\'hit\')">1+Hit</button><button onclick="tpAutoAdd(\'2tb\')">2TB</button><button onclick="tpAutoAdd(\'hrr\')">HRR</button><button onclick="tpAutoAdd(\'ml\')">ML</button><button onclick="tpAutoAdd(\'over\')">Over</button><button onclick="tpAutoAdd(\'\')">Any</button></div>';p.style.display='block';}
 function tpAddSel(){var s=$('tpSel');if(!s||s.value==='')return;var c=window._TPC[+s.value];if(!c)return;if(!TP_WORK)TP_WORK=[];var nl=Object.assign({},c);nl._id='m'+Date.now();TP_WORK.push(nl);renderParlay();tpAddOpen();}
-function tpRecalc(){var inputs=[].slice.call(document.querySelectorAll('#parlay .leg-od'));if(!inputs.length)return;var SGP=.62,byG={};inputs.forEach(function(i){var g=i.dataset.game;(byG[g]=byG[g]||[]).push(i);});var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(i){var a=parseFloat(i.value);gd*=isNaN(a)?1:amDec(a);});dec*=arr.length>=2?(1+(gd-1)*SGP):gd;});inputs.forEach(function(i){var a=parseFloat(i.value);var mp=parseFloat(i.dataset.prob);var ev=document.getElementById(i.dataset.ev);if(isNaN(a)){i.classList.remove('odbad');if(ev)ev.textContent='';return;}var imp=a<0?(-a)/(-a+100):100/(a+100);if(imp-mp>.07){i.classList.add('odbad');if(ev){ev.textContent='−EV';ev.style.color='var(--lose)';}}else{i.classList.remove('odbad');if(ev)ev.textContent='';}});var pay=$('tpPay');if(pay)pay.innerHTML='<b>Combined '+decToAm(dec)+'</b> · ≈'+(100/dec).toFixed(1)+'% to hit · $10→$'+Math.round(10*dec).toLocaleString()+' · $100→$'+Math.round(100*dec).toLocaleString()+'. Edit any leg to your book price; red −EV = book more confident than model. Same-game legs get a 0.62 correlation discount.';}
+function tpRecalc(){var inputs=[].slice.call(document.querySelectorAll('#parlay .leg-od'));if(inputs.length<2){var _tp=$('tpPay');if(_tp)_tp.innerHTML='';return;}var SGP=.62,byG={};inputs.forEach(function(i){var g=i.dataset.game;(byG[g]=byG[g]||[]).push(i);});var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(i){var a=parseFloat(i.value);gd*=isNaN(a)?1:amDec(a);});dec*=arr.length>=2?(1+(gd-1)*SGP):gd;});inputs.forEach(function(i){var a=parseFloat(i.value);var mp=parseFloat(i.dataset.prob);var ev=document.getElementById(i.dataset.ev);if(isNaN(a)){i.classList.remove('odbad');if(ev)ev.textContent='';return;}var imp=a<0?(-a)/(-a+100):100/(a+100);if(imp-mp>.07){i.classList.add('odbad');if(ev){ev.textContent='−EV';ev.style.color='var(--lose)';}}else{i.classList.remove('odbad');if(ev)ev.textContent='';}});var pay=$('tpPay');if(pay)pay.innerHTML='<b>Combined '+decToAm(dec)+'</b> · ≈'+(100/dec).toFixed(1)+'% to hit · $10→$'+Math.round(10*dec).toLocaleString()+' · $100→$'+Math.round(100*dec).toLocaleString()+'. Edit any leg to your book price; red −EV = book more confident than model. Same-game legs get a 0.62 correlation discount.';}
 /* ---- Suggested HR Parlays A+B (2026-07-22): decorrelated pair, tracked ---- */
 var HP_WORK={},HP_ADD={};
 function hpTickets(){return (D.hrParlays&&D.hrParlays.length)?D.hrParlays:(D.hrParlay?[D.hrParlay]:[]);}
@@ -794,6 +1238,12 @@ function hpCtx(l){
 }
 function hpCardHtml(ix){
   var hp=hpTickets()[ix]||{};var legs=hpLegs(ix);
+  /* A ticket labelled PARLAY must carry >=2 legs, and a ticket with none has
+     no hit percentage to quote. Both cases render as NO VALID PARLAY. */
+  var _v=parlayVerdict(hp,legs);
+  if(!_v.valid)return noParlayCard(hp.name||('HR ticket '+(ix+1)),_v,
+    '<div class="tpctrl" style="margin-top:10px"><button class="rf" onclick="hpAdd('+ix+')">&#10133; Add leg</button>'
+    +'<button class="rf" onclick="hpReset('+ix+')">&#8635; Reset</button></div>');
   var rows='',totalDec=1,byGame={},seen={};
   legs.forEach(function(l){var pk=l.gamePk||'x';byGame[pk]=(byGame[pk]||0)+1;});
   legs.forEach(function(l){
@@ -823,7 +1273,9 @@ function lateHtml(){
   var lt=D.lateTickets;if(!lt)return '';
   var lk=D.ticketsLocked&&D.ticketsLocked.late;
   function card(t){
-    if(!t||!(t.legs||[]).length)return '';
+    if(!t)return '';
+    var _v=parlayVerdict(t,t.legs||[]);
+    if(!_v.valid)return noParlayCard(t.name||'Late ticket',_v,'');
     var legs=t.legs.map(function(l){return '<div class="prow"><span class="pnm" style="cursor:default">'+(l.rank||'')+'. '+esc(l.desc||'')+'</span><span class="pmetric">'+Math.round((l.prob||0)*100)+'%</span></div>';}).join('');
     var hp=(t.combined||{}).hitPct;
     return '<div class="card"><div class="card-h"><span>\ud83c\udf19 '+esc(t.name||'')+'</span><span class="t">'+(hp!=null?'~'+hp+'% hit':'')+(lk?' \u00b7 \ud83d\udd12 locked':' \u00b7 \u23f3 may change until late lock')+'</span></div><div class="card-b">'+legs+(t.note?'<div class="note" style="margin-top:8px;padding:0">\u2699 '+esc(t.note)+'</div>':'')+'</div></div>';
@@ -843,7 +1295,9 @@ function mlpCalc(v){
     +(legs.length>=5?' · <b>$'+(MLP_STAKE*d4).toFixed(2)+'</b> if you drop leg 5':'');
 }
 function mlpHtml(){
-  var t=D.mlParlay;if(!t||!(t.legs||[]).length)return '';
+  var t=D.mlParlay;if(!t)return '';
+  var _v=parlayVerdict(t,t.legs||[]);
+  if(!_v.valid)return noParlayCard(t.name||'Moneyline parlay',_v,'');
   var n=t.legs.length;
   var legs=t.legs.map(function(l){
     var last=l.rank===n&&n>1?' <span style="font-size:9px;color:#b45309" title="Lowest-confidence leg — drop this one for the shorter ticket">▾ drop for '+(n-1)+'-leg</span>':'';
@@ -913,7 +1367,9 @@ function renderParlay(){
     });
   } else { legHtml='<div class="empty" style="padding:14px">No legs — add some below or reset to the model parlay.</div>'; }
   var ctrl='<div class="tpctrl"><button class="rf" onclick="tpAddOpen()">➕ Add leg</button><button class="rf" onclick="tpReset()">↺ Reset to model</button><button class="rf" id="tpAdd-fanduel" onclick="tpAddAll(\'fanduel\')" title="Adds every leg to your FanDuel slip — one tap per leg (browsers only allow one link per tap)">➕ Build FD slip</button><button class="rf" id="tpAdd-draftkings" onclick="tpAddAll(\'draftkings\')" title="Adds every leg to your DraftKings slip — one tap per leg">➕ Build DK slip</button><button class="rf" onclick="tpCopySlip(\'fanduel\')" title="Copy as text (FanDuel prices)">📋 copy</button></div><div id="tpAddBox" style="display:none;margin-top:8px"></div>';
-  var sugg='<div class="card"><div class="card-h"><span>⭐ Suggested Parlay</span><span class="t">'+legs.length+' legs</span></div><div class="card-b">'
+  var _sv=parlayVerdict(tp,legs);
+  var sugg=!_sv.valid?noParlayCard(tp.name||'Suggested Parlay',_sv,ctrl)
+    :'<div class="card"><div class="card-h"><span>⭐ Suggested Parlay</span><span class="t">'+legs.length+' legs</span></div><div class="card-b">'
     +(tp.note?'<div class="note" style="margin:0 0 10px;padding:0">⚙ '+esc(tp.note)+'</div>':'')
     +legHtml+'<div class="tppay" id="tpPay"></div>'+ctrl+'</div></div>';
   var BYO=[['ml','Moneyline',1],['over','Overs',1],['hit','1+ Hit',2],['2tb','2+ TB',1],['hrr','2+ HRR',1],['hr','Home Run',0]];
@@ -931,7 +1387,12 @@ function buildCustom(){
   Object.keys(byType).forEach(function(t){byType[t].sort(function(a,b){return (b.prob||0)-(a.prob||0);});});
   var picked=[],usedP={};
   order.forEach(function(t){var el=$('byo-'+t);var want=el?parseInt(el.value||0,10)||0:0;var arr=byType[t]||[];var n=0;for(var i=0;i<arr.length&&n<want;i++){var x=arr[i];if(x.playerId&&usedP[x.playerId])continue;picked.push(x);if(x.playerId)usedP[x.playerId]=1;n++;}});
-  if(!picked.length){$('byoResult').innerHTML='<div class="note" style="padding:0">Pick at least one leg type, then Generate.</div>';return;}
+  if(picked.length<2){
+    $('byoResult').innerHTML=(picked.length?picked.map(function(l,i){var ti=legTierInfo(l);return '<div class="leg"><span class="ln">'+(i+1)+'</span><span class="ld">'+esc(legDesc(l))+' <span class="badge '+ti[1]+'">'+ti[0]+'</span></span><span class="lp">'+amStr(fairAmNum(l.prob))+'</span></div>';}).join(''):'')
+      +'<div class="npar" style="margin-top:10px"><div class="nph">NOT A PARLAY</div><div class="npr">'
+      +(picked.length?'A parlay needs at least two legs. The single leg above is a standalone bet, so no combined price or hit percentage is shown for it.'
+                     :'Pick at least two legs, then Generate.')+'</div></div>';
+    return;}
   var byG={};picked.forEach(function(l){(byG[l.gamePk]=byG[l.gamePk]||[]).push(l);});
   var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(l){gd*=amDec(fairAmNum(l.prob));});dec*=arr.length>=2?(1+(gd-1)*.62):gd;});
   $('byoResult').innerHTML=picked.map(function(l,i){var ti=legTierInfo(l);return '<div class="leg"><span class="ln">'+(i+1)+'</span><span class="ld">'+esc(legDesc(l))+' <span class="badge '+ti[1]+'">'+ti[0]+'</span></span><span class="lp">'+amStr(fairAmNum(l.prob))+'</span></div>';}).join('')
@@ -1110,14 +1571,10 @@ function lineupValidationLine(){
     +' · rejected '+nz(v.rejected,0)+' · legs removed from tickets '+nz(v.legs_removed,0)
     +(reasons?' · reasons: '+reasons:'');
 }
-function slateBanner(){
-  var ck=slateClock(),SP=ck.plan,h=[];
-  h.push('<b>'+nz(SP.games,'?')+'</b> main-slate games · <b>'+nz(SP.official,0)+'</b> official lineups in'
-    +(SP.excluded?' · <b>'+SP.excluded+'</b> game(s) outside the window ('+esc((SP.excludedAt||[]).join(', '))+')':''));
-  h.push(esc(ck.label)+(isNum(ck.minsToLock)?' — lock '+(ck.minsToLock>0?'in '+durTxt(ck.minsToLock):durTxt(-ck.minsToLock)+' ago'):''));
-  return '<div class="note" style="background:var(--panel);border:1.5px solid var(--line);border-radius:10px;margin-bottom:12px">'
-    +h.join('<br>')+'<br>'+lineupValidationLine()+'</div>';
-}
+/* slateBanner was removed in the Slate rebuild: the banner it produced
+   (slate window, excluded games, lock clock, eligibility-gate counts) is
+   operator detail and now lives in Admin. The Slate carries a summary bar
+   instead — see slateSummary(). */
 function renderMeta(){
   var n=(D.gameCards||[]).length;
   var upd=D.generatedAt?new Date(D.generatedAt).toLocaleString():INS;
@@ -1134,9 +1591,7 @@ function renderMeta(){
   renderRunStrip();renderRunNote();
 }
 
-/* ================================================================
-   ADMIN / HEALTH
-   ================================================================ */
+/* ---------- admin census helpers ---------- */
 function lineupCensus(){
   var byState={},seen={},total=0,elig=0;
   function take(r){
@@ -1228,25 +1683,163 @@ function systemHealth(){
     :(ck.phase==='UNKNOWN'||counts.unknown)?'UNKNOWN':'HEALTHY';
   return {level:level,warnings:W,top:W.filter(function(w){return w.level!=='LOW';}),counts:counts,clock:ck};
 }
+/* ---------- shared: is this thing actually a parlay? ----------
+   Used by Admin and by the Parlay tab. A ticket with fewer than two legs is not
+   a parlay, and a 0-leg ticket has no hit percentage to report. */
+function parlayVerdict(t,legs){
+  t=t||{};legs=legs||t.legs||[];
+  var st=String(t.status||t.parlayStatus||'').toUpperCase();
+  var reason=t.noParlayReason||t.reason||null;
+  if(st==='NO_VALID_PARLAY')
+    return {valid:false,legs:legs,reason:reason||'The pipeline published this ticket with status NO_VALID_PARLAY and gave no reason.'};
+  if(legs.length<2)
+    return {valid:false,legs:legs,reason:reason||(legs.length===1
+      ?'Only one leg survived the filters. A single leg is a standalone bet, not a parlay.'
+      :'No leg survived the filters today.')};
+  return {valid:true,legs:legs,reason:null};
+}
+function noParlayCard(title,v,extraCtrl){
+  var stand='';
+  if(v.legs.length)
+    stand='<div class="luhead">Best standalone opportunity'+(v.legs.length>1?'ies':'')+' — NOT a parlay</div>'
+      +v.legs.map(function(l){
+        return '<div class="lurow2"><span class="lnm">'+esc(legDesc(l)||l.name||'')+'</span>'
+          +(isNum(l.prob)?'<span style="font-family:var(--mono);font-weight:700">'+Math.round(l.prob*100)+'%</span>':'')+'</div>';}).join('');
+  return '<div class="card"><div class="card-h"><span>'+esc(title)+'</span><span class="t">no parlay</span></div>'
+    +'<div class="card-b"><div class="npar"><div class="nph">NO VALID PARLAY TODAY</div>'
+    +'<div class="npr">'+esc(v.reason)+'</div></div>'
+    +stand+(extraCtrl||'')+'</div></div>';
+}
+
+/* ================================================================
+   ADMIN / HEALTH
+   ================================================================ */
+function detailTxt(d){
+  if(d==null)return '—';
+  if(typeof d==='string')return d;
+  if(Array.isArray(d))return d.map(function(x){return (typeof x==='string')?x:JSON.stringify(x);}).join(' · ');
+  if(typeof d==='object')return Object.keys(d).map(function(k){return k.replace(/_/g,' ')+' '+d[k];}).join(' · ');
+  return String(d);
+}
+function funnelTable(f,cap){
+  if(!f)return '<div class="note">'+esc(cap||'No funnel published for this ticket.')+'</div>';
+  var arr=Array.isArray(f)?f:Object.keys(f).map(function(k){
+    var v=f[k];
+    if(v&&typeof v==='object'&&!Array.isArray(v)){var o={stage:k};for(var p in v)o[p]=v[p];return o;}
+    return {stage:k,count:v};
+  });
+  if(!arr.length)return '<div class="note">Funnel published but empty.</div>';
+  return '<div class="tblwrap"><table class="aht"><tr><th>Stage</th><th>In</th><th>Out</th><th>Rejected</th><th>Why rejected</th></tr>'
+    +arr.map(function(s){
+      var iv=(s['in']!=null)?s['in']:(s.count!=null?s.count:null);
+      var ov=(s.out!=null)?s.out:(s.count!=null?s.count:null);
+      return '<tr><td>'+esc(String(nz(s.stage||s.name,'stage')).replace(/_/g,' '))+'</td>'
+        +'<td>'+esc(String(nz(iv,INS)))+'</td><td>'+esc(String(nz(ov,INS)))+'</td>'
+        +'<td>'+esc(String(nz(s.rejected,'0')))+'</td>'
+        +'<td class="wrap">'+esc(detailTxt(s.rejectedDetail||s.rejected_detail))+'</td></tr>';}).join('')
+    +'</table></div>';
+}
+/* ---- home run pipeline ---- */
+function hrCandidateSet(){
+  if(Array.isArray(D.hrCandidates)&&D.hrCandidates.length)
+    return {rows:D.hrCandidates,src:'hrCandidates[]',canonical:true};
+  if(Array.isArray(D.hrCandidates))
+    return {rows:[],src:'hrCandidates[] (published, empty)',canonical:true};
+  var bf=D.boardsFull||D.boards||{};
+  if((D.hrProps||[]).length)return {rows:D.hrProps,src:'hrProps[] — hrCandidates[] is '+NOT_IN_BUILD,canonical:false};
+  return {rows:bf.hr||[],src:'boards.hr — hrCandidates[] is '+NOT_IN_BUILD,canonical:false};
+}
+function hrOddsPill(r){
+  var s=String(r.oddsStatus||'').toUpperCase();
+  if(!s){
+    var price=(r.price!=null)?r.price:((r.bookOdds||{}).price);
+    s=(price!=null)?(((r.bookOdds||{}).offbook||r.priceOffbook)?'OFFBOOK':'PRICED'):'NO_ODDS';
+  }
+  var t=s.replace(/_/g,' ');
+  if(/PRICED|AVAILABLE|^OK$/.test(s))return pill(t,'b-ok','A price is posted for this candidate.');
+  if(/NO ODDS|NO_ODDS|UNPRICED|PENDING|AWAIT/.test(s))
+    return pill('NO ODDS · WATCH','b-warn','No price posted yet. HR prices post late — this is a legitimate WATCH row, not a pipeline error.');
+  if(/OFFBOOK|OFF BOOK|REFERENCE/.test(s))return pill(t,'b-info','Reference price only — not FanDuel/DraftKings. Verify before betting.');
+  return pill(t,'b-unk','Unrecognised odds status — treated as UNKNOWN, never as OK.');
+}
+function hrProbCell(r){
+  var ps=String(r.probStatus||'').toUpperCase();
+  var mp=isNum(r.model_prob)?r.model_prob:null;
+  if(mp==null)
+    return pill(ps==='UNVERIFIED'?'UNVERIFIED':(ps||'NO PROBABILITY'),'b-unk',
+      ps==='UNVERIFIED'
+        ?'probStatus is UNVERIFIED and model_prob is null. The score and rank are real; no probability is shown because none was published — inventing one would be a fabrication.'
+        :'No probability was published for this candidate.');
+  var v=(mp<=1?mp*100:mp).toFixed(1)+'%';
+  return v+((ps&&ps!=='VERIFIED')?' '+pill(ps,'b-warn','probStatus '+ps):'');
+}
+function hrEmptyExplanation(HRD,rows){
+  if(rows.length)return '';
+  var bits=[];
+  if(HRD){
+    if(HRD.headline)bits.push(esc(HRD.headline));
+    if(HRD.status)bits.push('Pipeline status <b>'+esc(HRD.status)+'</b>.');
+    var F=[['entered_scoring','entered scoring'],['scored','were scored'],['roster_eligible','passed the roster gate'],
+           ['lineup_eligible','passed the lineup gate'],['odds_available','had a price'],['candidates_published','were published']];
+    var first=null;
+    F.forEach(function(f){if(first===null&&isNum(HRD[f[0]])&&HRD[f[0]]===0)first=f;});
+    if(first)bits.push('The funnel reaches zero at <b>'+esc(first[1])+'</b> — every hitter was dropped at or before that stage.');
+    var rej=HRD.rejected||{};
+    var rk=Object.keys(rej);
+    if(rk.length)bits.push('Rejections: '+rk.map(function(k){return esc(k.replace(/_/g,' '))+' '+rej[k];}).join(' · ')+'.');
+    if(HRD.poolSource)bits.push('Candidate pool came from <b>'+esc(HRD.poolSource)+'</b>.');
+  }else{
+    bits.push('<b>hrDiagnostics is '+NOT_IN_BUILD+'</b>, so the pipeline itself did not say why. What this page can verify:');
+    var bf=D.boardsFull||D.boards||{};
+    bits.push('hrProps[] holds '+(D.hrProps||[]).length+' row(s); boards.hr holds '+((bf.hr||[]).length)+' row(s); hrParlays holds '+((D.hrParlays||[]).length)+' ticket(s).');
+    var v=D.lineupValidation;
+    if(v)bits.push('The lineup gate rejected '+nz(v.rejected,0)+' of '+nz(v.checked,0)+' player-rows'
+      +(Object.keys(v.reasons||{}).length?' ('+Object.keys(v.reasons).map(function(k){return esc(k)+' '+v.reasons[k];}).join(', ')+')':'')+'.');
+  }
+  return '<div class="note" style="background:#fee2e2;color:#7f1d1d;border-radius:8px;padding:9px 11px;margin-bottom:9px">'
+    +'<b>No home-run candidates were published today. Why:</b><br>'+bits.join('<br>')+'</div>';
+}
+/* ---- parlay pipeline ---- */
+function pdTickets(){
+  var pd=D.parlayDiagnostics;if(!pd)return null;
+  if(Array.isArray(pd))return pd;
+  if(Array.isArray(pd.tickets))return pd.tickets;
+  return Object.keys(pd).filter(function(k){
+    var v=pd[k];
+    return v&&typeof v==='object'&&!Array.isArray(v)&&
+      (v.status!==undefined||v.legCount!==undefined||v.noParlayReason!==undefined);
+  }).map(function(k){var o={name:k};for(var p in pd[k])o[p]=pd[k][p];return o;});
+}
+function payloadTickets(){
+  var out=[];
+  function add(name,t){if(t)out.push({name:t.name||name,t:t,legs:t.legs||[]});}
+  add('Suggested parlay',D.topParlay);
+  (D.parlays||[]).forEach(function(t,i){add('Parlay '+(i+1),t);});
+  (D.hrParlays||[]).forEach(function(t,i){add('HR ticket '+(i+1),t);});
+  if(D.hrParlay&&!(D.hrParlays||[]).length)add('HR parlay',D.hrParlay);
+  add('Moneyline parlay',D.mlParlay);
+  var seen={};
+  return out.filter(function(x){var k=x.name+'|'+x.legs.length;if(seen[k])return false;seen[k]=1;return true;});
+}
 function ahs(title,right,body){
   return '<div class="ahs"><div class="ahh"><span>'+title+'</span><span>'+(right||'')+'</span></div><div class="ahb">'+body+'</div></div>';
 }
 function ahbox(l,v,s){return '<div class="ahbox"><div class="hl">'+l+'</div><div class="hv">'+v+'</div>'+(s?'<div class="hsx">'+s+'</div>':'')+'</div>';}
 function renderAdmin(){
   var hs=systemHealth(),ck=hs.clock,SP=ck.plan,dh=D.dataHealth||{},h='';
+  var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
+  var gcAll=(D.gameCards||[]).slice().sort(function(a,b){return (tms(a.time)||0)-(tms(b.time)||0);});
 
   h+='<div class="note" style="background:var(--panel);border:1.5px solid var(--line);border-radius:10px;margin-bottom:12px">'
-    +'<b>Admin / Health.</b> Everything needed to decide whether today&rsquo;s numbers can be trusted. '
+    +'<b>Admin / Health.</b> Everything the Slate deliberately does not show, plus everything needed to decide whether today&rsquo;s numbers can be trusted. '
     +'Coverage is judged <b>against the ticket lock</b>, not against a fixed threshold — a source at 0% two hours before lineups post is normal, '
     +'the same source at 0% after the lock is critical. '
     +'Anything the payload does not positively assert as healthy renders <span class="badge b-unk">UNKNOWN</span>, never green.</div>';
 
-  /* 1. system health */
+  /* 1. SYSTEM HEALTH */
   h+=ahs('System health',statusPill(hs.level),
     '<div class="ahgrid">'
     +ahbox('Overall',statusPill(hs.level),{HEALTHY:'All reported sources OK and the slate clock is known.',DEGRADED:'At least one source or provider is thin, stale or missing.',CRITICAL:'At least one blocking failure — see warnings below.',UNKNOWN:'Not enough reported state to judge. Treat as unverified.'}[hs.level])
-    /* The phase is context, not a verdict — it gets a neutral chip so it can
-       never be read as "everything is fine". The verdicts live in the tables. */
     +ahbox('Slate phase',pill(ck.phase.replace(/_/g,' '),ck.phase==='UNKNOWN'?'b-unk':'b-info','Every coverage threshold on this page is judged relative to this phase.')+' <span style="font-size:11px">'+esc(ck.label)+'</span>',
       'Lock '+(SP.lockAt?esc(stampTxt(SP.lockAt)):INS)+(isNum(ck.minsToLock)?' · '+(ck.minsToLock>0?'in '+durTxt(ck.minsToLock):durTxt(-ck.minsToLock)+' ago'):'')
       +'<br>First pitch '+(SP.firstPitch?esc(stampTxt(SP.firstPitch)):INS)+' · window '+(isNum(SP.lockHorizonMin)?SP.lockHorizonMin+'m':INS))
@@ -1258,7 +1851,7 @@ function renderAdmin(){
     +ahbox('Build',esc(nz(D.version)),'model '+esc(nz(D.modelVersion||D.predictionVersion,NOT_IN_BUILD))+'<br>generated '+esc(stampTxt(D.generatedAt)))
     +'</div>');
 
-  /* 2. workflows, cadence, data age */
+  /* 2. WORKFLOWS */
   h+=ahs('Workflows, cadence &amp; data age','<a href="https://github.com/amercado19/mlb-pipeline/actions" target="_blank" rel="noopener" style="color:#fdf8ec">GitHub Actions &#8599;</a>',
     '<div class="tblwrap"><table class="aht">'
     +'<tr><th>Fact</th><th>Value</th><th>Meaning</th></tr>'
@@ -1275,9 +1868,8 @@ function renderAdmin(){
     +'</table></div>'
     +(D.runNote?'<div class="note"><b>Run note</b> — '+esc(D.runNote)+'</div>':'<div class="note">No runNote in this payload.</div>'));
 
-  /* 3. data sources */
-  var srcs=dh.sources;
-  var srcBody;
+  /* 3. DATA SOURCES */
+  var srcs=dh.sources,srcBody;
   if(!srcs){srcBody='<div class="empty">dataHealth.sources is '+NOT_IN_BUILD+'.</div>';}
   else{
     srcBody='<div class="tblwrap"><table class="aht"><tr><th>Source</th><th>Status</th><th>Severity</th><th>Coverage</th><th>Upstream</th><th>Feeds which rules</th><th>Note / why</th></tr>'
@@ -1295,19 +1887,37 @@ function renderAdmin(){
   }
   h+=ahs('Data sources',srcs?(Object.keys(srcs).length+' sources'):statusPill('UNKNOWN'),srcBody);
 
-  /* 4. odds provider */
-  var op=dh.oddsProvider;
-  h+=ahs('Odds provider &amp; price coverage',op?statusPill(op.status):statusPill('UNKNOWN'),
-    op?('<div class="ahgrid">'
-      +ahbox('Provider status',statusPill(op.status),'last attempt '+esc(stampTxt(op.last_attempt_at)))
-      +ahbox('Last success',esc(stampTxt(op.last_success_at)),agoMin(op.last_success_at)!=null?durTxt(agoMin(op.last_success_at))+' ago':INS)
-      +ahbox('Opening prices',op.opening_prices_available===true?pill('AVAILABLE','b-ok'):op.opening_prices_available===false?pill('NONE','b-crit'):statusPill('UNKNOWN'),'needed to measure CLV')
-      +ahbox('Closing prices',op.closing_prices_available===true?pill('AVAILABLE','b-ok'):op.closing_prices_available===false?pill('NONE','b-crit'):statusPill('UNKNOWN'),'needed to measure ROI and CLV')
-      +ahbox('Credits remaining',esc(nz(op.remaining)),'The Odds API')
-      +'</div>')
-    :'<div class="empty">dataHealth.oddsProvider is '+NOT_IN_BUILD+'.</div>');
+  /* 4. ROSTERS */
+  var rosterCount={},rosterTotal=0;
+  (function(){
+    var seen={};
+    function take(r){
+      if(!r||r.playerId==null)return;
+      var k=r.gamePk+'|'+r.playerId;if(seen[k])return;seen[k]=1;rosterTotal++;
+      var s=r.rosterStatus?String(r.rosterStatus).toUpperCase():'NOT PUBLISHED';
+      rosterCount[s]=(rosterCount[s]||0)+1;
+    }
+    var bf=D.boardsFull||D.boards||{};
+    Object.keys(bf).forEach(function(k){(bf[k]||[]).forEach(take);});
+    (D.hrProps||[]).forEach(take);(D.hitProps||[]).forEach(take);
+    (D.hrCandidates||[]).forEach(take);
+  })();
+  h+=ahs('Rosters',rosterTotal?(rosterTotal+' player-rows'):statusPill('UNKNOWN'),
+    (rosterTotal
+      ?'<div class="tblwrap"><table class="aht"><tr><th>Roster status</th><th>Player-rows</th><th>Meaning</th></tr>'
+        +Object.keys(rosterCount).sort(function(a,b){return rosterCount[b]-rosterCount[a];}).map(function(s){
+          var bad=/\bIL\b|INJUR|OPTION|MINOR|DFA|DESIGNAT|TRADE|RELEAS|SUSPEND|RESTRICT|INACTIVE/.test(s);
+          var cls=s==='NOT PUBLISHED'?'b-unk':bad?'b-crit':'b-ok';
+          return '<tr><td>'+pill(s.replace(/_/g,' '),cls)+'</td><td>'+rosterCount[s]+'</td>'
+            +'<td class="wrap">'+(s==='NOT PUBLISHED'
+              ?'This row carries no rosterStatus. The page cannot confirm the player is on the active roster, so it is treated as unknown — not as available.'
+              :bad?'These players must never be published as projected starters. The Slate strikes them through and labels them NOT A STARTER.'
+              :'Reported active for this game.')+'</td></tr>';}).join('')
+        +'</table></div>'
+      :'<div class="empty">No published row carries a rosterStatus in this payload.</div>')
+    +'<div class="note">Roster status is a per-row field on the published boards. Where it is absent the Slate falls back to the lineup state and says so — it never assumes the player is active.</div>');
 
-  /* 5. rosters + lineups */
+  /* 5. LINEUPS */
   var lc=lineupCensus(),v=D.lineupValidation;
   var stateRows=Object.keys(lc.byState).sort(function(a,b){return lc.byState[b]-lc.byState[a];}).map(function(s){
     var good=(s==='CONFIRMED_STARTER');
@@ -1315,50 +1925,180 @@ function renderAdmin(){
     var cls=good?'b-ok':bad?'b-crit':s==='UNKNOWN'?'b-unk':'b-warn';
     return '<tr><td>'+pill(s.replace(/_/g,' '),cls)+'</td><td>'+lc.byState[s]+'</td>'
       +'<td class="wrap">'+(lc.total?Math.round(lc.byState[s]/lc.total*100)+'% of rows carrying lineup provenance':'')+'</td></tr>';}).join('');
-  h+=ahs('Rosters &amp; lineup eligibility',v?(nz(v.eligible,0)+'/'+nz(v.checked,0)+' eligible at the gate'):(lc.total?(lc.eligible+'/'+lc.total+' eligible on published boards'):statusPill('UNKNOWN')),
-    (v?'<div class="ahgrid">'
-      +ahbox('Checked',nz(v.checked,0),'player-rows put through the gate')
-      +ahbox('Eligible',nz(v.eligible,0),'confirmed starters — bettable')
-      +ahbox('Rejected',nz(v.rejected,0),Object.keys(v.reasons||{}).map(function(k){return esc(k)+' '+v.reasons[k];}).join(' · ')||'no reasons given')
-      +ahbox('Legs removed',nz(v.legs_removed,0),'ticket legs dropped by the gate')
-      +'</div>'
-      :'<div class="empty">lineupValidation is '+NOT_IN_BUILD+'.</div>')
-    +(stateRows?'<div class="note" style="margin-top:10px"><b>Published board rows by lineup state</b> — '+lc.eligible+' of '+lc.total+' distinct player-rows on today’s boards are confirmed starters. '+(v?'This is a narrower set than the '+nz(v.checked,'?')+' rows the gate above checked.':'')+'</div>'
+  var gameLu={CONFIRMED:0,PROJECTED:0,UNKNOWN:0};
+  gcAll.forEach(function(g){gameLu[lineupStateOf(g,mlByPk[g.gamePk]||{})]++;});
+  h+=ahs('Lineups &amp; eligibility gate',v?(nz(v.eligible,0)+'/'+nz(v.checked,0)+' eligible at the gate'):(lc.total?(lc.eligible+'/'+lc.total+' eligible on published boards'):statusPill('UNKNOWN')),
+    '<div class="ahgrid">'
+    +ahbox('Games — confirmed',gameLu.CONFIRMED,'official lineup posted')
+    +ahbox('Games — projected',gameLu.PROJECTED,'projections in use; never shown as confirmed')
+    +ahbox('Games — unknown',gameLu.UNKNOWN,'payload does not say')
+    +(v?ahbox('Rows checked',nz(v.checked,0),'player-rows put through the gate')
+       +ahbox('Eligible',nz(v.eligible,0),'confirmed starters — bettable')
+       +ahbox('Rejected',nz(v.rejected,0),Object.keys(v.reasons||{}).map(function(k){return esc(k)+' '+v.reasons[k];}).join(' · ')||'no reasons given')
+       +ahbox('Legs removed',nz(v.legs_removed,0),'ticket legs dropped by the gate')
+      :ahbox('Eligibility gate',statusPill('UNKNOWN'),'lineupValidation is '+NOT_IN_BUILD))
+    +'</div>'
+    +(stateRows?'<div class="note" style="margin-top:10px"><b>Published board rows by lineup state</b> — '+lc.eligible+' of '+lc.total+' distinct player-rows on today’s boards are confirmed starters.</div>'
       +'<div class="tblwrap"><table class="aht"><tr><th>Lineup state</th><th>Players</th><th>Share</th></tr>'+stateRows+'</table></div>'
       :'<div class="note">No row in this payload carries a lineupStatus.</div>')
-    +'<div class="note">Game-level: '+(D.gameCards||[]).filter(function(g){return g.lineups_official===true;}).length+' of '+(D.gameCards||[]).length+' game cards report an official lineup.</div>');
+    +'<div class="note">'+lineupValidationLine()+'</div>');
 
-  /* 6. pitcher roles */
+  /* 6. PITCHERS */
   var sp=spCensus();
   var anyRole=sp.some(function(p){return p.role!==undefined;});
   var roleCount={};sp.forEach(function(p){var r=(p.role?String(p.role):'UNKNOWN').toUpperCase();roleCount[r]=(roleCount[r]||0)+1;});
   h+=ahs('Starting pitchers — role &amp; workload',anyRole?(sp.length+' starters'):pill('ROLE MODEL '+NOT_IN_BUILD.toUpperCase(),'b-unk'),
     (!sp.length?'<div class="empty">No starting pitchers in this payload.</div>'
-      :(!anyRole?'<div class="note">Role, expected workload and impact fields are '+NOT_IN_BUILD+'. Every starter below is being read as a full start, which overstates an opener or a bullpen day. Quality tier is shown because it is present.</div>':'')
-      +'<div class="tblwrap"><table class="aht"><tr><th>Game</th><th>Pitcher</th><th>Quality</th><th>Role</th><th>Exp IP</th><th>Exp BF</th><th>Impact</th><th>xERA</th><th>Sample</th></tr>'
+      :(!anyRole?'<div class="note">Role, expected workload and impact fields are '+NOT_IN_BUILD+'. Every starter below is being read as a full start, which overstates an opener or a bullpen day.</div>':'')
+      +'<div class="tblwrap"><table class="aht"><tr><th>Game</th><th>Pitcher</th><th>Quality</th><th>Role</th><th>Role conf</th><th>Exp IP</th><th>Exp BF</th><th>Workload conf</th><th>Impact</th><th>xERA</th><th>Sample</th><th>Flags</th></tr>'
       +sp.map(function(p){
         var role=(p.role?String(p.role).replace(/_/g,' '):'UNKNOWN');
         var rcls=role==='UNKNOWN'?'b-unk':(p.isTrueStarter===false||/OPENER|BULLPEN|TANDEM|LIMITED/.test(role))?'b-warn':'b-good';
         return '<tr><td>'+esc(nz(p.game,''))+'</td><td>'+esc(nz(p.name,'TBD'))+'</td><td>'+spTierBadge(p.tier||'UNKNOWN')+'</td>'
-          +'<td>'+pill(role,rcls)+(isNum(p.roleConfidence)?' <span style="color:var(--muted)">'+Math.round(p.roleConfidence<=1?p.roleConfidence*100:p.roleConfidence)+'%</span>':'')+'</td>'
+          +'<td>'+pill(role,rcls)+'</td>'
+          +'<td>'+(p.roleConfidence?esc(String(p.roleConfidence)):pill('UNKNOWN','b-unk'))+'</td>'
           +'<td>'+(isNum(p.expIp)?p.expIp.toFixed(1):INS)+'</td><td>'+(isNum(p.expBf)?p.expBf:INS)+'</td>'
+          +'<td>'+(p.workloadConfidence?esc(String(p.workloadConfidence)):pill('UNKNOWN','b-unk'))+'</td>'
           +'<td>'+esc(nz(p.impactLabel,isNum(p.impactShare)?Math.round((p.impactShare<=1?p.impactShare*100:p.impactShare))+'%':INS))+'</td>'
           +'<td>'+(isNum(p.xeraStarterEquiv)?p.xeraStarterEquiv.toFixed(2)+' <span style="color:var(--muted)">st-eq</span>':isNum(p.xeraAdj)?p.xeraAdj.toFixed(2)+' <span style="color:var(--muted)">adj</span>':isNum(p.xera)?p.xera.toFixed(2):INS)+'</td>'
-          +'<td>'+esc(nz(p.qualitySample,isNum(p.ip)?p.ip.toFixed(0)+' IP':INS))+'</td></tr>';}).join('')
+          +'<td>'+esc(nz(p.qualitySample,isNum(p.ip)?p.ip.toFixed(0)+' IP':INS))+'</td>'
+          +'<td class="wrap">'+esc((p.workloadFlags||[]).join(', ').replace(/_/g,' ')||'—')+'</td></tr>';}).join('')
       +'</table></div>'
       +'<div class="note">Role distribution: '+Object.keys(roleCount).map(function(r){return pill(r+' '+roleCount[r],r==='UNKNOWN'?'b-unk':'b-info');}).join(' ')+'</div>'));
 
-  /* 7. picks candidates / eligible / rejected */
+  /* 7. ODDS */
+  var op=dh.oddsProvider,od=D.odds||{};
+  h+=ahs('Odds provider &amp; price coverage',op?statusPill(op.status):statusPill('UNKNOWN'),
+    (op?('<div class="ahgrid">'
+      +ahbox('Provider status',statusPill(op.status),'last attempt '+esc(stampTxt(op.last_attempt_at)))
+      +ahbox('Last success',esc(stampTxt(op.last_success_at)),agoMin(op.last_success_at)!=null?durTxt(agoMin(op.last_success_at))+' ago':INS)
+      +ahbox('Opening prices',op.opening_prices_available===true?pill('AVAILABLE','b-ok'):op.opening_prices_available===false?pill('NONE','b-crit'):statusPill('UNKNOWN'),'needed to measure CLV')
+      +ahbox('Closing prices',op.closing_prices_available===true?pill('AVAILABLE','b-ok'):op.closing_prices_available===false?pill('NONE','b-crit'):statusPill('UNKNOWN'),'needed to measure ROI and CLV')
+      +ahbox('Credits remaining',esc(nz(op.remaining)),'The Odds API')
+      +'</div>')
+    :'<div class="empty">dataHealth.oddsProvider is '+NOT_IN_BUILD+'.</div>')
+    +'<div class="note">Last pull '+esc(stampTxt(od.pulledAt))+' · legs priced '+esc(nz(od.pricedLegs,INS))+'/'+esc(nz(od.totalLegs,INS))+(od.note?' · '+esc(od.note):'')+'</div>');
+
+  /* 8. MARKETS */
+  var msCount={};
+  var mkRows=gcAll.map(function(g){
+    var m=mlByPk[g.gamePk]||{},b=betFor(g,m),P=b.P||{};
+    var ms=b.state.marketState||'NOT PUBLISHED';msCount[ms]=(msCount[ms]||0)+1;
+    return '<tr><td>'+esc(nz(g.game,''))+'</td>'
+      +'<td>'+pill(b.state.label,{PREGAME:'b-info',LIVE:'b-warn',FINAL:'b-unk',POSTPONED:'b-crit'}[b.state.key]||'b-unk')+'</td>'
+      +'<td>'+(b.state.marketState?pill(b.state.marketState.replace(/_/g,' '),b.state.marketOpen?'b-ok':'b-unk'):pill('NOT PUBLISHED','b-unk'))+'</td>'
+      +'<td>'+(b.state.marketOpen?pill('OPEN','b-ok','Pre-game price still live — an edge here is actionable.'):pill('CLOSED','b-unk','No actionable pre-game edge is shown for this game.'))+'</td>'
+      +'<td>'+esc(nz(b.betTeam,'—'))+'</td>'
+      +'<td>'+(isNum(b.odds)?((b.odds>0?'+':'')+b.odds):INS)+'</td>'
+      +'<td>'+(isNum(b.implied)?b.implied+'%':INS)+'</td>'
+      +'<td>'+(isNum(b.edge)?((b.edge>0?'+':'')+b.edge+'pt'):INS)+'</td>'
+      +'<td>'+(b.rec?recPill(b.rec):pill('NONE','b-unk'))+'</td>'
+      +'<td class="wrap">'+esc(nz(m.odds,'—'))+'</td></tr>';}).join('');
+  h+=ahs('Markets',gcAll.length+' games',
+    '<div class="note">A dead market (STARTED / IN_PLAY_PRICE) publishes <code>betEdge</code> and <code>betImplied</code> as null. The Slate shows <b>BETTING CLOSED</b> for those games and never renders a live edge as actionable.</div>'
+    +'<div class="ahgrid">'+Object.keys(msCount).map(function(k){
+        return ahbox(k.replace(/_/g,' '),msCount[k],k==='PREGAME'?'market open':'market closed / not bettable');}).join('')+'</div>'
+    +(mkRows?'<div class="tblwrap"><table class="aht"><tr><th>Game</th><th>Game state</th><th>Market state</th><th>Bettable</th><th>Bet side</th><th>Price</th><th>Implied</th><th>Edge</th><th>Recommendation</th><th>Provider note</th></tr>'+mkRows+'</table></div>'
+      :'<div class="empty">No games to price.</div>'));
+
+  /* 9. HOME RUN PIPELINE */
+  var HRD=D.hrDiagnostics||null,HC=hrCandidateSet();
+  var hrFunnel=[['entered_scoring','Entered scoring'],['scored','Scored'],['roster_eligible','Roster eligible'],
+                ['lineup_eligible','Lineup eligible'],['odds_available','Odds available'],
+                ['candidates_published','Candidates published'],['bet_legs','BET legs'],['watch_legs','WATCH legs']];
+  var hrBody=hrEmptyExplanation(HRD,HC.rows);
+  if(HRD){
+    hrBody+='<div class="ahgrid">'+hrFunnel.map(function(f){
+      return ahbox(f[1],isNum(HRD[f[0]])?HRD[f[0]]:statusPill('UNKNOWN'),'');}).join('')+'</div>';
+    var rej=HRD.rejected||{};
+    hrBody+=(Object.keys(rej).length
+      ?'<div class="tblwrap"><table class="aht"><tr><th>Rejection reason</th><th>Count</th></tr>'
+        +Object.keys(rej).map(function(k){return '<tr><td>'+pill(k.replace(/_/g,' '),/ODDS|PRICE/.test(k.toUpperCase())?'b-warn':'b-crit')+'</td><td>'+rej[k]+'</td></tr>';}).join('')
+        +'</table></div>'
+      :'<div class="note">hrDiagnostics.rejected is empty — nothing was rejected, or the pipeline did not itemise rejections.</div>');
+    hrBody+='<div class="note">Pool source <b>'+esc(nz(HRD.poolSource))+'</b> · status '+statusPill(HRD.status)
+      +' · reconciles '+(HRD.reconciles===true?pill('YES','b-ok','Published candidates match the funnel counts.')
+        :HRD.reconciles===false?pill('NO','b-crit','The published candidate list does NOT match the funnel counts — one of the two is wrong.')
+        :pill('UNKNOWN','b-unk','The pipeline did not state whether the funnel reconciles.'))
+      +(HRD.headline?'<br>'+esc(HRD.headline):'')+'</div>';
+  }else{
+    hrBody+='<div class="note"><b>hrDiagnostics is '+NOT_IN_BUILD+'.</b> The funnel below cannot be shown; the candidate table is built from '+esc(HC.src)+'.</div>';
+  }
+  hrBody+='<div class="note" style="margin-top:8px"><b>Ranked candidates</b> — source '+esc(HC.src)+'. '
+    +'A candidate with no price is a legitimate <span class="badge b-warn">WATCH</span> row, not an error: HR prices post late. '
+    +'Where a probability was not published it is shown as <span class="badge b-unk">UNVERIFIED</span> — the score and rank are still real, and no probability is invented.</div>';
+  hrBody+=(HC.rows.length
+    ?'<div class="tblwrap"><table class="aht"><tr><th>#</th><th>Player</th><th>Team</th><th>Game</th><th>Score</th><th>Tier</th><th>Lineup</th><th>Odds</th><th>Price</th><th>Model prob</th></tr>'
+      +HC.rows.slice(0,60).map(function(r,i){
+        var lu=lineupFor(r,r.gamePk)||r;
+        var price=(r.price!=null)?r.price:((r.bookOdds||{}).price);
+        return '<tr><td>'+(isNum(r.rank)?r.rank:(i+1))+'</td><td>'+esc(nz(r.name,INS))+'</td><td>'+esc(nz(r.team,''))+'</td>'
+          +'<td>'+esc(nz(r.game,gameLabelByPk(r.gamePk)||''))+'</td>'
+          +'<td><b>'+esc(String(nz(r.score,r.metric!=null?r.metric:INS)))+'</b></td>'
+          +'<td>'+(r.tier?pill(String(r.tier),/^A/.test(String(r.tier))?'b-good':/^B/.test(String(r.tier))?'b-info':'b-unk'):pill('UNKNOWN','b-unk'))+'</td>'
+          +'<td>'+(lineupTag(lu,'CONFIRMED')||pill('UNKNOWN','b-unk'))+'</td>'
+          +'<td>'+hrOddsPill(r)+'</td>'
+          +'<td>'+(price!=null?((price>0?'+':'')+price):'<span style="color:var(--muted)">no price</span>')+'</td>'
+          +'<td>'+hrProbCell(r)+'</td></tr>';}).join('')
+      +'</table></div>'
+      +(HC.rows.length>60?'<div class="note">Showing the top 60 of '+HC.rows.length+' scored candidates.</div>':'')
+    :'<div class="empty">No home-run candidates published — see the explanation above.</div>');
+  h+=ahs('Home run pipeline',HC.rows.length+' candidates',hrBody);
+
+  /* 10. PARLAY PIPELINE */
+  var PDT=pdTickets(),PT=payloadTickets(),pdRoot=D.parlayDiagnostics||{};
+  var parBody='';
+  if(!PDT){
+    parBody+='<div class="note"><b>parlayDiagnostics is '+NOT_IN_BUILD+'.</b> '
+      +'The table below is this page&rsquo;s own audit of the tickets that were published, using the same rule the Parlay tab enforces: '
+      +'fewer than two legs is not a parlay.</div>';
+  }
+  parBody+='<div class="tblwrap"><table class="aht"><tr><th>Ticket</th><th>Status</th><th>Legs</th><th>Verdict</th><th>Payout available</th><th>Prob method</th><th>Standalone bet</th><th>Why no parlay</th></tr>'
+    +(PDT&&PDT.length?PDT.map(function(t){
+        var n=isNum(t.legCount)?t.legCount:(t.legs||[]).length;
+        var ok=String(t.status||'').toUpperCase()!=='NO_VALID_PARLAY'&&n>=2;
+        return '<tr><td><b>'+esc(nz(t.name,'ticket'))+'</b></td><td>'+statusPill(t.status)+'</td><td>'+esc(String(nz(n,INS)))+'</td>'
+          +'<td>'+(ok?pill('VALID PARLAY','b-ok'):pill('NO VALID PARLAY','b-crit','Fewer than two legs, or the pipeline published NO_VALID_PARLAY.'))+'</td>'
+          +'<td>'+(t.payoutAvailable===true?pill('YES','b-ok'):t.payoutAvailable===false?pill('NO','b-warn','No payout can be quoted for this ticket.'):pill('UNKNOWN','b-unk'))+'</td>'
+          +'<td>'+esc(nz(t.probMethod))+'</td>'
+          +'<td>'+(t.standaloneBet?esc(detailTxt(t.standaloneBet)):'—')+'</td>'
+          +'<td class="wrap">'+esc(nz(t.noParlayReason,ok?'—':'no reason published'))+'</td></tr>';}).join('')
+      :PT.map(function(x){
+        var vd=parlayVerdict(x.t,x.legs);
+        return '<tr><td><b>'+esc(x.name)+'</b></td><td>'+statusPill(x.t.status||(vd.valid?'OK':'NO_VALID_PARLAY'))+'</td><td>'+x.legs.length+'</td>'
+          +'<td>'+(vd.valid?pill('VALID PARLAY','b-ok'):pill('NO VALID PARLAY','b-crit'))+'</td>'
+          +'<td>'+((x.t.combined&&x.t.combined.americanOdds!=null)?pill('YES','b-ok'):pill('UNKNOWN','b-unk'))+'</td>'
+          +'<td>'+esc(nz(x.t.probMethod,NOT_IN_BUILD))+'</td><td>—</td>'
+          +'<td class="wrap">'+esc(vd.valid?'—':vd.reason)+'</td></tr>';}).join('')
+      ||'<tr><td colspan="8">No parlay tickets in this payload.</td></tr>')
+    +'</table></div>';
+  if(PDT&&PDT.length){
+    parBody+=PDT.map(function(t){
+      var f=t.funnel||t.funnels||t.stages;
+      return '<details class="gdet" style="border-top:1px solid var(--line);margin-top:10px"><summary>'+esc(nz(t.name,'ticket'))+' — four-stage funnel</summary>'+funnelTable(f,'No funnel published for '+nz(t.name,'this ticket')+'.')+'</details>';
+    }).join('');
+  }
+  var recon=pdRoot.reconciles!==undefined?pdRoot.reconciles:pdRoot.reconciliation;
+  parBody+='<div class="note">Reconciliation: '
+    +(recon===true?pill('RECONCILES','b-ok','Published tickets match the funnel counts.')
+      :recon===false?pill('DOES NOT RECONCILE','b-crit','Published tickets do not match the funnel counts.')
+      :(recon!=null&&typeof recon==='object')?esc(detailTxt(recon))
+      :pill('UNKNOWN','b-unk','parlayDiagnostics did not state whether the funnels reconcile.'))
+    +'. A ticket labelled PARLAY on any tab must carry at least two legs; a 0-leg ticket never shows a hit percentage.</div>';
+  h+=ahs('Parlay pipeline',(PDT?PDT.length:PT.length)+' tickets',parBody);
+
+  /* 11. PICKS */
   var mlAll=D.ml||[],tiers={STRONG:0,LEAN:0,PASS:0,OTHER:0};
   mlAll.forEach(function(p){var t=(p.tier||'').toUpperCase();if(tiers[t]===undefined)tiers.OTHER++;else tiers[t]++;});
   var recCount={BET:0,WATCH:0,PASS:0,NONE:0};
-  mlAll.forEach(function(p){var r=recFor({},p);if(r)recCount[r.rec]=(recCount[r.rec]||0)+1;else recCount.NONE++;});
-  h+=ahs('Picks — candidates, eligible, rejected',mlAll.length+' games priced',
+  gcAll.forEach(function(g){var r=recFor(g,mlByPk[g.gamePk]||{});if(r)recCount[r.rec]=(recCount[r.rec]||0)+1;else recCount.NONE++;});
+  h+=ahs('Picks — candidates, eligible, rejected',gcAll.length+' games',
     '<div class="ahgrid">'
-    +ahbox('Moneyline candidates',mlAll.length,'every game with a price')
+    +ahbox('Moneyline candidates',gcAll.length,'every game on the slate')
     +ahbox('BET',recCount.BET,'edge clears the threshold')
     +ahbox('WATCH',recCount.WATCH,'side, but not enough edge')
     +ahbox('PASS',recCount.PASS,'a verdict on the price — the model still projects a winner')
+    +ahbox('No recommendation',recCount.NONE,'no tier or recommendation published')
     +ahbox('Prop legs rejected',v?nz(v.rejected,0):INS,v?'by the lineup-eligibility gate':'lineupValidation '+NOT_IN_BUILD)
     +'</div>'
     +'<div class="tblwrap"><table class="aht"><tr><th>Rejection reason</th><th>Count</th><th>Meaning</th></tr>'
@@ -1369,9 +2109,8 @@ function renderAdmin(){
     +'</table></div>'
     +'<div class="note">Tier counts — STRONG '+tiers.STRONG+' · LEAN '+tiers.LEAN+' · PASS '+tiers.PASS+(tiers.OTHER?' · other '+tiers.OTHER:'')+'</div>');
 
-  /* 8. learning ledger */
-  var lrn=D.learned||{},mk=lrn.markets||{};
-  var mkKeys=Object.keys(mk);
+  /* 12. LEARNING */
+  var lrn=D.learned||{},mk=lrn.markets||{},mkKeys=Object.keys(mk);
   h+=ahs('Learning ledger — measurement state',mkKeys.length?(mkKeys.filter(function(k){return isPriceMeasurable(mk[k]);}).length+'/'+mkKeys.length+' measurable'):statusPill('UNKNOWN'),
     (mkKeys.length?'<div class="tblwrap"><table class="aht"><tr><th>Market</th><th>Status</th><th>Settled</th><th>Priced</th><th>Units</th><th>ROI</th><th>CLV</th><th>Why</th></tr>'
       +mkKeys.map(function(k){var m=mk[k],ok=isPriceMeasurable(m);
@@ -1383,24 +2122,93 @@ function renderAdmin(){
       +'</table></div>':'<div class="empty">learned.markets is '+NOT_IN_BUILD+'.</div>')
     +'<div class="note">Ledger rows published: '+esc(nz(lrn.published))+'. '+NOT_MEASURABLE+' is shown wherever a price-based metric has no recorded price behind it.</div>');
 
-  /* 9. consistency */
+  /* 13. CROSS-FIELD CONSISTENCY */
   var cons=D.consistency;
   h+=ahs('Cross-field consistency',cons?statusPill(cons.failed?'CRITICAL':'OK'):statusPill('UNKNOWN'),
     cons?('<div class="ahgrid">'+ahbox('Checked',nz(cons.checked,0),'')+ahbox('Passed',nz(cons.passed,0),'')+ahbox('Failed',nz(cons.failed,0),'')+'</div>'
-      +((cons.issues||[]).length?'<div class="tblwrap"><table class="aht"><tr><th>Issue</th></tr>'+cons.issues.map(function(i){return '<tr><td class="wrap">'+esc(typeof i==='string'?i:JSON.stringify(i))+'</td></tr>';}).join('')+'</table></div>':'<div class="note">No issues listed.</div>'))
+      +((cons.issues||[]).length?'<div class="tblwrap"><table class="aht"><tr><th>Check</th><th>Severity</th><th>Game</th><th>Message</th></tr>'
+        +cons.issues.map(function(i){
+          if(typeof i==='string')return '<tr><td colspan="4" class="wrap">'+esc(i)+'</td></tr>';
+          return '<tr><td>'+esc(nz(i.check,''))+'</td><td>'+sevPill(String(i.severity||'').toUpperCase()==='WARN'?'MEDIUM':String(i.severity||'UNKNOWN').toUpperCase())+'</td>'
+            +'<td>'+esc(nz(i.gameId,''))+'</td><td class="wrap">'+esc(nz(i.message,''))+'</td></tr>';}).join('')
+        +'</table></div>':'<div class="note">No issues listed.</div>'))
     :'<div class="empty">consistency is '+NOT_IN_BUILD+' — nothing verifies that the projected winner, win probabilities and recommendation agree with each other.</div>');
 
-  /* 10. warnings */
+  /* 14. PER-GAME DIAGNOSTICS */
+  var pgBody=gcAll.map(function(g){
+    var m=mlByPk[g.gamePk]||{},b=betFor(g,m),p=b.pred,P=b.P||{},st=b.state;
+    var luState=lineupStateOf(g,m),L=P.lineupState||{};
+    var wind=(g.wind_zones||[]).map(function(w){return w.zone+' '+w.dir+' '+w.mph;}).join(' · ');
+    function r(k,val){return '<div class="drow"><span class="dk">'+esc(k)+'</span><span class="dv">'+val+'</span></div>';}
+    function spBits(side,label){
+      var s=spFor(g,m,side);
+      if(!s)return r(label,pill('UNKNOWN','b-unk','No pitcher published for this side.'));
+      return r(label,esc(s.name||'TBD')+(s.throws?' ('+(s.throws==='L'?'LHP':'RHP')+')':''))
+        +r(label+' — quality',spTierBadge(s.tier||'UNKNOWN'))
+        +r(label+' — role',s.role?pill(String(s.role).replace(/_/g,' '),'b-info'):pill('UNKNOWN','b-unk'))
+        +r(label+' — expected workload',(isNum(s.expIp)?s.expIp.toFixed(1)+' IP':INS)+(isNum(s.expBf)?' / '+s.expBf+' BF':''))
+        +r(label+' — game impact',esc(nz(s.impactLabel,isNum(s.impactShare)?Math.round(s.impactShare*100)+'%':INS)))
+        +r(label+' — workload confidence',s.workloadConfidence?esc(String(s.workloadConfidence)):pill('UNKNOWN','b-unk'))
+        +r(label+' — role confidence',s.roleConfidence?esc(String(s.roleConfidence)):pill('UNKNOWN','b-unk'))
+        +r(label+' — xERA / ERA',(isNum(s.xera)?s.xera.toFixed(2):INS)+' / '+(isNum(s.era)?s.era.toFixed(2):INS));
+    }
+    var dq=P.dataQuality||{};
+    var warn=(D.consistency&&D.consistency.issues||[]).filter(function(i){return i&&(i.gamePk===g.gamePk||i.gameId===g.game);});
+    return '<details class="gdet" style="border-top:1px solid var(--line);padding-top:9px">'
+      +'<summary>'+esc(nz(g.game,''))+' — '+esc(st.label)+' · why the model favours '+esc(p.winner||INS)+'</summary>'
+      +'<div class="dgrid">'
+        +r('Canonical projected winner',esc(nz(p.winner))+' <span style="color:var(--muted)">('+esc(p.src)+')</span>')
+        +r('Away win probability',isNum(p.aw)?esc(p.away)+' '+p.aw.toFixed(1)+'%':INS)
+        +r('Home win probability',isNum(p.hw)?esc(p.home)+' '+p.hw.toFixed(1)+'%':INS)
+        +r('Projected score',(isNum(p.awayRuns)&&isNum(p.homeRuns))?(esc(p.away)+' '+p.awayRuns+' — '+esc(p.home)+' '+p.homeRuns):INS)
+        +r('Win-prob source',esc(nz(p.probSource)))
+        +r('Game state',pill(st.label,'b-info')+' <span style="color:var(--muted)">'+esc(nz(st.raw,'status not published'))+'</span>')
+        +r('Market state',st.marketState?pill(st.marketState.replace(/_/g,' '),st.marketOpen?'b-ok':'b-unk'):pill('UNKNOWN','b-unk'))
+        +r('Model / prediction version',esc(nz(p.modelVersion))+' / '+esc(nz(p.version)))
+        +r('Generated',esc(stampTxt(p.generatedAt)))
+        +r('Lineup state',(luState==='CONFIRMED'?pill('CONFIRMED','b-ok'):luState==='PROJECTED'?pill('PROJECTED','b-warn'):pill('UNKNOWN','b-unk'))
+            +' <span style="color:var(--muted)">'+esc(nz(L.awayCount,'?'))+'/'+esc(nz(L.homeCount,'?'))+' batters</span>')
+        +r('Lineup source',esc(nz(L.official===true?'official':L.projected===true?'projected':null,NOT_IN_BUILD)))
+        +r('Lineup freshness',isNum(L.ageHours)?L.ageHours.toFixed(1)+'h':esc(nz(null,NOT_IN_BUILD)))
+        +r('Roster state',esc(nz(L.rosterState,NOT_IN_BUILD)))
+        +spBits('away',p.away+' starter')
+        +spBits('home',p.home+' starter')
+        +r('Bullpen ERA',(g.away_pen!=null?esc(p.away)+' '+g.away_pen:INS)+' · '+(g.home_pen!=null?esc(p.home)+' '+g.home_pen:INS))
+        +r('Bullpen IP last 3d',(g.away_pen_ip!=null?g.away_pen_ip:INS)+' · '+(g.home_pen_ip!=null?g.home_pen_ip:INS))
+        +r('Offense inputs',(g.away_bat||[]).length+' / '+(g.home_bat||[]).length+' batters published')
+        +r('Weather',(g.temp!=null?g.temp+'&deg;F':INS)+(wind?' · '+esc(wind):''))
+        +r('Park',esc(nz(g.venue||P.venue))+(g.park_hr!=null?' · HR factor '+g.park_hr:''))
+        +r('Odds provider',esc(nz((dh.oddsProvider||{}).status,NOT_IN_BUILD))+' <span style="color:var(--muted)">'+esc(nz(m.odds,''))+'</span>')
+        +r('Price',isNum(b.odds)?((b.odds>0?'+':'')+b.odds):INS)
+        +r('Implied',isNum(b.implied)?b.implied+'%':INS)
+        +r('Edge',isNum(b.edge)?((b.edge>0?'+':'')+b.edge+'pt'):INS)
+        +r('Recommendation',b.rec?recPill(b.rec):pill('NONE','b-unk'))
+        +r('Data quality',(dq.missing&&dq.missing.length)?pill('MISSING: '+dq.missing.join(', ').toUpperCase(),'b-warn'):(P.dataQuality?pill('COMPLETE','b-ok'):pill('UNKNOWN','b-unk')))
+      +'</div>'
+      +'<div class="note">Rules fired — '+esc(p.away)+': '+esc(((P.sides||{}).away||{}).rules?((P.sides||{}).away.rules.join(' · ')):nz(null,NOT_IN_BUILD))
+      +'<br>Rules fired — '+esc(p.home)+': '+esc(((P.sides||{}).home||{}).rules?((P.sides||{}).home.rules.join(' · ')):nz(null,NOT_IN_BUILD))+'</div>'
+      +(p.disagree?'<div class="note" style="color:#92400e">'+esc(p.disagree)+'</div>':'')
+      +(warn.length?'<div class="note" style="color:#92400e"><b>Validation warnings</b><br>'+warn.map(function(i){return esc(i.check+': '+i.message);}).join('<br>')+'</div>'
+        :'<div class="note">No validation warning references this game.</div>')
+      +'</details>';
+  }).join('');
+  h+=ahs('Per-game diagnostics',gcAll.length+' games',
+    '<div class="note">Two questions per game: <b>why did the model favour this team</b>, and <b>can the data for this game be trusted</b>. '
+    +'Every field the payload does not carry is shown as '+INS+' or <span class="badge b-unk">UNKNOWN</span> rather than hidden.</div>'
+    +(pgBody||'<div class="empty">No games.</div>'));
+
+  /* 15. CURRENT WARNINGS */
   h+=ahs('Current warnings',hs.warnings.length+' total',
     hs.warnings.length?hs.warnings.map(function(w){
       return '<div class="sevrow">'+sevPill(w.level)+'<span class="sevw"><span class="seva">'+esc(w.area)+'</span><br>'+esc(w.msg)+'</span></div>';}).join('')
     :'<div class="note">Nothing to report at MEDIUM or worse. Note this is only as good as what the payload asserts — see UNKNOWN counts above.</div>');
 
-  /* 11. report */
+  /* 16. REPORT */
   h+=ahs('Report an issue','',
     '<div style="display:flex;gap:8px;flex-wrap:wrap">'
     +[['Incorrect data','incorrect-data'],['Missing player','missing-player'],['Wrong lineup status','lineup-status'],
-      ['Pitcher role wrong','pitcher-role'],['Odds / price problem','odds'],['UI problem','ui'],['Workflow failure','workflow']]
+      ['Pitcher role wrong','pitcher-role'],['Odds / price problem','odds'],['HR pipeline','hr-pipeline'],
+      ['Parlay pipeline','parlay-pipeline'],['UI problem','ui'],['Workflow failure','workflow']]
       .map(function(t){return reportBtn({page:'admin',title:t[0],market:t[1]},t[0]);}).join('')
     +'</div><div class="note">Each link opens a pre-filled GitHub issue carrying the build, the model version and the exact data timestamp on screen.</div>');
 
@@ -1436,7 +2244,8 @@ function renderMethod(){
   '</div>';
 }
 function renderAll(){
-  window._LUIX=null; /* lineup index is derived from D — rebuild it on every render */
+  /* every index below is derived from D — rebuild them all on every render */
+  window._LUIX=null;window._PIX=null;window._SPIX=null;
   /* Each renderer is isolated: one bad section must not blank the whole page. */
   [['meta',renderMeta],['slate',renderSlate],['picks',renderPicks],['matchups',renderMatchups],
    ['props',renderProps],['parlay',renderParlay],['performance',renderPerformance],
