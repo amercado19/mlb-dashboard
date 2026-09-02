@@ -1,6 +1,6 @@
 {
  "date": "2026-09-02",
- "generated_at": "2026-09-02T19:11:02",
+ "generated_at": "2026-09-02T19:24:04",
  "version": "0.1.0",
  "games": [
   {
@@ -38,7 +38,7 @@
    "confidence": 0.476,
    "tier": "PASS",
    "total": 9.6,
-   "book_total_line": 5.5,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -64,7 +64,7 @@
    "confidence": 0.425,
    "tier": "PASS",
    "total": 10.2,
-   "book_total_line": 7.5,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -90,7 +90,7 @@
    "confidence": 0.66,
    "tier": "PASS",
    "total": 11.6,
-   "book_total_line": 11.5,
+   "book_total_line": 10.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -420,19 +420,19 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2383,
+   "model_prob": 0.2381,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 575,
+    "pa_season": 576,
     "factors": {
      "sp": 1.163,
      "park": 1.175,
      "temp": 1.12,
      "wind": 1.03
     },
-    "hr_rate_pa": 0.0564
+    "hr_rate_pa": 0.0563
    },
    "edge_score": 83,
    "score_type": "model_score_0_100",
@@ -457,13 +457,13 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 602,
+    "pa_season": 603,
     "factors": {
      "sp": 1.17,
      "park": 1.2,
      "temp": 1.108
     },
-    "hr_rate_pa": 0.0713
+    "hr_rate_pa": 0.0712
    },
    "edge_score": 81,
    "score_type": "model_score_0_100",
@@ -483,18 +483,18 @@
    "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.2293,
+   "model_prob": 0.2291,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 618,
+    "pa_season": 619,
     "factors": {
      "sp": 1.17,
      "park": 1.2,
      "temp": 1.108
     },
-    "hr_rate_pa": 0.0531
+    "hr_rate_pa": 0.053
    },
    "edge_score": 78,
    "score_type": "model_score_0_100",
@@ -843,16 +843,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6939,
+   "model_prob": 0.6931,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 309,
+    "pa_season": 310,
     "factors": {
      "sp": 1.128
     },
-    "hit_rate_pa": 0.2402
+    "hit_rate_pa": 0.2397
    },
    "edge_score": 76,
    "score_type": "model_score_0_100",
@@ -872,16 +872,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7159,
+   "model_prob": 0.7155,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 602,
+    "pa_season": 603,
     "factors": {
      "sp": 1.128
     },
-    "hit_rate_pa": 0.2593
+    "hit_rate_pa": 0.259
    },
    "edge_score": 76,
    "score_type": "model_score_0_100",
@@ -1253,40 +1253,6 @@
    "flags": []
   },
   {
-   "player": "Hunter Goodman",
-   "team": "col",
-   "game": "bal-col",
-   "stat": "TB",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": 0.4573,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 492,
-    "factors": {
-     "sp": 0.986,
-     "park": 1.2,
-     "temp": 1.108
-    },
-    "p1b": 0.1254,
-    "p2b": 0.0498,
-    "p3b": 0.0034,
-    "phr": 0.075
-   },
-   "edge_score": 2.01,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 16.1,
-    "hard_hit_pct": 45.5,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.236,
-    "recent_hr_rate": 0.0455
-   },
-   "flags": []
-  },
-  {
    "player": "Luis Garc\u00eda",
    "team": "nyy",
    "game": "nyy-laa",
@@ -1318,6 +1284,40 @@
     "avg_exit_velo": 91.7,
     "xiso": 0.216,
     "recent_hr_rate": 0.049
+   },
+   "flags": []
+  },
+  {
+   "player": "Hunter Goodman",
+   "team": "col",
+   "game": "bal-col",
+   "stat": "TB",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": 0.4573,
+   "method": "tb_dp_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 492,
+    "factors": {
+     "sp": 0.986,
+     "park": 1.2,
+     "temp": 1.108
+    },
+    "p1b": 0.1254,
+    "p2b": 0.0498,
+    "p3b": 0.0034,
+    "phr": 0.075
+   },
+   "edge_score": 1.99,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 16.1,
+    "hard_hit_pct": 45.5,
+    "avg_exit_velo": 90.3,
+    "xiso": 0.236,
+    "recent_hr_rate": 0.0455
    },
    "flags": []
   },
