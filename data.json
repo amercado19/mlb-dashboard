@@ -1,6 +1,6 @@
 {
  "date": "2026-09-03",
- "generated_at": "2026-09-03T19:54:01",
+ "generated_at": "2026-09-03T20:10:39",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "0eb3e13"
+  "gitCommit": "61c9353"
  },
  "games": [
   {
@@ -73,7 +73,7 @@
    "confidence": 0.596,
    "tier": "PASS",
    "total": 9.6,
-   "book_total_line": 10.5,
+   "book_total_line": 9.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -107,7 +107,7 @@
     },
     "cf": {
      "dir": "cross",
-     "mph": 2
+     "mph": 0
     },
     "rf": {
      "dir": "cross",
@@ -129,7 +129,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 7
     },
     "cf": {
      "dir": "cross",
@@ -137,9 +137,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 7
     },
-    "out_mph": 4
+    "out_mph": 7
    }
   },
   {
@@ -246,12 +246,12 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 608,
+    "pa_season": 609,
     "factors": {
      "sp": 1.053,
      "park": 1.105
     },
-    "hr_rate_pa": 0.0594
+    "hr_rate_pa": 0.0593
    },
    "edge_score": 73,
    "score_type": "model_score_0_100",
@@ -278,12 +278,12 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 391,
+    "pa_season": 392,
     "factors": {
      "sp": 1.053,
      "park": 1.105
     },
-    "hr_rate_pa": 0.0443
+    "hr_rate_pa": 0.0442
    },
    "edge_score": 59,
    "score_type": "model_score_0_100",
@@ -379,8 +379,7 @@
     "factors": {
      "sp": 1.016,
      "park": 1.105,
-     "temp": 1.096,
-     "wind": 1.0
+     "temp": 1.096
     },
     "hr_rate_pa": 0.0427
    },
@@ -446,8 +445,7 @@
     "factors": {
      "sp": 1.016,
      "park": 1.105,
-     "temp": 1.096,
-     "wind": 1.0
+     "temp": 1.096
     },
     "hr_rate_pa": 0.0442
    },
@@ -572,11 +570,11 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 608,
+    "pa_season": 609,
     "factors": {
      "sp": 1.04
     },
-    "hit_rate_pa": 0.2592
+    "hit_rate_pa": 0.2589
    },
    "edge_score": 72,
    "score_type": "model_score_0_100",
@@ -727,11 +725,11 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 391,
+    "pa_season": 392,
     "factors": {
      "sp": 1.04
     },
-    "hit_rate_pa": 0.2541
+    "hit_rate_pa": 0.2537
    },
    "edge_score": 69,
    "score_type": "model_score_0_100",
@@ -916,15 +914,15 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 608,
+    "pa_season": 609,
     "factors": {
      "sp": 1.053,
      "park": 1.105
     },
-    "p1b": 0.147,
-    "p2b": 0.0539,
+    "p1b": 0.1468,
+    "p2b": 0.0538,
     "p3b": 0.0026,
-    "phr": 0.0594
+    "phr": 0.0593
    },
    "edge_score": 2.15,
    "score_type": "per_game_rate",
@@ -955,12 +953,12 @@
     "factors": {
      "sp": 0.918,
      "park": 1.0,
-     "temp": 1.042
+     "temp": 1.036
     },
     "p1b": 0.1304,
-    "p2b": 0.0413,
+    "p2b": 0.0411,
     "p3b": 0.0083,
-    "phr": 0.0488
+    "phr": 0.0485
    },
    "edge_score": 2.19,
    "score_type": "per_game_rate",
@@ -1026,12 +1024,12 @@
     "factors": {
      "sp": 0.989,
      "park": 1.0,
-     "temp": 1.042
+     "temp": 1.036
     },
     "p1b": 0.1609,
-    "p2b": 0.0492,
+    "p2b": 0.0489,
     "p3b": 0.0014,
-    "phr": 0.0402
+    "phr": 0.04
    },
    "edge_score": 2.02,
    "score_type": "per_game_rate",
@@ -1056,14 +1054,13 @@
    "model_prob": null,
    "method": "tb_dp_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
+    "epa": 4.35,
+    "order": 4,
     "pa_season": 607,
     "factors": {
      "sp": 0.945,
      "park": 1.105,
-     "temp": 1.096,
-     "wind": 1.0
+     "temp": 1.096
     },
     "p1b": 0.141,
     "p2b": 0.0467,
@@ -1201,15 +1198,15 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 391,
+    "pa_season": 392,
     "factors": {
      "sp": 1.053,
      "park": 1.105
     },
-    "p1b": 0.1604,
+    "p1b": 0.1601,
     "p2b": 0.0489,
-    "p3b": 0.0035,
-    "phr": 0.0443
+    "p3b": 0.0034,
+    "phr": 0.0442
    },
    "edge_score": 1.86,
    "score_type": "per_game_rate",
@@ -1329,7 +1326,7 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 608,
+    "pa_season": 609,
     "factors": {
      "sp": 1.04
     },
@@ -1453,7 +1450,7 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 391,
+    "pa_season": 392,
     "factors": {
      "sp": 1.04
     },
@@ -1484,7 +1481,7 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 101,
+    "pa_season": 102,
     "factors": {
      "sp": 1.009
     },
