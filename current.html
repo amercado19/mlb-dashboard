@@ -210,6 +210,62 @@ table.aht tr:last-child td{border-bottom:none}
 .sevrow .sevw{flex:1;min-width:180px}
 .sevrow .seva{font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
 
+/* ==== subsystem health / liveness (2026-09-03, Lane C) ============
+   Eight independent statuses. The visual grammar has ONE job beyond
+   looking like the rest of the page: an ABSENT value (.sshabs, hatched
+   + dashed + italic) can never be mistaken for a measured number.
+   A missing denominator and a real zero are different claims. */
+.sshbanner{border:1.5px solid var(--line);border-left:5px solid var(--muted);border-radius:10px;padding:10px 12px;background:var(--panel2);margin-bottom:11px}
+.sshbanner.ss-ok{border-left-color:#0c7a43;background:#f0fdf4}
+.sshbanner.ss-warn{border-left-color:#92400e;background:#fffbeb}
+.sshbanner.ss-crit{border-left-color:#b91c1c;background:#fef2f2}
+.sshbanner.ss-unk{border-left-color:#94a3b8;background:var(--panel2)}
+.sshhl{font-family:var(--mono);font-size:12px;font-weight:700;line-height:1.55;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.sshcause{font-size:11.5px;line-height:1.6;margin-top:7px;color:var(--txt)}
+.sshcause b{font-family:var(--mono)}
+.sshrule{font-size:10.5px;color:var(--muted);line-height:1.55;margin-top:7px;border-top:1px dotted var(--line);padding-top:6px}
+.sshgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(268px,100%),1fr));gap:10px;align-items:start}/* start, not stretch: a short card padded out to match a tall neighbour
+   ends in dead space that reads as truncated content, which is the last
+   thing this panel should imply. */
+/* a grid item defaults to min-width:auto and would be pushed wider than its
+   track by one long unbreakable token (a 64-char fingerprint, a raw error).
+   These two rules make horizontal page scroll structurally impossible. */
+.sshgrid>*{min-width:0}
+.sshcard,.sshbanner,.sshverdict{min-width:0;overflow-wrap:anywhere}
+.sshcard{border:1.5px solid var(--line);border-left:5px solid var(--muted);border-radius:10px;padding:9px 11px;background:var(--panel)}
+.sshcard.ss-ok{border-left-color:#0c7a43}
+.sshcard.ss-warn{border-left-color:#92400e}
+.sshcard.ss-crit{border-left-color:#b91c1c}
+.sshcard.ss-unk{border-left-color:#94a3b8}
+.sshhead{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.sshlab{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--txt)}
+.sshid{font-family:var(--mono);font-size:9px;color:var(--muted);margin:4px 0 2px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.sshtag{font-family:var(--mono);font-size:8.5px;font-weight:800;letter-spacing:.5px;padding:1px 5px;border-radius:4px;text-transform:uppercase}
+.sst-crit{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+.sst-imp{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+.sst-opt{background:#eef2f7;color:#475569;border:1px solid #cbd5e1}
+.sst-unk{background:#eef2f7;color:#475569;border:1px dashed #94a3b8}
+.sshwhy{font-size:11px;line-height:1.55;border-radius:7px;padding:6px 8px;margin-top:6px;color:#7f1d1d;background:#fef2f2;border:1px solid #fecaca}
+.sshcard.ss-ok .sshwhy{color:#14532d;background:#f0fdf4;border-color:#bbf7d0}
+.sshcard.ss-warn .sshwhy{color:#7c3d12;background:#fffbeb;border-color:#fde68a}
+.sshcard.ss-unk .sshwhy{color:#334155;background:var(--panel2);border-color:var(--line)}
+.sshkv{display:flex;gap:8px;padding:3px 0;border-bottom:1px dotted var(--line);flex-wrap:wrap;align-items:baseline}
+.sshkv:last-child{border-bottom:none}
+.sshkv .k{font-family:var(--mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;flex:0 0 112px}
+.sshkv .v{flex:1;min-width:130px;font-family:var(--mono);font-size:10.5px;line-height:1.55;word-break:break-word}
+.sshkv .v b{color:var(--txt)}
+.sshabs{font-family:var(--sans);font-style:italic;font-size:10px;color:#475569;background:repeating-linear-gradient(45deg,#f1f5f9,#f1f5f9 4px,#e2e8f0 4px,#e2e8f0 8px);border:1px dashed #94a3b8;border-radius:4px;padding:0 5px;display:inline-block;line-height:1.7;white-space:nowrap}
+.sshnone{font-family:var(--mono);font-size:10px;color:#475569}
+.sshage{color:var(--muted);font-weight:400}
+.sshc{font-family:var(--mono);font-size:9px;word-break:break-word;max-width:100%;background:#eef2f7;border:1px solid #cbd5e1;border-radius:4px;padding:1px 4px;color:#334155;display:inline-block;margin:1px 2px 1px 0}
+.sshverdict{border-radius:9px;padding:9px 11px;font-size:11.5px;line-height:1.6;margin-bottom:10px;border:1.5px solid}
+.sshverdict b{font-family:var(--mono);text-transform:uppercase;letter-spacing:.6px}
+.sshverdict.ss-ok{background:#f0fdf4;border-color:#86efac;color:#14532d}
+.sshverdict.ss-warn{background:#fffbeb;border-color:#fcd34d;color:#7c3d12}
+.sshverdict.ss-crit{background:#fef2f2;border-color:#fca5a5;color:#7f1d1d}
+.sshverdict.ss-unk{background:var(--panel2);border-color:var(--line);color:#334155}
+@media(max-width:430px){.sshkv .k{flex:0 0 100%}}
+
 /* ================================================================
    SLATE REBUILD v2 (2026-09-02)
    Light theme only. One card = one game, read top-to-bottom:
@@ -1867,6 +1923,353 @@ function ahs(title,right,body){
   return '<div class="ahs"><div class="ahh"><span>'+title+'</span><span>'+(right||'')+'</span></div><div class="ahb">'+body+'</div></div>';
 }
 function ahbox(l,v,s){return '<div class="ahbox"><div class="hl">'+l+'</div><div class="hv">'+v+'</div>'+(s?'<div class="hsx">'+s+'</div>':'')+'</div>';}
+/* ================================================================
+   SUBSYSTEM HEALTH — LIVENESS (2026-09-03, Lane C)
+
+   D.systemHealth answers "is the machine running", which is a
+   different question from "did today's data arrive". It therefore
+   renders ABOVE the coverage tables, as EIGHT INDEPENDENT statuses.
+   Nothing here is ever collapsed into a single badge: one green chip
+   over a dead subsystem is exactly how the odds archive stayed dead
+   for four weeks.
+
+   THE RULE OF THIS BLOCK: a value the payload does not carry renders
+   as the hatched "not reported" chip — never 0, never 0%, never an
+   empty cell. An absent denominator and a measured zero are different
+   claims and must never look the same.
+   ================================================================ */
+var SH_ABSENT='<span class="sshabs" title="The payload did not carry this field. Absent is not zero: an unreported value and a measured zero are different claims.">not reported</span>';
+var SH_CADENCE_MIN=30;
+
+function shPill(s){
+  var S=String(s==null?'UNKNOWN':s).toUpperCase().replace(/_/g,' ').trim();
+  var m={OK:'b-ok',HEALTHY:'b-ok',MEASURED:'b-ok',
+         STALE:'b-warn',DEGRADED:'b-warn',PENDING:'b-warn',
+         FAILING:'b-crit',FAILED:'b-crit',CRITICAL:'b-crit',MISSING:'b-crit',
+         UNKNOWN:'b-unk','NOT MEASURABLE':'b-unk','NOT REPORTED':'b-unk'}[S];
+  return pill(m?S:'UNKNOWN',m||'b-unk',
+    m?'':'The payload reported status "'+S+'", which this page does not recognise. Treated as UNKNOWN, never as OK.');
+}
+function shTone(s){
+  var S=String(s==null?'UNKNOWN':s).toUpperCase().replace(/_/g,' ').trim();
+  if(S==='OK'||S==='HEALTHY'||S==='MEASURED')return 'ss-ok';
+  if(S==='STALE'||S==='DEGRADED'||S==='PENDING')return 'ss-warn';
+  if(S==='FAILING'||S==='FAILED'||S==='CRITICAL'||S==='MISSING')return 'ss-crit';
+  return 'ss-unk';
+}
+function shTag(c){
+  var C=String(c==null?'':c).toUpperCase().trim();
+  var cls={CRITICAL:'sst-crit',IMPORTANT:'sst-imp',OPTIONAL:'sst-opt'}[C]||'sst-unk';
+  return '<span class="sshtag '+cls+'">'+esc(C||'criticality not reported')+'</span>';
+}
+/* the ONLY place a payload value becomes text. */
+function shTxt(v){
+  return (v===undefined||v===null||v==='')?SH_ABSENT:esc(String(v));
+}
+function shNum(v,unit){
+  return isNum(v)?('<b>'+esc(String(v))+'</b>'+(unit?' '+esc(unit):'')):SH_ABSENT;
+}
+/* A percentage is only ever printed when a real denominator exists. */
+function shRatio(num,den,noun){
+  noun=noun||'rows';
+  if(!isNum(num)&&!isNum(den))return SH_ABSENT;
+  if(!isNum(den)||den<=0){
+    return (isNum(num)?'<b>'+esc(String(num))+'</b>':SH_ABSENT)+' of '
+      +(isNum(den)?'<b>'+esc(String(den))+'</b>':SH_ABSENT)+' '+esc(noun)
+      +' <span class="sshabs" title="No denominator was published, so no percentage can honestly be shown.">no denominator &mdash; not a percentage</span>';
+  }
+  if(!isNum(num))return SH_ABSENT+' of <b>'+esc(String(den))+'</b> '+esc(noun);
+  return '<b>'+esc(String(num))+'</b> of <b>'+esc(String(den))+'</b> '+esc(noun)
+    +' <span class="sshage">('+(100*num/den).toFixed(1)+'%)</span>';
+}
+function shCodes(a){
+  if(!Array.isArray(a))return SH_ABSENT;
+  if(!a.length)return '<span class="sshnone">no codes raised</span>';
+  return a.map(function(c){return '<code class="sshc">'+esc(String(c))+'</code>';}).join('');
+}
+function shWhen(iso){
+  if(iso===undefined||iso===null||iso==='')return SH_ABSENT;
+  var t=tms(iso);
+  if(t==null)return '<span class="sshabs">timestamp present but unparseable</span>';
+  var a=agoMin(iso);
+  return esc(stampTxt(iso))+' <span class="sshage">('
+    +(isNum(a)?(a<0?'in '+durTxt(-a):durTxt(a)+' ago'):INS)+')</span>';
+}
+function shRoot(){
+  var s=D.systemHealth;
+  return (s&&typeof s==='object'&&!Array.isArray(s))?s:null;
+}
+function shSubs(){
+  var r=shRoot();
+  var m=r&&r.subsystems;
+  return (m&&typeof m==='object'&&!Array.isArray(m))?m:{};
+}
+function shSub(k){
+  var v=shSubs()[k];
+  return (v&&typeof v==='object'&&!Array.isArray(v))?v:null;
+}
+function shDet(k){
+  var s=shSub(k),d=s&&s.detail;
+  return (d&&typeof d==='object'&&!Array.isArray(d))?d:{};
+}
+function shKv(k,v){return '<div class="sshkv"><span class="k">'+esc(k)+'</span><span class="v">'+v+'</span></div>';}
+
+/* One headline status. o = {head,key,sub,status,why,rows[],note} */
+function shCard(o){
+  var s=o.sub||null;
+  var absent=!s&&o.status==null;
+  var st=(o.status!=null)?o.status:(s?s.status:'UNKNOWN');
+  var why=(o.why!=null)?o.why:(s?s.why:'');
+  var h='<div class="sshcard '+shTone(st)+'">';
+  h+='<div class="sshhead"><span class="sshlab">'+esc(o.head)+'</span>'+shPill(st)+'</div>';
+  h+='<div class="sshid">'+(o.key?'<code class="sshc">'+esc(o.key)+'</code>':'')
+    +shTag(o.criticality||(s?s.criticality:null))
+    +(absent?'<span class="sshabs">no such block in payload</span>':'')+'</div>';
+  if(absent){
+    h+='<div class="sshwhy">This subsystem published nothing this run, so its liveness is <b>unknown</b>. '
+      +'Unknown is not OK: treat it as unverified until the payload carries it.</div>';
+  }else if(why){
+    h+='<div class="sshwhy">'+esc(why)+'</div>';
+  }
+  if(o.note)h+='<div class="sshwhy">'+o.note+'</div>';
+  (o.rows||[]).forEach(function(r){h+=shKv(r[0],r[1]);});
+  h+=shKv('Last success',s?shWhen(s.lastSuccessAt):SH_ABSENT);
+  h+=shKv('Last attempt',s?shWhen(s.lastAttemptAt):SH_ABSENT);
+  if(s&&isNum(s.consecutiveFailures))h+=shKv('Consecutive fails',shNum(s.consecutiveFailures));
+  if(s&&s.lastError)h+=shKv('Last error','<span style="color:#b91c1c">'+esc(String(s.lastError))+'</span>');
+  h+=shKv('Codes',s?shCodes(s.codes):SH_ABSENT);
+  return h+'</div>';
+}
+
+/* ---- CLV MEASUREMENT: derived, it has no subsystem key of its own ---- */
+function shClvCard(){
+  var cp=shSub('closing_prices'),d=shDet('closing_prices');
+  var clv=d.withClv,st,note;
+  if(isNum(clv)&&clv>0){
+    st='MEASURED';
+    note='CLV is being measured on <b>'+esc(String(clv))+'</b> settled priced row(s). '
+      +'Every number derived from CLV is scoped to those rows only &mdash; it is not a season-wide figure.';
+  }else{
+    st='PENDING';
+    note='<b>PENDING &mdash; 0 settled priced rows.</b> CLV has <b>no denominator</b>: there is nothing to average. '
+      +'This is an <b>absent measurement, never a CLV of 0%</b>. Any surface that prints 0% here is fabricating a result. '
+      +(isNum(clv)?'The ledger reports 0 rows carrying a clv_pp value.'
+                 :'The payload did not report closing_prices.detail.withClv at all, which is itself unmeasured, not zero.');
+  }
+  return shCard({head:'CLV measurement',key:'derived from closing_prices.detail.withClv',
+    criticality:cp?cp.criticality:null,status:st,why:'',note:note,sub:cp,
+    rows:[['Rows with CLV',isNum(clv)?shNum(clv,'row(s)'):SH_ABSENT],
+          ['Rows with close',isNum(d.withClose)?shNum(d.withClose,'row(s)'):SH_ABSENT],
+          ['Ledger rows',isNum(d.ledgerRows)?shNum(d.ledgerRows,'row(s)'):SH_ABSENT],
+          ['Blocked by',cp?shCodes(cp.codes):SH_ABSENT]]});
+}
+
+/* ---- RULEBOOK PROVENANCE: model_version + D.provenance ---- */
+function shProvCard(){
+  var mv=shSub('model_version'),d=shDet('model_version');
+  var P=(D.provenance&&typeof D.provenance==='object'&&!Array.isArray(D.provenance))?D.provenance:null;
+  var fp=P?P.rulebookFingerprint:null;
+  var rows=[
+    ['Rulebook ver.',P?shTxt(P.rulebookVersion):SH_ABSENT],
+    ['Fingerprint',(P&&fp)?('<code class="sshc">'+esc(String(fp))+'</code>'):SH_ABSENT],
+    ['Model ver.',P?shTxt(P.modelVersion):shTxt(D.modelVersion)],
+    ['Published ver.',shTxt(D.version)],
+    ['Prediction ver.',P?shTxt(P.predictionVersion):shTxt(D.predictionVersion)],
+    ['Git commit',P?shTxt(P.gitCommit):SH_ABSENT],
+    ['Row coverage',isNum(d.rowCoveragePct)?('<b>'+esc(d.rowCoveragePct.toFixed(2))+'%</b>'):SH_ABSENT],
+    ['Labels reused',Array.isArray(d.labelsReused)
+      ?(d.labelsReused.length?d.labelsReused.map(function(x){return '<code class="sshc">'+esc(String(x))+'</code>';}).join('')
+                             :'<span class="sshnone">none &mdash; one label, one ruleset</span>')
+      :SH_ABSENT]];
+  var note=P?null
+    :'<b>D.provenance is '+esc(NOT_IN_BUILD)+'.</b> The rulebook version is a <i>claim</i>; the fingerprint is the '
+     +'<i>evidence</i>. Without the fingerprint this build cannot prove which ruleset actually produced these numbers, '
+     +'so treat the version label as unverified rather than assuming it is correct.';
+  return shCard({head:'Rulebook provenance',key:'model_version + D.provenance',
+    sub:mv,criticality:mv?mv.criticality:null,note:note,rows:rows});
+}
+
+/* ---- expanded odds-archive card: the subsystem that died silently ---- */
+function shOddsArchive(){
+  var oa=shSub('odds_archive'),d=shDet('odds_archive');
+  var lag=oa?agoMin(oa.lastSuccessAt):null;
+  var missed=isNum(lag)?Math.max(0,Math.floor(lag/SH_CADENCE_MIN)-1):null;
+  var pre=d.pregameQuotesLastSnapshot;
+  /* future-proof: render the field if a later build starts publishing it. */
+  var ev=d.eventsWith2PregameSnapshots;
+  if(ev===undefined)ev=d.eventsWithTwoPregameSnapshots;
+  if(ev===undefined)ev=d.eventsMultiSnapshot;
+
+  /* the seconds-to-read answer: is close coverage going to improve? */
+  var vst,vtxt;
+  if(!oa){
+    vst='ss-unk';
+    vtxt='<b>Cannot tell.</b> The payload carries no odds_archive block, so nothing here can say whether captures are landing.';
+  }else if(oa.status==='FAILING'||oa.status==='UNKNOWN'){
+    vst='ss-crit';
+    vtxt='<b>No &mdash; close coverage is not improving.</b> Captures are not landing. Every game played while the archive '
+      +'is down has no pregame price stored, and a price not captured before first pitch is <b>unrecoverable</b> &mdash; '
+      +'those dates can never gain a close, however long the archive runs later.';
+  }else if(oa.status==='STALE'){
+    vst='ss-warn';
+    vtxt='<b>Not yet.</b> The archive is behind its 30-minute cadence'
+      +(isNum(lag)?' by '+esc(durTxt(lag))+' since the last successful capture':'')
+      +'. Games first-pitching inside this gap are losing their pregame price permanently. Close coverage improves only '
+      +'from the moment captures resume, and never backfills.';
+  }else if(oa.status==='OK'&&isNum(pre)&&pre>0){
+    vst='ss-ok';
+    vtxt='<b>Yes, from here forward.</b> Captures are landing on cadence and the latest snapshot holds <b>'+esc(String(pre))
+      +'</b> valid pregame quote(s), so today&rsquo;s games should accrue closes. Dates lost to the earlier outage stay '
+      +'unrecoverable &mdash; historical close coverage will not improve.';
+  }else if(oa.status==='OK'&&isNum(pre)&&pre===0){
+    vst='ss-crit';
+    vtxt='<b>No &mdash; the archive is running empty.</b> Captures are landing on time but the latest snapshot holds '
+      +'<b>zero</b> valid pregame quotes, so nothing usable for a close is being stored. A fresh timestamp on an empty '
+      +'snapshot is exactly the failure mode that reads as healthy.';
+  }else{
+    vst='ss-unk';
+    vtxt='<b>Cannot tell.</b> Captures report status '+esc(String(oa.status))+', but the payload does not report a valid '
+      +'pregame-quote count for the latest snapshot, so whether anything usable is being stored is unmeasured.';
+  }
+
+  var h='<div class="sshverdict '+vst+'">Will close coverage improve? '+vtxt+'</div>';
+  h+='<div class="sshgrid">';
+  h+=shCard({head:'Capture liveness',key:'odds_archive',sub:oa,
+    rows:[['Archive lag',isNum(lag)?('<b>'+esc(durTxt(lag))+'</b> since last successful capture'):SH_ABSENT],
+          ['Expected cadence','<b>every '+SH_CADENCE_MIN+' min</b> through the betting window <span class="sshage">(configured expectation, not a payload field)</span>'],
+          ['Actual cadence',isNum(d.snapshotsToday)
+            ?('<b>'+esc(String(d.snapshotsToday))+'</b> capture(s) in the latest archived date file <span class="sshage">&mdash; a mean interval is not derivable: the payload publishes only the newest capture timestamp, not per-snapshot times</span>')
+            :SH_ABSENT+' <span class="sshage">&mdash; snapshotsToday absent, and cadence cannot be inferred without it</span>'],
+          ['Missed slots',isNum(missed)
+            ?('<b>'+esc(String(missed))+'</b> <span class="sshage">30-min slot(s), derived from lag &mdash; not a reported counter</span>')
+            :SH_ABSENT],
+          ['Consecutive fails',(oa&&isNum(oa.consecutiveFailures))?shNum(oa.consecutiveFailures):SH_ABSENT+' <span class="sshage">&mdash; this build publishes no failure counter</span>']]});
+  h+=shCard({head:'What was captured',key:'odds_archive.detail',sub:oa,status:oa?oa.status:null,why:'',
+    rows:[['Quotes captured',isNum(d.quotesLastSnapshot)?shNum(d.quotesLastSnapshot,'in the latest snapshot'):SH_ABSENT],
+          ['Valid pregame',isNum(pre)?shNum(pre,'pregame quote(s) in the latest snapshot'):SH_ABSENT],
+          ['Events >=2 snaps',isNum(ev)?shNum(ev,'event(s)')
+            :SH_ABSENT+' <span class="sshage">&mdash; this is the figure that would say whether a close is recoverable per event; no build publishes it yet</span>'],
+          ['Unmapped gamePk',isNum(d.unmappedGamePkLastSnapshot)?shNum(d.unmappedGamePkLastSnapshot,'quote(s) matched no game'):SH_ABSENT],
+          ['Dates archived',isNum(d.datesArchived)?shNum(d.datesArchived,'date file(s)'):SH_ABSENT],
+          ['Archive span',(d.firstArchivedDate||d.latestArchivedDate)
+            ?(shTxt(d.firstArchivedDate)+' &rarr; '+shTxt(d.latestArchivedDate))
+            :SH_ABSENT],
+          ['A today-total',SH_ABSENT+' <span class="sshage">&mdash; every count above is scoped to the LATEST SNAPSHOT; the payload publishes no all-day total, so none is shown</span>']]});
+  h+='</div>';
+  return h;
+}
+
+/* ---- secondary group: publish-time guards + everything remaining ---- */
+var SH_HEAD_KEYS=['daily_picks','odds_archive','settlement','closing_prices','run_outcomes','publication','model_version'];
+var SH_GUARD_KEYS=['market_state','hr_prob_suppression','parlay_invariant','lineup_gate','roster_gate','backtest','payload_guards'];
+function shGuards(){
+  var subs=shSubs(),seen={},order=[];
+  SH_GUARD_KEYS.forEach(function(k){if(subs[k]){order.push(k);seen[k]=1;}});
+  Object.keys(subs).forEach(function(k){
+    if(!seen[k]&&SH_HEAD_KEYS.indexOf(k)<0){order.push(k);seen[k]=1;}
+  });
+  if(!order.length)
+    return '<div class="note">No secondary subsystems were published this run. That is not a clean bill of health &mdash; '
+      +'it means the guards reported nothing, so whether they ran is <b>unknown</b>.</div>';
+  var h='<div class="tblwrap"><table class="aht">'
+    +'<tr><th>Subsystem</th><th>Key</th><th>Criticality</th><th>Status</th><th>Why</th><th>Last success</th><th>Codes</th></tr>';
+  order.forEach(function(k){
+    var s=subs[k]||{};
+    h+='<tr><td>'+shTxt(s.label)+'</td>'
+      +'<td><code class="sshc">'+esc(k)+'</code></td>'
+      +'<td>'+shTag(s.criticality)+'</td>'
+      +'<td>'+shPill(s.status)+'</td>'
+      +'<td class="wrap">'+(s.why?esc(s.why):'<span class="sshnone">nothing reported</span>')+'</td>'
+      +'<td>'+shWhen(s.lastSuccessAt)+'</td>'
+      +'<td>'+shCodes(s.codes)+'</td></tr>';
+  });
+  return h+'</table></div>'
+    +'<div class="note">These are the guards that are unit-tested but had no liveness surface until now. A green unit test '
+    +'proves the code is correct; it says nothing about whether the code still <b>runs</b> in production. Anything reading '
+    +'UNKNOWN here has not proved it ran.</div>';
+}
+
+/* ---- the panel ---- */
+function shPanel(){
+  var R=shRoot(),subs=shSubs(),h='';
+  var overall=R?R.overall:null;
+  var crit=(R&&Array.isArray(R.criticalFailing))?R.criticalFailing:[];
+  var imp=(R&&Array.isArray(R.importantFailing))?R.importantFailing:[];
+  function labelsOf(keys){
+    return keys.map(function(k){
+      var s=subs[k];
+      return '<b>'+esc((s&&s.label)||k)+'</b>'+((s&&s.why)?' &mdash; '+esc(s.why):'');
+    });
+  }
+  /* The banner must never be a lone green chip. It always names the
+     subsystems responsible for whatever the top-level status is. */
+  var ban='<div class="sshbanner '+shTone(overall||'UNKNOWN')+'">'
+    +'<div class="sshhl"><span>Overall</span>'+shPill(overall)
+    +'<span class="sshage">checked '+(R?shWhen(R.checkedAt):SH_ABSENT)+'</span></div>';
+  if(!R){
+    ban+='<div class="sshcause">The payload carries <b>no systemHealth block</b>, so not one subsystem below could be '
+      +'verified. This is <b>UNKNOWN, not healthy</b> &mdash; it is the same shape of silence that let the odds archive '
+      +'stay dead for four weeks while this page rendered a confident header.</div>';
+  }else{
+    ban+='<div class="sshcause">'+(R.headline?esc(R.headline):'<span class="sshabs">no headline reported</span>')+'</div>';
+    if(crit.length)
+      ban+='<div class="sshcause">Caused by these <b>CRITICAL</b> subsystem(s): '+labelsOf(crit).join('; ')+'.</div>';
+    if(imp.length)
+      ban+='<div class="sshcause">Degraded by these <b>IMPORTANT</b> subsystem(s): '+labelsOf(imp).join('; ')+'.</div>';
+    if(!crit.length&&!imp.length&&String(overall).toUpperCase()==='HEALTHY')
+      ban+='<div class="sshcause">No critical or important subsystem is failing or stale. Read the eight statuses below '
+        +'anyway &mdash; this line is a summary, and a summary is exactly what hid the last outage.</div>';
+    ban+='<div class="sshcause">Codes raised: '+shCodes(R.codes)+'</div>';
+  }
+  ban+='<div class="sshrule">'+(R&&R.rule?esc(R.rule)
+    :'A failing or stale CRITICAL subsystem forces overall CRITICAL. Data coverage can never override it.')
+    +' Each status below stands on its own: none of them is summarised away by the badge above.</div></div>';
+
+  var dp=shSub('daily_picks'),dpd=shDet('daily_picks');
+  var st=shSub('settlement'),std=shDet('settlement');
+  var cp=shSub('closing_prices'),cpd=shDet('closing_prices');
+  var ro=shSub('run_outcomes'),rod=shDet('run_outcomes');
+  var pb=shSub('publication');
+  var oa=shSub('odds_archive'),oad=shDet('odds_archive');
+  var oaLag=oa?agoMin(oa.lastSuccessAt):null;
+
+  var cards='<div class="sshgrid">'
+    +shCard({head:'Daily picks',key:'daily_picks',sub:dp,
+      rows:[['Days logged',isNum(dpd.daysLogged)?shNum(dpd.daysLogged,'day file(s)'):SH_ABSENT],
+            ['Latest log',shTxt(dpd.latest)]]})
+    +shCard({head:'Line snapshots',key:'odds_archive',sub:oa,
+      rows:[['Archive lag',isNum(oaLag)?('<b>'+esc(durTxt(oaLag))+'</b> vs a '+SH_CADENCE_MIN+'-min cadence'):SH_ABSENT],
+            ['Captures',isNum(oad.snapshotsToday)?shNum(oad.snapshotsToday,'in the latest date file'):SH_ABSENT],
+            ['Detail','see the expanded card below']]})
+    +shCard({head:'Settlement',key:'settlement',sub:st,
+      rows:[['Days graded',isNum(std.daysGraded)?shNum(std.daysGraded,'day file(s)'):SH_ABSENT],
+            ['Latest graded',shTxt(std.latest)]]})
+    +shCard({head:'Close derivation',key:'closing_prices',sub:cp,
+      rows:[['Rows with close',shRatio(cpd.withClose,cpd.ledgerRows,'ledger rows')],
+            ['Published pct',(isNum(cpd.closeCoveragePct)&&isNum(cpd.ledgerRows)&&cpd.ledgerRows>0)
+              ?('<b>'+esc(cpd.closeCoveragePct.toFixed(2))+'%</b>')
+              :SH_ABSENT+' <span class="sshage">&mdash; a percentage over an empty or unreported ledger would be invented</span>']]})
+    +shClvCard()
+    +shCard({head:'Run projection',key:'run_outcomes',sub:ro,
+      rows:[['Games with proj.',shRatio(rod.withRunProjection,rod.gamesChecked,'logged games')]]})
+    +shCard({head:'Dashboard publish',key:'publication',sub:pb,
+      rows:[['Payload generated',shWhen(D.generatedAt)],
+            ['Slate date',shTxt(D.date)]]})
+    +shProvCard()
+    +'</div>';
+
+  h+=ahs('Subsystem health &mdash; liveness','8 independent statuses '+shPill(overall),
+    '<div class="note" style="margin:0 0 10px">Liveness sits above coverage because it outranks it: coverage says how much '
+    +'of today&rsquo;s data arrived, liveness says whether the machine that produces it is still running. '
+    +'A value the payload does not carry renders as '+SH_ABSENT+' &mdash; never as 0, 0% or a blank cell.</div>'
+    +ban+cards);
+  h+=ahs('Pregame odds archive &mdash; expanded',shPill(oa?oa.status:null),
+    '<div class="note" style="margin:0 0 9px">This subsystem died on 2026-08-07 and stayed dead for four weeks while every '
+    +'other indicator read green, so it gets its own card. A pregame price not captured before first pitch is gone '
+    +'permanently &mdash; the archive cannot backfill.</div>'+shOddsArchive());
+  h+=ahs('Publish-time guards &amp; remaining subsystems','',shGuards());
+  return h;
+}
 function renderAdmin(){
   var hs=systemHealth(),ck=hs.clock,SP=ck.plan,dh=D.dataHealth||{},h='';
   var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
@@ -1877,6 +2280,18 @@ function renderAdmin(){
     +'Coverage is judged <b>against the ticket lock</b>, not against a fixed threshold — a source at 0% two hours before lineups post is normal, '
     +'the same source at 0% after the lock is critical. '
     +'Anything the payload does not positively assert as healthy renders <span class="badge b-unk">UNKNOWN</span>, never green.</div>';
+
+  /* LIVENESS BEFORE COVERAGE (2026-09-03, Lane C).
+     Eight independent subsystem statuses render above the coverage
+     tables. Wrapped so a malformed payload degrades to an honest
+     UNKNOWN panel instead of blanking the whole Admin tab. */
+  try{ h+=shPanel(); }
+  catch(shErr){
+    h+=ahs('Subsystem health &mdash; liveness',pill('UNKNOWN','b-unk'),
+      '<div class="note">The subsystem-health panel could not render: <b>'
+      +esc(String((shErr&&shErr.message)||shErr))+'</b>. The failure is shown rather than hidden &mdash; '
+      +'blank space here would read as &ldquo;nothing wrong&rdquo;, which is the exact error this panel exists to prevent.</div>');
+  }
 
   /* 1. SYSTEM HEALTH */
   h+=ahs('System health',statusPill(hs.level),
