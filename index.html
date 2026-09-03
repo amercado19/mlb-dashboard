@@ -403,6 +403,48 @@ details.gdet[open]>summary:before{content:'\25BE  '}
 .bt-legi span.badge{flex:0 0 auto;margin-top:1px}
 table.aht td.num{font-variant-numeric:tabular-nums}
 table.aht tr.tot td{border-top:1.5px solid var(--line);font-weight:700}
+/* ---------------- simulator ---------------- */
+.simctl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:12px 0 8px}
+.simtabs,.simsorts{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.simtabs button,.simsorts button{font:600 11px/1 var(--sans);padding:6px 10px;border:1px solid var(--line);
+  background:#fff;color:#334155;border-radius:999px;cursor:pointer}
+.simtabs button.on,.simsorts button.on{background:#0f172a;border-color:#0f172a;color:#fff}
+.simsortlab{font:800 9px/1 var(--mono);letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-right:2px}
+.simwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px}
+.simwrap.simstale{opacity:.62;filter:grayscale(.45)}
+.simstalebanner{background:#7f1d1d;color:#fff;font:800 10px/1.5 var(--mono);letter-spacing:.06em;
+  padding:6px 10px;text-align:center}
+table.simtab{width:100%;border-collapse:collapse;font:12px/1.35 var(--sans);min-width:760px}
+table.simtab th{font:800 9px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  padding:8px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;
+  position:sticky;top:0;background:#fff;z-index:1}
+table.simtab th.l{text-align:left}
+table.simtab td{padding:7px 8px;border-bottom:1px solid #f1f5f9;text-align:center;white-space:nowrap}
+table.simtab td.l{text-align:left}
+table.simtab td.num{text-align:right;font-family:var(--mono);font-size:11px}
+table.simtab td.p{text-align:right;font-family:var(--mono);font-size:11px}
+table.simtab tr:hover td{background:#f8fafc}
+tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:#475569;text-align:left}
+.simname{color:var(--muted);font-size:11px}
+.simdiv{color:#475569;font-size:11px}
+.simbar{display:block;height:3px;background:#e2e8f0;border-radius:2px;margin-top:3px;overflow:hidden}
+.simbar i{display:block;height:100%;background:#0f172a}
+.simtiny{color:var(--muted);font-style:italic}
+.simna{color:#cbd5e1}
+.simout{color:#94a3b8;font-weight:700;font-size:10px}
+.simbub{color:#b45309;font-weight:800;font-size:10px}
+.simnote{color:var(--muted);font-size:10px}
+.simok{color:#0c7a43;font-size:10px;font-weight:700}
+.simbad{color:#b91c1c;font-size:10px;font-weight:800}
+.simcal{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;padding:8px 10px;
+  background:#fffbeb;border:1px solid #fde68a;border-radius:8px}
+.simcallab{font:800 9px/1 var(--mono);letter-spacing:.1em;color:#92400e}
+.simcaltxt{font-size:11px;color:#78350f;flex:1 1 240px}
+.simcaveat{margin-top:8px;font-size:11px;color:var(--muted);line-height:1.5}
+.simfoot{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.55}
+.simempty{color:var(--muted);padding:14px;text-align:center}
+@media(max-width:520px){table.simtab{min-width:680px}.simcal{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -426,6 +468,7 @@ table.aht tr.tot td{border-top:1.5px solid var(--line);font-weight:700}
   <section id="parlay"></section>
   <section id="performance"></section>
   <section id="library"></section>
+  <section id="simulator"></section>
   <section id="admin"></section>
   <section id="method"></section>
   <section id="backtests"></section>
@@ -1621,7 +1664,7 @@ function renderLibrary(){
   $('library').innerHTML=bar+body;
 }
 
-var TABS=[['slate','Slate'],['picks','Picks'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['library','Library'],['admin','Admin / Health'],['method','How it works'],['backtests','Backtests']];
+var TABS=[['slate','Slate'],['picks','Picks'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['simulator','Simulator'],['library','Library'],['admin','Admin / Health'],['method','How it works'],['backtests','Backtests']];
 function buildNav(){$('nav').innerHTML=TABS.map(function(t,i){return '<button class="'+(i===0?'active':'')+'" data-s="'+t[0]+'" onclick="showTab(\''+t[0]+'\',this)">'+esc(t[1])+'</button>';}).join('');}
 function showTab(id,btn){var ss=document.querySelectorAll('main section');for(var i=0;i<ss.length;i++)ss[i].classList.remove('active');var sec=$(id);if(sec)sec.classList.add('active');var bs=document.querySelectorAll('nav button');for(var j=0;j<bs.length;j++){bs[j].classList.remove('active');if(!btn&&bs[j].getAttribute('data-s')===id)bs[j].classList.add('active');}if(btn)btn.classList.add('active');try{window.scrollTo(0,0);}catch(e){}}
 /* ---------- header meta, run cadence and run note ----------
@@ -1944,12 +1987,18 @@ var SH_CADENCE_MIN=30;
 function shPill(s){
   var S=String(s==null?'UNKNOWN':s).toUpperCase().replace(/_/g,' ').trim();
   var m={OK:'b-ok',HEALTHY:'b-ok',MEASURED:'b-ok',
+         /* the simulator artifact's own vocabulary */
+         CURRENT:'b-ok',BLOCKED:'b-crit',
          STALE:'b-warn',DEGRADED:'b-warn',PENDING:'b-warn',
          FAILING:'b-crit',FAILED:'b-crit',CRITICAL:'b-crit',MISSING:'b-crit',
          /* UNVERIFIED is warn, not unknown: the value EXISTS and cannot be
             certified, which is a different statement from "not reported". */
          UNVERIFIED:'b-warn',
-         UNKNOWN:'b-unk','NOT MEASURABLE':'b-unk','NOT REPORTED':'b-unk'}[S];
+         /* NOT MEASURED is a real status the simulator publishes: the thing
+            exists and has never been evaluated. Distinct from NOT MEASURABLE
+            (cannot be evaluated) and from NOT REPORTED (nobody said). */
+         UNKNOWN:'b-unk','NOT MEASURABLE':'b-unk','NOT MEASURED':'b-unk',
+         'NOT REPORTED':'b-unk'}[S];
   return pill(m?S:'UNKNOWN',m||'b-unk',
     m?'':'The payload reported status "'+S+'", which this page does not recognise. Treated as UNKNOWN, never as OK.');
 }
@@ -3195,13 +3244,232 @@ function renderBacktests(){
   $('backtests').innerHTML=h;
 }
 
+/* ============================== SIMULATOR =================================
+   Renders the pipeline's published simulator artifact. It does not simulate,
+   it does not decide eligibility, and it does not recompute a single
+   probability — every number here was produced by the pipeline and gated
+   there. The page's only job is to show them without lying about what they
+   are.
+
+   THREE THINGS THIS SECTION REFUSES TO DO
+
+     1  SHOW STALE NUMBERS AS CURRENT. A failed build leaves the previous
+        probabilities in the artifact. `showProbabilities` is decided in the
+        pipeline; when it is false the table still renders — blanking it would
+        hide evidence — but every probability column is labelled NOT CURRENT
+        and the block above says when they were last true.
+
+     2  PRINT A DENOMINATOR IT DOES NOT HAVE. Probabilities are divided by
+        fullyResolvedSims, which is not always simulationCount: a simulated
+        season whose tie no MLB criterion separates is discarded rather than
+        resolved arbitrarily. Both are shown, always, side by side.
+
+     3  IMPLY CALIBRATION. Convergence means the estimator settled given the
+        model and the inputs. calibrationStatus is NOT MEASURED and is printed
+        as prominently as the numbers it qualifies.
+========================================================================== */
+var SIM_SORT = 'winWorldSeriesProb';
+var SIM_VIEW = 'ALL';
+
+function simObj(){
+  var s = D && D.simulator;
+  return (s && typeof s === 'object' && !Array.isArray(s)) ? s : null;
+}
+/* 0.1 percentage points, and not one digit more. Measured seed-to-seed
+   variation at 20,000 sims is 0.00056, so a second decimal would be noise
+   rendered as precision. */
+function simPct(v){
+  if(!isNum(v)) return SH_ABSENT;
+  var p = 100 * v;
+  if(v > 0 && p < 0.05) return '<span class="simtiny" title="Non-zero, but below the 0.1 percentage-point precision this simulation supports.">&lt;0.1%</span>';
+  if(v < 1 && p > 99.95) return '<span class="simtiny" title="Below 1, but rounds to 100.0% at the precision this simulation supports.">&gt;99.9%</span>';
+  return esc(p.toFixed(1)) + '%';
+}
+function simBar(v){
+  if(!isNum(v)) return '';
+  var w = Math.max(0, Math.min(100, 100 * v));
+  return '<span class="simbar"><i style="width:' + w.toFixed(1) + '%"></i></span>';
+}
+function simSeedTxt(t){
+  /* "Seed" is a bracket position, and it only exists for a club that makes
+     the field. A club at 4% is not "seed 7"; it has no seed. */
+  if(!isNum(t.makePlayoffsProb)) return SH_ABSENT;
+  if(t.makePlayoffsProb >= 0.999) return '<b>IN</b>';
+  if(t.makePlayoffsProb <= 0.001) return '<span class="simout">OUT</span>';
+  return '<span class="simbub">BUBBLE</span>';
+}
+
+function renderSimulator(){
+  var el = $('simulator'); if(!el) return;
+  var s = simObj();
+
+  if(!s){
+    el.innerHTML = '<div class="empty">This payload carries no <code>simulator</code> block. '
+      + 'That is an absent measurement, not an empty postseason race — the page will not '
+      + 'invent a table to fill the space.</div>';
+    return;
+  }
+  if(s.status === 'MISSING'){
+    el.innerHTML = '<div class="sshcard ss-crit"><div class="sshhead">'
+      + '<span class="sshlab">Postseason simulator</span>' + shPill('MISSING') + '</div>'
+      + '<div class="sshwhy">' + esc(s.why || 'no simulator artifact has been produced') + '</div></div>';
+    return;
+  }
+
+  var show = s.showProbabilities === true;
+  var teams = Array.isArray(s.teams) ? s.teams : [];
+  var h = '';
+
+  /* ---------- status block ---------- */
+  h += '<div class="sshcard ' + shTone(show ? 'OK' : (s.status === 'STALE' ? 'STALE' : 'FAILING')) + '">';
+  h += '<div class="sshhead"><span class="sshlab">Postseason simulator</span>' + shPill(s.status) + '</div>';
+  if(!show){
+    h += '<div class="sshwhy"><b>These probabilities are NOT current.</b> '
+      + (Array.isArray(s.blockingReasons) && s.blockingReasons.length
+          ? 'This build failed its gates: ' + esc(s.blockingReasons.join('; ')) + '. '
+          : '')
+      + 'The numbers below are from the last successful build'
+      + (s.lastSuccessAt ? ' (' + esc(stampTxt(s.lastSuccessAt)) + ')' : '')
+      + ' and are shown only so the failure is visible rather than blank.</div>';
+  }
+  h += '<div class="sshkvs">';
+  h += shKv('Season', shTxt(s.season));
+  h += shKv('Generated', shWhen(s.generatedAt));
+  h += shKv('Last success', shWhen(s.lastSuccessAt));
+  h += shKv('Last attempt', shWhen(s.lastAttemptAt));
+  /* THE DENOMINATOR, next to the count it is not the same as. */
+  h += shKv('Simulations run', shNum(s.simulationCount));
+  h += shKv('Probability denominator',
+            shNum(s.fullyResolvedSims)
+            + '<span class="simnote" title="' + esc(String(s.denominatorNote || '')) + '"> '
+            + 'fully resolved</span>');
+  h += shKv('Unresolved seasons',
+            shNum(s.unresolvedTiebreakSims)
+            + (s.denominatorIdentityHolds === true
+                ? '<span class="simok" title="resolved + unresolved == simulations run"> identity holds</span>'
+                : '<span class="simbad" title="resolved + unresolved does not equal simulations run"> IDENTITY BROKEN</span>'));
+  h += shKv('Engine', shTxt(s.simulationVersion));
+  h += shKv('Inputs', shTxt(s.inputVersion));
+  h += shKv('Game model', shTxt(s.modelVersion));
+  h += shKv('Bracket format',
+            shTxt(s.formatVersion)
+            + (s.formatVerified === true
+                ? '<span class="simok" title="the bracket and tiebreaks are established from MLB&#39;s published rules"> verified</span>'
+                : '<span class="simbad"> NOT VERIFIED</span>'));
+  h += shKv('Tiebreak coverage',
+            shTxt(s.tiebreakCoverageStatus)
+            + (isNum(s.tiebreakFallbackCount)
+                ? '<span class="simnote"> · ' + esc(String(s.tiebreakFallbackCount)) + ' exhausted</span>'
+                : ''));
+  h += shKv('Build commit', s.gitCommit ? '<code class="sshc">' + esc(String(s.gitCommit)) + '</code>' : SH_ABSENT);
+  h += shKv('Runtime', shNum(s.runtimeSeconds, 's'));
+  h += shKv('Seed', shNum(s.seed));
+  h += '</div>';
+
+  /* CALIBRATION — as prominent as the numbers it qualifies. */
+  h += '<div class="simcal"><span class="simcallab">CALIBRATION</span>'
+    + shPill('NOT MEASURED')
+    + '<span class="simcaltxt">' + esc(String(s.calibrationStatus || 'NOT MEASURED')) + '</span></div>';
+  if(Array.isArray(s.unverifiedHomePatterns) && s.unverifiedHomePatterns.length){
+    h += '<div class="simcaveat">MLB does not publish the home-game distribution for the '
+      + esc(s.unverifiedHomePatterns.map(function(x){
+            return {LCS:'LCS',WORLD_SERIES:'World Series'}[x] || String(x).replace(/_/g,' ');
+          }).join(' and '))
+      + '. The long-standing 2-3-2 shape is assumed and flagged; its measured effect on a '
+      + 'World Series probability is smaller than Monte Carlo noise at the count used here, '
+      + 'which is not the same as no effect.</div>';
+  }
+  h += '</div>';
+
+  /* ---------- filters + sort ---------- */
+  var VIEWS = [['ALL','All 30'],['AL','American League'],['NL','National League'],
+               ['DIV','By division'],['FIELD','Projected playoff field']];
+  h += '<div class="simctl"><div class="simtabs">' + VIEWS.map(function(v){
+        return '<button class="' + (SIM_VIEW===v[0]?'on':'') + '" onclick="simSetView(\'' + v[0] + '\')">'
+             + esc(v[1]) + '</button>'; }).join('') + '</div>';
+  var SORTS = [['makePlayoffsProb','Playoffs'],['winDivisionProb','Division'],
+               ['earnByeProb','Bye'],['winPennantProb','Pennant'],
+               ['winWorldSeriesProb','World Series'],['projectedWins','Projected wins']];
+  h += '<div class="simsorts"><span class="simsortlab">Sort</span>' + SORTS.map(function(v){
+        return '<button class="' + (SIM_SORT===v[0]?'on':'') + '" onclick="simSetSort(\'' + v[0] + '\')">'
+             + esc(v[1]) + '</button>'; }).join('') + '</div></div>';
+
+  /* ---------- rows ---------- */
+  var rows = teams.slice();
+  if(SIM_VIEW === 'AL') rows = rows.filter(function(t){ return /American/i.test(t.leagueName||''); });
+  if(SIM_VIEW === 'NL') rows = rows.filter(function(t){ return /National/i.test(t.leagueName||''); });
+  if(SIM_VIEW === 'FIELD') rows = rows.filter(function(t){ return isNum(t.makePlayoffsProb) && t.makePlayoffsProb >= 0.5; });
+  rows.sort(function(a,b){
+    var x = isNum(a[SIM_SORT]) ? a[SIM_SORT] : -1, y = isNum(b[SIM_SORT]) ? b[SIM_SORT] : -1;
+    if(y !== x) return y - x;
+    return String(a.abbrev||'').localeCompare(String(b.abbrev||''));
+  });
+
+  var head = '<tr><th class="l">Team</th><th>Record</th><th class="l">Division</th><th>Status</th>'
+    + '<th>Proj W</th><th>Playoffs</th><th>Division</th><th>Wild card</th><th>Bye</th>'
+    + '<th>Pennant</th><th>World Series</th></tr>';
+
+  function rowHtml(t){
+    return '<tr><td class="l"><b>' + shTxt(t.abbrev) + '</b> <span class="simname">'
+      + shTxt(t.name) + '</span></td>'
+      + '<td class="num">' + (isNum(t.wins)&&isNum(t.losses) ? esc(t.wins+'-'+t.losses) : SH_ABSENT) + '</td>'
+      + '<td class="l simdiv">' + shTxt(t.divisionName) + '</td>'
+      + '<td>' + simSeedTxt(t) + '</td>'
+      + '<td class="num">' + (isNum(t.projectedWins) ? esc(t.projectedWins.toFixed(1)) : SH_ABSENT) + '</td>'
+      + '<td class="p">' + simPct(t.makePlayoffsProb) + simBar(t.makePlayoffsProb) + '</td>'
+      + '<td class="p">' + simPct(t.winDivisionProb) + '</td>'
+      /* A 99.9% division favourite has no meaningful wild-card number, and
+         printing one invites adding two figures that do not add. */
+      + '<td class="p">' + (t.wildCardMeaningful ? simPct(t.winWildCardProb)
+            : '<span class="simna" title="This club is a heavy division favourite; its wild-card probability is not a meaningful separate number.">&mdash;</span>') + '</td>'
+      + '<td class="p">' + simPct(t.earnByeProb) + '</td>'
+      + '<td class="p">' + simPct(t.winPennantProb) + '</td>'
+      + '<td class="p"><b>' + simPct(t.winWorldSeriesProb) + '</b>' + simBar(t.winWorldSeriesProb) + '</td></tr>';
+  }
+
+  h += '<div class="simwrap' + (show ? '' : ' simstale') + '">';
+  if(!show){
+    h += '<div class="simstalebanner">NOT CURRENT &mdash; last successful build '
+      + esc(stampTxt(s.lastSuccessAt)) + '</div>';
+  }
+  h += '<table class="simtab"><thead>' + head + '</thead><tbody>';
+  if(!rows.length){
+    h += '<tr><td colspan="11" class="simempty">'
+      + (teams.length ? 'No clubs match this view.'
+         : 'This artifact carries no team rows &mdash; nothing is being hidden by the filter.')
+      + '</td></tr>';
+  } else if(SIM_VIEW === 'DIV'){
+    var byDiv = {};
+    rows.forEach(function(t){ (byDiv[t.divisionName||'—'] = byDiv[t.divisionName||'—'] || []).push(t); });
+    Object.keys(byDiv).sort().forEach(function(k){
+      h += '<tr class="simgrp"><td colspan="11">' + esc(k) + '</td></tr>';
+      byDiv[k].forEach(function(t){ h += rowHtml(t); });
+    });
+  } else {
+    rows.forEach(function(t){ h += rowHtml(t); });
+  }
+  h += '</tbody></table></div>';
+
+  h += '<div class="simfoot">Probabilities are shown to '
+    + esc(String(isNum(s.displayPrecisionPp) ? s.displayPrecisionPp : 0.1))
+    + ' percentage points, the floor at which the last digit is not Monte Carlo noise. '
+    + 'Every figure is divided by the fully-resolved denominator above. '
+    + 'The pipeline produced them; this page does not simulate anything. '
+    + 'Deeper diagnostics — the ten simulator stages, their counters and evidence — are in '
+    + '<b>Admin / Health</b>.</div>';
+
+  el.innerHTML = h;
+}
+function simSetView(v){ SIM_VIEW = v; renderSimulator(); }
+function simSetSort(v){ SIM_SORT = v; renderSimulator(); }
+
 function renderAll(){
   /* every index below is derived from D — rebuild them all on every render */
   window._LUIX=null;window._PIX=null;window._SPIX=null;
   /* Each renderer is isolated: one bad section must not blank the whole page. */
   [['meta',renderMeta],['slate',renderSlate],['picks',renderPicks],['matchups',renderMatchups],
    ['props',renderProps],['parlay',renderParlay],['performance',renderPerformance],
-   ['library',renderLibrary],['admin',renderAdmin],['method',renderMethod],
+   ['simulator',renderSimulator],['library',renderLibrary],['admin',renderAdmin],['method',renderMethod],
    ['backtests',renderBacktests]].forEach(function(r){
     try{r[1]();}catch(e){
       if(window.console&&console.error)console.error('render '+r[0]+' failed',e);
