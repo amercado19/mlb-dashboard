@@ -2095,10 +2095,18 @@ function shOddsArchive(){
   var lag=oa?agoMin(oa.lastSuccessAt):null;
   var missed=isNum(lag)?Math.max(0,Math.floor(lag/SH_CADENCE_MIN)-1):null;
   var pre=d.pregameQuotesLastSnapshot;
-  /* future-proof: render the field if a later build starts publishing it. */
-  var ev=d.eventsWith2PregameSnapshots;
+  /* THE NAMES THE PIPELINE ACTUALLY PUBLISHES. An earlier build here guessed
+     three names and got all three wrong, so the fields were published and the
+     page still said no build publishes them. Guessed field names are not
+     future-proofing; they are a silent ABSENT that never resolves. The aliases
+     below are kept only to read older payloads. */
+  var ev=d.eventsWithTwoPlusPregameSnapshots;
+  if(ev===undefined)ev=d.eventsWith2PregameSnapshots;
   if(ev===undefined)ev=d.eventsWithTwoPregameSnapshots;
-  if(ev===undefined)ev=d.eventsMultiSnapshot;
+  var selReady=d.selectionsWithTwoPlusPregameQuotes;
+  var selSeen=d.selectionsSeenPregame;
+  var evSeen=d.eventsSeenPregame;
+  var qDay=d.quotesToday, preDay=d.pregameQuotesToday;
 
   /* the seconds-to-read answer: is close coverage going to improve? */
   var vst,vtxt;
@@ -2147,14 +2155,31 @@ function shOddsArchive(){
   h+=shCard({head:'What was captured',key:'odds_archive.detail',sub:oa,status:oa?oa.status:null,why:'',
     rows:[['Quotes captured',isNum(d.quotesLastSnapshot)?shNum(d.quotesLastSnapshot,'in the latest snapshot'):SH_ABSENT],
           ['Valid pregame',isNum(pre)?shNum(pre,'pregame quote(s) in the latest snapshot'):SH_ABSENT],
-          ['Events >=2 snaps',isNum(ev)?shNum(ev,'event(s)')
-            :SH_ABSENT+' <span class="sshage">&mdash; this is the figure that would say whether a close is recoverable per event; no build publishes it yet</span>'],
+          ['Events >=2 snaps',isNum(ev)
+            ?shNum(ev,'event(s) with two or more pregame captures'
+                   +(isNum(evSeen)?' of '+evSeen+' seen pregame':''))
+            :SH_ABSENT+' <span class="sshage">&mdash; the event-level readiness figure; this payload does not publish it</span>'],
+          /* THE EXACT CLV-READINESS FIGURE. A close is derived per SELECTION
+             (game x market x selection x line x book), so the event count
+             above OVERSTATES readiness whenever a book drops out of one pull.
+             Both are shown; when they disagree, the selection figure is the
+             true one and the gap is the thing to look at. */
+          /* the trailing note is concatenated OUTSIDE shNum: shNum escapes its
+             suffix, so markup passed into it renders as literal tag text. */
+          ['Selections >=2 quotes',isNum(selReady)
+            ?(shNum(selReady,'selection(s) with two or more pregame quotes'
+                    +(isNum(selSeen)?' of '+selSeen+' seen pregame':''))
+              +' <span class="sshage">&mdash; this, not the event count, is what a close can be derived from</span>')
+            :SH_ABSENT+' <span class="sshage">&mdash; the per-selection figure a close is actually derived from; this payload does not publish it</span>'],
           ['Unmapped gamePk',isNum(d.unmappedGamePkLastSnapshot)?shNum(d.unmappedGamePkLastSnapshot,'quote(s) matched no game'):SH_ABSENT],
           ['Dates archived',isNum(d.datesArchived)?shNum(d.datesArchived,'date file(s)'):SH_ABSENT],
           ['Archive span',(d.firstArchivedDate||d.latestArchivedDate)
             ?(shTxt(d.firstArchivedDate)+' &rarr; '+shTxt(d.latestArchivedDate))
             :SH_ABSENT],
-          ['A today-total',SH_ABSENT+' <span class="sshage">&mdash; every count above is scoped to the LATEST SNAPSHOT; the payload publishes no all-day total, so none is shown</span>']]});
+          ['Quotes today',isNum(qDay)
+            ?shNum(qDay,'quote(s) across every capture today'
+                   +(isNum(preDay)?', '+preDay+' of them valid pregame':''))
+            :SH_ABSENT+' <span class="sshage">&mdash; every count above is scoped to the LATEST SNAPSHOT; this payload publishes no all-day total, so none is shown</span>']]});
   h+='</div>';
   return h;
 }
