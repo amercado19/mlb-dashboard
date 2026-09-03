@@ -2050,6 +2050,84 @@ function shCard(o){
    CLV-eligible rows, verified CLV rows - plus one primary reason per excluded
    row. The card asserts the arithmetic on screen, because a funnel whose
    parts do not add up is how a row quietly disappears between two numbers. */
+/* ---- RUN MODEL: THREE STAGES, NEVER ONE BADGE ----
+   Projections were persisting and run_outcomes read OK, and it would have been
+   easy to read that as "the run model is measured". It was not: nothing joined
+   those projections to actual scores, so the archive was healthy and the
+   measurement did not exist. A stage that works is not the pipeline working.
+
+       ARCHIVE      are prediction-time projections PERSISTED?
+       SETTLEMENT   are actual outcomes AVAILABLE?
+       EVALUATION   are the two JOINED and SCORED?
+
+   Each renders its own status. A green ARCHIVE says nothing about EVALUATION
+   and this card says so in as many words. */
+function shRunStages(){
+  var ro=shSub('run_outcomes'), rod=shDet('run_outcomes');
+  var se=shSub('settlement');
+  var re=shSub('run_evaluation'), red=shDet('run_evaluation');
+  var h='';
+  h+=shCard({head:'Run projection \u00b7 1 ARCHIVE',key:'run_outcomes',sub:ro,
+    note:'Are prediction-time projections being <b>persisted</b>? This says nothing about whether they are '
+      +'being <b>scored</b> \u2014 that is stage 3.',
+    rows:[['Games with proj.',shRatio(rod.withRunProjection,rod.gamesChecked,'logged games')]]});
+  h+=shCard({head:'Run projection \u00b7 2 SETTLEMENT',key:'settlement',sub:se,
+    note:'Are actual outcomes available to score against?',rows:[]});
+  var rows=[];
+  if(!re){
+    rows.push(['Evaluation artifact',SH_ABSENT+' <span class="sshage">&mdash; this payload publishes no run_evaluation subsystem, so whether projections are scored is UNMEASURED, not fine</span>']);
+  }else{
+    rows.push(['Scorable rows',isNum(red.scorable)
+      ?(shNum(red.scorable,'row(s)')
+        +' <span class="sshage">&mdash; a game needs BOTH a persisted prediction-time projection AND a completed final</span>')
+      :SH_ABSENT]);
+    rows.push(['Rows evaluated',isNum(red.rows)?shNum(red.rows,'row(s)'):SH_ABSENT]);
+    [['excluded \u00b7 no projection','excludedNoProjection',
+      'predates run_projection; NEVER recomputed, so permanently NOT SCORABLE'],
+     ['excluded \u00b7 outcome unknown','excludedOutcomeUnknown',
+      'postponed, suspended, or not yet a completed final'],
+     ['excluded \u00b7 shortened','excludedShortened',
+      'called before 9 innings \u2014 a real outcome and a biased denominator']
+    ].forEach(function(p){
+      rows.push([p[0],isNum(red[p[1]])
+        ?(shNum(red[p[1]],'row(s)')+' <span class="sshage">'+p[2]+'</span>')
+        :SH_ABSENT]);
+    });
+    var acc=(isNum(red.scorable)&&isNum(red.excludedNoProjection)
+             &&isNum(red.excludedOutcomeUnknown)&&isNum(red.excludedShortened)
+             &&isNum(red.rows))
+      ?(red.scorable+red.excludedNoProjection+red.excludedOutcomeUnknown
+        +red.excludedShortened)
+      :null;
+    rows.push(['Accounting identity',(acc===null)?SH_ABSENT
+      :('<b>'+esc(String(acc))+' accounted of '+esc(String(red.rows))+' evaluated</b>'
+        +((red.identityHolds===true&&acc===red.rows)
+          ?' <span class="sshage">&mdash; holds</span>'
+          :' <span class="sshage">&mdash; DOES NOT HOLD; a row is unaccounted for</span>'))]);
+    rows.push(['Built at',shWhen(red.generatedAt)]);
+    var bv=red.byModelVersion;
+    if(bv&&typeof bv==='object'&&Object.keys(bv).length){
+      Object.keys(bv).forEach(function(v){
+        var s=bv[v]||{};
+        /* shKv ESCAPES the label. An &nbsp; here prints as literal "&NBSP;".
+           Fourth time this class of bug has shipped; plain characters only. */
+        rows.push(['\u2007\u2007'+v,isNum(s.n)&&s.n>0
+          ?('<b>n='+esc(String(s.n))+'</b> total-run MAE '+esc(String(s.totalRunMAE))
+            +' \u00b7 winner acc '+(isNum(s.runWinnerAccuracy)?esc(String(s.runWinnerAccuracy)):INS))
+          :SH_ABSENT+' <span class="sshage">no scorable rows for this version</span>']);
+      });
+    }else{
+      rows.push(['Per-version metrics',SH_ABSENT
+        +' <span class="sshage">&mdash; no version has a scorable row yet. NOT MEASURABLE, not zero</span>']);
+    }
+  }
+  h+=shCard({head:'Run projection \u00b7 3 EVALUATION',key:'run_evaluation',sub:re,
+    status:re?null:'NOT REPORTED',
+    note:'Are persisted projections actually being <b>scored</b> against outcomes? '
+      +'<b>A healthy archive is not a measurement.</b>',
+    rows:rows});
+  return h;
+}
 function shClvFunnel(){
   var d=shDet('closing_prices'), f=d.clvFunnel;
   if(!f||typeof f!=='object')
@@ -2382,8 +2460,7 @@ function shPanel(){
               :SH_ABSENT+' <span class="sshage">&mdash; a percentage over an empty or unreported ledger would be invented</span>']]})
     +shClvCard()
     +shClvFunnel()
-    +shCard({head:'Run projection',key:'run_outcomes',sub:ro,
-      rows:[['Games with proj.',shRatio(rod.withRunProjection,rod.gamesChecked,'logged games')]]})
+    +shRunStages()
     +shCard({head:'Dashboard publish',key:'publication',sub:pb,
       rows:[['Payload generated',shWhen(D.generatedAt)],
             ['Slate date',shTxt(D.date)]]})
