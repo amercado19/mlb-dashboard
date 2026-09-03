@@ -52,6 +52,36 @@ section{display:none}section.active{display:block}
 .wind{display:flex;gap:6px;justify-content:space-around;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px;margin:8px 0;font-family:var(--mono)}
 .wz{display:flex;flex-direction:column;align-items:center;font-size:9px;color:var(--muted)}
 .wza{font-size:15px;line-height:1}.wzm{font-weight:700;color:var(--txt)}
+/* ---- ENVIRONMENT card (ENV-VIEW-1). Replaces .wind/.wz, which drew three
+   arrows from one wind and a bearing nobody published. ---- */
+.envc{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 9px;margin:8px 0;font-family:var(--mono);font-size:10px}
+.envc-none{opacity:.85}
+.envh{display:flex;justify-content:space-between;align-items:center;font-size:9px;font-weight:700;letter-spacing:.07em;color:var(--muted);margin-bottom:6px}
+.envrow{display:flex;flex-wrap:wrap;gap:4px 12px;margin-bottom:6px}
+.envk{color:var(--txt);white-space:nowrap}
+.envk i{font-style:normal;color:var(--muted);margin-right:4px;font-size:9px;text-transform:uppercase;letter-spacing:.05em}
+.envrs{margin-left:5px;color:var(--muted)}
+.envdir{margin:5px 0 3px;font-size:11px}
+.envdir-on b{color:var(--accent)}
+.envdir-off b{color:var(--muted);font-weight:700}
+.envdeg{margin-left:7px;color:var(--muted);font-size:9px}
+.envviol{color:var(--lose);font-size:9px}
+.envsec{display:flex;gap:8px;justify-content:space-between;margin:5px 0 2px}
+.envs{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1}
+.envsl{font-size:9px;color:var(--muted);font-weight:700}
+.envsv{font-size:9px;color:var(--txt)}
+.envbar{position:relative;display:block;width:100%;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.envbar::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--muted);opacity:.6}
+.envbar i{position:absolute;top:0;bottom:0;border-radius:3px}
+.envdims{display:flex;gap:9px;flex-wrap:wrap;margin:6px 0 2px;font-size:9px;color:var(--txt)}
+.envd i{font-style:normal;color:var(--muted);margin-right:3px}
+.envdu{color:var(--muted)}
+.envnote{font-size:9px;color:var(--muted);line-height:1.5;margin-top:3px}
+.envregate{font-size:9px;color:var(--draw);line-height:1.5;margin-top:4px;padding-left:6px;border-left:2px solid var(--draw)}
+.envprov{font-size:9px;color:var(--muted);margin-top:6px;padding-top:5px;border-top:1px solid var(--line);word-break:break-word}
+.envuse{font-size:9px;color:var(--muted);margin-top:2px;font-weight:700}
+.envmiss{color:var(--muted);font-size:10px}
+.envfr{font-weight:400}
 .subrow{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:6px;flex-wrap:wrap;gap:6px}
 .kv{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px dotted var(--line)}
 .kv .k{color:var(--muted)}.kv .v{font-family:var(--mono);font-weight:700}
@@ -849,6 +879,171 @@ function windArrows(z){if(!z||!z.length)return '';var A={out:['⬆','var(--accen
 /* Was stripping lineupStatus / eligible / lineupReason before render, so the same
    player showed an amber WATCH badge on Props and nothing at all on the Slate.
    The row's lineup provenance now travels with it. */
+function envWindText(gamePk){
+  /* One line of wind for text contexts. Speed always; direction ONLY where the
+     pipeline granted it. The old version rendered wind_zones, whose "cross"
+     bearing was chosen by the dashboard rather than published by anyone. */
+  var E=D.environment,e=E&&E.games?E.games[String(gamePk)]:null;
+  if(!e||!e.available)return '';
+  var s=[];
+  if(isNum(e.windSpeedMph))s.push(e.windSpeedMph.toFixed(1)+' mph'+(e.windFromCompass?' '+e.windFromCompass:''));
+  if(e.directionShown&&e.fieldRelativeLabel)s.push(e.fieldRelativeLabel);
+  else if(e.suppressedReason)s.push('direction not shown ('+String(e.suppressedReason).toLowerCase().replace(/_/g,' ')+')');
+  return s.join(' · ');
+}
+/* ================= ENVIRONMENT CARD (ENV-VIEW-1) =========================
+   Replaces the three-arrow wind_zones strip, which was wrong in four ways at
+   once: it mapped statsapi's coarse word "cross" onto a bearing of 90 degrees
+   (270 was equally available, and nobody published either); it drew arrows for
+   parks whose orientation was never measured; it drew them in wind too light
+   to have a direction; and it carried no provenance, so a reader could not
+   tell a forecast from an observation.
+
+   This renders `payload.environment`, which the pipeline gates ONCE. The
+   surface decides nothing: if `directionShown` is false there is no arrow to
+   draw, and the reason travels with the object. A dashboard that re-derives
+   pipeline semantics drifts from the pipeline, so it does not.
+
+   The bars are the direction cosine of ONE wind vector against each sector
+   bearing. They are geometry. They are NOT five winds and NOT an effect on
+   batted balls, and the card says so where a reader can see it.        */
+
+var ENV_SUPPRESS={
+  LIGHT_WIND:['LIGHT / VARIABLE',
+    'Below 8 mph the mean angular error (54.8°) is wider than the 45° sector being labelled, so a direction here would be a coin flip.'],
+  ORIENTATION_UNVERIFIED:['ORIENTATION NOT MEASURED',
+    'This park’s field-relative agreement has not been measured well enough to place the wind against the field. Speed and compass bearing are still real.'],
+  ROOF_CLOSED:['ROOF CLOSED',
+    'Outside wind is not field wind under a closed roof, and no source publishes per-game retractable roof state.'],
+  NO_WIND_DATA:['NO WIND DATA',
+    'The provider returned no wind for this hour. Absent is not calm.']
+};
+
+/* Freshness is the WEATHER vocabulary, not the health-status vocabulary.
+   Passing it to shPill rendered PREGAME_FORECAST as UNKNOWN — shPill was
+   right to refuse a word it does not know, and using it here was the
+   category error. This pill knows the four buckets and, like shPill, refuses
+   to dress an unrecognised value as recognised.
+
+   The buckets describe TIMING, not accuracy. A long-lead forecast is not
+   "worse data", it is data about a moment further away, and forecast error
+   against that lead is the thing the archive exists to measure. */
+var ENV_FRESH={
+  NEAR_FIRST_PITCH:['b-ok','retrieved within 90 minutes of first pitch'],
+  PREGAME_FORECAST:['b-ok','retrieved 1.5–6 hours before first pitch'],
+  EARLY_FORECAST:['b-warn','retrieved 6–24 hours before first pitch'],
+  LONG_LEAD_FORECAST:['b-warn','retrieved more than a day before first pitch']
+};
+function envFreshPill(f){
+  var k=String(f==null?'':f).toUpperCase();
+  var e=ENV_FRESH[k];
+  return e?pill(k.replace(/_/g,' '),e[0],e[1]+' — a timing bucket, not an accuracy claim')
+          :pill('LEAD TIME NOT REPORTED','b-unk',
+                'The snapshot did not carry a freshness bucket this page recognises'
+                +(k?' (it said "'+k+'")':'')+'. Treated as unknown, never as fresh.');
+}
+
+function envAlignBar(a){
+  /* -1 .. +1 as a two-sided bar from the centre. Sign is the whole point:
+     an "in" component and an "out" component of equal size are opposite
+     claims and must not look alike. */
+  var v=isNum(a)?Math.max(-1,Math.min(1,a)):0;
+  var w=Math.round(Math.abs(v)*50);
+  var col=v>0.383?'var(--accent)':(v<-0.383?'var(--lose)':'var(--draw)');
+  var left=v<0?(50-w):50;
+  return '<span class="envbar"><i style="left:'+left+'%;width:'+w+'%;background:'+col+'"></i></span>';
+}
+
+function envSectors(secs){
+  if(!secs||!secs.length)return '';
+  return '<div class="envsec">'+secs.map(function(s){
+    return '<span class="envs"><span class="envsl">'+esc(s.sector)+'</span>'
+      +envAlignBar(s.alignment)
+      +'<span class="envsv">'+(isNum(s.alignment)?(s.alignment>0?'+':'')+s.alignment.toFixed(2):'—')+'</span></span>';
+  }).join('')+'</div>'
+  +'<div class="envnote">one wind vector projected onto five sector bearings — a direction cosine, not an effect size, and not five winds</div>';
+}
+
+function envDims(d){
+  if(!d)return '';
+  var order=['LF','L','LCF','CF','RCF','R','RF'],out=[];
+  order.forEach(function(k){if(isNum(d[k]))out.push('<span class="envd"><i>'+k+'</i>'+d[k]+'</span>');});
+  return out.length?('<div class="envdims">'+out.join('')+'<span class="envdu">ft</span></div>'):'';
+}
+
+function envLead(m){
+  if(!isNum(m))return SH_ABSENT;
+  if(m<0)return 'after first pitch';
+  if(m<90)return Math.round(m)+' min before first pitch';
+  return (m/60).toFixed(1)+' h before first pitch';
+}
+
+function envCard(gamePk){
+  var E=D.environment;
+  if(!E||!E.games){
+    return '<div class="envc envc-none"><div class="envh">ENVIRONMENT</div>'
+      +'<div class="envmiss">not published by this run</div>'
+      +'<div class="envnote">The previous wind display was withdrawn: it assigned a bearing to statsapi’s word "cross" that no source publishes, and drew it at parks and wind speeds where a direction cannot be supported. Nothing is shown here until the pipeline publishes the gated object.</div></div>';
+  }
+  var e=E.games[String(gamePk)];
+  if(!e){
+    return '<div class="envc envc-none"><div class="envh">ENVIRONMENT</div>'
+      +'<div class="envmiss">no entry for this game</div></div>';
+  }
+  if(!e.available){
+    return '<div class="envc envc-none"><div class="envh">ENVIRONMENT</div>'
+      +'<div class="envmiss">'+esc(e.unavailableReason||'unavailable')+'</div>'
+      +'<div class="envnote">'+esc(e.why||'')+'</div></div>';
+  }
+
+  var p=e.provenance||{};
+  var head='<div class="envh"><span>ENVIRONMENT</span><span class="envfr">'
+    +envFreshPill(p.freshness)+'</span></div>';
+
+  var bits=[];
+  bits.push('<span class="envk"><i>temp</i>'+(isNum(e.temperatureF)?e.temperatureF.toFixed(0)+'°F':SH_ABSENT)+'</span>');
+  bits.push('<span class="envk"><i>wind</i>'+(isNum(e.windSpeedMph)?e.windSpeedMph.toFixed(1)+' mph':SH_ABSENT)
+    +(e.windFromCompass?' <b>'+esc(e.windFromCompass)+'</b>':'')+'</span>');
+  if(isNum(e.windGustMph))bits.push('<span class="envk"><i>gust</i>'+e.windGustMph.toFixed(0)+'</span>');
+  if(isNum(e.relativeHumidityPct))bits.push('<span class="envk"><i>hum</i>'+e.relativeHumidityPct+'%</span>');
+  if(isNum(e.precipitationProbabilityPct))bits.push('<span class="envk"><i>precip</i>'+e.precipitationProbabilityPct+'%</span>');
+  /* roofType is the building; roofState is tonight. Retractable resolves to
+     UNKNOWN because nothing published says whether it is open. */
+  bits.push('<span class="envk"><i>roof</i>'+shTxt(e.roofType)
+    +'<span class="envrs">'+shTxt(e.roofState)+'</span></span>');
+
+  var dir;
+  if(e.directionShown){
+    dir='<div class="envdir envdir-on"><b>'+esc(e.fieldRelativeLabel||'')+'</b>'
+      +(isNum(e.fieldRelativeDeg)?'<span class="envdeg">'+e.fieldRelativeDeg.toFixed(0)+'° field-relative</span>':'')
+      +'</div>'+envSectors(e.sectors);
+  }else{
+    var r=ENV_SUPPRESS[e.suppressedReason]||['DIRECTION NOT SHOWN',
+      'The pipeline declined to place this wind against the field.'];
+    var extra='';
+    if(e.suppressedReason==='ORIENTATION_UNVERIFIED'&&e.orientationViolations&&e.orientationViolations.length){
+      extra=' <span class="envviol">fails '+esc(e.orientationViolations.join(', '))+'</span>';
+    }
+    dir='<div class="envdir envdir-off"><b>'+esc(r[0])+'</b>'+extra+'</div>'
+      +'<div class="envnote">'+esc(r[1])+'</div>';
+    if(e.regatedSinceCapture){
+      dir+='<div class="envregate">This snapshot recorded a direction under an earlier trust rule (ORIENT-VAL-1). '
+        +'The archived row is history and is not rewritten; what is displayed is decided by the current gate.</div>';
+    }
+  }
+
+  var prov='<div class="envprov">'
+    +esc(p.provider||'')+' · '+esc(p.snapshotClass||'')
+    +' · retrieved '+shTxt(p.retrievedAt)
+    +' · valid '+shTxt(p.forecastValidAt)
+    +' · '+envLead(p.forecastLeadMinutes)
+    +'</div><div class="envuse">'+esc(e.modelUse||'')
+    +' — displayed only; no score reads it</div>';
+
+  return '<div class="envc">'+head+'<div class="envrow">'+bits.join('')+'</div>'
+    +dir+envDims(e.dimensionsFt)+prov+'</div>';
+}
+
 function gameProps(pk){var bf=D.boardsFull||D.boards||{};var out=[];
   [['hr','HR'],['h1','1+H'],['tb2','2TB'],['hrr','HRR']].forEach(function(d){
     (bf[d[0]]||[]).filter(function(r){return r.gamePk===pk;}).slice(0,2).forEach(function(r){
@@ -1059,7 +1254,7 @@ function resultBlock(g,m){
 function drow(k,v){return '<div class="drow"><span class="dk">'+esc(k)+'</span><span class="dv">'+v+'</span></div>';}
 function detailsBlock(g,m){
   var b=betFor(g,m),p=b.pred,P=b.P||{};
-  var wind=(g.wind_zones||[]).map(function(w){return w.zone+' '+w.dir+' '+w.mph;}).join(' · ');
+  var wind=envWindText(g.gamePk);
   var d='';
   d+=drow('Venue',esc(nz(g.venue||P.venue)));
   d+=drow('Weather',(g.temp!=null?g.temp+'&deg;F':INS)+(wind?' · '+esc(wind):''));
@@ -1113,6 +1308,7 @@ function slateCard(g,m){
     +'<div class="gc-b">'
       +heroBlock(p,st)
       +pitchBlock(g,m,tm)
+      +envCard(g.gamePk)
       +(st.key==='FINAL'?resultBlock(g,m):betBlock(g,m))
       +lineupDetails(g,m,gState,tm)
       +detailsBlock(g,m)
@@ -1213,7 +1409,7 @@ function renderMatchups(){
     if(nf.tier){var _n=nrfiProbTxt(nf);kv+='<div class="kv"><span class="k">NRFI/YRFI</span><span class="v">'+esc(nf.bet||nf.tier)+' <span style="color:var(--muted)">'+esc(_n.txt)+'</span> '+_n.chip+'</span></div>';if(_n.why)kv+='<div class="kv"><span class="k">Why no probability</span><span class="v" style="font-family:var(--sans);font-weight:400;color:var(--muted);font-size:11px;text-align:right">'+esc(_n.why)+'</span></div>';}
     if(g.away_pen!=null)kv+='<div class="kv"><span class="k">Bullpen ERA</span><span class="v">'+esc(tm.away)+' '+g.away_pen+' · '+esc(tm.home)+' '+g.home_pen+'</span></div>';
     var fac=(m.rules&&m.rules.length)?'<div class="note"><b>Factors:</b> '+esc(m.rules.join(', '))+'</div>':(m.note?'<div class="note">'+esc(m.note)+'</div>':'');
-    return '<div class="card"><div class="card-h"><span>'+teamLogo(tm.away)+' '+esc(tm.away)+' @ '+esc(tm.home)+' '+teamLogo(tm.home)+'</span><span class="t">'+esc(g.venue||'')+'</span></div><div class="card-b">'+spL(g.away_sp)+spL(g.home_sp)+windArrows(g.wind_zones)+'<div style="margin-top:8px">'+kv+'</div>'+fac+'</div></div>';
+    return '<div class="card"><div class="card-h"><span>'+teamLogo(tm.away)+' '+esc(tm.away)+' @ '+esc(tm.home)+' '+teamLogo(tm.home)+'</span><span class="t">'+esc(g.venue||'')+'</span></div><div class="card-b">'+spL(g.away_sp)+spL(g.home_sp)+envCard(g.gamePk)+'<div style="margin-top:8px">'+kv+'</div>'+fac+'</div></div>';
   }).join('')+'</div>';
 }
 
@@ -1359,8 +1555,18 @@ function hpCtx(l){
   var chips='';
   var w=(l.wind||'').toLowerCase();
   var gc=((D.gameCards)||[]).filter(function(c){return c.gamePk===l.gamePk;})[0]||{};
-  var wz=gc.wind_zones||{};var pulls=l.batSide==='L'?['rf']:l.batSide==='S'?['lf','rf']:['lf'];
-  var pull=pulls.some(function(z){var o=wz[z]||{};return o.dir==='out'&&(o.mph||0)>=8;});
+  /* DEAD SINCE IT WAS WRITTEN: wind_zones is a LIST of {zone:'LF',...} and
+     this indexed it as an object with lowercase keys, so wz['lf'] was always
+     undefined and this chip could never fire. A chip that never fires reads
+     as "conditions do not warrant it" rather than "this was never checked".
+     Now it reads the gated environment: a pull-field claim requires that the
+     pipeline granted a direction at all, and uses the SIGNED alignment of the
+     one wind vector against that sector. */
+  var _ee=(D.environment&&D.environment.games)?D.environment.games[String(l.gamePk)]:null;
+  var pulls=l.batSide==='L'?['RF']:l.batSide==='S'?['LF','RF']:['LF'];
+  var _sec={};if(_ee&&_ee.directionShown&&_ee.sectors)_ee.sectors.forEach(function(s){_sec[s.sector]=s;});
+  var pull=!!(_ee&&_ee.directionShown&&isNum(_ee.windSpeedMph)&&_ee.windSpeedMph>=8
+    &&pulls.some(function(z){var o=_sec[z];return o&&isNum(o.alignment)&&o.alignment>0.383;}));
   if(w.indexOf('dome')>=0)chips+=pill('⌂ dome','neut','Roof/dome — wind not a factor');
   else if(pull)chips+=pill('🌬 wind→pull field ✓','good','Wind blowing out toward the pull field for this batter');
   else if(w.indexOf('out')>=0)chips+=pill('🌬 '+esc(l.wind),'good','Wind out — helps carry');
@@ -2853,7 +3059,7 @@ function renderAdmin(){
   var pgBody=gcAll.map(function(g){
     var m=mlByPk[g.gamePk]||{},b=betFor(g,m),p=b.pred,P=b.P||{},st=b.state;
     var luState=lineupStateOf(g,m),L=P.lineupState||{};
-    var wind=(g.wind_zones||[]).map(function(w){return w.zone+' '+w.dir+' '+w.mph;}).join(' · ');
+    var wind=envWindText(g.gamePk);
     function r(k,val){return '<div class="drow"><span class="dk">'+esc(k)+'</span><span class="dv">'+val+'</span></div>';}
     function spBits(side,label){
       var s=spFor(g,m,side);
