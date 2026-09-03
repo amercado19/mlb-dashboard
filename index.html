@@ -1946,6 +1946,9 @@ function shPill(s){
   var m={OK:'b-ok',HEALTHY:'b-ok',MEASURED:'b-ok',
          STALE:'b-warn',DEGRADED:'b-warn',PENDING:'b-warn',
          FAILING:'b-crit',FAILED:'b-crit',CRITICAL:'b-crit',MISSING:'b-crit',
+         /* UNVERIFIED is warn, not unknown: the value EXISTS and cannot be
+            certified, which is a different statement from "not reported". */
+         UNVERIFIED:'b-warn',
          UNKNOWN:'b-unk','NOT MEASURABLE':'b-unk','NOT REPORTED':'b-unk'}[S];
   return pill(m?S:'UNKNOWN',m||'b-unk',
     m?'':'The payload reported status "'+S+'", which this page does not recognise. Treated as UNKNOWN, never as OK.');
@@ -1953,7 +1956,7 @@ function shPill(s){
 function shTone(s){
   var S=String(s==null?'UNKNOWN':s).toUpperCase().replace(/_/g,' ').trim();
   if(S==='OK'||S==='HEALTHY'||S==='MEASURED')return 'ss-ok';
-  if(S==='STALE'||S==='DEGRADED'||S==='PENDING')return 'ss-warn';
+  if(S==='STALE'||S==='DEGRADED'||S==='PENDING'||S==='UNVERIFIED')return 'ss-warn';
   if(S==='FAILING'||S==='FAILED'||S==='CRITICAL'||S==='MISSING')return 'ss-crit';
   return 'ss-unk';
 }
@@ -2045,20 +2048,64 @@ function shCard(o){
 function shClvCard(){
   var cp=shSub('closing_prices'),d=shDet('closing_prices');
   var clv=d.withClv,st,note;
-  if(isNum(clv)&&clv>0){
-    st='MEASURED';
-    note='CLV is being measured on <b>'+esc(String(clv))+'</b> settled priced row(s). '
-      +'Every number derived from CLV is scoped to those rows only &mdash; it is not a season-wide figure.';
-  }else{
+  /* THREE STATES, NOT TWO (2026-09-03).
+     This card used to read `withClv` and call it "settled priced rows". It is
+     not: on 2026-09-03 production carried 105 rows with a clv_pp of which only
+     20 were settled, so the card would have claimed 105. CLV is a statement
+     about BETS, and a bet with no result is not one.
+     A second failure was possible in the same place: 78 of those 105 had
+     price_close identical to price_open and none recorded when the close was
+     captured, so an unmoved line and a close that was never independently
+     pulled were indistinguishable. That is UNVERIFIED, which is a different
+     thing from PENDING and from MEASURED, and it now has its own state. */
+  var settled=d.settledPricedRows, prov=d.closeProvenancePct, moved=d.closeMovedPct;
+  var denom=isNum(settled)?settled:null;
+  if(denom===null){
+    st='PENDING';
+    note='<b>PENDING &mdash; the denominator is not reported.</b> This payload publishes '
+      +(isNum(clv)?('<b>'+esc(String(clv))+'</b> row(s) carrying a clv_pp, but not how many of them are SETTLED. '
+                    +'CLV is a claim about bets, and an unsettled pick is not one, so this build cannot state a '
+                    +'CLV denominator at all.')
+                 :'no clv_pp count at all, which is unmeasured rather than zero.')
+      +' This is an <b>absent measurement, never a CLV of 0%</b>. Any surface printing 0% here is fabricating a result.';
+  }else if(denom===0){
     st='PENDING';
     note='<b>PENDING &mdash; 0 settled priced rows.</b> CLV has <b>no denominator</b>: there is nothing to average. '
-      +'This is an <b>absent measurement, never a CLV of 0%</b>. Any surface that prints 0% here is fabricating a result. '
-      +(isNum(clv)?'The ledger reports 0 rows carrying a clv_pp value.'
-                 :'The payload did not report closing_prices.detail.withClv at all, which is itself unmeasured, not zero.');
+      +'This is an <b>absent measurement, never a CLV of 0%</b>. Any surface that prints 0% here is fabricating a result.'
+      +(isNum(clv)&&clv>0?(' The ledger holds <b>'+esc(String(clv))+'</b> priced row(s), but none of them has settled yet.'):'');
+  }else if(prov===0&&isNum(moved)&&moved<40){
+    st='UNVERIFIED';
+    note='<b>UNVERIFIED &mdash; the close series cannot be certified.</b> '
+      +esc(String(denom))+' settled priced row(s) exist, but only <b>'+esc(String(moved))
+      +'%</b> of priced rows show any movement between open and close and <b>none</b> records when the '
+      +'close was captured. A line that genuinely did not move and a close that was never independently '
+      +'pulled look identical here, and they mean opposite things. Treat every CLV figure on this build as '
+      +'provisional until close provenance is populated.';
+  }else{
+    st='MEASURED';
+    note='CLV is measured on <b>'+esc(String(denom))+'</b> <b>settled</b> priced row(s)'
+      +(isNum(clv)&&clv>denom?(' of '+esc(String(clv))+' priced'):'')+'. '
+      +'Every number derived from CLV is scoped to those rows only &mdash; it is not a season-wide figure. '
+      +'<b>Break-even is not zero:</b> a bet struck at the fair closing price on -110/-110 juice scores -2.38 pp.';
   }
-  return shCard({head:'CLV measurement',key:'derived from closing_prices.detail.withClv',
+  return shCard({head:'CLV measurement',key:'derived from closing_prices.detail',
     criticality:cp?cp.criticality:null,status:st,why:'',note:note,sub:cp,
-    rows:[['Rows with CLV',isNum(clv)?shNum(clv,'row(s)'):SH_ABSENT],
+    rows:[['Settled + priced',isNum(settled)
+            ?(shNum(settled,'row(s)')
+              +' <span class="sshage">&mdash; the only denominator a CLV figure may use</span>')
+            :SH_ABSENT+' <span class="sshage">&mdash; this payload does not separate settled from unsettled priced rows</span>'],
+          ['Priced, unsettled',isNum(d.pricedButUnsettled)
+            ?shNum(d.pricedButUnsettled,'row(s) carrying a price but no result yet'):SH_ABSENT],
+          ['Rows with CLV',isNum(clv)?shNum(clv,'row(s)'):SH_ABSENT],
+          ['Close moved',isNum(moved)
+            ?('<b>'+esc(moved.toFixed(1))+'%</b> of priced rows'
+              +(isNum(d.closeEqualsOpen)?(' <span class="sshage">&mdash; '+esc(String(d.closeEqualsOpen))
+                 +' had price_close identical to price_open</span>'):''))
+            :SH_ABSENT],
+          ['Close provenance',isNum(prov)
+            ?('<b>'+esc(prov.toFixed(1))+'%</b> of priced rows record when the close was captured'
+              +(prov===0?' <span class="sshage">&mdash; rows written before 2026-09-03 have none, and are NOT backfilled</span>':''))
+            :SH_ABSENT],
           ['Rows with close',isNum(d.withClose)?shNum(d.withClose,'row(s)'):SH_ABSENT],
           ['Ledger rows',isNum(d.ledgerRows)?shNum(d.ledgerRows,'row(s)'):SH_ABSENT],
           ['Blocked by',cp?shCodes(cp.codes):SH_ABSENT]]});
