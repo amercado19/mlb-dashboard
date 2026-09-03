@@ -2045,6 +2045,57 @@ function shCard(o){
 }
 
 /* ---- CLV MEASUREMENT: derived, it has no subsystem key of its own ---- */
+/* ---- CLV FUNNEL: every ledger row lands in exactly one bucket ----
+   Four counts that are NOT interchangeable - rows with a close, settled rows,
+   CLV-eligible rows, verified CLV rows - plus one primary reason per excluded
+   row. The card asserts the arithmetic on screen, because a funnel whose
+   parts do not add up is how a row quietly disappears between two numbers. */
+function shClvFunnel(){
+  var d=shDet('closing_prices'), f=d.clvFunnel;
+  if(!f||typeof f!=='object')
+    return shCard({head:'CLV funnel',key:'closing_prices.detail.clvFunnel',
+      status:'NOT REPORTED',
+      note:'This payload does not publish the CLV funnel, so <b>why</b> rows are excluded '
+        +'cannot be shown. Absent, not empty.',rows:[]});
+  if(f.error)
+    return shCard({head:'CLV funnel',key:'closing_prices.detail.clvFunnel',
+      status:'NOT REPORTED',
+      note:'The funnel could not be computed: <b>'+esc(String(f.error))+'</b>. '
+        +'The failure is shown rather than hidden.',rows:[]});
+  var s=f.stages||{}, rows=[];
+  [['Total ledger rows','totalLedgerRows'],['Settled','settled'],
+   ['Has open price','hasOpen'],['Has close price','hasClose'],
+   ['Has open provenance','hasOpenProvenance'],
+   ['Has close provenance','hasCloseProvenance'],
+   ['clv_pp computed','clvComputed'],['VERIFIED CLV','verifiedClv']
+  ].forEach(function(p){
+    rows.push([p[0],isNum(s[p[1]])?shNum(s[p[1]],'row(s)'):SH_ABSENT]);
+  });
+  var ex=f.excluded||{};
+  Object.keys(ex).forEach(function(k){
+    /* shKv ESCAPES the label, so an &nbsp; entity leaks as literal text.
+       Same trap as shNum's suffix. Plain characters only. */
+    rows.push(['\u2007\u2007excluded \u00b7 '+k,
+      shNum(ex[k].count,'row(s)')+' <span class="sshage">'+esc(ex[k].why)+'</span>']);
+  });
+  var ok=f.identityHolds===true
+    && (f.included+f.excludedTotal)===f.evaluated;
+  rows.push(['Accounting identity',
+    (isNum(f.included)&&isNum(f.excludedTotal)&&isNum(f.evaluated))
+      ?('<b>'+esc(String(f.included))+' included + '+esc(String(f.excludedTotal))
+        +' excluded = '+esc(String(f.evaluated))+' evaluated</b>'
+        +(ok?' <span class="sshage">&mdash; holds</span>'
+            :' <span class="sshage">&mdash; DOES NOT HOLD; a row is unaccounted for</span>'))
+      :SH_ABSENT]);
+  return shCard({head:'CLV funnel',key:'closing_prices.detail.clvFunnel',
+    status:ok?(f.state||'PENDING'):'FAILING',
+    note:'Every ledger row lands in <b>exactly one</b> bucket, with its <b>first</b> blocking reason - '
+      +'a row with no result is not told its close is bad. These four counts are '
+      +'<b>not interchangeable</b>: rows with a close, settled rows, CLV-eligible rows and '
+      +'verified CLV rows are four different numbers, and printing one under another\u2019s name '
+      +'overstates the evidence.',
+    rows:rows});
+}
 function shClvCard(){
   var cp=shSub('closing_prices'),d=shDet('closing_prices');
   var clv=d.withClv,st,note;
@@ -2073,14 +2124,21 @@ function shClvCard(){
     note='<b>PENDING &mdash; 0 settled priced rows.</b> CLV has <b>no denominator</b>: there is nothing to average. '
       +'This is an <b>absent measurement, never a CLV of 0%</b>. Any surface that prints 0% here is fabricating a result.'
       +(isNum(clv)&&clv>0?(' The ledger holds <b>'+esc(String(clv))+'</b> priced row(s), but none of them has settled yet.'):'');
-  }else if(prov===0&&isNum(moved)&&moved<40){
+  }else if(isNum(prov)&&prov<100){
+    /* PROVENANCE DECIDES THIS, NOT PRICE MOVEMENT (corrected 2026-09-03).
+       The first version of this branch also required low movement, which was
+       wrong in principle: close != open is not proof a close is valid, and
+       close == open is not proof it is invalid. A genuinely re-pulled market
+       can be unchanged. Movement is shown below as CONTEXT and decides
+       nothing. */
     st='UNVERIFIED';
     note='<b>UNVERIFIED &mdash; the close series cannot be certified.</b> '
-      +esc(String(denom))+' settled priced row(s) exist, but only <b>'+esc(String(moved))
-      +'%</b> of priced rows show any movement between open and close and <b>none</b> records when the '
-      +'close was captured. A line that genuinely did not move and a close that was never independently '
-      +'pulled look identical here, and they mean opposite things. Treat every CLV figure on this build as '
-      +'provisional until close provenance is populated.';
+      +esc(String(denom))+' settled priced row(s) exist, but only <b>'+esc(prov.toFixed(1))
+      +'%</b> of priced rows record <b>when and from where</b> the close was captured. Without that a close '
+      +'cannot be shown to be an independent <i>later</i> observation of the same market, so every CLV figure '
+      +'on this build is provisional. '
+      +'<b>Price movement is not the test:</b> an unchanged market can be a real re-pull, and a moved price '
+      +'with no provenance proves nothing.';
   }else{
     st='MEASURED';
     note='CLV is measured on <b>'+esc(String(denom))+'</b> <b>settled</b> priced row(s)'
@@ -2100,7 +2158,8 @@ function shClvCard(){
           ['Close moved',isNum(moved)
             ?('<b>'+esc(moved.toFixed(1))+'%</b> of priced rows'
               +(isNum(d.closeEqualsOpen)?(' <span class="sshage">&mdash; '+esc(String(d.closeEqualsOpen))
-                 +' had price_close identical to price_open</span>'):''))
+                 +' had price_close identical to price_open. CONTEXT ONLY: an unchanged market '
+                 +'can be a real re-pull, so this decides nothing</span>'):''))
             :SH_ABSENT],
           ['Close provenance',isNum(prov)
             ?('<b>'+esc(prov.toFixed(1))+'%</b> of priced rows record when the close was captured'
@@ -2322,6 +2381,7 @@ function shPanel(){
               ?('<b>'+esc(cpd.closeCoveragePct.toFixed(2))+'%</b>')
               :SH_ABSENT+' <span class="sshage">&mdash; a percentage over an empty or unreported ledger would be invented</span>']]})
     +shClvCard()
+    +shClvFunnel()
     +shCard({head:'Run projection',key:'run_outcomes',sub:ro,
       rows:[['Games with proj.',shRatio(rod.withRunProjection,rod.gamesChecked,'logged games')]]})
     +shCard({head:'Dashboard publish',key:'publication',sub:pb,
