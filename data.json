@@ -1,6 +1,6 @@
 {
  "date": "2026-09-03",
- "generated_at": "2026-09-03T04:03:38",
+ "generated_at": "2026-09-03T04:16:45",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -876,6 +876,40 @@
    ]
   },
   {
+   "player": "Leo Bernal",
+   "team": "stl",
+   "game": "stl-lad",
+   "stat": "TB",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "tb_dp_over_PA",
+   "prob_inputs": {
+    "epa": 4.15,
+    "order": 6,
+    "pa_season": 8,
+    "factors": {
+     "sp": 0.931
+    },
+    "p1b": 0.1433,
+    "p2b": 0.0394,
+    "p3b": 0.0032,
+    "phr": 0.0311
+   },
+   "edge_score": 2.5,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": null,
+    "hard_hit_pct": null,
+    "avg_exit_velo": null,
+    "xiso": 0.093,
+    "recent_hr_rate": null
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the tb2 market is BLIND (not measurable yet \u2014 228 settled (need 40), 12 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Yordan Alvarez",
    "team": "hou",
    "game": "cws-hou",
@@ -1057,40 +1091,6 @@
    ]
   },
   {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "stl-lad",
-   "stat": "TB",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "tb_dp_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 590,
-    "factors": {
-     "sp": 0.953
-    },
-    "p1b": 0.1377,
-    "p2b": 0.0408,
-    "p3b": 0.0054,
-    "phr": 0.0421
-   },
-   "edge_score": 1.97,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 15.7,
-    "hard_hit_pct": 51.7,
-    "avg_exit_velo": 93.2,
-    "xiso": 0.27,
-    "recent_hr_rate": 0.05
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the tb2 market is BLIND (not measurable yet \u2014 228 settled (need 40), 12 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Jordan Walker",
    "team": "stl",
    "game": "stl-lad",
@@ -1102,23 +1102,23 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 579,
+    "pa_season": 580,
     "factors": {
      "sp": 0.931
     },
-    "p1b": 0.1576,
-    "p2b": 0.0456,
+    "p1b": 0.1574,
+    "p2b": 0.0466,
     "p3b": 0.0011,
     "phr": 0.0395
    },
-   "edge_score": 1.96,
+   "edge_score": 1.97,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 13.6,
     "hard_hit_pct": 48.3,
     "avg_exit_velo": 92.4,
     "xiso": 0.212,
-    "recent_hr_rate": 0.055
+    "recent_hr_rate": 0.0545
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the tb2 market is BLIND (not measurable yet \u2014 228 settled (need 40), 12 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -1234,6 +1234,37 @@
    ]
   },
   {
+   "player": "Leo Bernal",
+   "team": "stl",
+   "game": "stl-lad",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "poisson_ge2",
+   "prob_inputs": {
+    "epa": 4.15,
+    "order": 6,
+    "pa_season": 8,
+    "factors": {
+     "sp": 0.948
+    },
+    "lambda_pg": 1.543
+   },
+   "edge_score": 4.0,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": null,
+    "hard_hit_pct": null,
+    "avg_exit_velo": null,
+    "xiso": 0.093,
+    "recent_hr_rate": null
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 229 settled (need 40), 5 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Jordan Walker",
    "team": "stl",
    "game": "stl-lad",
@@ -1245,20 +1276,20 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 579,
+    "pa_season": 580,
     "factors": {
      "sp": 0.948
     },
-    "lambda_pg": 2.26
+    "lambda_pg": 2.275
    },
-   "edge_score": 2.49,
+   "edge_score": 2.51,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 13.6,
     "hard_hit_pct": 48.3,
     "avg_exit_velo": 92.4,
     "xiso": 0.212,
-    "recent_hr_rate": 0.055
+    "recent_hr_rate": 0.0545
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 229 settled (need 40), 5 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -1445,37 +1476,6 @@
     "avg_exit_velo": 90.9,
     "xiso": 0.166,
     "recent_hr_rate": 0.0472
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 229 settled (need 40), 5 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Alec Burleson",
-   "team": "stl",
-   "game": "stl-lad",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 586,
-    "factors": {
-     "sp": 0.948
-    },
-    "lambda_pg": 2.115
-   },
-   "edge_score": 2.36,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 10.9,
-    "hard_hit_pct": 50.0,
-    "avg_exit_velo": 92.1,
-    "xiso": 0.231,
-    "recent_hr_rate": 0.0526
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 229 settled (need 40), 5 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
