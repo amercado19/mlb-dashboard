@@ -82,6 +82,16 @@ section{display:none}section.active{display:block}
 .envuse{font-size:9px;color:var(--muted);margin-top:2px;font-weight:700}
 .envmiss{color:var(--muted);font-size:10px}
 .envfr{font-weight:400}
+/* ---- WEATHER ADMIN (eight independent stages) ---- */
+.wadist{display:inline-flex;align-items:baseline;gap:5px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:2px 8px;margin:2px 4px 2px 0;font-family:var(--mono);font-size:10px;color:var(--txt)}
+.wadist i{font-style:normal;color:var(--muted);font-size:9px;text-transform:lowercase}
+.wadists{margin:8px 0 2px}
+.wadl{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;margin-bottom:3px}
+.watw{overflow-x:auto;margin:8px 0 2px;-webkit-overflow-scrolling:touch}
+.watab{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:10px;min-width:380px}
+.watab th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;padding:4px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.watab td{padding:4px 8px;border-bottom:1px solid var(--line);color:var(--txt);vertical-align:top}
+.wafail{color:var(--lose);font-weight:700}
 .subrow{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:6px;flex-wrap:wrap;gap:6px}
 .kv{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px dotted var(--line)}
 .kv .k{color:var(--muted)}.kv .v{font-family:var(--mono);font-weight:700}
@@ -1009,8 +1019,14 @@ function envCard(gamePk){
   if(isNum(e.precipitationProbabilityPct))bits.push('<span class="envk"><i>precip</i>'+e.precipitationProbabilityPct+'%</span>');
   /* roofType is the building; roofState is tonight. Retractable resolves to
      UNKNOWN because nothing published says whether it is open. */
+  /* roofType is the BUILDING; roofState is TONIGHT. They are different
+     claims and must not read as one value: rendered adjacent with only a 5px
+     gap they collapsed into "OpenOPEN_AIR" in the accessibility text, which
+     is a distinction the payload keeps and the page was throwing away. */
   bits.push('<span class="envk"><i>roof</i>'+shTxt(e.roofType)
-    +'<span class="envrs">'+shTxt(e.roofState)+'</span></span>');
+    +'<span class="envrs" title="roof TYPE is the building; roof STATE is '
+    +'tonight. A retractable roof is UNKNOWN because no source publishes '
+    +'per-game roof state."> \u00b7 tonight '+shTxt(e.roofState)+'</span></span>');
 
   var dir;
   if(e.directionShown){
@@ -2734,6 +2750,247 @@ function shPanel(){
   h+=ahs('Publish-time guards &amp; remaining subsystems','',shGuards());
   return h;
 }
+/* ================= WEATHER ADMIN (2026-09-03) ==========================
+   Eight independent stages, rendered independently. One weather badge is how
+   a healthy fetch makes untrusted orientation metadata look green — the
+   pipeline already refuses to collapse them, and this panel refuses to
+   collapse them back.
+
+       SOURCE        did the provider answer, for how many games, losing how
+                     many — a snapshot lost to a transient error is NOT
+                     recoverable, because the lead time it described has passed
+       CAPTURE       attempts today, with the time of each and what it got
+       ARCHIVE       what is on disk for TODAY, by semantic date
+       FRESHNESS     lead-time distribution, read from snapshot rows and never
+                     from file mtime
+       VENUE         did every snapshot resolve to coordinates
+       ORIENTATION   how many parks are ENTITLED to an arrow, and which are
+                     not, naming the threshold each one fails
+       ROOF          type is the building; state is tonight
+       PERSISTENCE   did the run actually write, and is the file the one health
+                     is describing
+
+   CADENCE IS NOT YET EVIDENCE. Several runs a day at different lead times ARE
+   the forecast-error dataset, but the runs so far have been manual dispatches.
+   The panel says so where the numbers are, not in a footnote, because a
+   reader who sees "3 runs today" will otherwise take it for the schedule. */
+
+function waDet(k){ return shDet(k); }
+
+function waRow(label, val, sub){
+  return ahbox(esc(label), val, sub || '');
+}
+
+function waDist(obj, order){
+  if(!obj || typeof obj!=='object') return SH_ABSENT;
+  var keys = order ? order.filter(function(k){return obj[k]!=null;}) : Object.keys(obj).sort();
+  if(!keys.length) return SH_ABSENT;
+  return keys.map(function(k){
+    return '<span class="wadist"><i>'+esc(String(k).replace(/_/g,' '))+'</i>'+esc(String(obj[k]))+'</span>';
+  }).join('');
+}
+
+function waAttempts(list){
+  if(!list || !list.length) return '<div class="note">'+SH_ABSENT+' — no attempt log for today.</div>';
+  var rows = list.map(function(a){
+    var okRun = a.failed===0 && !a.failureReason;
+    return '<tr><td>'+shTxt(a.attemptedAt)+'</td><td>'+shTxt(a.succeededAt)+'</td>'
+      +'<td>'+shNum(a.captured)+'</td><td>'+shNum(a.failed)+'</td>'
+      +'<td>'+(a.failureReason?('<span class="wafail">'+esc(String(a.failureReason))+'</span>')
+                              :pill(okRun?'OK':'UNKNOWN',okRun?'b-ok':'b-unk'))+'</td></tr>';
+  }).join('');
+  return '<div class="watw"><table class="watab"><thead><tr>'
+    +'<th>attempted</th><th>succeeded</th><th>captured</th><th>failed</th><th>result</th>'
+    +'</tr></thead><tbody>'+rows+'</tbody></table></div>';
+}
+
+/* Snapshots per game, and the >=2 / >=3 counts the forecast-error study needs.
+   Computed from the ARCHIVE stage's own numbers where present; where the
+   payload does not carry them they render absent rather than being derived
+   from something that only resembles them. */
+function waCadence(arch){
+  var snaps = arch.snapshotsToday, games = arch.gamesCovered, runs = arch.runsToday;
+  var perGame = (isNum(snaps) && isNum(games) && games>0) ? (snaps/games) : null;
+  return '<div class="ahgrid">'
+    + waRow('Runs today', shNum(runs),
+            'manual dispatches and scheduled runs are not distinguished here — '
+            + 'treat this as a count, not a cadence')
+    + waRow('Snapshots today', shNum(snaps), 'archive rows written for this date')
+    + waRow('Games covered', shNum(games), 'distinct gamePks with at least one snapshot')
+    + waRow('Snapshots per game', perGame!=null?('<b>'+perGame.toFixed(2)+'</b>'):SH_ABSENT,
+            'mean. The study needs several lead times per game, not several games')
+    + waRow('Games with &ge;2', shNum(arch.gamesWithTwoPlus),
+            'two snapshots make a forecast-change measurable')
+    + waRow('Games with &ge;3', shNum(arch.gamesWithThreePlus),
+            'three make the change a shape rather than a difference')
+    + '</div>';
+}
+
+function renderWeatherAdmin(){
+  var src=waDet('weather_source'), arch=waDet('weather_archive'),
+      fresh=waDet('weather_freshness'), venue=waDet('venue_mapping'),
+      park=waDet('ballpark_metadata'), orient=waDet('field_orientation'),
+      roof=waDet('roof_state');
+  var sSrc=shSub('weather_source'), sArch=shSub('weather_archive'),
+      sFresh=shSub('weather_freshness'), sVenue=shSub('venue_mapping'),
+      sPark=shSub('ballpark_metadata'), sOrient=shSub('field_orientation'),
+      sRoof=shSub('roof_state');
+  var env=D.environment||null;
+  var h='';
+
+  h+='<div class="note" style="background:var(--panel);border:1.5px solid var(--line);border-radius:10px;margin:14px 0 10px">'
+    +'<b>Weather &amp; ballpark.</b> Eight stages, judged separately. '
+    +'A healthy fetch must never be able to make untrusted orientation metadata look green, '
+    +'so nothing here rolls up into a single badge. '
+    +'A <b>suppressed arrow is the system working</b> — the counts below exist so nobody widens the gate to make the Slate look complete.</div>';
+
+  /* ---- 1 SOURCE ---- */
+  h+=ahs('1 · Source &mdash; did the provider answer',
+    shPill(sSrc&&sSrc.status),
+    '<div class="ahgrid">'
+    + waRow('Provider', shTxt(src.provider), shTxt(src.providerUrl||''))
+    + waRow('Date requested', shTxt(src.date), 'the semantic day, not the newest file')
+    + waRow('Games on slate', shNum(src.gamesOnSlate))
+    + waRow('Captured', shNum(src.captured))
+    + waRow('Skipped', shNum(src.skipped),
+            'a game already under way has no pregame forecast left to take')
+    + waRow('Failed', shNum(src.failed),
+            'a snapshot lost to a transient error is NOT recoverable — the lead '
+            + 'time it described has passed')
+    + waRow('Identity holds', src.identityHolds===true?pill('YES','b-ok')
+            :src.identityHolds===false?pill('NO','b-crit'):SH_ABSENT,
+            'captured + skipped + failed must equal the slate')
+    + waRow('Failure reason', src.failureReason?('<span class="wafail">'+esc(String(src.failureReason))+'</span>'):shTxt(null))
+    + '</div>');
+
+  /* ---- 2 CAPTURE ---- */
+  h+=ahs('2 · Capture &mdash; every attempt, and what it got',
+    shPill(sArch&&sArch.status),
+    '<div class="ahgrid">'
+    + waRow('Last attempt', shTxt(arch.lastAttemptAt))
+    + waRow('Last success', shTxt(arch.lastSuccessAt),
+            'a run that attempted and failed does NOT move this')
+    + '</div>'
+    + waAttempts(arch.attempts));
+
+  /* ---- 3 ARCHIVE + CADENCE ---- */
+  h+=ahs('3 · Archive &mdash; what is on disk for today',
+    shPill(sArch&&sArch.status),
+    '<div class="ahgrid">'
+    + waRow('Path', '<code>'+shTxt(arch.path)+'</code>',
+            'selected by semantic date; a file whose own date contradicts its '
+            + 'name is refused, and a forward-dated file is never a stand-in')
+    + waRow('Schema', shTxt(arch.schemaVersion))
+    + (arch.futureDatedFilesIgnored && arch.futureDatedFilesIgnored.length
+       ? waRow('Future-dated files ignored',
+               '<b>'+esc(arch.futureDatedFilesIgnored.join(', '))+'</b>',
+               'dated after today, so not a candidate for &ldquo;current&rdquo;')
+       : '')
+    + '</div>'
+    + waCadence(arch)
+    + '<div class="note"><b>Cadence is not yet evidence.</b> Several runs a day at '
+    + 'different lead times ARE the forecast-error dataset, but the runs recorded '
+    + 'so far include manual dispatches. Reading a schedule off this count would '
+    + 'be reading a number that has not been measured.</div>');
+
+  /* ---- 4 FRESHNESS ---- */
+  h+=ahs('4 · Freshness &mdash; how far ahead each snapshot was looking',
+    shPill(sFresh&&sFresh.status),
+    '<div class="ahgrid">'
+    + waRow('Newest retrieval', shTxt(fresh.newestRetrievedAt),
+            'read from snapshot rows, never from file mtime — a file touched by '
+            + 'a failed run looks fresh and is not')
+    + waRow('Oldest retrieval', shTxt(fresh.oldestRetrievedAt))
+    + waRow('Age', isNum(fresh.ageMinutes)?('<b>'+fresh.ageMinutes.toFixed(1)+'</b> min'):SH_ABSENT)
+    + '</div>'
+    + '<div class="wadists"><div class="wadl">Lead-time buckets</div>'
+    + waDist(fresh.byFreshness, ['NEAR_FIRST_PITCH','PREGAME_FORECAST',
+                                 'EARLY_FORECAST','LONG_LEAD_FORECAST'])
+    + '</div>'
+    + '<div class="wadists"><div class="wadl">Snapshot status</div>'
+    + waDist(fresh.byStatus) + '</div>'
+    + '<div class="note">Buckets describe <b>timing, not accuracy</b>. A long-lead '
+    + 'forecast is not worse data; it is data about a moment further away, and the '
+    + 'error against that lead is exactly what the archive exists to measure.</div>');
+
+  /* ---- 5 VENUE ---- */
+  h+=ahs('5 · Venue mapping &mdash; did every snapshot resolve to a place',
+    shPill(sVenue&&sVenue.status),
+    '<div class="ahgrid">'
+    + waRow('Snapshots', shNum(venue.snapshots))
+    + waRow('Distinct venues', shNum(venue.distinctVenues))
+    + waRow('Without coordinates', shNum(venue.gamesWithoutVenueCoordinates),
+            'a game whose venue did not resolve gets NO weather, rather than the '
+            + 'home team&rsquo;s usual park')
+    + waRow('Park metadata', shTxt(park.parkMetaVersion),
+            'versions seen: '+esc(((park.versionsSeen)||[]).join(', ')||'—'))
+    + '</div>');
+
+  /* ---- 6 ORIENTATION ---- */
+  var notEnt = orient.parksMeasuredButNotEntitled || {};
+  var notRows = Object.keys(notEnt).sort().map(function(k){
+    return '<tr><td>'+esc(k)+'</td><td><span class="wafail">'
+      + esc((notEnt[k]||[]).join(', ')) + '</span></td></tr>';
+  }).join('');
+  h+=ahs('6 · Field orientation &mdash; who is entitled to an arrow',
+    shPill(sOrient&&sOrient.status),
+    '<div class="ahgrid">'
+    + waRow('Validation', shTxt(orient.validationVersion),
+            'validated '+esc(String(orient.validatedAt||'—')))
+    + waRow('Parks entitled', shNum(orient.parksEntitledToArrow),
+            'a park must violate NO measured threshold. A status label is a '
+            + 'description, not a permission')
+    + waRow('Arrows shown today', shNum(orient.directionShownToday))
+    + waRow('Suppressed today', shNum(orient.directionSuppressedToday),
+            'suppression is the system working, not a gap')
+    + '</div>'
+    + '<div class="wadists"><div class="wadl">Parks by measured status</div>'
+    + waDist(orient.parksByStatus) + '</div>'
+    + (notRows
+       ? '<div class="watw"><table class="watab"><thead><tr><th>park</th>'
+         + '<th>thresholds it fails</th></tr></thead><tbody>'+notRows
+         + '</tbody></table></div>'
+       : '<div class="note">Every measured park clears every threshold.</div>')
+    + '<div class="note"><b>No per-park correction is applied anywhere</b>, and none '
+    + 'may be fitted and scored on the same games. A large offset that is stable is '
+    + 'better understood than one that is unstable — which is why the thresholds, '
+    + 'not the label, decide.</div>');
+
+  /* ---- 7 ROOF ---- */
+  h+=ahs('7 · Roof &mdash; the building versus tonight',
+    shPill(sRoof&&sRoof.status),
+    '<div class="wadists"><div class="wadl">By roof TYPE (the building)</div>'
+    + waDist(roof.byRoofType) + '</div>'
+    + '<div class="wadists"><div class="wadl">By roof STATE (tonight)</div>'
+    + waDist(roof.byRoofState) + '</div>'
+    + '<div class="note">A retractable roof resolves to <b>UNKNOWN</b> because no '
+    + 'source consulted publishes per-game roof state. Outside wind is therefore '
+    + 'never applied as confirmed field wind at those parks — the honest answer is '
+    + 'that we do not know whether it was open.</div>');
+
+  /* ---- 8 PERSISTENCE + the object the Slate renders ---- */
+  h+=ahs('8 · Persistence &mdash; and what the Slate was given',
+    env?shPill('OK'):shPill('UNKNOWN'),
+    '<div class="ahgrid">'
+    + waRow('Environment object', env?shTxt(env.envViewVersion):SH_ABSENT,
+            env?('archive reader '+esc(String(env.archiveReaderVersion||'—'))):'the run published no environment block')
+    + waRow('Archive read', env?('<code>'+shTxt(env.archivePath)+'</code>'):SH_ABSENT,
+            env&&env.archiveUnavailableReason?('<span class="wafail">'+esc(env.archiveUnavailableReason)+'</span>'):'')
+    + waRow('Games on slate', env?shNum(env.gamesOnSlate):SH_ABSENT)
+    + waRow('With a snapshot', env?shNum(env.gamesWithSnapshot):SH_ABSENT,
+            'a game without one says so; it is not rendered calm')
+    + waRow('Direction shown', env?shNum(env.directionShownCount):SH_ABSENT)
+    + waRow('Direction suppressed', env?shNum(env.directionSuppressedCount):SH_ABSENT)
+    + waRow('Re-gated since capture', env?shNum(env.regatedSinceCaptureCount):SH_ABSENT,
+            'archived rows are history and are never rewritten; what is displayed '
+            + 'is decided by the current gate')
+    + waRow('Model use', env?('<b>'+esc(String(env.modelUse||''))+'</b>'):SH_ABSENT,
+            'display only — no score reads it')
+    + '</div>');
+
+  return h;
+}
+
 function renderAdmin(){
   var hs=systemHealth(),ck=hs.clock,SP=ck.plan,dh=D.dataHealth||{},h='';
   var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
@@ -2755,6 +3012,17 @@ function renderAdmin(){
       '<div class="note">The subsystem-health panel could not render: <b>'
       +esc(String((shErr&&shErr.message)||shErr))+'</b>. The failure is shown rather than hidden &mdash; '
       +'blank space here would read as &ldquo;nothing wrong&rdquo;, which is the exact error this panel exists to prevent.</div>');
+  }
+
+  /* WEATHER + BALLPARK — eight independent stages, above the coverage
+     tables and below liveness. Wrapped: a malformed weather payload must
+     degrade to one honest UNKNOWN panel, never blank the Admin tab, because
+     blank space here reads as "nothing wrong". */
+  try{ h+=renderWeatherAdmin(); }
+  catch(waErr){
+    h+=ahs('Weather &amp; ballpark',pill('UNKNOWN','b-unk'),
+      '<div class="note">The weather panel could not render: <b>'
+      +esc(String((waErr&&waErr.message)||waErr))+'</b>. Shown rather than hidden.</div>');
   }
 
   /* 1. SYSTEM HEALTH */
