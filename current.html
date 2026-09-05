@@ -2044,8 +2044,59 @@ function systemHealth(){
     :W.some(function(w){return w.level==='CRITICAL';})?'CRITICAL'
     :W.some(function(w){return w.level==='HIGH'||w.level==='MEDIUM';})?'DEGRADED'
     :(ck.phase==='UNKNOWN'||counts.unknown)?'UNKNOWN':'HEALTHY';
-  return {level:level,warnings:W,top:W.filter(function(w){return w.level!=='LOW';}),counts:counts,clock:ck};
+  /* THE PIPELINE'S VERDICT OUTRANKS THIS PAGE'S (added 2026-09-05). This
+     function is the browser's own read of dataHealth.sources -- nine legacy
+     sources -- and it published a headline of its own. On 2026-09-05 it read
+     "SYSTEM DEGRADED 7/9 sources OK" while the pipeline's canonical
+     systemHealth said CRITICAL with closing_prices failing. Two health
+     surfaces, and the one the reader sees first was the softer of the two.
+     A second opinion is fine; a second VERDICT is not. This page may still
+     escalate on things the pipeline cannot see (it checks card-vs-row winner
+     agreement, for one), so severity is taken as the MORE severe of the two
+     and never the less. De-escalating the pipeline is never allowed. */
+  var CAN=D.systemHealth||null;
+  if(CAN&&CAN.overall){
+    var HRANK={HEALTHY:0,UNKNOWN:1,DEGRADED:2,CRITICAL:3};
+    var cl=String(CAN.overall).toUpperCase(),cf=CAN.criticalFailing||[];
+    var cr=HRANK[cl]==null?1:HRANK[cl],lr=HRANK[level]==null?1:HRANK[level];
+    if(cr>lr){
+      warn(cl==='CRITICAL'?'CRITICAL':'HIGH','pipeline health',
+        'the pipeline reports overall '+cl
+        +(cf.length?' — critical subsystem(s) failing: '+cf.join(', '):'')
+        +'. This page\u2019s own source check said '+level
+        +'; the pipeline\u2019s verdict is the one shown.');
+      level=cl;
+      W.sort(function(a,b){return (SEV_RANK[a.level]==null?9:SEV_RANK[a.level])-(SEV_RANK[b.level]==null?9:SEV_RANK[b.level]);});
+    }
+  }
+  return {level:level,warnings:W,top:W.filter(function(w){return w.level!=='LOW';}),counts:counts,clock:ck,pipelineOverall:CAN?CAN.overall:null};
 }
+/* ---------- the parlay funnel reconciliation, said out loud ----------
+   This is a map of ticket -> {ok, checks:{"name":bool}, totals:{...}}. It used
+   to be flattened by detailTxt into "vp4:ticket1 [object Object]", which hid a
+   real finding: ticket1 selected 4 legs, rejected 2 at publish, and published
+   0 -- two legs unaccounted for. The reconciliation exists to catch exactly
+   that, so it has to name the check that failed and show the counts that
+   disagree, not summarise itself into a shrug. */
+function reconTxt(r){
+  var keys=Object.keys(r||{});
+  if(!keys.length)return pill('UNKNOWN','b-unk','No reconciliation was published.');
+  return keys.map(function(k){
+    var v=r[k]||{},ch=v.checks||{},to=v.totals||{};
+    var failed=Object.keys(ch).filter(function(c){return ch[c]===false;});
+    if(v.ok===true&&!failed.length)
+      return esc(k)+' '+pill('RECONCILES','b-ok','Every funnel count agrees.');
+    var nums=Object.keys(to).map(function(t){
+      var x=to[t];
+      return t+'='+((x!==null&&typeof x==='object')?'{'+Object.keys(x).map(function(y){return y+' '+x[y];}).join(', ')+'}':x);
+    }).join(', ');
+    return esc(k)+' '+pill('DOES NOT RECONCILE','b-crit',
+        'A funnel stage does not add up; the legs it names are unaccounted for.')
+      +'<span class="note"> failed: '+esc(failed.join('; ')||'unstated')
+      +(nums?' · counts: '+esc(nums):'')+'</span>';
+  }).join('<br>');
+}
+
 /* ---------- shared: is this thing actually a parlay? ----------
    Used by Admin and by the Parlay tab. A ticket with fewer than two legs is not
    a parlay, and a 0-leg ticket has no hit percentage to report. */
@@ -2080,8 +2131,17 @@ function noParlayCard(title,v,extraCtrl){
 function detailTxt(d){
   if(d==null)return '—';
   if(typeof d==='string')return d;
-  if(Array.isArray(d))return d.map(function(x){return (typeof x==='string')?x:JSON.stringify(x);}).join(' · ');
-  if(typeof d==='object')return Object.keys(d).map(function(k){return k.replace(/_/g,' ')+' '+d[k];}).join(' · ');
+  if(Array.isArray(d))return d.map(function(x){return (typeof x==='string')?x:detailTxt(x);}).join(' · ');
+  /* NESTED OBJECTS USED TO RENDER AS [object Object] (fixed 2026-09-05). The
+     parlay reconciliation is a map of ticket -> {ok, checks, totals}, so this
+     printed "vp4:ticket1 [object Object]" four times where the finding should
+     have been. A panel that prints [object Object] is not merely ugly: it
+     looks like a check that ran and says nothing, which is worse than an
+     absent check because it reads as reassurance. */
+  if(typeof d==='object')return Object.keys(d).map(function(k){
+    var v=d[k];
+    return k.replace(/_/g,' ')+' '+((v!==null&&typeof v==='object')?'('+detailTxt(v)+')':String(v));
+  }).join(' · ');
   return String(d);
 }
 function funnelTable(f,cap){
@@ -3271,7 +3331,7 @@ function renderAdmin(){
   parBody+='<div class="note">Reconciliation: '
     +(recon===true?pill('RECONCILES','b-ok','Published tickets match the funnel counts.')
       :recon===false?pill('DOES NOT RECONCILE','b-crit','Published tickets do not match the funnel counts.')
-      :(recon!=null&&typeof recon==='object')?esc(detailTxt(recon))
+      :(recon!=null&&typeof recon==='object')?reconTxt(recon)
       :pill('UNKNOWN','b-unk','parlayDiagnostics did not state whether the funnels reconcile.'))
     +'. A ticket labelled PARLAY on any tab must carry at least two legs; a 0-leg ticket never shows a hit percentage.</div>';
   h+=ahs('Parlay pipeline',(PDT?PDT.length:PT.length)+' tickets',parBody);
