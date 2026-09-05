@@ -2082,17 +2082,31 @@ function reconTxt(r){
   var keys=Object.keys(r||{});
   if(!keys.length)return pill('UNKNOWN','b-unk','No reconciliation was published.');
   return keys.map(function(k){
-    var v=r[k]||{},ch=v.checks||{},to=v.totals||{};
+    var v=r[k]||{},ch=v.checks||{},to=v.totals||{},dp=v.dispositions||{};
     var failed=Object.keys(ch).filter(function(c){return ch[c]===false;});
-    if(v.ok===true&&!failed.length)
-      return esc(k)+' '+pill('RECONCILES','b-ok','Every funnel count agrees.');
+    var un=isNum(v.unaccounted)?v.unaccounted:null;
+    /* THE DISPOSITION LEDGER (added 2026-09-05). The counts alone could not
+       say WHERE a leg went, only that the subtraction disagreed. Every
+       selected leg now ends in exactly one terminal disposition and they are
+       rendered as themselves. UNACCOUNTED is rendered loudest of all: it is
+       the bucket that exists so a gate which forgets to record its drops
+       produces a visible wrong answer instead of a quiet one. */
+    var dtxt=Object.keys(dp).sort().map(function(d){
+      return esc(d)+' '+dp[d];}).join(' · ');
+    var ok=v.ok===true&&!failed.length&&!un;
+    if(ok)
+      return esc(k)+' '+pill('CONSERVES','b-ok','Every selected leg ends in exactly one terminal disposition.')
+        +(dtxt?'<span class="note"> '+dtxt+'</span>':'');
     var nums=Object.keys(to).map(function(t){
       var x=to[t];
       return t+'='+((x!==null&&typeof x==='object')?'{'+Object.keys(x).map(function(y){return y+' '+x[y];}).join(', ')+'}':x);
     }).join(', ');
-    return esc(k)+' '+pill('DOES NOT RECONCILE','b-crit',
-        'A funnel stage does not add up; the legs it names are unaccounted for.')
+    return esc(k)+' '+pill('DOES NOT CONSERVE','b-crit',
+        'A selected leg reached no ticket and no rejection bucket. The funnel cannot account for it.')
+      +(un?' '+pill(un+' LEG(S) UNACCOUNTED','b-crit',
+          'These legs left selection and arrived nowhere. Fix the gate that dropped them, not this panel.'):'')
       +'<span class="note"> failed: '+esc(failed.join('; ')||'unstated')
+      +(dtxt?' · dispositions: '+dtxt:'')
       +(nums?' · counts: '+esc(nums):'')+'</span>';
   }).join('<br>');
 }
