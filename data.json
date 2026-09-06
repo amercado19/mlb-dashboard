@@ -1,6 +1,6 @@
 {
  "date": "2026-09-06",
- "generated_at": "2026-09-06T05:38:32",
+ "generated_at": "2026-09-06T06:04:03",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "6b50907"
+  "gitCommit": "0729dc9"
  },
  "games": [
   {
@@ -29,7 +29,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "rf": {
      "dir": "in",
@@ -129,15 +129,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 7
+     "mph": 8
     },
     "cf": {
      "dir": "in",
-     "mph": 10
+     "mph": 11
     },
     "rf": {
      "dir": "in",
-     "mph": 7
+     "mph": 8
     },
     "out_mph": 0
    }
@@ -155,15 +155,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "cf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "out_mph": 0
    }
@@ -237,7 +237,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "rf": {
      "dir": "in",
@@ -341,7 +341,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 8
+     "mph": 9
     },
     "rf": {
      "dir": "in",
@@ -363,15 +363,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "cf": {
      "dir": "in",
-     "mph": 12
+     "mph": 10
     },
     "rf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "out_mph": 0
    }
@@ -410,7 +410,7 @@
     },
     "hr_rate_pa": 0.0586
    },
-   "edge_score": 74,
+   "edge_score": 72,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.3,
@@ -443,7 +443,7 @@
     },
     "hr_rate_pa": 0.0777
    },
-   "edge_score": 73,
+   "edge_score": 71,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 15.8,
@@ -506,10 +506,10 @@
     "factors": {
      "sp": 1.055,
      "park": 1.175,
-     "temp": 1.054,
-     "wind": 0.964
+     "temp": 1.048,
+     "wind": 0.973
     },
-    "hr_rate_pa": 0.0483
+    "hr_rate_pa": 0.0485
    },
    "edge_score": 60,
    "score_type": "model_score_0_100",
@@ -572,10 +572,10 @@
     "factors": {
      "sp": 1.055,
      "park": 1.175,
-     "temp": 1.054,
-     "wind": 0.964
+     "temp": 1.048,
+     "wind": 0.973
     },
-    "hr_rate_pa": 0.0336
+    "hr_rate_pa": 0.0337
    },
    "edge_score": 58,
    "score_type": "model_score_0_100",
@@ -585,38 +585,6 @@
     "avg_exit_velo": 90.2,
     "xiso": 0.176,
     "recent_hr_rate": 0.0252
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Pete Crow-Armstrong",
-   "team": "chc",
-   "game": "chc-mia",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 641,
-    "factors": {
-     "sp": 1.032,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0493
-   },
-   "edge_score": 58,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.0,
-    "hard_hit_pct": 48.7,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.238,
-    "recent_hr_rate": 0.0963
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -639,9 +607,9 @@
      "sp": 1.064,
      "park": 0.93,
      "temp": 1.12,
-     "wind": 0.991
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0438
+    "hr_rate_pa": 0.0442
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
@@ -673,9 +641,9 @@
      "sp": 1.032,
      "park": 1.105,
      "temp": 1.03,
-     "wind": 0.937
+     "wind": 0.955
     },
-    "hr_rate_pa": 0.0563
+    "hr_rate_pa": 0.0574
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
@@ -716,6 +684,40 @@
     "avg_exit_velo": 95.2,
     "xiso": 0.304,
     "recent_hr_rate": 0.0
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Matt Olson",
+   "team": "atl",
+   "game": "atl-phi",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 617,
+    "factors": {
+     "sp": 0.999,
+     "park": 1.07,
+     "temp": 1.036,
+     "wind": 0.982
+    },
+    "hr_rate_pa": 0.0549
+   },
+   "edge_score": 56,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.0,
+    "hard_hit_pct": 50.3,
+    "avg_exit_velo": 92.6,
+    "xiso": 0.264,
+    "recent_hr_rate": 0.0508
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
