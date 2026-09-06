@@ -1,6 +1,6 @@
 {
  "date": "2026-09-06",
- "generated_at": "2026-09-06T16:03:31",
+ "generated_at": "2026-09-06T16:17:01",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "5eec7e4"
+  "gitCommit": "34d3def"
  },
  "games": [
   {
@@ -568,14 +568,14 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 490,
+    "pa_season": 491,
     "factors": {
      "sp": 1.055,
      "park": 1.175,
      "temp": 1.042,
      "wind": 0.964
     },
-    "hr_rate_pa": 0.0478
+    "hr_rate_pa": 0.0477
    },
    "edge_score": 61,
    "score_type": "model_score_0_100",
@@ -766,11 +766,11 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 490,
+    "pa_season": 491,
     "factors": {
      "sp": 1.041
     },
-    "hit_rate_pa": 0.2587
+    "hit_rate_pa": 0.2583
    },
    "edge_score": 77,
    "score_type": "model_score_0_100",
@@ -1189,37 +1189,6 @@
    ]
   },
   {
-   "player": "Jackson Chourio",
-   "team": "mil",
-   "game": "mil-cin",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 490,
-    "factors": {
-     "sp": 1.041
-    },
-    "lambda_pg": 2.39
-   },
-   "edge_score": 2.43,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 12.6,
-    "hard_hit_pct": 47.1,
-    "avg_exit_velo": 91.8,
-    "xiso": 0.208,
-    "recent_hr_rate": 0.0551
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Oneil Cruz",
    "team": "pit",
    "game": "laa-pit",
@@ -1245,6 +1214,37 @@
     "avg_exit_velo": 95.3,
     "xiso": 0.23,
     "recent_hr_rate": 0.0441
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Jackson Chourio",
+   "team": "mil",
+   "game": "mil-cin",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "poisson_ge2",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 491,
+    "factors": {
+     "sp": 1.041
+    },
+    "lambda_pg": 2.368
+   },
+   "edge_score": 2.4,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 12.6,
+    "hard_hit_pct": 47.1,
+    "avg_exit_velo": 91.8,
+    "xiso": 0.208,
+    "recent_hr_rate": 0.0551
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -1313,9 +1313,9 @@
    ]
   },
   {
-   "player": "Sal Stewart",
-   "team": "cin",
-   "game": "mil-cin",
+   "player": "Junior Caminero",
+   "team": "tb",
+   "game": "tb-tex",
    "stat": "H+R+RBI",
    "line": 1.5,
    "side": "over",
@@ -1324,20 +1324,20 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 615,
+    "pa_season": 620,
     "factors": {
-     "sp": 0.974
+     "sp": 0.988
     },
-    "lambda_pg": 2.209
+    "lambda_pg": 2.234
    },
-   "edge_score": 2.34,
+   "edge_score": 2.33,
    "score_type": "per_game_rate",
    "statcast": {
-    "barrel_pct": 12.8,
-    "hard_hit_pct": 38.9,
-    "avg_exit_velo": 90.2,
-    "xiso": 0.225,
-    "recent_hr_rate": 0.056
+    "barrel_pct": 13.0,
+    "hard_hit_pct": 50.7,
+    "avg_exit_velo": 93.1,
+    "xiso": 0.22,
+    "recent_hr_rate": 0.041
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
