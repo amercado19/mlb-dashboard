@@ -575,6 +575,56 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
   .gc2 .g2when{order:3}
 }
 
+
+/* ---------- ADMIN HEALTH v2 (2026-09-06) -------------------------------
+   The page was several screens of prose per subsystem. Every paragraph was
+   worth keeping and none of it could be scanned, so the state moved to the
+   top of each card and the explanation moved behind a dropdown. */
+.shax{display:flex;gap:5px;flex-wrap:wrap;margin:5px 0 2px}
+.shaxi{display:inline-flex;align-items:center;gap:5px;font-size:10px;
+   border:1px solid var(--line);border-radius:20px;padding:1px 8px;max-width:100%}
+.shaxi>i{font-style:normal;color:var(--muted);letter-spacing:.07em;
+   text-transform:uppercase;font-size:9px;white-space:nowrap}
+.shaxi>b{font-weight:700;white-space:nowrap}
+.shaxi.a-ok>b{color:var(--win)}.shaxi.a-warn>b{color:var(--gold)}
+.shaxi.a-bad>b{color:var(--lose)}.shaxi.a-unk>b{color:var(--muted)}
+.shesc{font-size:10px;color:var(--lose);font-weight:700;letter-spacing:.05em}
+.shnoesc{font-size:10px;color:var(--muted);letter-spacing:.03em}
+.shdet{margin-top:7px;border-top:1px solid var(--line)}
+.shdet>summary{list-style:none;cursor:pointer;padding:6px 0 2px;font-size:10px;
+   letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+   display:flex;align-items:center;justify-content:space-between;gap:8px}
+.shdet>summary::-webkit-details-marker{display:none}
+.shdet>summary:hover{color:var(--txt)}
+.shdet>summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.shdet>summary .shchev{transition:transform .15s}
+.shdet[open]>summary .shchev{transform:rotate(180deg)}
+.shdetb{padding-top:5px}
+/* a long fingerprint must wrap, not push the page sideways */
+.sshc,.sshcard code{overflow-wrap:anywhere;word-break:break-word;max-width:100%}
+.sshkv .v{min-width:0;overflow-wrap:anywhere}
+/* the CLV card's four sections */
+.shsec{border:1px solid var(--line);border-radius:8px;margin-top:8px;overflow:hidden}
+.shsech{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+   padding:5px 9px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.shsecb{padding:7px 9px}
+/* the funnel */
+.shfun{display:grid;gap:0;margin-top:4px}
+.shfr{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:baseline;
+   padding:4px 0;font-size:12px;border-bottom:1px dashed var(--line)}
+.shfr:last-child{border-bottom:0}
+.shfr>b{font-variant-numeric:tabular-nums}
+.shfr.shfr-end{font-weight:700}
+.shfd{display:grid;grid-template-columns:14px 1fr auto;gap:8px;align-items:baseline;
+   font-size:11px;color:var(--muted);padding:2px 0 2px 2px}
+.shfd>span:first-child{color:var(--lose)}
+.shfd>b{font-variant-numeric:tabular-nums;color:var(--txt)}
+@media(max-width:520px){
+  .shfr{grid-template-columns:1fr auto}
+  .shfd{grid-template-columns:12px 1fr auto;gap:6px}
+  .sshkv{grid-template-columns:1fr !important}
+}
+
 </style>
 </head>
 <body>
@@ -2694,6 +2744,240 @@ function ahbox(l,v,s){return '<div class="ahbox"><div class="hl">'+l+'</div><div
 var SH_ABSENT='<span class="sshabs" title="The payload did not carry this field. Absent is not zero: an unreported value and a measured zero are different claims.">not reported</span>';
 var SH_CADENCE_MIN=30;
 
+
+/* ================= ADMIN HEALTH v2 (2026-09-06) =======================
+   THREE AXES, NEVER ONE FIELD.
+
+     OPERATION    is it doing its job right now?
+     MEASUREMENT  how much do we actually know yet?
+     DATA         can what we already hold be trusted?
+
+   They have different lifetimes, and that is the whole point. A permanent,
+   unrepairable fact about August used to occupy the same slot as a live
+   outage: the closing-price guard compared provenance coverage across the
+   WHOLE ledger including 105 rows written before the provenance producer
+   existed. Those rows can never acquire provenance, so the guard could not
+   pass under any circumstances, and the CRITICAL banner it held stopped
+   carrying information.
+
+   Every word below is read from the payload. The browser does not decide
+   which axis a subsystem is on, whether it escalates, or what the overall
+   status is. */
+
+var SH_AX_TONE={
+  OK:'a-ok',MEASURED:'a-ok',VERIFIED:'a-ok',
+  DEGRADED:'a-warn',STALE:'a-warn',PENDING:'a-warn',UNVERIFIED:'a-warn',
+  EARLY_SAMPLE:'a-warn',UNDERPOWERED:'a-warn',PARTIAL:'a-warn',
+  LEGACY_UNVERIFIED:'a-warn',
+  FAILING:'a-bad',FAILED:'a-bad',
+  UNKNOWN:'a-unk',NOT_MEASURED:'a-unk',NOT_MEASURABLE:'a-unk'
+};
+/* Each axis pill is LABELLED. An unlabelled green chip beside an unlabelled
+   red one is the contradiction this replaces — the two were never about the
+   same question. */
+function shAxis(label,val,tip){
+  if(val===null||val===undefined||val==='')return '';
+  var V=String(val).toUpperCase();
+  return '<span class="shaxi '+(SH_AX_TONE[V]||'a-unk')+'"'
+    +(tip?' title="'+esc(tip)+'"':'')+'><i>'+esc(label)+'</i><b>'
+    +esc(V.replace(/_/g,' '))+'</b></span>';
+}
+/* The measurement verdict has its own two words. shPill deliberately renders
+   an unrecognised status as UNKNOWN rather than guessing, so the two new words
+   are taught here instead of loosening that rule. */
+function shMeasPill(v){
+  var V=String(v==null?'':v).toUpperCase();
+  if(V==='COMPLETE')return pill('COMPLETE','b-ok',
+    'Every reported measurement has matured.');
+  if(V==='INCOMPLETE')return pill('INCOMPLETE','b-warn',
+    'At least one measurement has not matured yet. This is time and data, '
+    +'not a fault, and it cannot change the operational status.');
+  return shPill(v);
+}
+function shAxes(s){
+  if(!s)return '';
+  var A=(shRoot()||{}).axes||{};
+  var h=shAxis('Operation',s.operational!==undefined?s.operational:s.status,A.operational)
+    +shAxis('Measurement',s.measurement,s.measurementWhy||A.measurement)
+    +shAxis('Data',s.integrity,s.integrityWhy||A.integrity);
+  if(!h)return '';
+  /* Say plainly whether this card is one of the ones holding the banner. */
+  h+=(s.escalates===true)
+    ? '<span class="shesc" title="This subsystem is one of the reasons the overall status is what it is.">FORCES OVERALL STATUS</span>'
+    : (s.escalates===false
+       ? '<span class="shnoesc" title="Visible and real, but it cannot change the overall status. Measurement maturity and permanent historical limits never escalate.">does not affect overall</span>'
+       : '');
+  return '<div class="shax">'+h+'</div>';
+}
+/* Depth, one click away. Nothing is removed — the paragraphs that made this
+   page unscannable are still here, just not all at once. */
+function shDetails(inner,label){
+  if(!inner)return '';
+  return '<details class="shdet"><summary><span>'+esc(label||'Details')+'</span>'
+    +'<span class="shchev" aria-hidden="true">&#9662;</span></summary>'
+    +'<div class="shdetb">'+inner+'</div></details>';
+}
+
+/* ---- CLV MEASUREMENT: four sections, from the canonical subsystem ---- */
+function shClvCard2(){
+  var cm=shSub('clv_measurement'), cp=shSub('closing_prices');
+  var d=shDet('clv_measurement'), cpd=shDet('closing_prices');
+  if(!cm){
+    /* An older payload has no clv_measurement block. Say so; do not fall back
+       to deriving the state here, which is the habit being removed. */
+    return shCard({head:'CLV measurement',key:'clv_measurement',
+      status:'UNKNOWN',
+      note:'This payload predates the health taxonomy split and publishes no '
+        +'<code>clv_measurement</code> block. The state is <b>not derived here</b> '
+        +'&mdash; a surface that recomputes pipeline semantics is how two pages '
+        +'come to disagree.',rows:[]});
+  }
+  var f=d.funnel||{}, st=f.stages||{}, bn=d.bottleneck||null;
+  var eras=(cpd.eras)||{}, fwd=eras.forward||{}, leg=eras.legacy||{};
+  var prod=cpd.producer||{};
+
+  var cur='<div class="shsec"><div class="shsech">Current forward capture</div><div class="shsecb">'
+    +shKv('Producer',(cp?shPill(cp.operational||cp.status):SH_ABSENT)
+      +(isNum(prod.forwardOpportunities)
+        ? ' <span class="sshage">'+esc(String(prod.forwardCaptured))+' of '
+          +esc(String(prod.forwardOpportunities))+' settled forward rows closed</span>'
+        : ' <span class="sshage">no forward row has reached its closing window yet</span>'))
+    +shKv('Last close capture',shWhen(prod.lastCloseCaptureAt))
+    +shKv('Last open capture',shWhen(prod.lastOpenCaptureAt))
+    +shKv('Forward rows',isNum(fwd.rows)?shNum(fwd.rows,'row(s)'):SH_ABSENT)
+    +shKv('Open provenance',shRatio(fwd.openProvenance,fwd.rows,'forward rows'))
+    +shKv('Close provenance',shRatio(fwd.closeProvenance,fwd.withClose,'forward rows with a close'))
+    +shKv('Verified CLV',isNum(st.verifiedClv)?shNum(st.verifiedClv,'row(s)'):SH_ABSENT)
+    +'</div></div>';
+
+  var legacy='<div class="shsec"><div class="shsech">Legacy data &mdash; permanent</div><div class="shsecb">'
+    +shKv('Legacy rows',isNum(leg.rows)?shNum(leg.rows,'row(s)'):SH_ABSENT)
+    +shKv('...with a close',isNum(leg.withClose)?shNum(leg.withClose,'row(s)'):SH_ABSENT)
+    +shKv('...with provenance',shRatio(leg.closeProvenance,leg.withClose,'legacy rows with a close'))
+    +shKv('Integrity',shAxis('Data',leg.integrity||'LEGACY_UNVERIFIED',
+        'Excluded from verified CLV permanently. NOT a current fault and NOT a gap to fill.'))
+    +'<div class="note" style="margin:6px 0 0">'
+    +esc(leg.note||'These rows predate the provenance producer.')
+    +' They stay visible here on purpose: hiding a limitation is the same '
+    +'mistake as letting it impersonate an outage.</div></div></div>';
+
+  var bottleneck='<div class="shsec"><div class="shsech">Current bottleneck</div><div class="shsecb">'
+    +(bn?(shKv('Blocked by','<b>'+esc(bn.reason)+'</b> <span class="sshage">'
+             +esc(String(bn.count))+' row(s)</span>')
+          +shKv('Kind',shAxis('Kind',bn.kind,''))
+          +'<div class="note" style="margin:6px 0 0">'+esc(bn.why)+'</div>')
+        :'<span class="sshnone">no rows are excluded</span>')
+    +'</div></div>';
+
+  var eraLine=shKv('Valid CLV era start',
+    d.validClvEraStart
+      ? ('<b>'+esc(String(d.validClvEraStart))+'</b>')
+      : (SH_ABSENT+' <span class="sshage">&mdash; unset until one row passes the entire contract</span>'));
+
+  return shCard({head:'CLV measurement',key:'clv_measurement',sub:cm,
+    status:cm.operational||cm.status,
+    note:(cm.measurementWhy?esc(cm.measurementWhy):'')
+      +'<br><span class="sshage">'+esc(d.breakEven||'')+'</span>',
+    rows:[],
+    extra:cur+bottleneck+legacy
+      +shDetails(eraLine
+        +shKv('Era note','<span class="sshage">'+esc(d.eraNote||'')+'</span>')
+        +shKv('Funnel','see the CLV funnel card'),'Era and contract')});
+}
+
+/* ---- CLV FUNNEL: the drops, and the first blocker at each one ---- */
+function shClvFunnel2(){
+  var d=shDet('clv_measurement'), f=d.funnel;
+  if(!f||typeof f!=='object'||f.error){
+    return shCard({head:'CLV funnel',key:'clv_measurement.detail.funnel',
+      status:'UNKNOWN',
+      note:f&&f.error?('The funnel could not be computed: <b>'+esc(String(f.error))
+          +'</b>. The failure is shown rather than hidden.')
+        :'This payload does not publish the CLV funnel. Absent, not empty.',rows:[]});
+  }
+  var s=f.stages||{}, ex=f.excluded||{};
+  /* The stages are counts of rows REACHING each point. They are NOT
+     interchangeable, and the two most tempting substitutions are named
+     explicitly below: a row with a close is not a row with a VALID close, and
+     a row carrying a clv_pp is not a VERIFIED CLV. */
+  var order=[['Ledger rows','totalLedgerRows'],['Settled','settled'],
+             ['Has open price','hasOpen'],['Open provenance','hasOpenProvenance'],
+             ['Has close price','hasClose'],['Close provenance','hasCloseProvenance'],
+             ['clv_pp computed','clvComputed'],['VERIFIED CLV','verifiedClv']];
+  var h='<div class="shfun">';
+  order.forEach(function(p,i){
+    h+='<div class="shfr'+(p[1]==='verifiedClv'?' shfr-end':'')+'">'
+      +'<span>'+esc(p[0])+'</span><b>'+(isNum(s[p[1]])?esc(String(s[p[1]])):'&mdash;')+'</b></div>';
+  });
+  h+='</div>';
+  var drops='';
+  Object.keys(ex).forEach(function(k){
+    drops+='<div class="shfd"><span>&#8595;</span><span>'+esc(k)+' &mdash; '
+      +esc(ex[k].why)+'</span><b>'+esc(String(ex[k].count))+'</b></div>';
+  });
+  var ok=f.identityHolds===true&&(f.included+f.excludedTotal)===f.evaluated;
+  var identity=(isNum(f.included)&&isNum(f.excludedTotal)&&isNum(f.evaluated))
+    ?('<b>'+esc(String(f.included))+' included + '+esc(String(f.excludedTotal))
+      +' excluded = '+esc(String(f.evaluated))+' evaluated</b>'
+      +(ok?' <span class="sshage">&mdash; holds</span>'
+          :' <span class="sshage">&mdash; DOES NOT HOLD; a row is unaccounted for</span>'))
+    :SH_ABSENT;
+  return shCard({head:'CLV funnel',key:'clv_measurement.detail.funnel',
+    status:ok?'OK':'FAILING',
+    note:'Every ledger row lands in <b>exactly one</b> bucket, with its '
+      +'<b>first</b> blocking reason. <b>HAS CLOSE is not VALID CLOSE</b>, and '
+      +'<b>a row carrying a clv_pp is not a VERIFIED CLV</b> &mdash; printing one '
+      +'under the other&rsquo;s name overstates the evidence.',
+    rows:[],
+    extra:h+shDetails(drops+'<div class="sshkv" style="margin-top:6px">'
+      +'<span class="k">Accounting identity</span><span class="v">'+identity+'</span></div>',
+      'Where every excluded row went')});
+}
+
+/* ---- RULEBOOK: today's artifact and the historical map, kept apart ---- */
+function shProvCard2(){
+  var cur=shSub('rulebook_provenance'), cd=shDet('rulebook_provenance');
+  var mv=shSub('model_version'), md=shDet('model_version');
+  var P=(D.provenance&&typeof D.provenance==='object')?D.provenance:{};
+  var fp=P.rulebookFingerprint||null;
+  var curRows=shKv('Model ver.',shTxt(P.modelVersion||D.modelVersion))
+    +shKv('Rulebook ver.',shTxt(P.rulebookVersion))
+    +shKv('Feature ver.',shTxt(P.featureVersion))
+    +shKv('Prediction ver.',shTxt(P.predictionVersion))
+    +shKv('Git commit',shTxt(P.gitCommit))
+    +shKv('Fingerprint',fp?('<code class="sshc">'+esc(String(fp))+'</code>'):SH_ABSENT)
+    +shKv('Fingerprints on this slate',
+        (cd.distinctFingerprints&&cd.distinctFingerprints.length)
+          ? shNum(cd.distinctFingerprints.length,'distinct')
+            +' <span class="sshage">one run must have one ruleset</span>'
+          : SH_ABSENT);
+  var histRows=shKv('Row coverage',isNum(md.rowCoveragePct)
+        ?('<b>'+esc(md.rowCoveragePct.toFixed(2))+'%</b> of historical rows resolve to a ruleset')
+        :SH_ABSENT)
+    +shKv('Ambiguous rows',isNum(md.ambiguousRows)
+        ?(shNum(md.ambiguousRows,'row(s)')
+          +(isNum(md.ambiguousPct)?' <span class="sshage">('+esc(md.ambiguousPct.toFixed(2))+'%)</span>':''))
+        :SH_ABSENT)
+    +shKv('Labels reused',Array.isArray(md.labelsReused)
+        ?(md.labelsReused.length
+            ? md.labelsReused.map(function(x){return '<code class="sshc">'+esc(String(x))+'</code>';}).join('')
+            : '<span class="sshnone">none &mdash; one label, one ruleset</span>')
+        :SH_ABSENT);
+  return shCard({head:'Rulebook provenance &middot; CURRENT',key:'rulebook_provenance',
+      sub:cur,rows:[],
+      note:'Can <b>today&rsquo;s</b> prediction name the exact rules that produced it? '
+        +'This is a question about the current artifact and nothing else.',
+      extra:curRows})
+    +shCard({head:'Version coverage &middot; HISTORICAL',key:'model_version',
+      sub:mv,rows:[],
+      note:'How much of the <b>past</b> can be partitioned by ruleset? '
+        +'Permanent and unrepairable &mdash; the evidence to split those rows does '
+        +'not exist. It bounds what history can be asked; it is <b>not</b> a '
+        +'statement about the current rulebook and never escalates.',
+      extra:histRows+shDetails('<div class="note" style="margin:0">'
+        +esc(md.exclusionRule||'')+'</div>','Exclusion rule')});
+}
+
 function shPill(s){
   var S=String(s==null?'UNKNOWN':s).toUpperCase().replace(/_/g,' ').trim();
   var m={OK:'b-ok',HEALTHY:'b-ok',MEASURED:'b-ok',
@@ -2720,9 +3004,21 @@ function shTone(s){
   return 'ss-unk';
 }
 function shTag(c){
+  /* CRITICALITY IS NOT A STATUS (relabelled 2026-09-06). A bare red CRITICAL
+     chip sitting beside a green OK read as a contradiction, and readers took
+     it for one. It is not: it says how much a FUTURE failure of this
+     subsystem would matter, which is a fact about the subsystem's importance
+     and not about its current state. The chip now names the question it
+     answers, like every other pill on the page. */
   var C=String(c==null?'':c).toUpperCase().trim();
   var cls={CRITICAL:'sst-crit',IMPORTANT:'sst-imp',OPTIONAL:'sst-opt'}[C]||'sst-unk';
-  return '<span class="sshtag '+cls+'">'+esc(C||'criticality not reported')+'</span>';
+  var tip={CRITICAL:'If this subsystem fails, the system is not trustworthy. This is its importance, NOT its current state.',
+           IMPORTANT:'A failure here degrades quality or measurability. Importance, not current state.',
+           OPTIONAL:'A failure here never affects the top-level status. Importance, not current state.'}[C]
+    ||'This card is derived rather than a subsystem of its own, so it carries no criticality.';
+  if(!C)return '<span class="sshtag sst-unk" title="'+esc(tip)+'">derived &mdash; no criticality</span>';
+  return '<span class="sshtag '+cls+'" title="'+esc(tip)+'">if it fails &middot; '
+    +esc(C)+'</span>';
 }
 /* the ONLY place a payload value becomes text. */
 function shTxt(v){
@@ -2793,13 +3089,23 @@ function shCard(o){
   }else if(why){
     h+='<div class="sshwhy">'+esc(why)+'</div>';
   }
+  /* THE THREE AXES, EACH LABELLED. An unlabelled OK beside an unlabelled
+     CRITICAL was a contradiction only because the two chips were answering
+     different questions with no way to tell which. */
+  h+=shAxes(s);
   if(o.note)h+='<div class="sshwhy">'+o.note+'</div>';
+  if(o.extra)h+=o.extra;
   (o.rows||[]).forEach(function(r){h+=shKv(r[0],r[1]);});
-  h+=shKv('Last success',s?shWhen(s.lastSuccessAt):SH_ABSENT);
-  h+=shKv('Last attempt',s?shWhen(s.lastAttemptAt):SH_ABSENT);
-  if(s&&isNum(s.consecutiveFailures))h+=shKv('Consecutive fails',shNum(s.consecutiveFailures));
-  if(s&&s.lastError)h+=shKv('Last error','<span style="color:#b91c1c">'+esc(String(s.lastError))+'</span>');
-  h+=shKv('Codes',s?shCodes(s.codes):SH_ABSENT);
+  /* Everything below is the depth that made this page unscannable. It is all
+     still here; it is one click away instead of eight lines down. */
+  var deep=shKv('Last success',s?shWhen(s.lastSuccessAt):SH_ABSENT)
+    +shKv('Last attempt',s?shWhen(s.lastAttemptAt):SH_ABSENT)
+    +((s&&isNum(s.consecutiveFailures))?shKv('Consecutive fails',shNum(s.consecutiveFailures)):'')
+    +((s&&s.lastError)?shKv('Last error','<span style="color:#b91c1c">'+esc(String(s.lastError))+'</span>'):'')
+    +shKv('Codes',s?shCodes(s.codes):SH_ABSENT)
+    +((s&&s.measurementWhy)?shKv('Measurement','<span class="sshage">'+esc(s.measurementWhy)+'</span>'):'')
+    +((s&&s.integrityWhy)?shKv('Data integrity','<span class="sshage">'+esc(s.integrityWhy)+'</span>'):'');
+  h+=shDetails(deep,'Details');
   return h+'</div>';
 }
 
@@ -3180,13 +3486,31 @@ function shPanel(){
       +'stay dead for four weeks while this page rendered a confident header.</div>';
   }else{
     ban+='<div class="sshcause">'+(R.headline?esc(R.headline):'<span class="sshabs">no headline reported</span>')+'</div>';
-    if(crit.length)
+    /* THE SECOND VERDICT, never rendered without the first. "Operational but
+       measurement incomplete" is one honest sentence; either half alone
+       misleads, and for two days the missing half was the one that mattered. */
+    if(R.measurementOverall)
+      ban+='<div class="sshcause"><b>Measurement</b> '+shMeasPill(R.measurementOverall)
+        +((Array.isArray(R.measurementIncomplete)&&R.measurementIncomplete.length)
+          ?(' &mdash; not yet matured: '+R.measurementIncomplete.map(function(k){
+              var s=subs[k];return '<b>'+esc((s&&s.label)||k)+'</b>'
+                +((s&&s.measurement)?' ('+esc(String(s.measurement).replace(/_/g,' '))+')':'');
+            }).join(', ')+'. <span class="sshage">A measurement that has not matured is not an outage '
+            +'and cannot change the status above.</span>')
+          :' &mdash; every reported measurement has matured.')+'</div>';
+    if(Array.isArray(R.escalatedBy)&&R.escalatedBy.length){
+      ban+='<div class="sshcause">The status above is forced by: '
+        +R.escalatedBy.map(function(e){
+          return '<b>'+esc(e.label||e.key)+'</b> ('+esc(e.axis)+' '
+            +esc(String(e.value))+')'+(e.why?' &mdash; '+esc(e.why):'');
+        }).join('; ')+'.</div>';
+    }else if(crit.length){
       ban+='<div class="sshcause">Caused by these <b>CRITICAL</b> subsystem(s): '+labelsOf(crit).join('; ')+'.</div>';
-    if(imp.length)
-      ban+='<div class="sshcause">Degraded by these <b>IMPORTANT</b> subsystem(s): '+labelsOf(imp).join('; ')+'.</div>';
+    }
     if(!crit.length&&!imp.length&&String(overall).toUpperCase()==='HEALTHY')
-      ban+='<div class="sshcause">No critical or important subsystem is failing or stale. Read the eight statuses below '
-        +'anyway &mdash; this line is a summary, and a summary is exactly what hid the last outage.</div>';
+      ban+='<div class="sshcause">No critical or important subsystem is failing, stale or contradicting itself. '
+        +'Read the statuses below anyway &mdash; this line is a summary, and a summary is exactly what hid the '
+        +'last outage.</div>';
     ban+='<div class="sshcause">Codes raised: '+shCodes(R.codes)+'</div>';
   }
   ban+='<div class="sshrule">'+(R&&R.rule?esc(R.rule)
@@ -3212,18 +3536,18 @@ function shPanel(){
     +shCard({head:'Settlement',key:'settlement',sub:st,
       rows:[['Days graded',isNum(std.daysGraded)?shNum(std.daysGraded,'day file(s)'):SH_ABSENT],
             ['Latest graded',shTxt(std.latest)]]})
-    +shCard({head:'Close derivation',key:'closing_prices',sub:cp,
+    +shCard({head:'Closing-price producer',key:'closing_prices',sub:cp,
       rows:[['Rows with close',shRatio(cpd.withClose,cpd.ledgerRows,'ledger rows')],
             ['Published pct',(isNum(cpd.closeCoveragePct)&&isNum(cpd.ledgerRows)&&cpd.ledgerRows>0)
               ?('<b>'+esc(cpd.closeCoveragePct.toFixed(2))+'%</b>')
               :SH_ABSENT+' <span class="sshage">&mdash; a percentage over an empty or unreported ledger would be invented</span>']]})
-    +shClvCard()
-    +shClvFunnel()
+    +shClvCard2()
+    +shClvFunnel2()
     +shRunStages()
     +shCard({head:'Dashboard publish',key:'publication',sub:pb,
       rows:[['Payload generated',shWhen(D.generatedAt)],
             ['Slate date',shTxt(D.date)]]})
-    +shProvCard()
+    +shProvCard2()
     +'</div>';
 
   h+=ahs('Subsystem health &mdash; liveness','8 independent statuses '+shPill(overall),
