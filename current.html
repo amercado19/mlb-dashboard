@@ -745,6 +745,30 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
 .penr span{font-size:10px;font-family:var(--mono,monospace);padding:2px 7px;
   border-radius:4px;background:#141414;border:1px solid #242424;color:#8a8a8a}
 .penr span u{text-decoration:none;color:#555;margin-right:4px}
+
+/* --- interval + evidence strength ------------------------------------ */
+.mbtab{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin-top:2px}
+.mbtab dt{font-size:9px;letter-spacing:.06em;text-transform:uppercase;
+  color:#4d5f7d;font-weight:700;align-self:center;white-space:nowrap}
+.mbtab dd{margin:0;font-size:11px;color:#a9c0dc;font-family:var(--mono,monospace)}
+.mbtab dd b{color:#dce8f6;font-weight:700}
+.mbci{color:#8fa8c8}
+.mbev-adequate{background:#0a1f14;color:#4dd08a;border-color:#14432c}
+.mbev-limited{background:#1a1200;color:#e8b040;border-color:#3a2a06}
+.mbev-under{background:#1f0a0a;color:#e87070;border-color:#3d1414}
+.mbpill{display:inline-flex;align-items:center;gap:5px;font-size:10px;
+  font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:20px;
+  border:1px solid transparent}
+.mbpill i{font-style:normal;opacity:.62;font-weight:600;font-size:9px}
+.mbinside{font-size:10px;color:#7d7259;background:#161200;border:1px solid #2a2206;
+  border-radius:5px;padding:5px 8px;line-height:1.6;margin-top:5px}
+.mbinside b{color:#e8a030;font-weight:700}
+.mbclaim{font-size:10px;color:#6a7a92;line-height:1.65;margin-top:5px}
+.mbclaim b{color:#9fb4cc;font-weight:600}
+.mbregion{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.mbregion span{font-size:10px;font-family:var(--mono,monospace);color:#8fa8c8;
+  background:#111826;border:1px solid #1d2740;border-radius:4px;padding:2px 7px}
+.mbregion span u{text-decoration:none;color:#4d5f7d;margin-right:4px}
 </style>
 </head>
 <body>
@@ -1831,6 +1855,67 @@ function mbGapClass(g){
 }
 function pctOf(x,d){return (x==null)?SH_ABSENT:(x*100).toFixed(d==null?1:d)+'%';}
 
+
+/* ==== EVIDENCE STRENGTH, READ NEVER DERIVED ==========================
+   `sampleStatus` is computed in mlb_picks/decision.py from the width of the
+   Wilson interval, and its rule string travels with it. This maps the word to
+   a colour and nothing else — the moment this file decides what counts as
+   adequate, the page and the model can disagree. */
+var MB_EV={ADEQUATE_SAMPLE:['ADEQUATE','mbev-adequate'],
+           LIMITED_SAMPLE:['LIMITED','mbev-limited'],
+           UNDERPOWERED:['UNDERPOWERED','mbev-under']};
+
+function mbEvidencePill(st,rule){
+  var m=MB_EV[st]; if(!m)return '';
+  return '<span class="mbpill '+m[1]+'"'+(rule?' title="'+esc(rule)+'"':'')
+    +'><i>evidence</i>'+esc(m[0])+'</span>';
+}
+
+function mbCi(b){
+  if(b.actualWinRateCi95Low==null||b.actualWinRateCi95High==null)return SH_ABSENT;
+  return '<span class="mbci">['+(b.actualWinRateCi95Low*100).toFixed(1)+'–'
+    +(b.actualWinRateCi95High*100).toFixed(1)+'%]</span>'
+    +(b.ciHalfWidthPp!=null?' <span class="mbci">±'+b.ciHalfWidthPp+'pp</span>':'');
+}
+
+/* The named rows of §12, in that order. A definition list rather than chips,
+   because these are seven labelled facts about ONE number and a chip row
+   invites reading them as seven independent findings. */
+function mbEvidenceTable(mc,b){
+  function row(k,v){return '<dt>'+esc(k)+'</dt><dd>'+v+'</dd>';}
+  return '<dl class="mbtab">'
+    +row('Model probability', mc.winProbability!=null
+        ? '<b>'+(mc.winProbability*100).toFixed(1)+'%</b>' : SH_ABSENT)
+    +row('Measured band',(b.lo*100).toFixed(0)+'–'+(b.hi*100).toFixed(0)+'%')
+    +row('Forward n', b.n)
+    +row('Observed win rate', b.measuredWinRate!=null
+        ? '<b>'+(b.measuredWinRate*100).toFixed(1)+'%</b>'
+          +(b.wins!=null?' <span class="mbci">('+b.wins+'/'+b.n+')</span>':'')
+        : SH_ABSENT)
+    +row('95% interval', mbCi(b))
+    +row('Calibration gap', b.calibrationGapPp!=null
+        ? '<span class="'+mbGapClass(b.calibrationGapPp)+'">'
+          +(b.calibrationGapPp>0?'+':'')+b.calibrationGapPp+'pp</span>' : SH_ABSENT)
+    +row('Evidence', mbEvidencePill(b.sampleStatus,b.sampleStatusRule)
+        ||esc(b.sampleStatus||'')||SH_ABSENT)
+    +'</dl>';
+}
+
+/* THE ONE FACT THAT FORBIDS THE STRONGER CLAIM, in the payload's own words.
+   `predictedInsideCi` is computed upstream; the page reports it. */
+function mbInsideNote(b){
+  if(b.predictedInsideCi!==true)return '';
+  return '<div class="mbinside"><b>Not distinguishable from the prediction.</b> '
+    +'The model said '+(b.predictedMean*100).toFixed(1)+'% and this band\'s 95% '
+    +'interval still contains that number, so the difference is not separable '
+    +'from sampling noise on '+b.n+' games'
+    +(b.nForTargetGap!=null
+      ? '. About '+b.nForTargetGap+' would be needed to detect a '
+        +(b.targetDetectableGapPp!=null?b.targetDetectableGapPp:5)+' point gap.'
+      : '.')
+    +'</div>';
+}
+
 function measuredBandBlock(mc){
   if(!mc)return '';
   var b=mc.measuredBand;
@@ -1838,26 +1923,13 @@ function measuredBandBlock(mc){
     return '<div class="mbev"><b>Measured evidence</b>'
       +'<em>'+esc(mc.why||'no measured band covers this probability')+'</em></div>';
   }
-  function cell(k,v,cls){
-    return '<span class="'+(cls||'')+'"><u>'+esc(k)+'</u>'+v+'</span>';}
-  var gap=b.calibrationGapPp;
-  var body='<div class="mbg">'
-    +cell('band',(b.lo*100).toFixed(0)+'–'+(b.hi*100).toFixed(0)+'%')
-    +cell('n',b.n)
-    +cell('model said',pctOf(b.predictedMean))
-    +cell('actually won',pctOf(b.measuredWinRate))
-    +cell('gap',(gap>0?'+':'')+gap+'pp',mbGapClass(gap))
-    +'</div>'
+  /* §12 — the seven named facts, in order, with the interval and the
+     evidence strength that the earlier version left off. The raw model
+     probability is the FIRST row: a measured tier explains what a 71% call is
+     worth, it does not entitle the page to hide that the model said 71%. */
+  var body=mbEvidenceTable(mc,b)
+    +mbInsideNote(b)
     +'<em>'+esc(mc.why||'')+'</em>';
-  /* THE RAW NUMBER STAYS VISIBLE. A measured tier explains what a 71% call is
-     worth; it does not entitle the page to hide that the model said 71%. */
-  if(mc.winProbability!=null){
-    body+='<div class="mbraw">Model probability for this game: <b>'
-      +(mc.winProbability*100).toFixed(1)+'%</b>'
-      +(b.measuredWinRate!=null
-        ? ' — its band delivered '+pctOf(b.measuredWinRate)+' over '+b.n+' games.'
-        : '')+'</div>';
-  }
   var m=mc.measurement;
   if(m){
     var ex=[];for(var k in (m.excluded||{}))ex.push(m.excluded[k]+' '+k);
@@ -1884,12 +1956,41 @@ function calibrationNote(){
   if(!c||!c.highRule)return '';
   var hr=c.highRule;
   if(hr.reachable!==false)return '';
+  /* Every band row carries its interval here too, so the slate-level
+     explanation cannot be read as five settled numbers. */
   var rows=(c.bands||[]).map(function(b){
     return '<span><u>'+(b.lo*100).toFixed(0)+'–'+(b.hi*100).toFixed(0)+'</u>n '
-      +b.n+' · won '+(b.measuredWinRate*100).toFixed(1)+'%</span>';}).join('');
+      +b.n+' · won '+(b.measuredWinRate*100).toFixed(1)+'% '
+      +'['+(b.actualWinRateCi95Low*100).toFixed(0)+'–'
+      +(b.actualWinRateCi95High*100).toFixed(0)+'] · '
+      +esc((MB_EV[b.sampleStatus]||['?'])[0])+'</span>';}).join('');
+  /* The pooled regions, because five small buckets invite the reader to pick
+     the scariest one. */
+  var regs=(c.regions||[]).map(function(r){
+    return '<span><u>'+esc(r.region)+'</u>n '+r.n+' · said '
+      +(r.predictedMean*100).toFixed(1)+'% · won '
+      +(r.measuredWinRate*100).toFixed(1)+'% ['
+      +(r.actualWinRateCi95Low*100).toFixed(0)+'–'
+      +(r.actualWinRateCi95High*100).toFixed(0)+']</span>';}).join('');
+  /* THE CANONICAL CLAIM, read from the payload. This page does not get to
+     phrase the calibration finding; decision.py owns that one sentence. */
+  var claim=c.claim?'<div class="mbclaim"><b>What the sample supports:</b> '
+      +esc(c.claim)+'</div>':'';
+  var cs=c.claimStatus||{};
+  var detail='';
+  if(cs.observed)detail+='<div class="mbclaim"><b>Observed:</b> '+esc(cs.observed)+'</div>';
+  if(cs.notEstablished)detail+='<div class="mbclaim"><b>Not established:</b> '
+      +esc(cs.notEstablished)+'</div>';
+  if(cs.wouldSettleIt)detail+='<div class="mbclaim"><b>Would settle it:</b> '
+      +esc(cs.wouldSettleIt)+'</div>';
   return '<div class="mbev"><b>Why no game is rated HIGH</b>'
     +'<em>'+esc(hr.why||'')+'</em>'
-    +(rows?'<div class="mbg">'+rows+'</div>':'')+'</div>';
+    +(rows?'<div class="mbregion">'+rows+'</div>':'')
+    +(regs?'<div class="mbregion">'+regs+'</div>':'')
+    +claim+detail
+    +(c.ciMethod?'<div class="ctxrule">intervals: '+esc(c.ciMethod)
+      +(c.sampleStatusVersion?' · '+esc(c.sampleStatusVersion):'')+'</div>':'')
+    +'</div>';
 }
 
 /* ==== COMPETITIVE CONTEXT ============================================
