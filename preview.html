@@ -485,6 +485,96 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
 .simfoot{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.55}
 .simempty{color:var(--muted);padding:14px;text-align:center}
 @media(max-width:520px){table.simtab{min-width:680px}.simcal{flex-direction:column;align-items:flex-start}}
+
+/* ---------- SLATE CARD v2 (2026-09-06) ---------------------------------
+   The card was a stack of six always-open blocks. Each block was good; the
+   stack was unreadable, because fifteen of them is a wall and the six things
+   a slate is actually for -- who plays, when, who starts, who the model
+   likes, whether it is a bet, and what the wind is doing -- were buried at
+   different depths inside it. The collapsed card now answers exactly those
+   six. Nothing was deleted: every old block moved, intact, into one dropdown.
+
+   MODEL and BET are deliberately two rows with two vocabularies. They are
+   different claims -- one about who wins, one about the price -- and the old
+   layout let them sit close enough to read as one. */
+.gc2{border:1px solid var(--line);border-radius:11px;background:var(--panel);
+     overflow:hidden;margin-bottom:9px}
+.gc2 .g2h{display:flex;align-items:center;gap:9px;padding:10px 12px;
+     border-bottom:1px solid var(--line);flex-wrap:wrap}
+.gc2 .g2mu{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px;
+     min-width:0;flex:1 1 auto}
+.gc2 .g2mu>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gc2 .g2at{color:var(--muted);font-weight:400}
+.gc2 .g2when{font-size:12px;color:var(--muted);white-space:nowrap}
+.gc2 .g2chips{display:flex;gap:5px;flex-wrap:wrap}
+.g2body{padding:10px 12px;display:grid;gap:9px}
+.g2row{display:grid;grid-template-columns:60px 1fr;gap:10px;align-items:start}
+.g2row>i{font-style:normal;font-size:9px;letter-spacing:.09em;color:var(--muted);
+     text-transform:uppercase;padding-top:4px}
+/* starters: name first, everything else subordinate to it */
+.g2sp{display:grid;gap:4px;font-size:12.5px;min-width:0}
+.g2spr{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;min-width:0}
+.g2spt{color:var(--muted);font-size:10px;letter-spacing:.06em;min-width:30px}
+.g2spn{font-weight:700}
+.g2spn.g2tbd{color:var(--muted);font-weight:600}
+.g2hand{color:var(--muted);font-weight:400;font-size:11px}
+.g2scr{color:var(--lose);font-size:11px;flex-basis:100%}
+/* model / bet */
+.g2model{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.g2team{font-weight:700;font-size:14px}
+.g2prob{font-variant-numeric:tabular-nums;font-weight:700}
+.g2proj{color:var(--muted);font-size:11.5px;font-variant-numeric:tabular-nums}
+.g2bet{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.g2price{font-variant-numeric:tabular-nums;font-size:12px}
+.g2why{color:var(--muted);font-size:11.5px;line-height:1.5;flex:1 1 100%;min-width:0}
+/* wind: ONE schematic, ONE arrow, ONE vector */
+.g2wind{display:flex;gap:11px;align-items:flex-start;flex-wrap:wrap}
+.g2field{flex:0 0 auto;color:var(--txt)}
+.g2wtxt{flex:1 1 160px;min-width:0;display:grid;gap:5px}
+.g2wsum{font-weight:700;font-size:12.5px}
+.g2wsum.g2sup{font-weight:600;color:var(--muted)}
+.g2sect{display:flex;gap:5px;flex-wrap:wrap}
+.g2sc{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);
+     border-radius:5px;padding:1px 6px;font-size:10.5px}
+.g2sc>i{font-style:normal;color:var(--muted);font-size:9px;letter-spacing:.06em}
+.g2sc>b{font-weight:700}
+.g2sc.s-OUT>b{color:var(--win)}.g2sc.s-IN>b{color:var(--lose)}
+.g2sc.s-CROSS>b{color:var(--gold)}.g2sc.s-NA>b{color:var(--muted)}
+.g2meta{color:var(--muted);font-size:11.5px;line-height:1.5}
+/* four independent subsystems -- never averaged into one score */
+.g2q{display:flex;gap:5px;flex-wrap:wrap;padding-top:1px}
+.g2qi{display:inline-flex;align-items:center;gap:5px;font-size:10px;
+     border:1px solid var(--line);border-radius:20px;padding:1px 8px}
+.g2qi>i{font-style:normal;color:var(--muted);letter-spacing:.07em}
+.g2qi>b{font-weight:700}
+.g2qi.q-ok>b{color:var(--win)}.g2qi.q-warn>b{color:var(--gold)}
+.g2qi.q-bad>b{color:var(--lose)}.g2qi.q-unk>b{color:var(--muted)}
+/* the dropdown */
+.g2det{border-top:1px solid var(--line)}
+.g2det>summary{list-style:none;cursor:pointer;padding:9px 12px;font-size:11px;
+     letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+     display:flex;align-items:center;justify-content:space-between;gap:8px}
+.g2det>summary::-webkit-details-marker{display:none}
+.g2det>summary:hover{color:var(--txt);background:var(--panel2)}
+.g2det>summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;color:var(--txt)}
+.g2det>summary .g2chev{transition:transform .15s}
+.g2det[open]>summary .g2chev{transform:rotate(180deg)}
+.g2dbody{padding:0 12px 12px;display:grid;gap:10px}
+.g2grp{border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.g2grph{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+     padding:6px 10px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.g2grpb{padding:9px 10px;display:grid;gap:7px}
+.g2kv{display:grid;grid-template-columns:minmax(92px,33%) 1fr;gap:8px;font-size:12px;
+     align-items:baseline}
+.g2kv>i{font-style:normal;color:var(--muted);font-size:10.5px}
+.g2kv>span{min-width:0;overflow-wrap:anywhere}
+@media(max-width:520px){
+  .g2row{grid-template-columns:1fr;gap:3px}
+  .g2row>i{padding-top:0}
+  .g2kv{grid-template-columns:1fr;gap:1px}
+  .gc2 .g2when{order:3}
+}
+
 </style>
 </head>
 <body>
@@ -1306,6 +1396,330 @@ function lineupChipOf(s){
     :s==='PROJECTED'?pill('LINEUPS PROJECTED','b-warn','Official lineups had not posted at run time — every batter is a projection, not a confirmed starter.')
     :pill('LINEUPS UNKNOWN','b-unk','The payload does not state whether this game’s lineup is official.');
 }
+
+/* ================= SLATE CARD v2 (2026-09-06) =========================
+   THE ONE RULE IN THIS BLOCK: it renders canonical values and computes no
+   decision. Winner, win probability, projected runs, bet verdict, edge,
+   implied price, market validity, lineup eligibility, starter confirmation,
+   wind eligibility, sector sense, park orientation and roof/wind
+   applicability all arrive already decided -- from prediction.py and from
+   data/environment_view.py (ENV-VIEW-1). Where a value is absent, the card
+   says it is absent. It never substitutes a neutral-looking default, because
+   "missing" and "nothing happening" are different claims and only one of them
+   is true. */
+
+/* --- the single physical wind vector, drawn once ----------------------
+   `fieldRelativeDeg` is published by mlb_picks/env/wind.py as the direction
+   the AIR TRAVELS, expressed relative to the home-plate -> centre-field axis,
+   clockwise positive (SECTORS: LF -45, CF 0, RF +45). The schematic puts CF
+   at the top and RF to the right, which is that same convention, so the arrow
+   is drawn pointing up and rotated by exactly that number. No meteorological
+   transform happens here: the comes-from direction was inverted to a movement
+   vector and rotated into field coordinates pipeline-side, where it was
+   measured against 526 games. Drawing one arrow per sector would be inventing
+   four winds; there is one. */
+function windField(e,size){
+  var S=size||76,c=S/2,on=!!(e&&e.directionShown),
+      deg=(on&&isNum(e&&e.fieldRelativeDeg))?e.fieldRelativeDeg:null;
+  var lab=windAria(e),r=c-10;
+  var lx=(c-r*Math.SQRT1_2).toFixed(1),ly=(c-r*Math.SQRT1_2).toFixed(1);
+  var rx=(c+r*Math.SQRT1_2).toFixed(1),ry=ly;
+  var t='<svg class="g2field" width="'+S+'" height="'+S+'" viewBox="0 0 '+S+' '+S
+    +'" role="img" aria-label="'+esc(lab)+'"><title>'+esc(lab)+'</title>';
+  /* fair territory: home plate low centre, foul lines out to +/-45 */
+  t+='<path d="M '+c+' '+(c+r*0.60).toFixed(1)+' L '+lx+' '+ly
+    +' A '+r+' '+r+' 0 0 1 '+rx+' '+ry+' Z" fill="none" stroke="currentColor" '
+    +'stroke-opacity=".26" stroke-width="1"/>';
+  t+='<text x="'+c+'" y="9.5" text-anchor="middle" font-size="7.5" fill="currentColor" fill-opacity=".55">CF</text>';
+  t+='<text x="3" y="'+(c-1)+'" font-size="7.5" fill="currentColor" fill-opacity=".55">LF</text>';
+  t+='<text x="'+(S-3)+'" y="'+(c-1)+'" text-anchor="end" font-size="7.5" fill="currentColor" fill-opacity=".55">RF</text>';
+  if(deg!==null){
+    /* tail-to-head IS the direction the air moves */
+    t+='<g data-arrow-deg="'+deg.toFixed(1)+'" transform="rotate('+deg.toFixed(1)+' '+c+' '+c+')">'
+      +'<line x1="'+c+'" y1="'+(c+16)+'" x2="'+c+'" y2="'+(c-13)+'" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/>'
+      +'<path d="M '+c+' '+(c-20)+' l 5.6 8.4 h -11.2 Z" fill="var(--accent)"/></g>';
+  }else{
+    /* no arrow, and no arrow-shaped placeholder either */
+    t+='<circle cx="'+c+'" cy="'+c+'" r="3.2" fill="currentColor" fill-opacity=".28"/>';
+  }
+  return t+'</svg>';
+}
+
+/* Plain words for a canonical suppression code. Turning a code into a
+   sentence is labelling; the decision behind the code is not revisited. */
+var WIND_SUPPRESS={
+  LIGHT_WIND:'Too light to call a direction',
+  ORIENTATION_UNVERIFIED:'Park orientation not verified — no direction shown',
+  ROOF_CLOSED:'Roof closed — outside wind does not reach the field',
+  NO_WIND_DIRECTION:'No wind direction reported'
+};
+var WIND_SUPPRESS_WHY={
+  LIGHT_WIND:'Below 8 mph the measured angular error (about 55°) is wider than the 45° sector being labelled, so the label would be a coin flip.',
+  ORIENTATION_UNVERIFIED:'This park’s home-plate-to-centre-field bearing has not cleared the orientation thresholds, so a field-relative arrow would be a guess dressed as a measurement.',
+  ROOF_CLOSED:'The roof is closed. The outdoor wind reading is real, but it is not the air over the field.',
+  NO_WIND_DIRECTION:'The provider supplied a speed but no direction for this hour.'
+};
+function windSuppressText(e){
+  var r=e&&e.suppressedReason;
+  if(r&&WIND_SUPPRESS[r])return WIND_SUPPRESS[r];
+  if(r)return String(r).replace(/_/g,' ').toLowerCase();
+  return 'Direction not shown';
+}
+function windSuppressWhy(e){
+  var r=e&&e.suppressedReason;
+  return (r&&WIND_SUPPRESS_WHY[r])||'';
+}
+/* One human line, composed from the same canonical fields the picture uses. */
+function windSummary(e){
+  if(!e)return 'No environment entry for this game';
+  if(!e.available)return 'No weather snapshot — this is a missing reading, not calm';
+  var sp=isNum(e.windSpeedMph)?(e.windSpeedMph.toFixed(0)+' mph'):'Wind speed not reported';
+  if(e.directionShown)return sp+' · '+(e.fieldRelativeLabel||'direction unlabelled');
+  return sp+' · '+windSuppressText(e);
+}
+/* The spoken sentence is built from the SAME fields as the drawing, so a
+   screen reader and a sighted reader cannot be told different things. */
+function windAria(e){
+  if(!e)return 'No environment entry for this game.';
+  if(!e.available)return 'No weather snapshot was captured for this game. This is a missing reading, not calm conditions.';
+  var sp=isNum(e.windSpeedMph)?('Wind '+e.windSpeedMph.toFixed(0)+' miles per hour. ')
+                              :'Wind speed not reported. ';
+  if(!e.directionShown)return sp+windSuppressText(e)+'.';
+  var s=sectorMap(e),parts=[],deg=isNum(e.fieldRelativeDeg)?e.fieldRelativeDeg:null;
+  ['LF','CF','RF'].forEach(function(k){if(s[k])parts.push(k+' '+s[k].toLowerCase());});
+  return sp+'Blowing '+(e.fieldRelativeLabel||'')
+    +(deg!==null?', '+deg.toFixed(0)+' degrees from straight-out to centre field':'')
+    +'. '+(parts.length?parts.join(', ')+'.':'');
+}
+function sectorMap(e){
+  var out={};
+  ((e&&e.sectors)||[]).forEach(function(s){if(s&&s.sector)out[s.sector]=s.sense;});
+  return out;
+}
+/* LF / CF / RF in the collapsed card, all five in the dropdown. A suppressed
+   direction shows an em dash: there is no sense to report, and printing
+   "NEUTRAL" would be an answer where the system has none. */
+function sectorStrip(e,keys){
+  var K=keys||['LF','CF','RF'],m=sectorMap(e),on=!!(e&&e.directionShown);
+  return '<div class="g2sect">'+K.map(function(k){
+    var v=on?(m[k]||null):null;
+    return '<span class="g2sc '+(v?'s-'+v:'s-NA')+'"><i>'+k+'</i><b>'
+      +(v?esc(v):'&mdash;')+'</b></span>';
+  }).join('')+'</div>';
+}
+
+/* --- four subsystems, four independent states ------------------------- */
+function qBit(label,txt,cls,tip){
+  return '<span class="g2qi '+cls+'"'+(tip?' title="'+esc(tip)+'"':'')
+    +'><i>'+esc(label)+'</i><b>'+esc(txt)+'</b></span>';
+}
+function qualityStrip(P,e){
+  P=P||{};
+  var out='',ls=P.lineupState||{};
+  if(ls.official)out+=qBit('LINEUP','CONFIRMED','q-ok','Official lineups are posted for both clubs.');
+  else if(ls.projected)out+=qBit('LINEUP','PROJECTED','q-warn','Official lineups had not posted when this ran — every batter is a projection.');
+  else out+=qBit('LINEUP','UNKNOWN','q-unk','The payload does not state whether this game’s lineup is official.');
+
+  var ms=String(P.marketState||'').toUpperCase();
+  out+=qBit('MARKET',ms||'UNKNOWN',
+    {PREGAME:'q-ok',LIVE:'q-bad',STARTED:'q-bad',IN_PLAY_PRICE:'q-bad',
+     CLOSED:'q-unk',STALE:'q-warn'}[ms]||'q-unk',
+    P.marketStateReason||'The payload does not state a market state for this game.');
+
+  if(!e)out+=qBit('WX','NO ENTRY','q-unk','No environment entry exists for this game.');
+  else if(!e.available)out+=qBit('WX','NO SNAPSHOT','q-unk',e.why||e.unavailableReason||'');
+  else if(e.directionShown)out+=qBit('WX','SHOWN','q-ok','A snapshot exists and the direction cleared every gate.');
+  else out+=qBit('WX','SUPPRESSED','q-warn',
+    windSuppressText(e)+(windSuppressWhy(e)?' '+windSuppressWhy(e):''));
+
+  if(!e||!e.available)out+=qBit('PARK','—','q-unk','No environment entry, so nothing is claimed about this park’s orientation.');
+  else if(e.orientationEntitled)out+=qBit('PARK','VERIFIED','q-ok','Measured orientation clears every threshold, so a field-relative arrow is authorised here.');
+  else out+=qBit('PARK','NOT VERIFIED','q-warn',
+    'Not entitled to an arrow'+((e.orientationViolations||[]).length
+      ? ': fails '+(e.orientationViolations||[]).join(', ')
+      : '. A suppressed arrow is the system working, not a gap.'));
+  return '<div class="g2q">'+out+'</div>';
+}
+
+/* --- starters: impossible to miss, and honest about what is known ------
+   CONFIRMED / PROJECTED / UNKNOWN come from prediction.py::sp_status, which
+   compares the club's filed lineup card against the stated probable. The
+   browser reads the word; it does not decide it. Older payloads carry no
+   status, and are shown as UNKNOWN rather than being upgraded by silence. */
+var SP_STATUS_TIP={
+  CONFIRMED:'The club’s filed lineup card names this starter.',
+  PROJECTED:'A stated probable. The club has not filed a lineup card naming him, so this is an intention, not a confirmation.',
+  UNKNOWN:'No starter has been named for this side. This is an absent claim, not a weak one.'
+};
+/* A PAYLOAD THAT CARRIES NO STATUS IS NOT A GAME WITH NO STARTER. The two
+   would look identical if both printed UNKNOWN, and one of them is a claim
+   about the game while the other is a gap in the build. They get different
+   words. */
+function spStatusPill(sp){
+  var raw=sp&&sp.status;
+  if(!raw)return pill('NOT PUBLISHED','b-unk',
+    'Starter confirmation state is '+NOT_IN_BUILD+' in this payload. That is a '
+    +'gap in what was published, not a statement that no starter was named.');
+  var s=String(raw).toUpperCase();
+  if(!SP_STATUS_TIP[s])s='UNKNOWN';
+  return pill(s,{CONFIRMED:'b-ok',PROJECTED:'b-warn',UNKNOWN:'b-unk'}[s],
+    sp.statusWhy||SP_STATUS_TIP[s]);
+}
+function spRow(team,sp){
+  var tbd=!sp||sp.tbd===true||!sp.name;
+  var name=tbd?'TBD':sp.name;
+  var hand=(sp&&sp.throws)?(sp.throws==='L'?'LHP':'RHP'):'';
+  var scr=(sp&&sp.cardDisagrees)
+    ? '<span class="g2scr">Lineup card names '+esc(sp.listedStarterName||'someone else')
+      +' — this prediction was built on '+esc(sp.name||'the probable')+'</span>' : '';
+  return '<div class="g2spr"><span class="g2spt">'+esc(team||'')+'</span>'
+    +'<span class="g2spn'+(tbd?' g2tbd':'')+'">'+esc(name)+'</span>'
+    +(hand?'<span class="g2hand">'+hand+'</span>':'')
+    +spStatusPill(sp)+scr+'</div>';
+}
+function spBlock(P,tm){
+  var ps=P.pitcherState||{};
+  return '<div class="g2sp">'+spRow(tm.away,ps.away)+spRow(tm.home,ps.home)+'</div>';
+}
+
+/* --- short environment meta: temperature, and the roof as TWO values ----
+   THE BUILDING AND TONIGHT ARE NEVER ONE VALUE. "Retractable" is what the
+   park is; "open" is what it is doing this evening. A retractable park with
+   the roof open behaves like an open-air park and a retractable park with it
+   shut behaves like a dome, so collapsing the pair loses the only thing a
+   reader wanted. Both are shown, always, even when the state is unknown --
+   an unknown roof state is a fact about tonight, not a reason to fall back
+   to describing the building. */
+var ROOF_TYPE_WORDS={Open:'open-air park',Retractable:'retractable roof',
+                     Dome:'fixed dome'};
+var ROOF_STATE_WORDS={OPEN_AIR:'no roof to close',OPEN:'open',CLOSED:'closed',
+                      FIXED_CLOSED:'closed (never opens)',
+                      UNKNOWN:'not reported'};
+function roofWords(e){
+  var t=e.roofType, s=e.roofState||'UNKNOWN';
+  return 'Roof: '+esc(ROOF_TYPE_WORDS[t]||t)
+    +' &middot; tonight '+esc(ROOF_STATE_WORDS[s]||String(s).toLowerCase());
+}
+function envMetaLine(e){
+  if(!e)return 'No environment entry for this game.';
+  /* the summary line directly above already says the snapshot is absent;
+     repeating it here would be volume, not information */
+  if(!e.available)return '';
+  var out=[];
+  out.push(isNum(e.temperatureF)?(e.temperatureF.toFixed(0)+'&deg;F')
+                                :'temperature not reported');
+  if(e.roofType)out.push(roofWords(e));
+  var w=windSuppressWhy(e);
+  return out.join(' &middot; ')+(w&&!e.directionShown?'<br>'+esc(w):'');
+}
+
+/* --- why the verdict is what it is, from canonical fields only --------- */
+function betWhy(P,rec,st){
+  P=P||{};
+  if(st&&st.key==='FINAL')return null;
+  var ms=String(P.marketState||'').toUpperCase();
+  if(ms&&ms!=='PREGAME')
+    return P.marketStateReason||('The market is '+ms.toLowerCase()+'.');
+  if(!rec)return null;
+  if(rec.rec==='PASS'&&!isNum(P.betEdge))
+    return 'No pregame price arrived for this game, so there is no edge to bet against.';
+  if(rec.rec==='PASS')
+    return 'The model has a side; the edge does not clear the bet threshold at this price.';
+  if(rec.rec==='WATCH')
+    return 'The model has a side; the edge is too thin to bet at this price.';
+  return null;
+}
+
+/* --- the card ---------------------------------------------------------- */
+function slateCard2(g,m){
+  var b=betFor(g,m),st=b.state,p=b.pred,P=predOf(g,m)||{};
+  var tm={away:p.away||teamsOf(g).away,home:p.home||teamsOf(g).home};
+  var gState=lineupStateOf(g,m);
+  var e=((D.environment||{}).games||{})[String(g.gamePk)]||null;
+  var cls={PREGAME:'st-pre',LIVE:'st-live',FINAL:'st-final',POSTPONED:'st-ppd'}[st.key]||'st-pre';
+  var rec=recFor(g,m);
+
+  /* MODEL: who wins. Always present when the algo ran, and never suppressed
+     by a PASS -- a PASS is a verdict on the PRICE. */
+  var prov=(p.src==='derived')
+    ? ' '+pill('DERIVED','b-unk','No canonical projectedWinner in this payload — the winner was derived from the pick and confidence. Treat it as unverified.')
+    : (p.src==='mirror')
+    ? ' '+pill('MIRRORED','b-unk','Read from a mirrored field, not from predictions[].') : '';
+  var dis=p.disagree?' '+pill('SOURCES DISAGREE','b-warn',p.disagree):'';
+  var proj=(isNum(p.awayRuns)&&isNum(p.homeRuns))
+    ? esc(tm.away)+' '+p.awayRuns.toFixed(1)+' &ndash; '+p.homeRuns.toFixed(1)+' '+esc(tm.home)
+    : null;
+  var model='<div class="g2model"><span class="g2team">'+esc(p.winner||'—')+'</span>'
+    +(isNum(p.wp)?'<span class="g2prob">'+p.wp.toFixed(0)+'%</span>':'')
+    +(proj?'<span class="g2proj">'+proj+'</span>':'')+prov+dis+'</div>';
+
+  /* BET: a verdict on the price, in its own vocabulary. */
+  /* A price belongs to a SIDE. `betTeam` is the canonical side the price and
+     the edge were computed for; `b.team` can fall back to the market-value or
+     projected side, and printing an American number beside that would put a
+     price on a team nobody quoted. So the price cluster is shown only when
+     the payload names the side it belongs to. */
+  var price='';
+  if(b.betTeam&&isNum(b.odds))price+='<span class="g2price">'+esc(b.betTeam)+' '
+    +(b.odds>0?'+':'')+b.odds+'</span>';
+  if(b.betTeam&&isNum(b.edge))price+='<span class="g2price">edge '
+    +(b.edge>0?'+':'')+b.edge.toFixed(1)+'pt</span>';
+  var why=betWhy(P,rec,st);
+  var bet='<div class="g2bet">'+(rec?recPill(rec.rec):pill('UNKNOWN','b-unk',
+      'The payload carries no recommendation for this game.'))+price
+    +(why?'<span class="g2why">'+esc(why)+'</span>':'')+'</div>';
+
+  var wsum=windSummary(e),shown=!!(e&&e.available&&e.directionShown);
+  var wind='<div class="g2wind">'+windField(e)
+    +'<div class="g2wtxt"><div class="g2wsum'+(shown?'':' g2sup')+'">'+esc(wsum)+'</div>'
+    +sectorStrip(e)+'<div class="g2meta">'+envMetaLine(e)+'</div></div></div>';
+
+  return '<div class="gc2 '+cls+'">'
+    +'<div class="g2h">'
+      +'<div class="g2mu">'+teamLogo(tm.away)+'<span>'+esc(tm.away)+'</span>'
+        +'<span class="g2at">@</span>'+teamLogo(tm.home)+'<span>'+esc(tm.home)+'</span></div>'
+      +'<div class="g2when">'+esc(etTime(g.time||m.time||p.pred.time))+'</div>'
+      +'<div class="g2chips">'+stateChip(st)+'</div>'
+    +'</div>'
+    +'<div class="g2body">'
+      +'<div class="g2row"><i>Starters</i>'+spBlock(P,tm)+'</div>'
+      +'<div class="g2row"><i>Model</i>'+model+'</div>'
+      +'<div class="g2row"><i>Bet</i>'+bet+'</div>'
+      +'<div class="g2row"><i>Wind</i>'+wind+'</div>'
+      +qualityStrip(P,e)
+    +'</div>'
+    +'<details class="g2det"><summary><span>Game details</span>'
+      +'<span class="g2chev" aria-hidden="true">&#9662;</span></summary>'
+      +'<div class="g2dbody">'
+        +g2group('Matchup',
+            g2kv('Away',tm.away)+g2kv('Home',tm.home)
+            +g2kv('Venue',P.venue||g.venue)
+            +g2kv('First pitch',etTime(g.time||m.time||p.pred.time))
+            +g2kv('Game status',(P.lineupState||{}).gameStatus||st.label)
+            +g2kv('gamePk',g.gamePk))
+        +heroBlock(p,st)
+        +pitchBlock(g,m,tm)
+        +(st.key==='FINAL'?resultBlock(g,m):betBlock(g,m))
+        +g2group('Wind, all five sectors',
+            '<div class="g2wind">'+windField(e,92)
+            +'<div class="g2wtxt"><div class="g2wsum'+(shown?'':' g2sup')+'">'+esc(wsum)+'</div>'
+            +sectorStrip(e,['LF','LCF','CF','RCF','RF'])
+            +'<div class="g2meta">'+esc((e&&e.sectorNote)||'')+'</div></div></div>')
+        +envCard(g.gamePk)
+        +lineupDetails(g,m,gState,tm)
+        +detailsBlock(g,m)
+      +'</div></details>'
+    +'</div>';
+}
+function g2group(t,inner){
+  return '<div class="g2grp"><div class="g2grph">'+esc(t)+'</div>'
+    +'<div class="g2grpb">'+inner+'</div></div>';
+}
+function g2kv(k,v){
+  return '<div class="g2kv"><i>'+esc(k)+'</i><span>'
+    +((v===null||v===undefined||v==='')?SH_ABSENT:esc(String(v)))+'</span></div>';
+}
+
 function slateCard(g,m){
   var b=betFor(g,m),st=b.state,p=b.pred;
   var tm={away:p.away||teamsOf(g).away,home:p.home||teamsOf(g).home};
@@ -1402,7 +1816,7 @@ function renderSlate(){
     var g2=vis.filter(function(r){return r.st.group===k;}).sort(function(a,b){return a.t-b.t;});
     if(!g2.length)return;
     body+='<div class="ghead"><span>'+esc(k)+'</span><span class="gn">'+g2.length+'</span></div>'
-      +'<div class="sgrid">'+g2.map(function(r){return slateCard(r.g,r.m);}).join('')+'</div>';
+      +'<div class="sgrid">'+g2.map(function(r){return slateCard2(r.g,r.m);}).join('')+'</div>';
   });
   if(!body)body='<div class="empty">No games match the '+esc(SLATE_FILTER)+' filter. '
     +(SLATE_FILTER==='BET'?'The model still projects a winner in every game — switch to ALL to see them.':'Switch to ALL to see the full slate.')+'</div>';
