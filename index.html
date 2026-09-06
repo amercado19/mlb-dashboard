@@ -1929,13 +1929,33 @@ function contextChips(pred){
       +(s.seriesLength?'/'+esc(String(s.seriesLength)):'')+'</i>'
       +esc(s.seriesRecordBeforeGame)+'</span>';
   }
+  /* MOST BINDING FIRST, and the order is written down.
+     The payload lists labels in rule-evaluation order, which is not an order
+     of importance: it put DIVISION_RACE ahead of ELIMINATION_RISK, so a club
+     sixteen games out with an elimination number of 4 led with a green chip
+     saying it was in a division race. True, and the wrong headline. */
+  var CX_BIND=['ELIMINATED','DIVISION_CLINCHED','PLAYOFF_CLINCHED',
+               'CLINCH_OPPORTUNITY','ELIMINATION_RISK','DIVISION_LEADER',
+               'PLAYOFF_BUBBLE','WILD_CARD_POSITION','DIVISION_RACE',
+               'WILD_CARD_CHASING'];
   ['away','home'].forEach(function(k){
     var c=st[k]; if(!c||!c.labels||!c.labels.length)return;
-    var lab=c.labels[0];
     var team=(pred[k+'Team']||k.toUpperCase());
+    var lab=null;
+    for(var i=0;i<CX_BIND.length&&!lab;i++)
+      if(c.labels.indexOf(CX_BIND[i])>=0)lab=CX_BIND[i];
+    if(!lab)lab=c.labels[0];
     var chip=cxChip(team,CX_RACE,lab);
+    /* THE NUMBER, NOT JUST THE WORD. An elimination number is checkable; a
+       chip that says ELIM RISK is not. It is the count of combined
+       leader-wins and own-losses that ends the season. */
+    if(chip&&lab==='ELIMINATION_RISK'&&c.eliminationNumber!=null)
+      chip=chip.replace('</span>',' <i>E#'+c.eliminationNumber+'</i></span>');
+    if(chip&&lab==='CLINCH_OPPORTUNITY'&&c.magicNumber!=null)
+      chip=chip.replace('</span>',' <i>M#'+c.magicNumber+'</i></span>');
     if(chip)out+=chip;
-    if(c.labels.indexOf('REST_RISK')>0)out+=cxChip(team,CX_RACE,'REST_RISK');
+    if(lab!=='REST_RISK'&&c.labels.indexOf('REST_RISK')>=0)
+      out+=cxChip(team,CX_RACE,'REST_RISK');
   });
   return out?'<div class="ctxrow">'+out+'</div>':'';
 }
