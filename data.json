@@ -1,6 +1,6 @@
 {
  "date": "2026-09-06",
- "generated_at": "2026-09-06T19:18:07",
+ "generated_at": "2026-09-06T19:41:04",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,19 +9,19 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "1671a32"
+  "gitCommit": "574b3e5"
  },
  "games": [
   {
    "away": "mil",
    "home": "cin",
    "away_win_prob": 0.51,
-   "home_win_prob": 0.38,
+   "home_win_prob": 0.39,
    "pick": "mil",
    "confidence": 0.51,
    "tier": "LEAN",
    "total": 9.6,
-   "book_total_line": 19.5,
+   "book_total_line": 20.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -45,9 +45,9 @@
    "home_win_prob": 0.454,
    "pick": "atl",
    "confidence": 0.496,
-   "tier": "LEAN",
+   "tier": "PASS",
    "total": 8.9,
-   "book_total_line": 6.5,
+   "book_total_line": 9.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -73,7 +73,7 @@
    "confidence": 0.573,
    "tier": "PASS",
    "total": 8.2,
-   "book_total_line": 7.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -99,7 +99,7 @@
    "confidence": 0.483,
    "tier": "LEAN",
    "total": 7.6,
-   "book_total_line": 3.5,
+   "book_total_line": 1.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -125,7 +125,7 @@
    "confidence": 0.612,
    "tier": "PASS",
    "total": 9.4,
-   "book_total_line": 6.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -151,7 +151,7 @@
    "confidence": 0.592,
    "tier": "LEAN",
    "total": 8.4,
-   "book_total_line": 4.5,
+   "book_total_line": 3.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -177,7 +177,7 @@
    "confidence": 0.539,
    "tier": "LEAN",
    "total": 9.1,
-   "book_total_line": 14.5,
+   "book_total_line": 13.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -203,7 +203,7 @@
    "confidence": 0.614,
    "tier": "LEAN",
    "total": 9.1,
-   "book_total_line": 8.5,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -255,7 +255,7 @@
    "confidence": 0.476,
    "tier": "PASS",
    "total": 9.0,
-   "book_total_line": 11.5,
+   "book_total_line": 10.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -402,13 +402,13 @@
    "prob_inputs": {
     "epa": 4.15,
     "order": 6,
-    "pa_season": 77,
+    "pa_season": 78,
     "factors": {
      "sp": 1.019,
      "park": 1.2,
      "temp": 1.108
     },
-    "hr_rate_pa": 0.0586
+    "hr_rate_pa": 0.0584
    },
    "edge_score": 71,
    "score_type": "model_score_0_100",
@@ -568,14 +568,14 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 620,
+    "pa_season": 621,
     "factors": {
      "sp": 1.021,
      "park": 1.105
     },
-    "hr_rate_pa": 0.058
+    "hr_rate_pa": 0.0579
    },
-   "edge_score": 65,
+   "edge_score": 63,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 16.2,
@@ -634,16 +634,16 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 620,
+    "pa_season": 621,
     "factors": {
      "sp": 0.999,
      "park": 1.07,
      "temp": 1.042,
      "wind": 0.973
     },
-    "hr_rate_pa": 0.0546
+    "hr_rate_pa": 0.0545
    },
-   "edge_score": 59,
+   "edge_score": 58,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.9,
@@ -734,11 +734,11 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 550,
+    "pa_season": 551,
     "factors": {
      "sp": 1.048
     },
-    "hit_rate_pa": 0.2548
+    "hit_rate_pa": 0.2545
    },
    "edge_score": 80,
    "score_type": "model_score_0_100",
@@ -920,11 +920,11 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 620,
+    "pa_season": 621,
     "factors": {
      "sp": 1.016
     },
-    "hit_rate_pa": 0.2532
+    "hit_rate_pa": 0.2529
    },
    "edge_score": 73,
    "score_type": "model_score_0_100",
@@ -951,11 +951,11 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 123,
+    "pa_season": 124,
     "factors": {
      "sp": 1.004
     },
-    "hit_rate_pa": 0.2467
+    "hit_rate_pa": 0.2459
    },
    "edge_score": 72,
    "score_type": "model_score_0_100",
@@ -1044,7 +1044,7 @@
    "prob_inputs": {
     "epa": 4.15,
     "order": 6,
-    "pa_season": 30,
+    "pa_season": 31,
     "factors": {
      "sp": 1.031
     },
@@ -1168,7 +1168,7 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 620,
+    "pa_season": 621,
     "factors": {
      "sp": 1.016
     },
@@ -1230,7 +1230,7 @@
    "prob_inputs": {
     "epa": 4.25,
     "order": 5,
-    "pa_season": 353,
+    "pa_season": 354,
     "factors": {
      "sp": 0.969
     },
