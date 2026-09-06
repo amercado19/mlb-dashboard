@@ -769,6 +769,40 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
 .mbregion span{font-size:10px;font-family:var(--mono,monospace);color:#8fa8c8;
   background:#111826;border:1px solid #1d2740;border-radius:4px;padding:2px 7px}
 .mbregion span u{text-decoration:none;color:#4d5f7d;margin-right:4px}
+
+/* --- market study panel ---------------------------------------------- */
+.mkwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mkt{border-collapse:collapse;width:100%;min-width:640px;font-size:11px}
+.mkt th{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#4d5f7d;
+  font-weight:700;text-align:left;padding:5px 8px;border-bottom:1px solid #1d2740;
+  white-space:nowrap}
+.mkt td{padding:5px 8px;border-bottom:1px solid #111a26;font-size:11px;
+  color:#8fa8c8;font-family:var(--mono,monospace);white-space:nowrap}
+.mkt td:first-child{color:#dce8f6;font-weight:700}
+.mkt tr.mk-hi td{background:#0d1220}
+.mkpair{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:8px;margin:8px 0}
+.mkcard{background:#0d1220;border:1px solid #1d2740;border-radius:7px;padding:9px 11px}
+.mkcard u{text-decoration:none;display:block;font-size:9px;letter-spacing:.06em;
+  text-transform:uppercase;color:#4d5f7d;font-weight:700;margin-bottom:4px}
+.mkcard b{font-size:15px;color:#dce8f6;display:block;font-family:var(--mono,monospace)}
+.mkcard s{text-decoration:none;font-size:10px;color:#6a7a92;display:block;margin-top:3px}
+.mkbetter{color:#4dd08a}.mkworse{color:#e8a030}.mksame{color:#8a8a8a}
+.mknote{font-size:10px;color:#6a7a92;line-height:1.65;margin:6px 0}
+.mknote b{color:#9fb4cc;font-weight:600}
+.mkdef{font-size:9px;color:#4f4f4f;font-family:var(--mono,monospace);
+  line-height:1.6;margin-top:5px}
+.mkflag{font-size:10px;color:#7d7259;background:#161200;border:1px solid #2a2206;
+  border-radius:5px;padding:6px 9px;line-height:1.6;margin:7px 0}
+.mkflag b{color:#e8a030;font-weight:700}
+.mkref{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.mkref span{font-size:10px;font-family:var(--mono,monospace);color:#8a8a8a;
+  background:#141414;border:1px solid #242424;border-radius:4px;padding:2px 7px}
+.mkstat{font-size:9px;font-weight:700;letter-spacing:.04em;padding:1px 6px;
+  border-radius:20px;border:1px solid transparent}
+.mks-ok{background:#0a1f14;color:#4dd08a;border-color:#14432c}
+.mks-lim{background:#1a1200;color:#e8b040;border-color:#3a2a06}
+.mks-und{background:#1f0a0a;color:#e87070;border-color:#3d1414}
 </style>
 </head>
 <body>
@@ -5219,6 +5253,135 @@ function labClv(L){
     +labCard('Legacy CLV — never combined','', legacy)+'</div>';
 }
 
+
+/* ==== MARKET STUDY — READ, NEVER COMPUTED ============================ */
+function mkStat(s){
+  var c=s==='ADEQUATE'?'mks-ok':s==='LIMITED'?'mks-lim':'mks-und';
+  return '<span class="mkstat '+c+'">'+esc(s||'?')+'</span>';
+}
+function mkPp(v){return (v==null)?SH_ABSENT:((v>0?'+':'')+v+'pp');}
+function mkPct(v,d){return (v==null)?SH_ABSENT:(v*100).toFixed(d==null?1:d)+'%';}
+
+function marketPanel(){
+  var M=(labRoot()||{}).market;
+  if(!M)return '';
+  if(M.status==='BUILD_FAILED'){
+    return ahs('Model versus market','BUILD FAILED',
+      '<div class="mkflag"><b>The market study did not build.</b> '
+      +esc(M.why||'')+'</div>');
+  }
+  var P=M.paired||{};
+  var h='';
+
+  /* THE DEFINITION FIRST. A reader must know what "market probability" means
+     before seeing a number derived from it. */
+  h+='<div class="mknote"><b>Market probability:</b> '
+    +esc(M.marketProbabilityDefinition||'')+'</div>';
+  h+='<div class="mknote"><b>Not a close:</b> '+esc(M.notAClose||'')+'</div>';
+
+  if(!P.n){
+    h+='<div class="mkflag"><b>No paired row.</b> '
+      +esc(P.why||'the eligibility rules admitted nothing')+'</div>';
+  }else{
+    var d=P.delta||{};
+    var cls=d.pairedBrierMeanDiff==null?'mksame'
+      :(d.pairedBrierMeanDiff<0?'mkbetter':'mkworse');
+    h+='<div class="mkpair">'
+      +'<div class="mkcard"><u>paired n</u><b>'+P.n+'</b><s>'
+        +esc((M.dateRange||[]).join(' to '))+'</s></div>'
+      +'<div class="mkcard"><u>model Brier</u><b>'+P.model.brier+'</b><s>acc '
+        +mkPct(P.model.accuracy)+' · logloss '+P.model.logLoss+'</s></div>'
+      +'<div class="mkcard"><u>market Brier</u><b>'+P.market.brier+'</b><s>acc '
+        +mkPct(P.market.accuracy)+' · logloss '+P.market.logLoss+'</s></div>'
+      +'<div class="mkcard"><u>model − market</u><b class="'+cls+'">'
+        +(d.pairedBrierMeanDiff>0?'+':'')+d.pairedBrierMeanDiff+'</b><s>'
+        +esc(d.sign||'')+'</s></div>'
+      +'</div>';
+    h+='<div class="mknote"><b>95% on the paired difference:</b> ['
+      +(d.pairedBrierCi95||[]).join(', ')+'] — '
+      +((d.pairedBrierCi95 && d.pairedBrierCi95[0]<=0 && d.pairedBrierCi95[1]>=0)
+        ? 'contains zero, so this sample does not separate the two forecasters'
+        : 'excludes zero')
+      +'</div>';
+    h+='<div class="mkdef">'+esc(d.note||'')+'</div>';
+  }
+
+  /* Disagreement buckets, with the residual against the MARKET. */
+  function tbl(rows,label,keyName){
+    if(!rows||!rows.length)return '';
+    var body='';
+    rows.forEach(function(r){
+      if(!r.n){ body+='<tr><td>'+esc(r.bucket)+'</td><td colspan="8">'
+        +SH_ABSENT+' '+esc(r.why||'')+'</td></tr>'; return; }
+      body+='<tr><td>'+esc(r.bucket)+'</td>'
+        +'<td>'+r.n+'</td>'
+        +'<td>'+mkPct(r.meanModelProbability)+'</td>'
+        +'<td>'+mkPct(r.meanMarketFairProbability)+'</td>'
+        +'<td>'+mkPct(r.actualAwayWinRate)+'</td>'
+        +'<td>['+(r.actualCi95||[]).map(function(x){return (x*100).toFixed(1);}).join(', ')+']</td>'
+        +'<td class="'+(r.marketResidualPp>0?'mkbetter':r.marketResidualPp<0?'mkworse':'mksame')
+          +'">'+mkPp(r.marketResidualPp)+'</td>'
+        +'<td>['+(r.marketResidualCi95Pp||[]).join(', ')+']</td>'
+        +'<td>'+mkStat(r.sampleStatus)+'</td></tr>';
+    });
+    return '<div class="mknote"><b>'+esc(label)+'</b></div>'
+      +'<div class="mkwrap"><table class="mkt"><tr>'
+      +'<th>'+esc(keyName)+'</th><th>n</th><th>model</th><th>market</th>'
+      +'<th>actual</th><th>95% actual</th><th>market residual</th>'
+      +'<th>95% residual</th><th>evidence</th></tr>'+body+'</table></div>';
+  }
+
+  h+=tbl(M.disagreementBuckets,
+        'Disagreement buckets — model minus market, in points. The column that '
+        +'matters is MARKET RESIDUAL: what actually happened minus what the '
+        +'market already expected. Beating 50% is not the question.',
+        'disagreement');
+  h+=tbl(M.leadTimeBuckets,
+        'By capture lead time. A morning price and a near-first-pitch price are '
+        +'different markets, and pooling them would hide that.',
+        'lead time');
+
+  /* Direction, because absolute disagreement hides an asymmetry. */
+  var dir=M.direction||{};
+  function dirRow(k,label){
+    var g=dir[k]; if(!g||!g.n)return '<span>'+esc(label)+' — '+SH_ABSENT+'</span>';
+    return '<span>'+esc(label)+': n '+g.n+' · actual '
+      +mkPct(g.actualAwayWinRate)+' · market '
+      +mkPct(g.meanMarketFairProbability)+' · residual '
+      +mkPp(g.marketResidualPp)+(g.residualExcludesZero?' *':'')+'</span>';
+  }
+  h+='<div class="mknote"><b>Direction of disagreement.</b> '+esc(dir.note||'')+'</div>'
+    +'<div class="mkref">'+dirRow('modelMoreBullishBy5Plus','model higher by 5+')
+    +dirRow('modelMoreBearishBy5Plus','model lower by 5+')
+    +dirRow('agreeWithin2','within 2')+'</div>'
+    +'<div class="mkdef">* the residual interval excludes zero</div>';
+
+  /* Sources and refusals — an empty study must be diagnosable. */
+  var src=M.bySource||{};
+  var sk=Object.keys(src);
+  if(sk.length){
+    h+='<div class="mknote"><b>By price source.</b></div><div class="mkref">'
+      +sk.map(function(k){return '<span>'+esc(k)+': n '+src[k].n+' · mean disagreement '
+        +mkPp(src[k].meanDisagreementPp)+'</span>';}).join('')+'</div>';
+  }
+  var rf=M.refusals||{};
+  var rk=Object.keys(rf);
+  h+='<div class="mknote"><b>Refusals</b> — every capture the join declined, '
+    +'by reason. An empty study must be diagnosable.</div><div class="mkref">'
+    +(rk.length?rk.map(function(k){return '<span>'+esc(k)+' '+rf[k]+'</span>';}).join('')
+      :'<span>none</span>')+'</div>';
+
+  /* The vocabulary, on the panel, so nobody has to remember it. */
+  var T=M.terminology||{};
+  h+='<div class="mkflag"><b>Disagreement is not edge.</b> '
+    +esc(T.disagreement||'')+'. '+esc(T.realizedEdge||'')+'</div>';
+  h+='<div class="mkdef">'+esc(M.version||'')+' · '+esc(M.status||'')
+    +' · de-vig '+esc(M.devigMethod||'')+' · '+esc(M.scoredOn||'')+'</div>';
+
+  return ahs('Model versus market',
+    (P.n?String(P.n)+' paired':'no paired row'), h);
+}
+
 function renderBacktests(){
   var BT=(D&&D.backtests)||{},h='';
 
@@ -5231,6 +5394,7 @@ function renderBacktests(){
       +'One row per prediction family that actually exists. '
       +esc((L.pit&&L.pit.consequence)||'')
       +'</div>'+labMatrix(L));
+    h+=marketPanel();
     h+=ahs('Valid CLV era','',
       '<div class="lab-note" style="margin:0 0 9px">The valid forward series and the legacy provisional numbers are shown side by side and are <b>never combined</b>. They are different measurements, and averaging them would let the unverifiable rows outvote the real ones under the valid series\u2019 name.</div>'
       +labClv(L));
