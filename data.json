@@ -1,6 +1,6 @@
 {
  "date": "2026-09-06",
- "generated_at": "2026-09-06T15:42:16",
+ "generated_at": "2026-09-06T16:03:31",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "827cd01"
+  "gitCommit": "5eec7e4"
  },
  "games": [
   {
@@ -95,9 +95,9 @@
    "home": "pit",
    "away_win_prob": 0.483,
    "home_win_prob": 0.497,
-   "pick": "laa",
-   "confidence": 0.483,
-   "tier": "LEAN",
+   "pick": "pit",
+   "confidence": 0.497,
+   "tier": "PASS",
    "total": 7.6,
    "book_total_line": 7.0,
    "wind": {
@@ -424,8 +424,8 @@
    ]
   },
   {
-   "player": "Hunter Goodman",
-   "team": "col",
+   "player": "Leo Bernal",
+   "team": "stl",
    "game": "stl-col",
    "stat": "HR",
    "line": 0.5,
@@ -433,24 +433,24 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 507,
+    "epa": 4.25,
+    "order": 5,
+    "pa_season": 22,
     "factors": {
-     "sp": 1.041,
+     "sp": 1.019,
      "park": 1.2,
      "temp": 1.108
     },
-    "hr_rate_pa": 0.0777
+    "hr_rate_pa": 0.0433
    },
-   "edge_score": 71,
+   "edge_score": 68,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 15.6,
-    "hard_hit_pct": 45.1,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.232,
-    "recent_hr_rate": 0.0429
+    "barrel_pct": null,
+    "hard_hit_pct": null,
+    "avg_exit_velo": null,
+    "xiso": 0.179,
+    "recent_hr_rate": 0.0455
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -1043,13 +1043,13 @@
    "model_prob": null,
    "method": "poisson_ge2",
    "prob_inputs": {
-    "epa": 3.95,
-    "order": 8,
+    "epa": 4.15,
+    "order": 6,
     "pa_season": 30,
     "factors": {
      "sp": 1.031
     },
-    "lambda_pg": 1.76
+    "lambda_pg": 1.849
    },
    "edge_score": 3.11,
    "score_type": "per_game_rate",
