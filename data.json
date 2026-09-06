@@ -1,6 +1,6 @@
 {
  "date": "2026-09-06",
- "generated_at": "2026-09-06T19:16:26",
+ "generated_at": "2026-09-06T19:18:07",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "a635791"
+  "gitCommit": "1671a32"
  },
  "games": [
   {
@@ -151,7 +151,7 @@
    "confidence": 0.592,
    "tier": "LEAN",
    "total": 8.4,
-   "book_total_line": 5.5,
+   "book_total_line": 4.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -177,7 +177,7 @@
    "confidence": 0.539,
    "tier": "LEAN",
    "total": 9.1,
-   "book_total_line": 15.5,
+   "book_total_line": 14.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -279,7 +279,7 @@
    "home_win_prob": 0.545,
    "pick": "col",
    "confidence": 0.545,
-   "tier": "LEAN",
+   "tier": "PASS",
    "total": 11.0,
    "book_total_line": 11.5,
    "wind": {
@@ -435,14 +435,14 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 517,
+    "pa_season": 518,
     "factors": {
      "sp": 1.055,
      "park": 1.175,
      "temp": 1.036,
      "wind": 0.955
     },
-    "hr_rate_pa": 0.05
+    "hr_rate_pa": 0.0499
    },
    "edge_score": 70,
    "score_type": "model_score_0_100",
@@ -452,39 +452,6 @@
     "avg_exit_velo": 92.4,
     "xiso": 0.213,
     "recent_hr_rate": 0.0273
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Adael Amador",
-   "team": "col",
-   "game": "stl-col",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.15,
-    "order": 6,
-    "pa_season": 30,
-    "factors": {
-     "sp": 1.041,
-     "park": 1.2,
-     "temp": 1.108
-    },
-    "hr_rate_pa": 0.0474
-   },
-   "edge_score": 70,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": null,
-    "hard_hit_pct": null,
-    "avg_exit_velo": null,
-    "xiso": 0.139,
-    "recent_hr_rate": 0.0667
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -519,6 +486,39 @@
     "avg_exit_velo": 91.8,
     "xiso": 0.208,
     "recent_hr_rate": 0.0551
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Alec Burleson",
+   "team": "stl",
+   "game": "stl-col",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 601,
+    "factors": {
+     "sp": 1.019,
+     "park": 1.2,
+     "temp": 1.108
+    },
+    "hr_rate_pa": 0.0456
+   },
+   "edge_score": 67,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 10.6,
+    "hard_hit_pct": 49.0,
+    "avg_exit_velo": 91.8,
+    "xiso": 0.225,
+    "recent_hr_rate": 0.0254
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -600,7 +600,7 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 388,
+    "pa_season": 389,
     "factors": {
      "sp": 1.014,
      "park": 0.86,
@@ -889,11 +889,11 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 517,
+    "pa_season": 518,
     "factors": {
      "sp": 1.041
     },
-    "hit_rate_pa": 0.2315
+    "hit_rate_pa": 0.2312
    },
    "edge_score": 75,
    "score_type": "model_score_0_100",
@@ -1106,7 +1106,7 @@
    "prob_inputs": {
     "epa": 4.25,
     "order": 5,
-    "pa_season": 22,
+    "pa_season": 23,
     "factors": {
      "sp": 1.014
     },
