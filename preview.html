@@ -625,6 +625,50 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
   .sshkv{grid-template-columns:1fr !important}
 }
 
+
+/* ---------- BACKTEST LAB — PHASE A (2026-09-06) ----------------------- */
+.lab-wrap{display:grid;gap:12px}
+.lab-note{font-size:11.5px;color:var(--muted);line-height:1.6}
+.lab-tblw{overflow-x:auto;border:1px solid var(--line);border-radius:9px}
+table.lab-mx{border-collapse:collapse;width:100%;min-width:840px;font-size:11.5px}
+table.lab-mx th{text-align:left;font-size:9px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);font-weight:600;
+  padding:7px 9px;border-bottom:1px solid var(--line);
+  background:var(--panel2);white-space:nowrap;position:sticky;top:0}
+table.lab-mx td{padding:7px 9px;border-bottom:1px solid var(--line);
+  vertical-align:top}
+table.lab-mx tr:last-child td{border-bottom:0}
+table.lab-mx td.lab-fam{font-weight:700;white-space:nowrap}
+table.lab-mx td.lab-num{font-variant-numeric:tabular-nums;white-space:nowrap}
+table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
+.lab-st{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.05em;
+  border-radius:20px;padding:1px 8px;white-space:nowrap;border:1px solid var(--line)}
+.lab-st.s-meas{color:var(--win)}.lab-st.s-warn{color:var(--gold)}
+.lab-st.s-bad{color:var(--lose)}.lab-st.s-unk{color:var(--muted)}
+.lab-pick{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px}
+.lab-pick button{font:inherit;font-size:11px;padding:3px 10px;border-radius:20px;
+  border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer}
+.lab-pick button:hover{color:var(--txt)}
+.lab-pick button[aria-pressed="true"]{background:var(--accent);color:#fff;
+  border-color:var(--accent)}
+.lab-pick button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lab-g{display:grid;gap:11px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.lab-card{border:1px solid var(--line);border-radius:9px;overflow:hidden;
+  background:var(--panel);min-width:0}
+.lab-ch{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);padding:6px 10px;border-bottom:1px solid var(--line);
+  background:var(--panel2);display:flex;justify-content:space-between;gap:8px}
+.lab-ch b{color:var(--txt);font-variant-numeric:tabular-nums}
+.lab-cb{padding:9px 10px}
+.lab-svg{display:block;width:100%;height:auto;color:var(--txt)}
+.lab-refuse{font-size:11.5px;color:var(--muted);line-height:1.6;
+  border-left:3px solid var(--gold);padding:2px 0 2px 9px}
+.lab-kv{display:grid;grid-template-columns:minmax(96px,38%) 1fr;gap:6px;
+  font-size:11.5px;padding:2px 0;align-items:baseline}
+.lab-kv>i{font-style:normal;color:var(--muted);font-size:10.5px}
+.lab-kv>span{min-width:0;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+@media(max-width:520px){.lab-kv{grid-template-columns:1fr;gap:1px}}
+
 </style>
 </head>
 <body>
@@ -4306,8 +4350,386 @@ function btAbs(state,head,reason,foot,cls){
     +'<div class="ar">'+reason+'</div>'
     +(foot?'<div class="aw">'+foot+'</div>':'')+'</div>';
 }
+
+/* ================= BACKTEST LAB — PHASE A (2026-09-06) ================
+   THE DIVISION OF LABOUR. mlb_picks/research/baselines.py computes every
+   metric, bin, rolling window and inclusion decision, and writes them to
+   exports/backtest_lab.json. This block reads that and draws it.
+
+   It is worth stating why, because the temptation is real and specific: it
+   would be four lines of JavaScript to re-bin a calibration curve here so the
+   chart looked smoother, and the result would be a second, undocumented
+   opinion about which observations count. The pipeline's bins are the ones
+   written to a durable artifact that can be diffed tomorrow; a browser's are
+   not. So this file draws what it is given, including the empty bins.
+
+   NO CHART IS DRAWN FROM AN ABSENT MEASUREMENT. A family the pipeline refuses
+   to publish performance for gets its refusal rendered, never an empty axis. */
+
+function labRoot(){
+  var d=(D&&D.backtestLab);
+  return (d&&typeof d==='object'&&!Array.isArray(d))?d:null;
+}
+/* OBSERVATION MODE IS THE FIRST THING ON EVERY ROW, and it is never a
+   generic "backtested" badge. The distinction it carries is the one this lab
+   was rebuilt around: a prediction from August is legitimate evidence if it
+   was PRODUCED in August before first pitch, and worthless if it was
+   regenerated today. Those two look identical in a date range. */
+var LAB_MODE={
+  FORWARD_LOGGED:['s-meas','FORWARD LOGGED',
+    'Written by a production run BEFORE first pitch and checked against a resolved first pitch. Legitimate evidence regardless of how old the game is.'],
+  FORWARD_SHADOW:['s-meas','FORWARD SHADOW',
+    'Produced prospectively by a shadow model that reaches no decision.'],
+  HISTORICAL_PIT_REPLAY:['s-meas','PIT REPLAY',
+    'Regenerated from features every one of which is independently proven point-in-time. Currently unreachable — confirmed_lineup is NOT_POINT_IN_TIME.'],
+  RECONSTRUCTED:['s-bad','RECONSTRUCTED',
+    'First published AFTER first pitch, or regenerated later. NOT a prediction about the game it names, and never pooled into a metric.'],
+  LEGACY_UNKNOWN:['s-unk','ORIGIN UNKNOWN',
+    'No audit coverage resolves a first pitch for these rows, so they cannot be shown to predate their games. Unknown is never read as clean.']
+};
+function labMode(v){
+  var m=LAB_MODE[String(v||'').toUpperCase()];
+  if(!m)return '<span class="lab-st s-unk" title="This payload does not state how these observations came to exist. Absent, and never assumed forward.">MODE NOT STATED</span>';
+  return '<span class="lab-st '+m[0]+'" title="'+esc(m[2])+'">'+esc(m[1])+'</span>';
+}
+var LAB_STATE_TONE={
+  MEASURED:'s-meas',
+  EARLY_SAMPLE:'s-warn',UNDERPOWERED:'s-warn',UNVERIFIED:'s-warn',
+  RANKING_ONLY:'s-warn',
+  NO_DATA:'s-unk',NOT_IN_LEDGER:'s-unk',BLOCKED:'s-bad',
+  FORWARD_ONLY:'s-meas',SPENT:'s-warn'
+};
+var LAB_STATE_TIP={
+  MEASURED:'A validated probability with enough observations to report. Still not a claim about profit.',
+  EARLY_SAMPLE:'Real, and far too small to support a claim.',
+  UNDERPOWERED:'Enough to look at, not enough to conclude from.',
+  UNVERIFIED:'A probability is published but has NOT been shown to be calibrated. Sample size does not change this.',
+  RANKING_ONLY:'The published number is a score, not a probability. It gets ranking evidence and no calibration curve.',
+  NO_DATA:'No settled observation exists yet. Absent, not zero.',
+  NOT_IN_LEDGER:'Not written to the pick ledger, so no per-selection settled record exists to score.',
+  BLOCKED:'Cannot be evaluated at all — a required feature cannot be proven point-in-time.',
+  FORWARD_ONLY:'Evidence comes from records written before the games they describe. There is no replay.'
+};
+function labState(v){
+  var V=String(v==null?'':v).toUpperCase();
+  return '<span class="lab-st '+(LAB_STATE_TONE[V]||'s-unk')+'"'
+    +(LAB_STATE_TIP[V]?' title="'+esc(LAB_STATE_TIP[V])+'"':'')
+    +'>'+esc(V.replace(/_/g,' ')||'—')+'</span>';
+}
+function labKv(k,v){
+  return '<div class="lab-kv"><i>'+esc(k)+'</i><span>'+v+'</span></div>';
+}
+function labNum(v,dp){
+  return isNum(v)?('<b>'+esc(v.toFixed(dp==null?4:dp))+'</b>'):SH_ABSENT;
+}
+
+/* ---- the model-performance matrix: one row per family ---------------- */
+function labMatrix(L){
+  var rows=(L.matrix||[]);
+  if(!rows.length)return '<div class="lab-note">'+SH_ABSENT+' &mdash; this payload carries no matrix.</div>';
+  var h='<div class="lab-tblw"><table class="lab-mx"><thead><tr>'
+    +['Prediction','Observation mode','Prediction eval','Price eval','CLV eval',
+      'PIT integrity','n','Date range','Primary metric','Calibration',
+      'Excluded','Main limitation']
+      .map(function(x){return '<th>'+esc(x)+'</th>';}).join('')
+    +'</tr></thead><tbody>';
+  rows.forEach(function(r){
+    var pm=r.primaryMetric;
+    var ex=r.exclusions||{};
+    var exTxt=Object.keys(ex).length
+      ? Object.keys(ex).map(function(k){
+          return '<b>'+ex[k]+'</b> '+esc(k.replace(/_/g,' ').toLowerCase());
+        }).join('<br>')
+      : '<span class="sshnone">none</span>';
+    h+='<tr>'
+      +'<td class="lab-fam">'+esc(r.family)+'<br><span class="sshage">'
+        +esc(String(r.productionStatus||'').replace(/_/g,' '))+'</span></td>'
+      +'<td>'+labMode(r.observationMode)+'</td>'
+      +'<td>'+labState(r.predictionEvaluation)+'</td>'
+      +'<td>'+labState(r.priceEvaluation)
+        +(r.priceCoverage?'<br><span class="sshage">'+esc(r.priceCoverage)+'</span>':'')+'</td>'
+      +'<td>'+labState(r.clvEvaluation)+'</td>'
+      +'<td>'+labState(r.pitIntegrity)+'</td>'
+      +'<td class="lab-num">'+(isNum(r.n)?('<b>'+r.n+'</b>'):SH_ABSENT)+'</td>'
+      +'<td class="lab-num">'+(Array.isArray(r.dateRange)&&r.dateRange[0]
+          ?esc(r.dateRange[0]+' → '+r.dateRange[1]):SH_ABSENT)+'</td>'
+      +'<td class="lab-num">'+(pm?('<b>'+esc(String(pm.value))+'</b> <span class="sshage">'
+          +esc(pm.name)+'</span>'):SH_ABSENT)+'</td>'
+      +'<td>'+(r.calibrationStatus
+          ?('<span class="sshage">'+esc(r.calibrationStatus)+'</span>'):SH_ABSENT)+'</td>'
+      +'<td class="lab-num">'+exTxt+'</td>'
+      +'<td class="lab-lim">'+esc(r.mainLimitation||'')+'</td>'
+      +'</tr>';
+  });
+  return h+'</tbody></table></div>';
+}
+
+/* ---- CALIBRATION: predicted vs observed, with the diagonal ----------- */
+function labCalChart(bins,title){
+  var pts=(bins||[]).filter(function(b){return b.n>0;});
+  var W=300,H=210,P=30;
+  var sx=function(v){return P+v*(W-P-8);},
+      sy=function(v){return H-P-v*(H-P-10);};
+  var g='<svg class="lab-svg" viewBox="0 0 '+W+' '+H+'" role="img" '
+    +'aria-label="'+esc(title+'. Predicted probability against observed frequency, '
+      +pts.length+' non-empty bins.')+'">';
+  /* the reference diagonal: perfect calibration */
+  g+='<line x1="'+sx(0)+'" y1="'+sy(0)+'" x2="'+sx(1)+'" y2="'+sy(1)
+    +'" stroke="currentColor" stroke-opacity=".3" stroke-dasharray="3 3"/>';
+  g+='<line x1="'+P+'" y1="'+(H-P)+'" x2="'+(W-8)+'" y2="'+(H-P)+'" stroke="currentColor" stroke-opacity=".35"/>';
+  g+='<line x1="'+P+'" y1="10" x2="'+P+'" y2="'+(H-P)+'" stroke="currentColor" stroke-opacity=".35"/>';
+  [0,0.5,1].forEach(function(t){
+    g+='<text x="'+sx(t)+'" y="'+(H-P+13)+'" font-size="8" text-anchor="middle" fill="currentColor" fill-opacity=".6">'+t+'</text>';
+    g+='<text x="'+(P-5)+'" y="'+(sy(t)+3)+'" font-size="8" text-anchor="end" fill="currentColor" fill-opacity=".6">'+t+'</text>';
+  });
+  /* THE RADIUS IS THE SAMPLE. A bin of 3 observations must not look like a
+     bin of 300 — the eye reads area, and equal dots would give a two-point
+     curve the same authority as a two-hundred-point one. */
+  var maxN=Math.max.apply(null,pts.map(function(b){return b.n;}).concat([1]));
+  pts.forEach(function(b){
+    var r=3+5*Math.sqrt(b.n/maxN);
+    g+='<circle cx="'+sx(b.predictedMean).toFixed(1)+'" cy="'+sy(b.observedRate).toFixed(1)
+      +'" r="'+r.toFixed(1)+'" fill="var(--accent)" fill-opacity=".75">'
+      +'<title>predicted '+b.predictedMean+' · observed '+b.observedRate+' · n='+b.n+'</title></circle>';
+  });
+  g+='<text x="'+(W/2)+'" y="'+(H-4)+'" font-size="8" text-anchor="middle" fill="currentColor" fill-opacity=".55">predicted probability</text>';
+  return g+'</svg>';
+}
+
+/* ---- ROLLING: a chronological series, drawn as given ----------------- */
+function labLineChart(series,label,fmt){
+  var pts=(series||[]).filter(function(p){return isNum(p.value);});
+  if(pts.length<2)return '<div class="lab-note">'+SH_ABSENT
+    +' &mdash; fewer observations than the window needs. No line is drawn through one point.</div>';
+  var W=300,H=170,P=34;
+  var vs=pts.map(function(p){return p.value;});
+  var lo=Math.min.apply(null,vs), hi=Math.max.apply(null,vs);
+  if(hi-lo<1e-9){hi=lo+0.01;}
+  var sx=function(i){return P+(i/(pts.length-1))*(W-P-8);},
+      sy=function(v){return H-24-((v-lo)/(hi-lo))*(H-24-12);};
+  var d=pts.map(function(p,i){return (i?'L':'M')+sx(i).toFixed(1)+' '+sy(p.value).toFixed(1);}).join(' ');
+  var g='<svg class="lab-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'
+    +esc(label+', '+pts.length+' windows, from '+lo.toFixed(4)+' to '+hi.toFixed(4))+'">';
+  g+='<line x1="'+P+'" y1="'+(H-24)+'" x2="'+(W-8)+'" y2="'+(H-24)+'" stroke="currentColor" stroke-opacity=".35"/>';
+  g+='<line x1="'+P+'" y1="12" x2="'+P+'" y2="'+(H-24)+'" stroke="currentColor" stroke-opacity=".35"/>';
+  g+='<text x="'+(P-4)+'" y="16" font-size="8" text-anchor="end" fill="currentColor" fill-opacity=".6">'+hi.toFixed(3)+'</text>';
+  g+='<text x="'+(P-4)+'" y="'+(H-24)+'" font-size="8" text-anchor="end" fill="currentColor" fill-opacity=".6">'+lo.toFixed(3)+'</text>';
+  g+='<path d="'+d+'" fill="none" stroke="var(--accent)" stroke-width="1.6"/>';
+  g+='<text x="'+(W/2)+'" y="'+(H-6)+'" font-size="8" text-anchor="middle" fill="currentColor" fill-opacity=".55">'
+    +esc(pts[0].date||'')+' → '+esc(pts[pts.length-1].date||'')+'</text>';
+  return g+'</svg>';
+}
+
+/* ---- DISTRIBUTION: does the model discriminate at all? --------------- */
+function labDistChart(buckets){
+  var bs=(buckets||[]).filter(function(b){return b.n>0;});
+  if(!bs.length)return '<div class="lab-note">'+SH_ABSENT+'</div>';
+  var W=300,H=170,P=30;
+  var maxN=Math.max.apply(null,bs.map(function(b){return b.n;}));
+  var bw=(W-P-8)/bs.length;
+  var g='<svg class="lab-svg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'
+    +esc('Prediction distribution across '+bs.length+' buckets, with the observed rate in each.')+'">';
+  bs.forEach(function(b,i){
+    var h=(b.n/maxN)*(H-46);
+    g+='<rect x="'+(P+i*bw+1).toFixed(1)+'" y="'+(H-24-h).toFixed(1)+'" width="'+(bw-2).toFixed(1)
+      +'" height="'+h.toFixed(1)+'" fill="var(--accent)" fill-opacity=".55">'
+      +'<title>'+b.lo+'–'+b.hi+' · n='+b.n+' · observed '+b.observedRate+'</title></rect>';
+    /* the observed rate inside each bucket, on the same x, as a tick */
+    var y=H-24-(b.observedRate)*(H-46);
+    g+='<line x1="'+(P+i*bw+1).toFixed(1)+'" y1="'+y.toFixed(1)+'" x2="'+(P+(i+1)*bw-1).toFixed(1)
+      +'" y2="'+y.toFixed(1)+'" stroke="var(--accent2)" stroke-width="1.6"/>';
+  });
+  g+='<line x1="'+P+'" y1="'+(H-24)+'" x2="'+(W-8)+'" y2="'+(H-24)+'" stroke="currentColor" stroke-opacity=".35"/>';
+  g+='<text x="'+(W/2)+'" y="'+(H-6)+'" font-size="8" text-anchor="middle" fill="currentColor" fill-opacity=".55">bars = how many predictions · line = observed rate</text>';
+  return g+'</svg>';
+}
+
+function labCard(title,right,inner){
+  return '<div class="lab-card"><div class="lab-ch"><span>'+esc(title)+'</span>'
+    +'<b>'+(right||'')+'</b></div><div class="lab-cb">'+inner+'</div></div>';
+}
+
+/* ---- the honesty panel: read this before believing anything above --- */
+function labHonesty(f){
+  var hn=f.honesty||{};
+  return labCard('Backtest honesty', esc(hn.dataMode||''),
+    labKv('Data mode',esc(hn.dataMode||'')+' <span class="sshage">no replay exists for any family</span>')
+    +labKv('Test period',Array.isArray(hn.testPeriod)&&hn.testPeriod[0]
+        ?esc(hn.testPeriod[0]+' → '+hn.testPeriod[1]):SH_ABSENT)
+    +labKv('Holdout',esc(String(hn.holdout||'NONE'))
+        +(hn.holdoutStatus==='SPENT'
+          ?' <span class="lab-st s-warn" title="Already inspected. It may be reported for reference and may NOT be reused to select a challenger.">SPENT</span>':''))
+    +labKv('Leakage check',esc(hn.leakageCheck||''))
+    +labKv('Blocked features',(hn.blockedFeatures||[]).length
+        ?(hn.blockedFeatures||[]).map(function(x){return '<code class="sshc">'+esc(x)+'</code>';}).join(' ')
+        :'<span class="sshnone">none</span>')
+    +labKv('Model version',(function(){
+        var mv=hn.modelVersion;
+        if(!mv)return SH_ABSENT;
+        if(typeof mv==='string')return '<code class="sshc">'+esc(mv)+'</code>';
+        var ks=Object.keys(mv);
+        return ks.length?ks.map(function(k){
+          return '<code class="sshc">'+esc(k)+'</code> <span class="sshage">'+mv[k]+' obs</span>';}).join('<br>')
+          :SH_ABSENT;})())
+    +(hn.publishPerformance===false
+      ?'<div class="lab-refuse" style="margin-top:7px">'+esc(hn.refusal||'')+'</div>':''));
+}
+
+/* ---- one family ------------------------------------------------------ */
+var LAB_FAMILY=null;
+function labPick(f){LAB_FAMILY=f;renderBacktests();try{
+  var el=document.getElementById('lab-detail'); if(el)el.scrollIntoView({block:'nearest'});}catch(e){}}
+
+function labFamilyBlock(L){
+  var fams=L.families||{};
+  var ids=Object.keys(fams);
+  if(!ids.length)return '';
+  if(!LAB_FAMILY||!fams[LAB_FAMILY]){
+    /* default to the family with the most settled observations — the one
+       there is most to say about, not the one that looks best */
+    var best=null;
+    ids.forEach(function(k){
+      var n=fams[k].n||0;
+      if(best===null||n>(fams[best].n||0))best=k;});
+    LAB_FAMILY=best;
+  }
+  var picker='<div class="lab-pick" role="group" aria-label="prediction family">'
+    +ids.map(function(k){
+      return '<button type="button" aria-pressed="'+(k===LAB_FAMILY)+'" '
+        +'onclick="labPick(\''+esc(k)+'\')">'+esc(k)
+        +(isNum(fams[k].n)?' <span class="sshage">'+fams[k].n+'</span>':'')+'</button>';
+    }).join('')+'</div>';
+
+  var f=fams[LAB_FAMILY]||{}, m=f.metrics||{};
+  var head=labCard('Baseline · '+LAB_FAMILY, labMode(f.observationMode),
+    labKv('Observation mode',labMode(f.observationMode)
+      +' <span class="sshage">how these observations came to exist &mdash; not how old they are</span>')
+    +labKv('Excluded',(function(){
+        var ex=(f.exclusions||{}).counts||{};
+        var ks=Object.keys(ex);
+        if(!ks.length)return '<span class="sshnone">nothing</span>';
+        return ks.map(function(k){
+          return '<b>'+ex[k]+'</b> '+esc(k.replace(/_/g,' ').toLowerCase())
+            +'<br><span class="sshage">'+esc(((f.exclusions||{}).why||{})[k]||'')+'</span>';
+        }).join('<br>');})())
+    +labKv('Production status',esc(String(f.productionStatus||'').replace(/_/g,' ')))
+    +labKv('Observations',isNum(f.n)?('<b>'+f.n+'</b>'):SH_ABSENT)
+    +labKv('Base rate',labNum(f.baseRate))
+    +labKv('Mean prediction',labNum(f.meanPrediction))
+    +labKv('Sharpness',labNum(f.sharpness)
+        +' <span class="sshage">spread of the predictions; near zero means the model says the same thing about everything</span>')
+    +labKv('Brier',labNum(m.brier,5))
+    +labKv('Log loss',labNum(m.log_loss,5))
+    +labKv('Accuracy',labNum(m.accuracy,4))
+    +labKv('ECE',labNum((f.calibration||{}).ece,5))
+    +'<div class="lab-note" style="margin-top:7px">'+esc(f.limitation||'')+'</div>');
+
+  var cards=head+labHonesty(f);
+
+  if(f.calibration&&(f.calibration.fixedBins||[]).length){
+    var nb=(f.calibration.fixedBins||[]).filter(function(b){return b.n>0;}).length;
+    cards+=labCard('Calibration · fixed bins', nb+' of 10 non-empty',
+      labCalChart(f.calibration.fixedBins,'Calibration, fixed bins')
+      +'<div class="lab-note">Dot area is the bin’s sample. The dashed line is perfect calibration. Empty bins are omitted from the plot and reported in the count &mdash; a gap is information about sharpness, not something to smooth over.</div>');
+    if((f.calibration.adaptiveBins||[]).length)
+      cards+=labCard('Calibration · equal-count bins',
+        (f.calibration.adaptiveBins||[]).length+' bins',
+        labCalChart(f.calibration.adaptiveBins,'Calibration, equal-count bins')
+        +'<div class="lab-note">The honest view when the prediction distribution is narrow: a fixed grid puts every observation in one cell and says nothing.</div>');
+  }else if(f.refusal){
+    cards+=labCard('Calibration','REFUSED',
+      '<div class="lab-refuse">'+esc(f.refusal)+'</div>');
+  }
+  if(f.distribution&&f.distribution.length)
+    cards+=labCard('Prediction distribution','',labDistChart(f.distribution)
+      +'<div class="lab-note">Does this model distinguish games, or predict everything near its base rate? A flat, narrow distribution can be perfectly calibrated and useless.</div>');
+  if(f.rolling&&(f.rolling.brier||[]).length)
+    cards+=labCard('Rolling Brier','window '+f.rolling.window,
+      labLineChart(f.rolling.brier,'Rolling Brier score')
+      +'<div class="lab-note">'+esc(f.rolling.note||'')+'</div>');
+  if(f.rolling&&(f.rolling.accuracy||[]).length)
+    cards+=labCard('Rolling accuracy','window '+f.rolling.window,
+      labLineChart(f.rolling.accuracy,'Rolling accuracy')
+      +'<div class="lab-note">Accuracy alone can be improved by predicting the favourite every time. It is here beside Brier, never instead of it.</div>');
+  if(f.ranking)
+    cards+=labCard('Ranking evidence',(isNum(f.n)?f.n+' settled':''),
+      Object.keys(f.ranking).map(function(k){
+        var v=f.ranking[k];
+        return labKv(k,(typeof v==='object')?('<span class="sshage">'+esc(JSON.stringify(v)).slice(0,160)+'</span>'):esc(String(v)));
+      }).join('')
+      +'<div class="lab-refuse" style="margin-top:7px">'+esc(f.refusal||'')+'</div>');
+  if(f.edgeBuckets)
+    cards+=labCard('Edge buckets', (f.edgeBuckets.n||0)+' priced',
+      (f.edgeBuckets.n
+        ?(f.edgeBuckets.buckets||[]).map(function(b){
+            return labKv((b.lo*100).toFixed(0)+'–'+(b.hi*100).toFixed(0)+'pp',
+              b.n?('<b>'+b.n+'</b> rows · win '+(b.winRate*100).toFixed(1)+'%'
+                   +' <span class="sshage">model '+(b.meanModelProb*100).toFixed(1)
+                   +'% vs implied '+(b.meanImplied*100).toFixed(1)+'%</span>')
+                 :'<span class="sshnone">no rows</span>');
+          }).join('')
+        :'<div class="lab-note">'+esc(f.edgeBuckets.why||'')+'</div>')
+      +'<div class="lab-note" style="margin-top:6px">'+esc(f.edgeBuckets.note||'')
+      +' The question is whether a BIGGER model edge actually performs better. If it does not, the edge calculation is not doing the job it is used for.</div>');
+
+  return picker+'<div id="lab-detail" class="lab-g">'+cards+'</div>';
+}
+
+/* ---- the CLV era, alone --------------------------------------------- */
+function labClv(L){
+  var c=L.clv||{};
+  var body=labKv('Era start',c.eraStart
+      ?('<b>'+esc(c.eraStart)+'</b>')
+      :(SH_ABSENT+' <span class="sshage">unset until one row passes the entire contract</span>'))
+    +labKv('Valid rows',isNum(c.n)?('<b>'+c.n+'</b>'):SH_ABSENT)
+    +labKv('Mean CLV',isNum(c.meanClvPp)?('<b>'+c.meanClvPp+'</b> pp'):SH_ABSENT)
+    +labKv('Median CLV',isNum(c.medianClvPp)?('<b>'+c.medianClvPp+'</b> pp'):SH_ABSENT)
+    +labKv('Positive rate',isNum(c.positiveRate)?('<b>'+(c.positiveRate*100).toFixed(1)+'%</b>'):SH_ABSENT)
+    +labKv('Drift refused',isNum(c.driftRefusedCount)?('<b>'+c.driftRefusedCount+'</b>'
+        +' <span class="sshage">attempts to move the recorded era start</span>'):SH_ABSENT)
+    +'<div class="lab-refuse" style="margin-top:8px">'
+      +esc(c.interpretation||c.why||'')+'</div>'
+    +'<div class="lab-note" style="margin-top:6px">'+esc(c.breakEven||'')+'</div>';
+  var legacy=labKv('Legacy rows with a CLV number',
+      isNum((c.legacy||{}).rowsCarryingAClvNumber)
+        ?('<b>'+c.legacy.rowsCarryingAClvNumber+'</b>'):SH_ABSENT)
+    +labKv('Status','<span class="lab-st s-warn">'+esc((c.legacy||{}).status||'')+'</span>')
+    +'<div class="lab-note" style="margin-top:6px">'+esc((c.legacy||{}).why||'')+'</div>';
+  var pre=(c.partition||{});
+  if(pre.before)
+    legacy+='<div class="lab-refuse" style="margin-top:8px">'
+      +esc(pre.before+' verified row(s) settled BEFORE the recorded era start. '
+        +(pre.note||''))+'</div>';
+  return '<div class="lab-g">'
+    +labCard('Valid CLV era', isNum(c.n)?('n = '+c.n):'', body)
+    +labCard('Legacy CLV — never combined','', legacy)+'</div>';
+}
+
 function renderBacktests(){
   var BT=(D&&D.backtests)||{},h='';
+
+  /* ---------- PHASE A: the lab, above the older era notes ---------- */
+  var L=labRoot();
+  if(L){
+    h+=ahs('Model performance matrix',
+      esc(String((L.registry&&L.registry.counts&&L.registry.counts.total)||'')+' families'),
+      '<div class="lab-note" style="margin:0 0 9px">'
+      +'One row per prediction family that actually exists. '
+      +esc((L.pit&&L.pit.consequence)||'')
+      +'</div>'+labMatrix(L));
+    h+=ahs('Valid CLV era','',
+      '<div class="lab-note" style="margin:0 0 9px">The valid forward series and the legacy provisional numbers are shown side by side and are <b>never combined</b>. They are different measurements, and averaging them would let the unverifiable rows outvote the real ones under the valid series\u2019 name.</div>'
+      +labClv(L));
+    h+=ahs('Per-family baseline','Phase A \u2014 champion only, no challenger',
+      '<div class="lab-note" style="margin:0 0 9px">Every metric, bin and rolling window below is computed in the pipeline and read here. Nothing on this page fits, bins or decides what counts.</div>'
+      +labFamilyBlock(L));
+  }else{
+    h+=ahs('Backtest lab','not in this payload',
+      '<div class="lab-note">This payload carries no <code>backtestLab</code> block. '
+      +esc(((D&&D.backtestLabAbsent)||{}).why
+           ||'The lab is ABSENT from this payload, which is a different statement from every family scoring zero.')
+      +'</div>');
+  }
 
   /* ---------- measurement provenance ---------- */
   h+='<div class="bt-era">'
