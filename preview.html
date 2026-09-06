@@ -669,6 +669,41 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
 .lab-kv>span{min-width:0;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 @media(max-width:520px){.lab-kv{grid-template-columns:1fr;gap:1px}}
 
+
+/* --- decision chips: three questions, three chips ------------------- */
+.dcrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.dchip{display:inline-flex;align-items:center;gap:5px;font-size:10px;
+  font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:20px;
+  border:1px solid transparent;white-space:nowrap}
+.dchip i{font-style:normal;opacity:.62;font-weight:600;font-size:9px}
+.dc-strong{background:#0a1f14;color:#4dd08a;border-color:#14432c}
+.dc-mod{background:#101a2c;color:#6fa8ff;border-color:#1d3155}
+.dc-low{background:#1a1a1a;color:#8a8a8a;border-color:#282828}
+.dc-bet{background:#0a1f14;color:#22c88a;border-color:#14432c}
+.dc-lean{background:#101a2c;color:#3a8fff;border-color:#1d3155}
+.dc-pass{background:#161616;color:#7d7d7d;border-color:#242424}
+.dc-block{background:#1f0a0a;color:#e87070;border-color:#3d1414}
+.dc-core{background:#14210a;color:#9ede45;border-color:#2b4413}
+.dc-qual{background:#101a2c;color:#6fa8ff;border-color:#1d3155}
+.dc-spec{background:#1a1200;color:#e8a030;border-color:#3a2a06}
+.dc-inel{background:#161616;color:#6f6f6f;border-color:#242424}
+.dcwhy{font-size:10px;color:#6a6a6a;line-height:1.55;margin-top:4px}
+.dcwhy b{color:#9a9a9a;font-weight:600}
+.dcsum{display:flex;gap:14px;flex-wrap:wrap;padding:9px 12px;margin:0 0 10px;
+  background:#131313;border:1px solid #222;border-radius:9px}
+.dcsum>div{display:flex;flex-direction:column;gap:3px;min-width:96px}
+.dcsum u{text-decoration:none;font-size:9px;letter-spacing:.07em;color:#4a4a4a;
+  text-transform:uppercase;font-weight:700}
+.dcsum s{text-decoration:none;font-size:10px;color:#7d7d7d}
+.dcsum b{font-size:13px;color:#ddd}
+.dcnote{font-size:10px;color:#555;padding:0 12px 10px;line-height:1.6}
+.dcorient{margin-top:7px;padding:7px 9px;background:#161200;border:1px solid #2a2206;
+  border-radius:6px;display:grid;gap:3px}
+.dcorient b{font-size:10px;letter-spacing:.05em;color:#e8a030;font-weight:700}
+.dcorient span{font-size:10px;color:#7d7259;line-height:1.6}
+.dcorient em{font-style:normal;font-size:9px;color:#5c5443;font-family:monospace}
+.dcunval{font-size:9px;color:#6a5a2a;background:#161200;border:1px solid #2a2206;
+  border-radius:4px;padding:2px 6px;display:inline-block;margin-top:4px}
 </style>
 </head>
 <body>
@@ -1628,11 +1663,113 @@ function qualityStrip(P,e){
 
   if(!e||!e.available)out+=qBit('PARK','—','q-unk','No environment entry, so nothing is claimed about this park’s orientation.');
   else if(e.orientationEntitled)out+=qBit('PARK','VERIFIED','q-ok','Measured orientation clears every threshold, so a field-relative arrow is authorised here.');
-  else out+=qBit('PARK','NOT VERIFIED','q-warn',
-    'Not entitled to an arrow'+((e.orientationViolations||[]).length
-      ? ': fails '+(e.orientationViolations||[]).join(', ')
-      : '. A suppressed arrow is the system working, not a gap.'));
+  else out+=qBit('PARK','NOT VERIFIED','q-warn',orientWhy(e));
   return '<div class="g2q">'+out+'</div>';
+}
+
+
+/* WHY THE ARROW IS REFUSED — read, never composed here. environment_view
+   publishes one canonical code and one sentence per game, because a list of
+   threshold identifiers cannot tell a reader whether the park was measured
+   and disagreed or was never measured at all, and those mean opposite
+   things. The violation list stays, as detail behind the reason. */
+function orientWhy(e){
+  var r=e&&e.orientationReason;
+  if(!r||!r.code)return 'Not entitled to an arrow. A suppressed arrow is the system working, not a gap.';
+  var v=(r.violations||[]);
+  return r.code.replace(/_/g,' ')+' — '+(r.why||'')
+    +(v.length?' ['+v.join(', ')+']':'');
+}
+
+/* The same reason, stated in the open rather than hidden in a tooltip. A
+   `title` attribute is invisible on the two mobile widths this page is
+   verified at, so a suppressed arrow had no visible explanation there. */
+function orientWhyLine(e){
+  if(!e||!e.available)return '';
+  if(e.orientationEntitled)return '';
+  var r=e.orientationReason||{};
+  if(!r.code)return '';
+  return '<div class="dcorient"><b>ARROW SUPPRESSED — '+esc(r.code.replace(/_/g,' '))
+    +'</b><span>'+esc(r.why||'')+'</span>'
+    +((r.violations||[]).length?'<em>fails: '+esc(r.violations.join(', '))+'</em>':'')
+    +'</div>';
+}
+
+/* ---- decision: read, never derive ---------------------------------- */
+var DC_MODEL={STRONG_MODEL:['STRONG','dc-strong'],MODERATE_MODEL:['MODERATE','dc-mod'],
+              LOW_MODEL:['LOW','dc-low']};
+var DC_STRAIGHT={STRONG_BET:['STRONG BET','dc-bet'],LEAN:['LEAN','dc-lean'],
+                 WATCH:['WATCH','dc-lean'],PASS:['PASS','dc-pass'],
+                 BLOCKED:['BLOCKED','dc-block']};
+var DC_PARLAY={CORE:['CORE','dc-core'],QUALIFIED:['QUALIFIED','dc-qual'],
+               SPECULATIVE:['SPECULATIVE','dc-spec'],INELIGIBLE:['INELIGIBLE','dc-inel']};
+
+function dcChip(label,map,key,extra){
+  var m=map[key];
+  if(!m)return '<span class="dchip dc-inel"><i>'+esc(label)+'</i>NOT STATED</span>';
+  return '<span class="dchip '+m[1]+'"><i>'+esc(label)+'</i>'+esc(m[0])
+    +(extra?' <span style="opacity:.7;font-weight:600">'+esc(extra)+'</span>':'')+'</span>';
+}
+
+/* the three chips, from the canonical decision block */
+function decisionChips(pred){
+  var d=pred&&pred.decision;
+  if(!d)return '';
+  var mc=d.modelConfidence||{},sb=d.straightBet||{},pl=d.parlayLeg||{};
+  var wp=(mc.winProbability!=null)?(mc.winProbability*100).toFixed(1)+'%':'';
+  return '<div class="dcrow">'
+    +dcChip('MODEL',DC_MODEL,mc.tier,wp)
+    +dcChip('STRAIGHT',DC_STRAIGHT,sb.verdict)
+    +dcChip('PARLAY',DC_PARLAY,pl.quality)
+    +'</div>';
+}
+
+/* the expanded block: the reason each answer is what it is */
+function decisionBlock(pred){
+  var d=pred&&pred.decision;
+  if(!d)return g2group('Decision','<div class="dcwhy">This prediction carries no decision block.</div>');
+  var mc=d.modelConfidence||{},sb=d.straightBet||{},pl=d.parlayLeg||{};
+  /* g2kv ESCAPES its value, so markup handed to it renders as literal text.
+     These rows carry markup, so they are built directly. */
+  function row(k,v,extra){
+    return '<div class="g2kv"><i>'+esc(k)+'</i><span>'+v
+      +(extra?' <span class="g2meta">'+esc(extra)+'</span>':'')+'</span></div>';}
+  var body=''
+    +row('Model confidence',
+        (mc.tier?esc(mc.tier.replace(/_/g,' ')):SH_ABSENT)
+        +(mc.winProbability!=null?' <b>'+(mc.winProbability*100).toFixed(1)+'%</b>':''),
+        mc.band?('band '+mc.band):'')
+    +row('Straight bet',(sb.verdict?esc(sb.verdict.replace(/_/g,' ')):SH_ABSENT),
+        sb.whyCode?sb.whyCode.replace(/_/g,' ').toLowerCase():'')
+    +(sb.why?'<div class="dcwhy"><b>Why:</b> '+esc(sb.why)+'</div>':'')
+    +row('Parlay leg',(pl.quality?esc(pl.quality):SH_ABSENT),
+        pl.whyCode?pl.whyCode.replace(/_/g,' ').toLowerCase():'')
+    +(pl.why?'<div class="dcwhy"><b>Why:</b> '+esc(pl.why)+'</div>':'')
+    +'<div class="dcwhy">'+esc(pl.note||'')+'</div>'
+    +(mc.calibrationStatus&&/UNVALIDATED/.test(mc.calibrationStatus)
+      ?'<div class="dcunval">CONFIDENCE NOT YET CALIBRATED</div>'
+       +'<div class="dcwhy">'+esc(mc.calibrationStatus)+'</div>':'')
+    +row('Rule version','<code class="sshc">'+esc(mc.ruleVersion||'—')+'</code>'
+        +' / <code class="sshc">'+esc(pl.ruleVersion||'—')+'</code>');
+  return g2group('Decision — three questions',body);
+}
+
+/* slate-level tallies, so an empty BET column stops reading as an empty model */
+function decisionSummaryStrip(){
+  var s=(window.D&&window.D.decisionSummary);
+  if(!s)return '';
+  function cell(t,sub,obj,order){
+    var parts=[],tot=0;
+    (order||Object.keys(obj||{})).forEach(function(k){
+      var n=(obj||{})[k]; if(!n)return; tot+=n;
+      parts.push(n+' '+k.replace(/_MODEL|_BET/,'').replace(/_/g,' ').toLowerCase());});
+    return '<div><u>'+esc(t)+'</u><b>'+tot+'</b><s>'+esc(parts.join(' · ')||'none')+'</s></div>';
+  }
+  return '<div class="dcsum">'
+    +cell('Model calls','',s.modelConfidence,['STRONG_MODEL','MODERATE_MODEL','LOW_MODEL'])
+    +cell('Straight bets','',s.straightBet,['STRONG_BET','LEAN','WATCH','PASS','BLOCKED'])
+    +cell('Parlay legs','',s.parlayLeg,['CORE','QUALIFIED','SPECULATIVE','INELIGIBLE'])
+    +'</div><div class="dcnote">'+esc(s.note||'')+'</div>';
 }
 
 /* --- starters: impossible to miss, and honest about what is known ------
@@ -1779,6 +1916,7 @@ function slateCard2(g,m){
       +'<div class="g2row"><i>Starters</i>'+spBlock(P,tm)+'</div>'
       +'<div class="g2row"><i>Model</i>'+model+'</div>'
       +'<div class="g2row"><i>Bet</i>'+bet+'</div>'
+      +'<div class="g2row"><i>Decision</i>'+decisionChips(p.pred)+'</div>'
       +'<div class="g2row"><i>Wind</i>'+wind+'</div>'
       +qualityStrip(P,e)
     +'</div>'
@@ -1791,14 +1929,14 @@ function slateCard2(g,m){
             +g2kv('First pitch',etTime(g.time||m.time||p.pred.time))
             +g2kv('Game status',(P.lineupState||{}).gameStatus||st.label)
             +g2kv('gamePk',g.gamePk))
-        +heroBlock(p,st)
+        +heroBlock(p,st)+decisionBlock(p.pred)
         +pitchBlock(g,m,tm)
         +(st.key==='FINAL'?resultBlock(g,m):betBlock(g,m))
         +g2group('Wind, all five sectors',
             '<div class="g2wind">'+windField(e,92)
             +'<div class="g2wtxt"><div class="g2wsum'+(shown?'':' g2sup')+'">'+esc(wsum)+'</div>'
             +sectorStrip(e,['LF','LCF','CF','RCF','RF'])
-            +'<div class="g2meta">'+esc((e&&e.sectorNote)||'')+'</div></div></div>')
+            +'<div class="g2meta">'+esc((e&&e.sectorNote)||'')+'</div>'+orientWhyLine(e)+'</div></div>')
         +envCard(g.gamePk)
         +lineupDetails(g,m,gState,tm)
         +detailsBlock(g,m)
@@ -1830,7 +1968,7 @@ function slateCard(g,m){
       +'<div class="gc-chips">'+stateChip(st)+lineupChipOf(gState)+'</div>'
     +'</div>'
     +'<div class="gc-b">'
-      +heroBlock(p,st)
+      +heroBlock(p,st)+decisionBlock(p.pred)
       +pitchBlock(g,m,tm)
       +envCard(g.gamePk)
       +(st.key==='FINAL'?resultBlock(g,m):betBlock(g,m))
@@ -1914,7 +2052,7 @@ function renderSlate(){
   });
   if(!body)body='<div class="empty">No games match the '+esc(SLATE_FILTER)+' filter. '
     +(SLATE_FILTER==='BET'?'The model still projects a winner in every game — switch to ALL to see them.':'Switch to ALL to see the full slate.')+'</div>';
-  $('slate').innerHTML=head+body;
+  $('slate').innerHTML=decisionSummaryStrip()+head+body;
 }
 function renderMatchups(){
   var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});var mlByPk={};(D.ml||[]).forEach(function(m){mlByPk[m.gamePk]=m;});
