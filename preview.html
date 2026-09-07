@@ -125,6 +125,9 @@ section{display:none}section.active{display:block}
 .leg .ld{flex:1;font-size:13px}.leg .lp{font-family:var(--mono);font-weight:700;color:var(--accent)}
 .note{font-size:11.5px;color:var(--muted);padding:10px 14px;line-height:1.5}
 .empty{font-family:var(--mono);font-size:12px;color:var(--muted);padding:20px;text-align:center}
+.a15none{margin:8px 0 10px;padding:9px 11px;border:1px dashed var(--line);border-radius:8px;font-size:11.5px;color:var(--muted);line-height:1.55}
+.a15none b{color:var(--txt)}
+.a15code{font-family:var(--mono);font-size:10px;opacity:.7}
 .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
 .kbox{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;box-shadow:var(--card-sh);padding:12px;text-align:center}
 .kbox .kv2{font-family:var(--mono);font-weight:700;font-size:22px}
@@ -2270,6 +2273,50 @@ function betWhy(P,rec,st){
 }
 
 /* --- the card ---------------------------------------------------------- */
+/* ---- +1.5 RUN LINE (ALT15-RUNDIST-1) --------------------------------
+   PUBLISHED FROM DAY ONE, LABELLED FOR WHAT IT IS. Nothing here has cleared
+   its forward horizon, so every row carries the producer's own
+   TOP +1.5 PICK / PROVISIONAL. This surface copies that label and may not
+   upgrade it -- publishing and being validated are different claims and the
+   label is the only place that says which one this is.
+
+   ABSENT IS NOT EMPTY. When the producer did not publish, the slate prints
+   ONE line naming the reason. Cards silently dropping the row would read as
+   "no +1.5 edge today", which is a claim nobody made. */
+function alt15For(pk){
+  var a=D.alt15; if(!a||!a.available)return null;
+  return (a.byGamePk||{})[String(pk)]||null;
+}
+function alt15Note(){
+  var a=D.alt15;
+  /* A payload that predates the block says nothing, rather than inventing a
+     refusal reason it was never given. */
+  if(!a||a.available)return '';
+  return '<div class="a15none"><b>+1.5 run line &mdash; not published for this slate.</b> '
+    +esc(a.why||'')+' <span class="a15code">'+esc(a.reason||'')+'</span></div>';
+}
+function a15Pct(p){return isNum(p)?(100*p).toFixed(1)+'%':null;}
+function alt15Row(g){
+  var q=alt15For(g.gamePk);if(!q)return '';
+  var a=D.alt15||{};
+  var lab=pill((a.label||'TOP +1.5 PICK')+' \u00b7 '+(a.evidence||'PROVISIONAL'),'b-unk',
+    (a.evidenceNote||'')+' '+(a.publishingModelWhy||''));
+  var p=a15Pct(q.bestPlus15Probability);
+  /* BOTH SIDES COVER IN A ONE-RUN GAME, so the two probabilities do not sum
+     to 1 and the losing side is never shown as 1 minus this one. */
+  var side='<div class="g2model"><span class="g2team">'+esc(q.bestPlus15Team||'\u2014')+' +1.5</span>'
+    +(p?'<span class="g2prob">'+p+'</span>':'')+lab
+    +(a.bothSidesNote?'<span class="g2why">'+esc(a.bothSidesNote)+'</span>':'')+'</div>';
+  var bo=q.bestOutcome||null;
+  /* BEST OUTCOME IS NOT BEST VALUE. No price enters it, so it says nothing
+     about whether the outcome is worth betting, and it is allowed to
+     disagree with MODEL WINNER -- that disagreement is the point. */
+  var boh=bo?('<div class="g2model"><span class="g2team">'+esc(bo.outcome||'\u2014')+'</span>'
+    +(isNum(bo.probability)?'<span class="g2prob">'+(100*bo.probability).toFixed(1)+'%</span>':'')
+    +(a.bestOutcomeNote?'<span class="g2why">'+esc(a.bestOutcomeNote)+'</span>':'')+'</div>'):'';
+  return '<div class="g2row"><i>Best +1.5</i>'+side+'</div>'
+    +(boh?'<div class="g2row"><i>Best outcome</i>'+boh+'</div>':'');
+}
 function slateCard2(g,m){
   var b=betFor(g,m),st=b.state,p=b.pred,P=predOf(g,m)||{};
   var tm={away:p.away||teamsOf(g).away,home:p.home||teamsOf(g).home};
@@ -2324,6 +2371,7 @@ function slateCard2(g,m){
       +'<div class="g2row"><i>Starters</i>'+spBlock(P,tm)+'</div>'
       +'<div class="g2row"><i>Model</i>'+model+'</div>'
       +'<div class="g2row"><i>Bet</i>'+bet+'</div>'
+      +alt15Row(g)
       +'<div class="g2row"><i>Decision</i>'+decisionChips(p.pred)+'</div>'
       +(contextChips(p.pred)?'<div class="g2row"><i>Context</i>'+contextChips(p.pred)+'</div>':'')
       +'<div class="g2row"><i>Wind</i>'+wind+'</div>'
@@ -2462,7 +2510,7 @@ function renderSlate(){
   });
   if(!body)body='<div class="empty">No games match the '+esc(SLATE_FILTER)+' filter. '
     +(SLATE_FILTER==='BET'?'The model still projects a winner in every game — switch to ALL to see them.':'Switch to ALL to see the full slate.')+'</div>';
-  $('slate').innerHTML=decisionSummaryStrip()+head+body;
+  $('slate').innerHTML=decisionSummaryStrip()+head+alt15Note()+body;
 }
 function renderMatchups(){
   var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});var mlByPk={};(D.ml||[]).forEach(function(m){mlByPk[m.gamePk]=m;});
