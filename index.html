@@ -3362,6 +3362,14 @@ var SH_AX_TONE={
   EARLY_SAMPLE:'a-warn',UNDERPOWERED:'a-warn',PARTIAL:'a-warn',
   LEGACY_UNVERIFIED:'a-warn',
   FAILING:'a-bad',FAILED:'a-bad',
+  /* FORWARD CAPTURE is the producer axis: it is green when the producer is
+     capturing, and never inherits the colour of the evidence count. */
+  ACTIVE:'a-ok',
+  /* NOT ENOUGH VERIFIED DATA IS DELIBERATELY NOT RED. "We do not have enough
+     trustworthy evidence yet" is not "the machine is broken", and colouring
+     it as a failure is the same lie as an inflated count, pointed the other
+     way. It sits with the other absences, in muted grey. */
+  NOT_ENOUGH_VERIFIED_DATA:'a-unk',
   UNKNOWN:'a-unk',NOT_MEASURED:'a-unk',NOT_MEASURABLE:'a-unk'
 };
 /* Each axis pill is LABELLED. An unlabelled green chip beside an unlabelled
@@ -3411,6 +3419,64 @@ function shDetails(inner,label){
 }
 
 /* ---- CLV MEASUREMENT: four sections, from the canonical subsystem ---- */
+/* ---- MEASUREMENT MATURITY: a different axis from operational health ----
+   Zero verified rows with a working producer is NOT an outage. It is a young
+   measurement whose historical rows were reclassified, and rendering that as
+   a failure is lying in the other direction -- the same mistake as the
+   inflated count, pointed the other way.
+
+   The number here is whatever the PIPELINE recomputed under the current
+   contract. This surface never derives it, never remembers a larger earlier
+   one, and prints 0 as 0. */
+function shClauseRows(byClause){
+  if(!byClause||typeof byClause!=='object')return '';
+  var ks=Object.keys(byClause);if(!ks.length)return '';
+  var out='';
+  for(var i=0;i<ks.length;i++){
+    var b=byClause[ks[i]]||{};
+    out+=shKv(esc(ks[i].replace(/_/g,' ').toLowerCase()),
+      (isNum(b.count)?shNum(b.count,'row(s)'):SH_ABSENT)
+      +((b.codes&&b.codes.length)?' <span class="sshage">'+esc(b.codes.join(', '))+'</span>':''));
+  }
+  return out;
+}
+function shClvMaturity(d){
+  var m=(d&&d.maturity)||null;
+  if(!m)return '';
+  if(m.measurementMaturity==='UNKNOWN')
+    return '<div class="shsec"><div class="shsech">Measurement maturity</div>'
+      +'<div class="shsecb"><span class="sshnone">the pipeline could not compute it</span>'
+      +'<div class="note" style="margin:6px 0 0">'+esc(m.why||'')
+      +' It is NOT derived here &mdash; a surface that recomputes pipeline '
+      +'semantics is how two pages come to disagree.</div></div></div>';
+  var n=m.validForwardClvN,synth=m.rowsExcludedAsSyntheticCapture,uf=m.userFacing||{};
+  var cap=uf.forwardCapture||'UNKNOWN';
+  var capWhy=cap==='ACTIVE'?'the producer is capturing now'
+    :cap==='DEGRADED'?'the producer is not capturing'
+    :'the producer state was not reported, and is not assumed healthy';
+  var rows=shKv('Verified forward rows',
+      isNum(n)?('<b>'+esc(String(n))+'</b> <span class="sshage">recomputed under '
+        +'the current contract</span>'):SH_ABSENT)
+    +shKv('Maturity',shAxis('Evidence',m.measurementMaturity||'',
+        'How much trustworthy evidence exists. Says NOTHING about whether the '
+        +'capture producer is working.'))
+    +shKv('Forward capture',shAxis('Producer',cap,capWhy))
+    +((isNum(synth)&&synth>0)?shKv('Excluded as synthetic capture',
+        shNum(synth,'row(s)')+' <span class="sshage">classified, never '
+        +'rewritten</span>'):'');
+  return '<div class="shsec"><div class="shsech">'+esc(uf.headline||'Measurement maturity')
+    +'</div><div class="shsecb">'+rows
+    +'<div class="note" style="margin:6px 0 0">'+esc(uf.reason||'')+'</div>'
+    +'<div class="note" style="margin:4px 0 0">'+esc(m.operationalHealthIsSeparate||'')+'</div>'
+    +shDetails(
+       shKv('Valid CLV era start',m.eraStart
+         ?('<b>'+esc(String(m.eraStart))+'</b> <span class="sshage">immutable</span>')
+         :SH_ABSENT)
+      +shKv('Era note','<span class="sshage">'+esc(m.eraNote||'')+'</span>')
+      +shKv('Recomputed','<span class="sshage">'+esc(m.recomputedNote||'')+'</span>')
+      +shClauseRows(m.excludedByContractClause),'Why the count is what it is')
+    +'</div></div>';
+}
 function shClvCard2(){
   var cm=shSub('clv_measurement'), cp=shSub('closing_prices');
   var d=shDet('clv_measurement'), cpd=shDet('closing_prices');
@@ -3471,7 +3537,7 @@ function shClvCard2(){
     note:(cm.measurementWhy?esc(cm.measurementWhy):'')
       +'<br><span class="sshage">'+esc(d.breakEven||'')+'</span>',
     rows:[],
-    extra:cur+bottleneck+legacy
+    extra:shClvMaturity(d)+cur+bottleneck+legacy
       +shDetails(eraLine
         +shKv('Era note','<span class="sshage">'+esc(d.eraNote||'')+'</span>')
         +shKv('Funnel','see the CLV funnel card'),'Era and contract')});
