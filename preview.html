@@ -125,6 +125,26 @@ section{display:none}section.active{display:block}
 .leg .ld{flex:1;font-size:13px}.leg .lp{font-family:var(--mono);font-weight:700;color:var(--accent)}
 .note{font-size:11.5px;color:var(--muted);padding:10px 14px;line-height:1.5}
 .empty{font-family:var(--mono);font-size:12px;color:var(--muted);padding:20px;text-align:center}
+.hero{margin:0 0 14px}
+.heroh{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
+.heroh h2{font-size:15px;letter-spacing:.02em;margin:0;color:var(--txt)}
+.heroh .hsub{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.herog{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:560px){.herog{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.herog{grid-template-columns:repeat(4,1fr)}}
+.hcard{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 11px;box-shadow:var(--card-sh);display:flex;flex-direction:column;gap:6px;min-width:0}
+.hcat{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.hsubj{display:flex;align-items:center;gap:8px;min-width:0}
+.hsubj .hname{font-weight:700;font-size:14px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hsubj .hteam{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.hpic{width:30px;height:30px;border-radius:50%;background:var(--panel2);object-fit:cover;flex:0 0 30px}
+.hlogo{width:26px;height:26px;flex:0 0 26px;object-fit:contain}
+.hini{width:30px;height:30px;flex:0 0 30px;border-radius:50%;background:var(--panel2);color:var(--muted);font-family:var(--mono);font-size:11px;display:flex;align-items:center;justify-content:center}
+.hnum{font-family:var(--mono);font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.hnum small{font-size:10px;font-weight:400;color:var(--muted);margin-left:4px}
+.hwhy{font-size:11px;color:var(--muted);line-height:1.45}
+.hnone{font-size:11.5px;color:var(--muted);line-height:1.45;padding:2px 0}
+.hchips{display:flex;flex-wrap:wrap;gap:4px}
 .pnote{margin-top:6px;font-size:11px;color:var(--muted);line-height:1.55}
 .pnote b{color:var(--txt)}
 .a15code{font-family:var(--mono);font-size:10px;opacity:.7}
@@ -2482,6 +2502,154 @@ function slateSummary(rows){
     return '<button class="'+(SLATE_FILTER===f[0]?'on':'')+'" onclick="slateFilter(\''+f[0]+'\')">'+esc(f[1])+'</button>';}).join('')+'</div>';
   return bar+fil;
 }
+/* ---- DAILY HERO: today's answer, above the slate ---------------------
+   ONE RULE. Every number on a Hero card is a number the payload already
+   publishes, wearing the label the payload already gave it. Nothing here
+   computes a probability, upgrades a label, or invents a category so the
+   row looks even.
+
+   WHY A CARD CAN SAY "NO PICK". Three of these markets can legitimately be
+   empty on a given day -- an empty board is an empty board. The card stays,
+   in plain English, because a category that silently disappears reads as
+   "there was nothing worth showing", which is a different claim. Internal
+   refusal codes stay in Admin; the Hero says what a reader can act on. */
+function hInit(n){return (String(n||'?').trim()[0]||'?').toUpperCase();}
+function hFace(pid,name){
+  return pid ? '<img class="hpic" loading="lazy" alt="" src="https://img.mlbstatic.com/mlb-photos/image/upload/'
+      +'d_people:generic:headshot:67:current.png/w_120,q_auto:best/v1/people/'+pid+'/headshot/67/current"'
+      +' onerror="this.outerHTML=\'<span class=&quot;hini&quot;>'+esc(hInit(name))+'</span>\'">'
+    : '<span class="hini">'+esc(hInit(name))+'</span>';
+}
+function hTeam(ab){
+  var id=IDBYABBR[ab];
+  return id ? '<img class="hlogo" loading="lazy" alt="" src="https://midfield.mlbstatic.com/v1/team/'+id+'/spots/48"'
+      +' onerror="this.outerHTML=\'<span class=&quot;hini&quot;>'+esc(hInit(ab))+'</span>\'">'
+    : '<span class="hini">'+esc(hInit(ab))+'</span>';
+}
+function hCard(cat,subject,num,chips,why){
+  return '<div class="hcard"><div class="hcat">'+esc(cat)+'</div>'
+    +(subject||'')+(num?'<div class="hnum">'+num+'</div>':'')
+    +(chips?'<div class="hchips">'+chips+'</div>':'')
+    +(why?'<div class="hwhy">'+esc(why)+'</div>':'')+'</div>';
+}
+function hNone(cat,why){
+  return '<div class="hcard"><div class="hcat">'+esc(cat)+'</div>'
+    +'<div class="hnone">'+esc(why)+'</div></div>';
+}
+/* A prop board row publishes model_prob only when its calibration is
+   verified. Today none of them do, so the Hero shows the SCORE it ranks on
+   and says the ranking is all it is. */
+function hPropChip(row){
+  return (row && isNum(row.model_prob))
+    ? pill('MODEL PROBABILITY','b-ok','This market publishes a verified probability.')
+    : pill('RANKING ONLY','b-unk','No probability is published for this market yet, '
+        +'so the number shown is the score the board ranks on — not a chance.');
+}
+function hProp(cat,fam,label){
+  var rows=((D.boards||{})[fam])||[];
+  var r=rows[0];
+  if(!r) return hNone(cat,'No eligible pick on today’s slate for this market.');
+  var num=isNum(r.model_prob)? (100*r.model_prob).toFixed(1)+'%'
+        : esc(String(r.metric))+'<small>score</small>';
+  return hCard(cat,
+    '<div class="hsubj">'+hFace(r.playerId,r.name)
+      +'<div style="min-width:0"><div class="hname">'+esc(r.name||'')+'</div>'
+      +'<div class="hteam">'+esc(r.team||'')+' · '+esc(label)+'</div></div></div>',
+    num, pill('TOP MODEL PICK','b-unk','The board’s top-ranked candidate for this market.')
+      +hPropChip(r),
+    (isNum(r.order)?'Batting '+r.order+'. ':'')+'Ranked #1 of '+rows.length+'.');
+}
+function hMoneyline(){
+  var rows=(D.ml||[]).filter(function(m){return isNum(m.conf);});
+  if(!rows.length) return hNone('Best moneyline','No moneyline was priced for this slate.');
+  var ORD={STRONG:0,LEAN:1,PASS:2};
+  rows.sort(function(a,b){
+    var ta=ORD[String(a.tier||'').toUpperCase()], tb=ORD[String(b.tier||'').toUpperCase()];
+    if(ta===undefined)ta=3; if(tb===undefined)tb=3;
+    return ta-tb || (b.edge||-99)-(a.edge||-99);});
+  var m=rows[0];
+  var g=(D.gameCards||[]).filter(function(x){return x.gamePk===m.gamePk;})[0]||{};
+  var team=m.team||g.betTeam||g.projectedWinner||(m.pickSide==='home'?g.home_sp&&g.home_sp.team:g.away_sp&&g.away_sp.team)||'';
+  var tier=String(m.tier||'').toUpperCase();
+  /* THE MODEL'S CALL AND THE BET VERDICT ARE DIFFERENT ANSWERS. A PASS is a
+     verdict on the PRICE; the model still has a winner and it is shown. */
+  var chip=(tier==='STRONG')?pill('STRONG','b-ok','Meets the strong-bet thresholds.')
+      :(tier==='LEAN')?pill('LEAN','b-warn','Meets the lean thresholds.')
+      :pill('NO BET AT THIS PRICE','b-unk','The model has a winner; the price does not clear the bet thresholds.');
+  return hCard('Best moneyline',
+    '<div class="hsubj">'+hTeam(team)
+      +'<div style="min-width:0"><div class="hname">'+esc(team||'—')+'</div>'
+      +'<div class="hteam">'+esc(g.game||'')+'</div></div></div>',
+    m.conf.toFixed(1)+'%<small>model</small>', chip,
+    (isNum(m.edge)?((m.edge>0?'+':'')+m.edge.toFixed(1)+'pt vs the price. '):'')
+      +(tier==='PASS'?'Shown as the model’s best call, not as a bet.':''));
+}
+function hPlus15(){
+  var a=D.alt15;
+  if(!a) return hNone('Best +1.5','This slate was published before the +1.5 model was wired in.');
+  if(!a.available) return hNone('Best +1.5', a.why||'Not published for this slate.');
+  var q=(a.picks||[])[0];
+  if(!q) return hNone('Best +1.5','The +1.5 model priced no game on this slate.');
+  var g=String(q.game||'');
+  return hCard('Best +1.5',
+    '<div class="hsubj">'+hTeam(q.bestPlus15Team)
+      +'<div style="min-width:0"><div class="hname">'+esc(q.bestPlus15Team||'')+' +1.5</div>'
+      +'<div class="hteam">'+esc(g)+'</div></div></div>',
+    isNum(q.bestPlus15Probability)?(100*q.bestPlus15Probability).toFixed(1)+'%':'—',
+    pill(String(a.evidence||'PROVISIONAL'),'b-unk',
+      a.evidenceNote||'Published while its forward record accumulates.'),
+    'Both sides cover in a one-run game, so this is not one minus the other.');
+}
+function hHomeRun(){
+  var rows=(D.hrProps||[]).length?D.hrProps:(D.hrCandidates||[]);
+  var r=rows[0];
+  if(!r) return hNone('Top home run','No home-run candidate cleared the lineup gate today.');
+  return hCard('Top home run',
+    '<div class="hsubj">'+hFace(r.playerId,r.name)
+      +'<div style="min-width:0"><div class="hname">'+esc(r.name||'')+'</div>'
+      +'<div class="hteam">'+esc(r.team||'')+' · '+esc(r.park||'')+'</div></div></div>',
+    esc(String(r.score))+'<small>score</small>',
+    pill('LONGSHOT RANKING','b-unk','Home runs are ranked, not priced as a probability.')
+      +(isNum(r.model_prob)?'':pill('NO BOOK PRICE','b-unk','No sportsbook price was captured for this prop.')),
+    [(r.iso!=null?'ISO '+r.iso:''),(r.hr!=null?r.hr+' HR':''),
+     (r.wind||''),(r.temp?r.temp+'°':'')].filter(Boolean).join(' · '));
+}
+/* The leg description carries the model's reasoning after an em dash.
+   That belongs in the game card, not on a hero tile: the Hero answers
+   "what do I like", and the reasoning is one tap away. */
+function hLegShort(l){
+  return String(legDesc(l)||'').split(' \u2014 ')[0].split(' - ')[0].trim();
+}
+function hParlay(){
+  var t=D.topParlay||{};
+  var legs=t.legs||[];
+  if(!t.parlayValid||legs.length<2)
+    return hNone('Best parlay', t.noParlayReason||'No two legs cleared the gates together today.');
+  var c=t.combined||{};
+  var num=c.americanOdds?esc(String(c.americanOdds))+'<small>combined</small>':'';
+  /* NO FABRICATED TICKET PROBABILITY. It shows only when the pipeline says
+     the product was licensed, and then it is labelled an assumption. */
+  var chip=isNum(c.hitPct)
+    ? pill(c.hitPct.toFixed(1)+'% · INDEPENDENCE ASSUMED','b-unk',
+        c.correlationNote||'Multiplied under an explicit independence assumption.')
+    : pill('HIT PROBABILITY NOT MEASURED','b-unk',
+        c.correlationNote||c.probUnavailableReason||'No joint probability is published for this ticket.');
+  return hCard('Best parlay',
+    '<div class="hsubj"><div style="min-width:0"><div class="hname">'+legs.length+' legs</div>'
+      +'<div class="hteam">'+esc(legs.map(hLegShort).join(' + '))
+      +'</div></div></div>', num, chip, '');
+}
+function dailyHero(){
+  var tiles=[hMoneyline(),hPlus15(),
+    hProp('Best 1+ hit','h1','1+ hit'),
+    hProp('Best 1+ double','h2','1+ double'),
+    hProp('Best 2+ total bases','tb2','2+ TB'),
+    hProp('Best H+R+RBI','hrr','hits + runs + RBI'),
+    hHomeRun(),hParlay()];
+  return '<div class="hero"><div class="heroh"><h2>Today’s top picks</h2>'
+    +'<span class="hsub">'+esc(etStamp(D.generatedAt))+'</span></div>'
+    +'<div class="herog">'+tiles.join('')+'</div></div>';
+}
 function renderSlate(){
   var gc=(D.gameCards||[]).slice();
   var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
@@ -2513,7 +2681,7 @@ function renderSlate(){
   });
   if(!body)body='<div class="empty">No games match the '+esc(SLATE_FILTER)+' filter. '
     +(SLATE_FILTER==='BET'?'The model still projects a winner in every game — switch to ALL to see them.':'Switch to ALL to see the full slate.')+'</div>';
-  $('slate').innerHTML=decisionSummaryStrip()+head+alt15Note()+body;
+  $('slate').innerHTML=dailyHero()+decisionSummaryStrip()+head+alt15Note()+body;
 }
 function renderMatchups(){
   var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});var mlByPk={};(D.ml||[]).forEach(function(m){mlByPk[m.gamePk]=m;});
