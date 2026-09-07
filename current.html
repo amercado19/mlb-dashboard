@@ -148,6 +148,11 @@ section{display:none}section.active{display:block}
 .pnote{margin-top:6px;font-size:11px;color:var(--muted);line-height:1.55}
 .pnote b{color:var(--txt)}
 .a15code{font-family:var(--mono);font-size:10px;opacity:.7}
+.pecorr{border:1px solid var(--line);border-left:3px solid var(--warn,#b45309);border-radius:8px;padding:9px 11px;margin:8px 0;background:var(--panel)}
+.pecid{font-family:var(--mono);font-size:9px;font-weight:800;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}
+.pecrow{display:grid;grid-template-columns:150px 1fr;gap:10px;font-size:11px;line-height:1.6;margin-bottom:5px}
+.pecrow i{font-style:normal;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+@media(max-width:640px){.pecrow{grid-template-columns:1fr;gap:2px}}
 .g2picks{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
 .g2pick{display:inline-flex;align-items:center;gap:5px;font-size:11px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:2px 8px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .g2pick i{font-style:normal;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
@@ -6047,6 +6052,124 @@ function a15Panel(){
   return ahs('Run-line experiment — ALT15-RUNDIST-1',
     esc(String(V.verdict||'').replace(/_/g,' ')), h);
 }
+/* ==== PROP EVIDENCE — SELECTION AND ORDERING, KEPT APART ============
+   A prop board answers to two separate questions and one number cannot
+   carry both. SELECTION asks whether being on the board is a signal at all.
+   ORDERING asks whether the printed position means anything. A board can do
+   the first and not the second, and three of five do exactly that.
+
+   The panel also renders the RETRACTIONS. A number that was published and
+   later withdrawn needs four parts — what was invalidated, what caused it,
+   what the corrected result is, and what is still limited. Anything less
+   reads as a quiet edit, and a reader who saw the original claim has no way
+   to learn it was withdrawn. */
+function peVerdict(v){
+  var V=String(v||'').toUpperCase();
+  var tone=V==='DISCRIMINATES'?'s-meas'
+    :(V==='INVERTED'?'s-bad'
+    :(V==='NO_MEASURED_DISCRIMINATION'?'s-warn':'s-unk'));
+  var tip=V==='DISCRIMINATES'
+      ? 'The ordering carries information: the interval excludes chance.'
+      :(V==='NO_MEASURED_DISCRIMINATION'
+        ? 'Not shown to carry information. That is not the same as shown to be useless — the interval includes chance.'
+        : 'The payload does not state a verdict for this population.');
+  return '<span class="lab-st '+tone+'" title="'+esc(tip)+'">'
+    +esc(V.replace(/_/g,' ')||'—')+'</span>';
+}
+function pePct(v,dp){return (v==null)?SH_ABSENT:(100*Number(v)).toFixed(dp==null?1:dp)+'%';}
+function peAuc(b){
+  if(!b||b.auc==null)return SH_ABSENT;
+  var ci=(b.ci95&&b.ci95.length===2)
+    ? ' <span class="sshage">['+b.ci95[0]+', '+b.ci95[1]+']</span>' : '';
+  return '<b>'+Number(b.auc).toFixed(4)+'</b>'+ci;
+}
+function peLift(b,k){
+  var t=b&&b[k]; if(!t)return SH_ABSENT;
+  return pePct(t.hitRate)+' <span class="sshage">'+Number(t.liftVsBase).toFixed(2)+'x</span>';
+}
+function peCorrection(c){
+  return '<div class="pecorr">'
+    +'<div class="pecid">'+esc(c.id||'')+'</div>'
+    +'<div class="pecrow"><i>Earlier result invalidated</i><span>'+esc(c.earlierResultInvalidated||'')+'</span></div>'
+    +'<div class="pecrow"><i>Cause</i><span>'+esc(c.cause||'')+'</span></div>'
+    +'<div class="pecrow"><i>Corrected result</i><span>'+esc(c.correctedResult||'')+'</span></div>'
+    +'<div class="pecrow"><i>Current limitation</i><span>'+esc(c.currentLimitation||'')+'</span></div>'
+    +(c.whyItMatters?'<div class="pecrow"><i>Why it matters</i><span>'+esc(c.whyItMatters)+'</span></div>':'')
+    +'</div>';
+}
+function pePanel(){
+  var R=labRoot()||{}; var P=R.propEvidence;
+  if(!P)return '';
+  var corr=(P.corrections||[]).map(peCorrection).join('');
+  if(!P.available){
+    return ahs('Prop evidence','NOT IN THIS PAYLOAD',
+      '<div class="mkflag"><b>'+esc(String(P.reason||'UNAVAILABLE').replace(/_/g,' '))
+      +'.</b> '+esc(P.why||'')+'</div>'
+      +'<div class="lab-note" style="margin:9px 0">A retraction survives the '
+      +'absence of the measurement it corrects.</div>'+corr);
+  }
+  var fams=P.families||{};
+  var keys=Object.keys(fams);
+  var h='<div class="mknote"><b>'+esc(P.separateClaims||'')+'</b></div>';
+  h+='<div class="lab-note" style="margin:0 0 9px">'
+    +esc(String(P.daysEvaluated==null?'':P.daysEvaluated))+' days'
+    +(Array.isArray(P.dateRange)&&P.dateRange[0]?' &middot; '+esc(P.dateRange[0]+' to '+P.dateRange[1]):'')
+    +' &middot; pool <span class="a15code">'+esc(P.universeMembership||'NOT STATED')+'</span>'
+    +' &middot; features <span class="a15code">'+esc(P.featureAsOf||'NOT STATED')+'</span></div>';
+  h+='<div class="mkdef">'+esc(P.universeNote||'')+'</div>';
+  h+='<div class="mkflag">'+esc(P.notRepublished||'')+'</div>';
+
+  h+='<div class="lab-tblw"><table class="lab-mx"><thead><tr>'
+    +['Market','Settles on','Full universe AUC','Universe verdict',
+      'Board base rate','vs universe','Board order (metric)','Printed rank',
+      'Top-5 on the universe']
+      .map(function(x){return '<th>'+esc(x)+'</th>';}).join('')
+    +'</tr></thead><tbody>';
+  keys.forEach(function(k){
+    var v=fams[k]||{}, L=v.label||{}, u=v.fullUniverse, m=v.boardMetric,
+        rk=v.boardPrintedRank, sel=v.selection;
+    h+='<tr>'
+      +'<td class="lab-fam">'+esc(L.humanName||k)+'<br><span class="sshage">'
+        +esc(L.shortName||'')+'</span></td>'
+      +'<td><code>'+esc(L.targetCondition||'')+'</code></td>'
+      +'<td class="lab-num">'+peAuc(u)+'</td>'
+      +'<td>'+peVerdict(u&&u.verdict)+'</td>'
+      +'<td class="lab-num">'+(sel?pePct(sel.boardBaseRate):SH_ABSENT)
+        +'<br><span class="sshage">universe '+(sel?pePct(sel.universeBaseRate):SH_ABSENT)+'</span></td>'
+      +'<td>'+(sel
+          ? (sel.boardAboveUniverse
+              ? '<span class="lab-st s-meas" title="'+esc(sel.how)+'">SELECTS</span>'
+              : '<span class="lab-st s-warn" title="'+esc(sel.how)+'">NO LIFT</span>')
+          : SH_ABSENT)+'</td>'
+      +'<td class="lab-num">'+peAuc(m)+'<br>'+peVerdict(m&&m.verdict)+'</td>'
+      +'<td class="lab-num">'+peAuc(rk)+'<br>'+peVerdict(rk&&rk.verdict)+'</td>'
+      +'<td class="lab-num">'+peLift(u,'top5')+'</td>'
+      +'</tr>';
+  });
+  h+='</tbody></table></div>';
+
+  /* WHAT A LABEL MAY SAY, derived from nothing — it is read off the verdicts
+     already in the table, and stated so a reader can check it against them. */
+  var ordersWell=keys.filter(function(k){
+    return ((fams[k].boardPrintedRank||{}).verdict)==='DISCRIMINATES';});
+  var selectsWell=keys.filter(function(k){
+    return (fams[k].selection||{}).boardAboveUniverse;});
+  h+='<div class="mknote"><b>What a label may say.</b> '
+    +'Board membership is a real signal in '+selectsWell.length+' of '+keys.length
+    +' markets, so appearing on a board can carry one. Printed rank order is '
+    +'shown to carry information in '+ordersWell.length+' — '
+    +(ordersWell.length
+        ? ordersWell.map(function(k){return esc((fams[k].label||{}).humanName||k);}).join(' and ')
+        : 'none')
+    +' — so anywhere else, rank 1 is not a stronger pick than rank 8 and no '
+    +'label may imply that it is.</div>';
+  h+='<div class="mkdef">'+esc(P.readingNote||'')+'</div>';
+  h+='<div class="mkdef">'+esc(P.notScoredHere||'')+'</div>';
+
+  h+='<div class="mkdef">CORRECTIONS AND RETRACTIONS</div>'+corr;
+  return ahs('Prop evidence — selection and ordering',
+    esc(keys.length+' markets'), h);
+}
 function renderBacktests(){
   var BT=(D&&D.backtests)||{},h='';
 
@@ -6062,6 +6185,7 @@ function renderBacktests(){
     h+=marketPanel();
     h+=xpPanel();
     h+=a15Panel();
+    h+=pePanel();
     h+=ahs('Valid CLV era','',
       '<div class="lab-note" style="margin:0 0 9px">The valid forward series and the legacy provisional numbers are shown side by side and are <b>never combined</b>. They are different measurements, and averaging them would let the unverifiable rows outvote the real ones under the valid series\u2019 name.</div>'
       +labClv(L));
