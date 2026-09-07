@@ -1,6 +1,6 @@
 {
  "date": "2026-09-07",
- "generated_at": "2026-09-07T04:31:06",
+ "generated_at": "2026-09-07T05:02:14",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "6ff4f37"
+  "gitCommit": "56c0469"
  },
  "games": [
   {
@@ -25,15 +25,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 4
     },
     "cf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "rf": {
      "dir": "in",
-     "mph": 3
+     "mph": 4
     },
     "out_mph": 0
    }
@@ -89,7 +89,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -97,9 +97,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 3
+     "mph": 4
     },
-    "out_mph": 3
+    "out_mph": 4
    }
   },
   {
@@ -115,7 +115,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
      "dir": "cross",
@@ -123,9 +123,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
-    "out_mph": 4
+    "out_mph": 5
    }
   },
   {
@@ -273,6 +273,38 @@
  ],
  "props": [
   {
+   "player": "Juan Soto",
+   "team": "nym",
+   "game": "nym-mia",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 390,
+    "factors": {
+     "sp": 0.996,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0434
+   },
+   "edge_score": 65,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.1,
+    "hard_hit_pct": 48.0,
+    "avg_exit_velo": 92.3,
+    "xiso": 0.289,
+    "recent_hr_rate": 0.0645
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Rafael Devers",
    "team": "sf",
    "game": "stl-sf",
@@ -303,39 +335,7 @@
     "recent_hr_rate": 0.0945
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Juan Soto",
-   "team": "nym",
-   "game": "nym-mia",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 390,
-    "factors": {
-     "sp": 0.996,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0434
-   },
-   "edge_score": 63,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.1,
-    "hard_hit_pct": 48.0,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.289,
-    "recent_hr_rate": 0.0645
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -366,7 +366,7 @@
     "recent_hr_rate": 0.1176
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -400,7 +400,7 @@
     "recent_hr_rate": 0.0351
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -434,7 +434,7 @@
     "recent_hr_rate": 0.0714
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -466,7 +466,7 @@
     "recent_hr_rate": 0.0348
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -500,7 +500,7 @@
     "recent_hr_rate": 0.0246
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -531,7 +531,7 @@
     "recent_hr_rate": 0.0513
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -563,7 +563,7 @@
     "recent_hr_rate": 0.1045
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -597,7 +597,7 @@
     "recent_hr_rate": 0.094
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 268 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -628,7 +628,7 @@
     "recent_hr_rate": 0.094
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -659,7 +659,7 @@
     "recent_hr_rate": 0.0513
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -690,7 +690,7 @@
     "recent_hr_rate": 0.1176
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -721,7 +721,7 @@
     "recent_hr_rate": 0.0435
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -752,7 +752,7 @@
     "recent_hr_rate": 0.0351
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -783,7 +783,7 @@
     "recent_hr_rate": 0.0263
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -814,7 +814,7 @@
     "recent_hr_rate": 0.009
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -845,7 +845,7 @@
     "recent_hr_rate": 0.0645
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -876,7 +876,7 @@
     "recent_hr_rate": 0.0
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -907,7 +907,7 @@
     "recent_hr_rate": 0.0505
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 267 settled (need 40), 18 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 276 settled (need 40), 23 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -938,7 +938,7 @@
     "recent_hr_rate": 0.037
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -953,7 +953,7 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 553,
+    "pa_season": 554,
     "factors": {
      "sp": 0.9
     },
@@ -969,7 +969,7 @@
     "recent_hr_rate": 0.0
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -1000,7 +1000,7 @@
     "recent_hr_rate": 0.1045
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -1031,7 +1031,7 @@
     "recent_hr_rate": 0.0476
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -1062,7 +1062,7 @@
     "recent_hr_rate": 0.0469
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -1093,7 +1093,7 @@
     "recent_hr_rate": 0.0472
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -1124,7 +1124,7 @@
     "recent_hr_rate": 0.031
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -1139,7 +1139,7 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 586,
+    "pa_season": 587,
     "factors": {
      "sp": 0.9
     },
@@ -1152,10 +1152,10 @@
     "hard_hit_pct": 41.0,
     "avg_exit_velo": 89.6,
     "xiso": 0.181,
-    "recent_hr_rate": 0.0196
+    "recent_hr_rate": 0.0194
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -1186,7 +1186,7 @@
     "recent_hr_rate": 0.0
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -1217,7 +1217,7 @@
     "recent_hr_rate": 0.0164
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 269 settled (need 40), 17 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   }
  ],
