@@ -148,6 +148,14 @@ section{display:none}section.active{display:block}
 .pnote{margin-top:6px;font-size:11px;color:var(--muted);line-height:1.55}
 .pnote b{color:var(--txt)}
 .a15code{font-family:var(--mono);font-size:10px;opacity:.7}
+.g2picks{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
+.g2pick{display:inline-flex;align-items:center;gap:5px;font-size:11px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:2px 8px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.g2pick i{font-style:normal;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.g2pick b{font-family:var(--mono);font-weight:800}
+.g2pick small{font-size:8px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.g2rank{font-size:8px;font-weight:800;letter-spacing:.05em;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:0 4px}
+.g2par{border-style:dashed}
+.g2none{font-size:11px;color:var(--muted)}
 .a15none{margin:8px 0 10px;padding:9px 11px;border:1px dashed var(--line);border-radius:8px;font-size:11.5px;color:var(--muted);line-height:1.55}
 .a15none b{color:var(--txt)}
 .a15code{font-family:var(--mono);font-size:10px;opacity:.7}
@@ -2340,6 +2348,55 @@ function alt15Row(g){
   return '<div class="g2row"><i>Best +1.5</i>'+side+'</div>'
     +(boh?'<div class="g2row"><i>Best outcome</i>'+boh+'</div>':'');
 }
+/* ---- WHAT THIS GAME ACTUALLY OFFERS ---------------------------------
+   The slate card carried the moneyline, the run line and the weather, and
+   said nothing about the props or the parlay — so a reader looking at one
+   game had to leave the card to find out whether the system liked anybody
+   in it. This row puts the game's own top prop, its own top home-run
+   candidate, and a marker when a leg from this game is on the suggested
+   ticket, side by side with the bet.
+
+   It publishes only what the boards already publish. Where a market has no
+   probability the number is the SCORE the board ranks on, labelled as a
+   ranking and never as a chance, exactly as the Hero does. A game with no
+   eligible candidate says so rather than borrowing the slate leader. */
+function gameTopRow(fam,pk){
+  var rows=((D.boards||{})[fam])||[];
+  for(var i=0;i<rows.length;i++){if(String(rows[i].gamePk)===String(pk))return {row:rows[i],rank:i+1,of:rows.length};}
+  return null;
+}
+function gamePickChip(fam,pk,label){
+  var f=gameTopRow(fam,pk);
+  if(!f)return '';
+  var r=f.row;
+  var num=isNum(r.model_prob)?(100*r.model_prob).toFixed(1)+'%'
+        :esc(String(r.metric))+' <small>score</small>';
+  var kind=isNum(r.model_prob)?'probability':'board score, not a chance';
+  return '<span class="g2pick" title="'+esc(label+' — '+(r.name||'')+'. '
+      +'Board rank #'+f.rank+' of '+f.of+'. The number is a '+kind+'.')+'">'
+    +'<i>'+esc(label)+'</i>'+esc(r.name||'')
+    +' <b>'+num+'</b>'
+    +(isNum(r.model_prob)?'':' <span class="g2rank">RANKING ONLY</span>')+'</span>';
+}
+function gameParlayChip(pk){
+  var tp=D.topParlay||{};var legs=tp.legs||[];
+  var n=0;legs.forEach(function(l){if(String(l.gamePk)===String(pk))n++;});
+  if(!n)return '';
+  return '<span class="g2pick g2par" title="This game supplies '+n+' leg'
+    +(n===1?'':'s')+' of the suggested parlay. Two legs from one game are '
+    +'dependent, and the ticket says so where the price is shown.">'
+    +'<i>Parlay</i>'+n+' leg'+(n===1?'':'s')+'</span>';
+}
+function gamePicksRow(g){
+  var pk=g&&g.gamePk;
+  if(pk==null)return '';
+  var bits=gamePickChip('h1',pk,'Top hit')+gamePickChip('hr',pk,'Top HR')
+          +gamePickChip('tb2',pk,'Top 2+ TB')+gameParlayChip(pk);
+  if(!bits)return '<div class="g2row"><i>Picks</i><div class="g2picks">'
+    +'<span class="g2none">No prop from this game reached a board today.</span>'
+    +'</div></div>';
+  return '<div class="g2row"><i>Picks</i><div class="g2picks">'+bits+'</div></div>';
+}
 function slateCard2(g,m){
   var b=betFor(g,m),st=b.state,p=b.pred,P=predOf(g,m)||{};
   var tm={away:p.away||teamsOf(g).away,home:p.home||teamsOf(g).home};
@@ -2395,6 +2452,7 @@ function slateCard2(g,m){
       +'<div class="g2row"><i>Model</i>'+model+'</div>'
       +'<div class="g2row"><i>Bet</i>'+bet+'</div>'
       +alt15Row(g)
+      +gamePicksRow(g)
       +'<div class="g2row"><i>Decision</i>'+decisionChips(p.pred)+'</div>'
       +(contextChips(p.pred)?'<div class="g2row"><i>Context</i>'+contextChips(p.pred)+'</div>':'')
       +'<div class="g2row"><i>Wind</i>'+wind+'</div>'
