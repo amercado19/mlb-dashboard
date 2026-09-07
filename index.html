@@ -5382,6 +5382,59 @@ function marketPanel(){
     (P.n?String(P.n)+' paired':'no paired row'), h);
 }
 
+/* ==== ML-MKT-DISAGREE-1 — READ, NEVER COMPUTED ====================== */
+function xpTag(v){return '<span class="mkstat mks-lim">'+esc(String(v||'?'))+'</span>';}
+function xpN(v){return String(v==null?0:v);}
+function xpPanel(){
+  var R=labRoot()||{}; var X=R.experiment; if(!X)return '';
+  if(X.status==='READ_FAILED'){return ahs('Market disagreement experiment','READ FAILED',
+    '<div class="mkflag"><b>The experiment artifact could not be read.</b> '+esc(X.why||'')+'</div>');}
+  var c=X.counts||{}, p=X.primary||{}, d=X.discovery||{}, s=R.straightLedger||{};
+  var h='';
+  h+='<div class="mknote"><b>'+esc(X.experimentId||'')+'</b> &middot; FORWARD SHADOW &middot; '+esc(p.status||'ACCUMULATING')
+    +'. '+esc(X.productionUse||'')+' &mdash; it reaches no probability, tier, verdict, parlay or ticket.</div>';
+  h+='<div class="mknote"><b>Hypothesis:</b> '+esc(X.hypothesis||'')+'</div>';
+  h+='<div class="mknote"><b>Orientation:</b> '+esc(X.canonicalSelection||'')+' &middot; '+esc(X.disagreementFormula||'')+'</div>';
+  h+='<div class="mkdef">DISCOVERY &mdash; inspected, and may never validate anything</div>';
+  h+='<div class="mkpair">'
+    +'<div class="mkcard"><u>Discovery rows</u><b>'+xpN(d.n)+'</b><s>'+esc((d.window||[]).join(' to '))+'</s></div>'
+    +'<div class="mkcard"><u>Classification</u><b>'+xpTag(d.classification)+'</b><s>suggestive, not established</s></div>'
+    +'</div>';
+  h+='<div class="mkdef">'+esc(d.note||'')+'</div>';
+  h+='<div class="mkdef">FORWARD &mdash; the only rows that can ever count</div>';
+  h+='<div class="mknote"><b>Forward start:</b> '+esc(X.forwardSeriesStart||'')+'</div>';
+  if(X.intendedPrelaunchStatus){
+    h+='<div class="mkflag"><b>An earlier start, '+esc(X.intendedPrelaunchStart||'')+', was '
+      +esc(X.intendedPrelaunchStatus)+'.</b> '+esc(X.intendedPrelaunchNote||'')+'</div>';}
+  h+='<div class="mkpair">'
+    +'<div class="mkcard"><u>Paired rows</u><b>'+xpN(c.rows)+'</b><s>quoted '+xpN(c.quoted)+' &middot; awaiting '+xpN(c.awaitingQuote)+'</s></div>'
+    +'<div class="mkcard"><u>Qualifying 5pp+</u><b>'+xpN(c.qualifying)+'</b><s>settled '+xpN(c.qualifyingSettled)+'</s></div>'
+    +'<div class="mkcard"><u>Positive</u><b>'+xpN(c.positive)+'</b><s>model more bullish</s></div>'
+    +'<div class="mkcard"><u>Negative</u><b>'+xpN(c.negative)+'</b><s>model less bullish</s></div>'
+    +'<div class="mkcard"><u>Settled</u><b>'+xpN(c.settled)+'</b><s>outcome recorded</s></div>'
+    +'</div>';
+  h+='<div class="mkpair">'
+    +'<div class="mkcard"><u>Primary &mdash; mean signed residual</u><b>'+mkPp(p.meanSignedResidualPp)+'</b><s>n '+xpN(p.n)+' of '+xpN(X.evaluationN)+'</s></div>'
+    +'<div class="mkcard"><u>95% interval</u><b>'+((p.ci95&&p.ci95[0]!=null)?(mkPp(p.ci95[0])+' to '+mkPp(p.ci95[1])):SH_ABSENT)+'</b><s>descriptive only</s></div>'
+    +'<div class="mkcard"><u>Read</u><b>'+xpTag(p.status||'ACCUMULATING')+'</b><s>once, at n='+xpN(p.readAt||X.evaluationN)+'</s></div>'
+    +'</div>';
+  h+='<div class="mknote"><b>Verdict:</b> '+esc(p.verdict||'')+'</div>';
+  h+='<div class="mknote"><b>Promotion needs both:</b> '+esc(X.promotionCriterion||'')+'</div>';
+  h+='<div class="mkdef">'+esc(X.powerNote||'')+'</div>';
+  h+='<div class="mkdef">'+esc(X.promotionMeaning||'')+'</div>';
+  h+='<div class="mkdef">quote '+esc(X.quotePolicy||'')+' &middot; de-vig '+esc(X.devigMethod||'')
+    +' &middot; threshold '+esc(String(X.thresholdPp))+'pp, fixed &middot; ROI is not a criterion</div>';
+  if(s.ledgerId){
+    h+='<div class="mkdef">'+esc(s.ledgerId||'')+' &mdash; publication-time straight moneyline, a separate axis, never merged into CLV</div>';
+    h+='<div class="mkpair">'
+      +'<div class="mkcard"><u>Ledger rows</u><b>'+xpN(s.rows)+'</b><s>settled '+xpN(s.settled)+'</s></div>'
+      +'<div class="mkcard"><u>Era start</u><b>'+esc(s.eraStart||'')+'</b><s>'+esc(s.stakePolicyVersion||'')+'</s></div>'
+      +'</div>';
+    h+='<div class="mknote"><b>No ROI:</b> '+esc(s.roiWhy||'')+'</div>';
+    h+='<div class="mkdef">'+esc(s.notClv||'')+'</div>';}
+  return ahs(esc(X.experimentId||'ML-MKT-DISAGREE-1')+' &mdash; market disagreement','FORWARD SHADOW',h);
+}
+
 function renderBacktests(){
   var BT=(D&&D.backtests)||{},h='';
 
@@ -5395,6 +5448,7 @@ function renderBacktests(){
       +esc((L.pit&&L.pit.consequence)||'')
       +'</div>'+labMatrix(L));
     h+=marketPanel();
+    h+=xpPanel();
     h+=ahs('Valid CLV era','',
       '<div class="lab-note" style="margin:0 0 9px">The valid forward series and the legacy provisional numbers are shown side by side and are <b>never combined</b>. They are different measurements, and averaging them would let the unverifiable rows outvote the real ones under the valid series\u2019 name.</div>'
       +labClv(L));
