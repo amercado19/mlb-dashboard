@@ -5939,6 +5939,114 @@ function xpPanel(){
   return ahs(esc(X.experimentId||'ML-MKT-DISAGREE-1')+' &mdash; market disagreement','FORWARD SHADOW',h);
 }
 
+/* ==== ALT15-RUNDIST-1 — THE +1.5 NULL, READ AND NEVER RECOMPUTED ====
+   A preregistered null is a completed experiment. It is published here for
+   the same reason the promotion rule was frozen before any number existed:
+   so that a result nobody liked cannot quietly become a search for a better
+   story, and so that six weeks from now the same idea is not tried again by
+   someone with no record that it was already answered.
+
+   Every figure below is copied from research/alt15_backtest.json. This block
+   does not compute a Brier, an interval or a verdict, and it never renders a
+   number for a missing experiment. */
+function a15N(v,dp){
+  if(v==null||v==='')return SH_ABSENT;
+  var n=Number(v); if(!isFinite(n))return esc(String(v));
+  return (dp==null)?String(n):n.toFixed(dp);
+}
+function a15Pp2(v){return (v==null)?SH_ABSENT:(Number(v).toFixed(2)+'pp');}
+function a15Card(u,b,note){
+  return '<div class="mkcard"><u>'+esc(u)+'</u><b>'+b+'</b>'
+    +(note?'<s>'+esc(note)+'</s>':'')+'</div>';
+}
+function a15Panel(){
+  var R=labRoot()||{}; var A=R.alt15;
+  if(!A)return '';
+  if(!A.available){
+    return ahs('Run-line experiment — ALT15-RUNDIST-1','NOT IN THIS PAYLOAD',
+      '<div class="mkflag"><b>'+esc(String(A.reason||'UNAVAILABLE').replace(/_/g,' '))
+      +'.</b> '+esc(A.why||'')+'</div>'
+      +(A.historicalCaveat?'<div class="mkdef">'+esc(A.historicalCaveat)+'</div>':''));
+  }
+  var P=A.prereg||{}, C=A.corpus||{}, F=A.fit||{}, E=A.evaluation||{},
+      V=A.verdict||{}, S=E.selectedPick||{}, B=A.boundaryBug||{},
+      PR=A.production||{};
+  var h='';
+  h+='<div class="mknote"><b>'+esc(A.experimentId||'')+'</b> &middot; '
+    +esc(String(A.status||'').replace(/_/g,' '))+' &middot; verdict '
+    +xpTag(V.verdict)+'. '+esc(V.why||'')+'</div>';
+  h+='<div class="mkflag"><b>This is not validation.</b> '+esc(A.historicalCaveat||'')+'</div>';
+
+  h+='<div class="mkdef">FROZEN BEFORE ANY NUMBER EXISTED</div>';
+  h+='<div class="mknote"><b>Hypothesis:</b> '+esc(P.hypothesis||'')+'</div>';
+  h+='<div class="mkpair">'
+    +a15Card('Baseline',esc(P.baselineId||SH_ABSENT),'the simpler model')
+    +a15Card('Challenger',esc(P.challengerId||SH_ABSENT),'one feature, one parameter')
+    +a15Card('Practical floor',a15N(P.practicalFloor),'paired Brier gain that would count')
+    +a15Card('Forward horizon',a15N(P.forwardHorizonGames),'settled games, read once')
+    +'</div>';
+  h+='<div class="mkdef"><b>Tie rule:</b> '+esc(P.tieRule||'')+'</div>';
+
+  h+='<div class="mkdef">THE CORPUS</div>';
+  h+='<div class="mkpair">'
+    +a15Card('Games',a15N(C.games),esc(String(C.dates==null?'':C.dates))+' dates')
+    +a15Card('Cut date',esc(C.cutDate||SH_ABSENT),'train / evaluate split')
+    +a15Card('PIT violations',a15N(C.pitViolations),'counted, not assumed')
+    +a15Card('One-run games',(C.oneRunGameShare==null?SH_ABSENT:(100*C.oneRunGameShare).toFixed(1)+'%'),'both +1.5 sides cover here')
+    +'</div>';
+  h+='<div class="mkdef">'+esc(C.baseRateNote||'')+'</div>';
+
+  h+='<div class="mkdef">THE RESULT</div>';
+  h+='<div class="mkpair">'
+    +a15Card('Baseline Brier',a15N(E.baselineBrier,5),'lower is better')
+    +a15Card('Challenger Brier',a15N(E.challengerBrier,5),'lower is better')
+    +a15Card('Paired difference',(E.pairedBrierDiff==null?SH_ABSENT:((E.pairedBrierDiff>0?'+':'')+E.pairedBrierDiff)),'challenger minus baseline')
+    +a15Card('95% interval',((E.pairedBrierCI95&&E.pairedBrierCI95.length===2)
+        ?(E.pairedBrierCI95[0]+' to '+E.pairedBrierCI95[1]):SH_ABSENT),'clustered by game')
+    +a15Card('Evaluation games',a15N(E.evalGames),a15N(E.evalRows)+' team rows')
+    +a15Card('Fitted beta',a15N(F.betaFitted),(F.betaAtGridEdge?'AT GRID EDGE — grid too narrow':'inside the frozen grid'))
+    +'</div>';
+  h+='<div class="mknote"><b>Why this is a null:</b> the interval '
+    +(E.intervalSpansZero===true?'spans zero':(E.intervalSpansZero===false?'excludes zero':'span is not stated'))
+    +' and the difference is '
+    +(E.belowPracticalFloor===true?'below':(E.belowPracticalFloor===false?'at or above':'not comparable to'))
+    +' the floor frozen before it was computed. '+esc(V.publishesWhy||'')+'</div>';
+  h+='<div class="mkpair">'
+    +a15Card('Selected pick predicted',(S.predicted==null?SH_ABSENT:(100*S.predicted).toFixed(1)+'%'),'n '+a15N(S.n))
+    +a15Card('Observed cover rate',(S.observed==null?SH_ABSENT:(100*S.observed).toFixed(1)+'%'),'same games')
+    +a15Card('Calibration gap',a15Pp2(S.calibrationGapPp),'predicted minus observed')
+    +'</div>';
+  h+='<div class="mkdef">'+esc(S.note||'')+'</div>';
+
+  /* THE BUG THAT MOVED EVERY NUMBER ABOVE. A reader who does not understand
+     it cannot judge the result, so it is explained rather than cited. */
+  if(B&&B.cause){
+    h+='<div class="mkdef">A SHARED-COMPONENT BUG THE SANITY CHECK CAUGHT</div>';
+    h+='<div class="mkflag"><b>'+esc(B.name||'')+'</b></div>';
+    h+='<div class="mknote"><b>Found by:</b> '+esc(B.foundBy||'')+' <b>It read</b> '+esc(B.symptom||'')+'</div>';
+    h+='<div class="mknote"><b>Cause:</b> '+esc(B.cause||'')+'</div>';
+    h+='<div class="mknote"><b>Fix:</b> '+esc(B.fix||'')+'</div>';
+    h+='<div class="mkpair">'+(B.effect||[]).map(function(e){
+        return a15Card(e.what,esc(String(e.before))+' &rarr; '+esc(String(e.after)),'before / after');
+      }).join('')+'</div>';
+    h+='<div class="mkdef">'+esc(B.fairness||'')+'</div>';
+    h+='<div class="mkdef">'+esc(B.lesson||'')+'</div>';
+  }
+
+  h+='<div class="mkdef">WHAT PUBLISHES TODAY</div>';
+  h+='<div class="mknote"><b>'+esc(PR.label||'')+'</b> &middot; '
+    +esc(PR.evidence||'')+'. '+esc(PR.note||'')+'</div>';
+  if(PR.productNote)h+='<div class="mkdef">'+esc(PR.productNote)+'</div>';
+  if((P.forbiddenLanguage||[]).length){
+    h+='<div class="mkdef">Language frozen out of this market: '
+      +(P.forbiddenLanguage||[]).map(function(w){return esc(w);}).join(' &middot; ')
+      +'. Allowed strength wording: '
+      +(P.allowedStrengthLanguage||[]).map(function(w){return esc(w);}).join(' &middot; ')
+      +'.</div>';
+  }
+  return ahs('Run-line experiment — ALT15-RUNDIST-1',
+    esc(String(V.verdict||'').replace(/_/g,' ')), h);
+}
 function renderBacktests(){
   var BT=(D&&D.backtests)||{},h='';
 
@@ -5953,6 +6061,7 @@ function renderBacktests(){
       +'</div>'+labMatrix(L));
     h+=marketPanel();
     h+=xpPanel();
+    h+=a15Panel();
     h+=ahs('Valid CLV era','',
       '<div class="lab-note" style="margin:0 0 9px">The valid forward series and the legacy provisional numbers are shown side by side and are <b>never combined</b>. They are different measurements, and averaging them would let the unverifiable rows outvote the real ones under the valid series\u2019 name.</div>'
       +labClv(L));
