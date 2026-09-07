@@ -1,6 +1,6 @@
 {
  "date": "2026-09-07",
- "generated_at": "2026-09-07T05:02:14",
+ "generated_at": "2026-09-07T06:11:39",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "56c0469"
+  "gitCommit": "b11d9f9"
  },
  "games": [
   {
@@ -25,15 +25,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 2
     },
     "cf": {
      "dir": "in",
-     "mph": 5
+     "mph": 3
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 2
     },
     "out_mph": 0
    }
@@ -115,7 +115,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 6
     },
     "cf": {
      "dir": "cross",
@@ -123,9 +123,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
-    "out_mph": 5
+    "out_mph": 6
    }
   },
   {
@@ -188,7 +188,7 @@
    "pick": "sd",
    "confidence": 0.677,
    "tier": "PASS",
-   "total": 8.4,
+   "total": 8.5,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
@@ -273,38 +273,6 @@
  ],
  "props": [
   {
-   "player": "Juan Soto",
-   "team": "nym",
-   "game": "nym-mia",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 390,
-    "factors": {
-     "sp": 0.996,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0434
-   },
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.1,
-    "hard_hit_pct": 48.0,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.289,
-    "recent_hr_rate": 0.0645
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Rafael Devers",
    "team": "sf",
    "game": "stl-sf",
@@ -333,6 +301,38 @@
     "avg_exit_velo": 93.1,
     "xiso": 0.232,
     "recent_hr_rate": 0.0945
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Juan Soto",
+   "team": "nym",
+   "game": "nym-mia",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 390,
+    "factors": {
+     "sp": 0.996,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0434
+   },
+   "edge_score": 63,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.1,
+    "hard_hit_pct": 48.0,
+    "avg_exit_velo": 92.3,
+    "xiso": 0.289,
+    "recent_hr_rate": 0.0645
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 277 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -419,10 +419,10 @@
     "factors": {
      "sp": 1.038,
      "park": 1.07,
-     "temp": 1.042,
+     "temp": 1.036,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0649
+    "hr_rate_pa": 0.0646
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
@@ -485,10 +485,10 @@
     "factors": {
      "sp": 1.038,
      "park": 1.07,
-     "temp": 1.042,
+     "temp": 1.036,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0461
+    "hr_rate_pa": 0.0458
    },
    "edge_score": 56,
    "score_type": "model_score_0_100",
@@ -1139,7 +1139,7 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 587,
+    "pa_season": 588,
     "factors": {
      "sp": 0.9
     },
@@ -1152,7 +1152,7 @@
     "hard_hit_pct": 41.0,
     "avg_exit_velo": 89.6,
     "xiso": 0.181,
-    "recent_hr_rate": 0.0194
+    "recent_hr_rate": 0.0192
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 278 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
