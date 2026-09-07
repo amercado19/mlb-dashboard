@@ -2795,6 +2795,14 @@ function renderPicks(){
 var TP_WORK=null;
 function legTierInfo(l){
   var bf=D.boardsFull||D.boards||{};var map={hit:'h1','2tb':'tb2',hrr:'hrr',hr:'hr','2b':'h2'};
+  /* A +1.5 leg carries the run-line model's OWN evidence label. It is not
+     scored against the moneyline board and it does not inherit a tier from
+     one, so it wears what its producer published — PROVISIONAL stays
+     PROVISIONAL, and a leg whose producer labelled nothing says so. */
+  if(l.betType==='plus15'||l.betType==='minus15'){
+    var ev=String(l.evidenceStatus||'').toUpperCase();
+    return ev?[ev,'b-unk']:['UNLABELLED','b-unk'];
+  }
   if(l.betType==='ml'){var m=(D.ml||[]).filter(function(p){return p.gamePk===l.gamePk&&p.team===l.team;})[0];var t=m&&m.tier;return t==='STRONG'?['STRONG','b-strong']:t==='LEAN'?['LEAN','b-lean']:['WEAK','b-pass'];}
   if(l.betType==='over'){var ou=(bf.ou||[]).filter(function(o){return o.gamePk===l.gamePk;})[0];var e=ou?((ou.proj||0)-(ou.line||0)):0;return e>=1?['STRONG','b-strong']:e>=.4?['LEAN','b-lean']:['WEAK','b-pass'];}
   var bk=map[l.betType];if(bk){var bd=bf[bk]||[];var rt=rate10fn(bd,function(r){return r.metric;});var row=bd.filter(function(r){return r.playerId===l.playerId;})[0];if(row){var rg=parseFloat(rt(row.metric));return rg>=8?['STRONG','b-strong']:rg>=6.5?['LEAN','b-lean']:['WEAK','b-pass'];}}
@@ -2832,52 +2840,122 @@ function tpAddSel(){var s=$('tpSel');if(!s||s.value==='')return;var c=window._TP
    So: the percentage is attributed to whatever actually produced it, the
    assumption is named every time it is applied, and no line claims the model
    publishes a parlay probability -- because it does not. */
-var SGP_ASSUMED=0.62;
-var SGP_PROVENANCE='ASSUMED, NOT MEASURED';
+/* ---- WHAT DEPENDENT LEGS MAY AND MAY NOT CLAIM ----------------------
+   (2026-09-07) The flat 0.62 same-game factor is gone. It was never fitted
+   against a settled parlay, and naming an invented number does not make the
+   price built from it true. A price computed with a made-up dependence
+   factor is a made-up price.
+
+   Nothing replaces it as a factor. What replaces it is the INDEPENDENT
+   PRODUCT -- which is arithmetic, not a model -- plus the plain statement
+   that for dependent legs the real combined figure is NOT MEASURED.
+
+   Only mathematically true implications are encoded below. Winning the game
+   means losing by no more than one, so a moneyline contains that team's
+   +1.5. A home run is a hit and is two total bases. Nothing here estimates
+   a correlation, and a pair the list does not cover is reported as dependent
+   with its dependence unmeasured -- never quietly as independent. */
+var PL_INDEP='INDEPENDENT',PL_NESTED='NESTED',PL_DEP='DEPENDENT',PL_EXCL='CONTRADICTORY';
+var PL_ALIAS={ml:'ml',moneyline:'ml',plus15:'plus15',runline_plus:'plus15',
+  minus15:'minus15',runline_minus:'minus15',hit:'hit',h1:'hit',hr:'hr',
+  '2tb':'tb2',tb2:'tb2',tb:'tb2',h2:'dbl','double':'dbl',hrr:'hrr',
+  over:'over',under:'under',nrfi:'nrfi',yrfi:'yrfi'};
+function plType(l){return PL_ALIAS[String((l&&l.betType)||'').toLowerCase()]||null;}
+function plWho(l){if(!l)return null;if(l.playerId!=null&&l.playerId!=='')return 'p'+l.playerId;if(l.team)return 't'+l.team;return null;}
+var PL_IMPLIES={'ml>plus15':'winning the game means losing by no more than one',
+  'minus15>ml':'covering −1.5 means winning the game',
+  'minus15>plus15':'winning by two or more means losing by no more than one',
+  'hr>hit':'a home run is a hit',
+  'hr>tb2':'a home run is four total bases',
+  'dbl>hit':'a double is a hit',
+  'dbl>tb2':'a double is two total bases'};
+function plPairRel(a,b){
+  var ta=plType(a),tb=plType(b);
+  if(!ta||!tb)return {rel:PL_DEP,why:'a leg could not be typed, so its dependence is unknown'};
+  var ga=(a&&a.gamePk),gb=(b&&b.gamePk);
+  if(ga==null||ga===''||gb==null||gb==='')return {rel:PL_DEP,why:'a leg does not name its game, so its dependence is unknown'};
+  if(String(ga)!==String(gb))return {rel:PL_INDEP,why:''};
+  if((ta==='over'&&tb==='under')||(ta==='under'&&tb==='over'))return {rel:PL_EXCL,why:'OVER and UNDER on the same total'};
+  if((ta==='nrfi'&&tb==='yrfi')||(ta==='yrfi'&&tb==='nrfi'))return {rel:PL_EXCL,why:'NRFI and YRFI on the same first inning'};
+  var wa=plWho(a),wb=plWho(b);
+  if(ta==='ml'&&tb==='ml'&&wa&&wb&&wa!==wb)return {rel:PL_EXCL,why:'both sides of the same moneyline'};
+  if(wa&&wb&&wa===wb){
+    if(ta===tb)return {rel:PL_EXCL,why:'the same selection written twice'};
+    var m=PL_IMPLIES[ta+'>'+tb]||PL_IMPLIES[tb+'>'+ta];
+    if(m)return {rel:PL_NESTED,why:m};
+    return {rel:PL_DEP,why:'the same subject, so the legs move together by an unmeasured amount'};
+  }
+  return {rel:PL_DEP,why:'the same game, so the legs move together by an unmeasured amount'};
+}
+function parlayDependence(legs){
+  legs=legs||[];
+  var o={n:legs.length,nested:[],dependent:[],contradictory:[],licensed:legs.length>1};
+  for(var i=0;i<legs.length;i++)for(var j=i+1;j<legs.length;j++){
+    var r=plPairRel(legs[i],legs[j]);
+    if(r.rel===PL_INDEP)continue;
+    o.licensed=false;
+    var e={a:i+1,b:j+1,why:r.why};
+    if(r.rel===PL_NESTED)o.nested.push(e);
+    else if(r.rel===PL_EXCL)o.contradictory.push(e);
+    else o.dependent.push(e);
+  }
+  return o;
+}
 var PARLAY_SOURCE={
-  PRICE:'is what THIS PRICE implies \u2014 the odds you typed, multiplied. '
+  PRICE:'is what THIS PRICE implies — the odds you typed, multiplied. '
        +'It is not the model\'s number; the model does not publish a '
        +'probability for a parlay.',
   MODEL:'is the model\'s own leg probabilities multiplied together. The model '
-       +'does not measure how dependent legs are, so this figure rests on the '
-       +'assumption below and is not a measured parlay hit rate.',
+       +'does not measure how dependent legs are, so this figure holds only '
+       +'because no two legs here share a game.',
   MIXED:'mixes sources: the BOOK price where a leg has one, the model\'s fair '
        +'price where it does not. It is neither a pure market number nor a '
        +'pure model number, and it is labelled as neither.'
 };
-function tpCorrelatedGames(byG){
-  var n=0,ks=Object.keys(byG||{});
-  for(var i=0;i<ks.length;i++){
-    var v=byG[ks[i]];
-    var c=(v&&v.length!=null)?v.length:(typeof v==='number'?v:0);
-    if(c>=2)n++;
+function parlayDepNote(dep){
+  if(!dep||dep.n<2)return '';
+  if(dep.licensed)return '<div class="pnote">No two legs share a game, so '
+    +'multiplying them is licensed and no dependence assumption was applied.</div>';
+  var bits=[];
+  dep.contradictory.forEach(function(e){bits.push('legs '+e.a+' and '+e.b+' cannot both win — '+e.why);});
+  dep.nested.forEach(function(e){bits.push('leg '+e.a+' and leg '+e.b+' are nested — '+e.why);});
+  dep.dependent.forEach(function(e){bits.push('legs '+e.a+' and '+e.b+' are dependent — '+e.why);});
+  return '<div class="pnote"><b>Combined hit chance: '
+    +'<span class="a15code">NOT MEASURED</span>.</b> '+bits.join('; ')
+    +'. No dependence coefficient is fitted anywhere in this system, so no '
+    +'combined probability is published for this ticket. The ticket is still '
+    +'bettable; the percentage is what is missing, not the bet.'
+    +(dep.nested.length?' A nested pair is one unit of risk priced as two.':'')
+    +'</div>';
+}
+function parlayPayoutHtml(dec,dep,kind){
+  var money='$10→$'+Math.round(10*dec).toLocaleString()
+    +' · $100→$'+Math.round(100*dec).toLocaleString();
+  if(dep&&dep.licensed&&dep.n>1){
+    return '<b>Combined '+decToAm(dec)+'</b> · '+money
+      +'<div class="pnote"><b>'+(100/dec).toFixed(1)+'%</b> '
+      +(PARLAY_SOURCE[kind]||PARLAY_SOURCE.PRICE)+'</div>'
+      +parlayDepNote(dep);
   }
-  return n;
+  var onlyNested=!!(dep&&dep.nested.length&&!dep.dependent.length&&!dep.contradictory.length);
+  return '<b>Independent-product '+decToAm(dec)+'</b> · '+money
+    +'<div class="pnote">That price multiplies these legs as if they were '
+    +'independent. They are not.'
+    +(onlyNested
+      ? ' Every dependent pair here is nested, and a nested pair can only make '
+       +'the true chance HIGHER than the product — so this price is an '
+       +'UPPER BOUND on what the ticket is worth, never a quote.'
+      : ' Whether the true price is longer or shorter than this is not '
+       +'measured, so treat it as the arithmetic it is and not as a quote.')
+    +'</div>'
+    +parlayDepNote(dep);
 }
-function parlayCorrNote(corr){
-  if(!corr)return '<div class="pnote">No game carries more than one leg, so no '
-    +'correlation assumption was applied.</div>';
-  return '<div class="pnote"><b>'+corr+' game'+(corr===1?' carries':'s carry')
-    +' more than one leg.</b> Those legs are dependent, so they are combined '
-    +'with an assumed '+SGP_ASSUMED+' correlation factor \u2014 '
-    +'<span class="a15code">'+SGP_PROVENANCE+'</span>. It is a placeholder, '
-    +'not a fitted value, and the combined number is only as good as it is.</div>';
-}
-function parlayPayoutHtml(dec,corr,kind,money){
-  var pct=(100/dec).toFixed(1)+'%';
-  return '<b>Combined '+decToAm(dec)+'</b>'+(money?' \u00b7 '+money:'')
-    +'<div class="pnote"><b>'+pct+'</b> '
-    +(PARLAY_SOURCE[kind]||PARLAY_SOURCE.PRICE)+'</div>'
-    +parlayCorrNote(corr);
-}
-function tpPayoutHtml(dec,byG){
-  var money='$10\u2192$'+Math.round(10*dec).toLocaleString()
-    +' \u00b7 $100\u2192$'+Math.round(100*dec).toLocaleString();
-  return parlayPayoutHtml(dec,tpCorrelatedGames(byG),'PRICE',money)
-    +'<div class="pnote">Edit any leg to your book price; red \u2212EV means '
+function tpPayoutHtml(dec,dep){
+  return parlayPayoutHtml(dec,dep,'PRICE')
+    +'<div class="pnote">Edit any leg to your book price; red −EV means '
     +'the book is more confident than the model.</div>';
 }
-function tpRecalc(){var inputs=[].slice.call(document.querySelectorAll('#parlay .leg-od'));if(inputs.length<2){var _tp=$('tpPay');if(_tp)_tp.innerHTML='';return;}var SGP=SGP_ASSUMED,byG={};inputs.forEach(function(i){var g=i.dataset.game;(byG[g]=byG[g]||[]).push(i);});var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(i){var a=parseFloat(i.value);gd*=isNaN(a)?1:amDec(a);});dec*=arr.length>=2?(1+(gd-1)*SGP):gd;});inputs.forEach(function(i){var a=parseFloat(i.value);var mp=parseFloat(i.dataset.prob);var ev=document.getElementById(i.dataset.ev);if(isNaN(a)){i.classList.remove('odbad');if(ev)ev.textContent='';return;}var imp=a<0?(-a)/(-a+100):100/(a+100);if(imp-mp>.07){i.classList.add('odbad');if(ev){ev.textContent='−EV';ev.style.color='var(--lose)';}}else{i.classList.remove('odbad');if(ev)ev.textContent='';}});var pay=$('tpPay');if(pay)pay.innerHTML=tpPayoutHtml(dec,byG);}
+function tpRecalc(){var inputs=[].slice.call(document.querySelectorAll('#parlay .leg-od'));if(inputs.length<2){var _tp=$('tpPay');if(_tp)_tp.innerHTML='';return;}var legs=inputs.map(function(i){return {gamePk:i.dataset.game,betType:i.dataset.bt,team:i.dataset.team||null,playerId:i.dataset.pid||null};});var dec=1;inputs.forEach(function(i){var a=parseFloat(i.value);dec*=isNaN(a)?1:amDec(a);});inputs.forEach(function(i){var a=parseFloat(i.value);var mp=parseFloat(i.dataset.prob);var ev=document.getElementById(i.dataset.ev);if(isNaN(a)){i.classList.remove('odbad');if(ev)ev.textContent='';return;}var imp=a<0?(-a)/(-a+100):100/(a+100);if(imp-mp>.07){i.classList.add('odbad');if(ev){ev.textContent='−EV';ev.style.color='var(--lose)';}}else{i.classList.remove('odbad');if(ev)ev.textContent='';}});var pay=$('tpPay');if(pay)pay.innerHTML=tpPayoutHtml(dec,parlayDependence(legs));}
 /* ---- Suggested HR Parlays A+B (2026-07-22): decorrelated pair, tracked ---- */
 var HP_WORK={},HP_ADD={};
 function hpTickets(){return (D.hrParlays&&D.hrParlays.length)?D.hrParlays:(D.hrParlay?[D.hrParlay]:[]);}
@@ -2946,13 +3024,11 @@ function hpCardHtml(ix){
   if(!_v.valid)return noParlayCard(hp.name||('HR ticket '+(ix+1)),_v,
     '<div class="tpctrl" style="margin-top:10px"><button class="rf" onclick="hpAdd('+ix+')">&#10133; Add leg</button>'
     +'<button class="rf" onclick="hpReset('+ix+')">&#8635; Reset</button></div>');
-  var rows='',totalDec=1,byGame={},seen={};
-  legs.forEach(function(l){var pk=l.gamePk||'x';byGame[pk]=(byGame[pk]||0)+1;});
+  var rows='',totalDec=1;
   legs.forEach(function(l){
     var bo=(l.bookOdds&&l.bookOdds.price!=null)?l.bookOdds:null;
     var a=bo?bo.price:fairAmNum(l.prob||((l.model_prob>1?l.model_prob/100:l.model_prob)||0.15));
-    var d=amDec(a);var pk=l.gamePk||'x';
-    if(byGame[pk]>1&&seen[pk]){d=1+(d-1)*SGP_ASSUMED;}seen[pk]=1;
+    var d=amDec(a);
     totalDec*=d;
     var lk='';var bks=l.books||{};['fanduel','draftkings'].forEach(function(bk){var o=bks[bk];if(!o||o.price==null)return;
       var lab=(bk==='fanduel'?'FD':'DK')+' '+(o.price>0?'+':'')+o.price;
@@ -2964,7 +3040,7 @@ function hpCardHtml(ix){
     var storm=l.storm?' <span style="font-size:9px;font-weight:800;color:#b45309" title="PERFECT STORM (R55.1)">⚡</span>':'';
     rows+='<div class="leg"><span class="ln">'+(l.rank||'·')+'</span><span class="ld">💣 '+esc(l.name||'')+' HR'+storm+ep+lk+gp+'</span><span class="tprm" onclick="hpRemove('+ix+',\''+l._id+'\')" title="Remove">✕</span></div>'+hpCtx(l);});
   if(!rows)rows='<div class="empty" style="padding:12px">'+esc(hp.note||'No HR legs right now.')+'</div>';
-  var pay=legs.length?'<div class="tppay">'+parlayPayoutHtml(totalDec,tpCorrelatedGames(byGame),'MIXED','$10 → ~$'+Math.round(10*totalDec).toLocaleString())+'</div>':'';
+  var pay=legs.length?'<div class="tppay">'+parlayPayoutHtml(totalDec,parlayDependence(legs),'MIXED')+'</div>':'';
   var ctrl='<div class="tpctrl"><button class="rf" id="hpAdd-'+ix+'-fanduel" onclick="hpAddAll('+ix+',\'fanduel\')">➕ Build FD slip</button><button class="rf" id="hpAdd-'+ix+'-draftkings" onclick="hpAddAll('+ix+',\'draftkings\')">➕ Build DK slip</button><button class="rf" onclick="hpAdd('+ix+')">➕ Add leg</button><button class="rf" onclick="hpReset('+ix+')">↺ Reset</button><button class="rf" onclick="hpCopy('+ix+',\'fanduel\')">📋 copy</button></div>';
   return '<div class="card"><div class="card-h"><span>💣 '+esc(hp.name||'Suggested HR Parlay')+'</span><span class="t">'+legs.length+' legs</span></div><div class="card-b">'
     +(hp.note?'<div class="note" style="margin:0 0 10px;padding:0">⚙ '+esc(hp.note)+'</div>':'')
@@ -3055,6 +3131,24 @@ function tpCopyFallback(txt,done){
   try{document.execCommand('copy');done();}catch(e){prompt('Copy your slip:',txt);}
   document.body.removeChild(ta);
 }
+/* WHAT THE TICKET DECIDED NOT TO INCLUDE ------------------------------
+   The builder adds +1.5 legs last and drops one that is already contained
+   by a leg on the slip. A skip nobody can see is indistinguishable from a
+   skip that never happened, so the ticket says what it declined and why.
+   `plus15Considered` separates the two ways the skip list can be empty:
+   nothing nested, or nothing was offered. */
+function tpNestedNote(tp){
+  tp=tp||{};
+  var sk=tp.nestedSkipped;
+  if(!sk||!sk.length)return '';
+  return '<div class="pnote" style="margin:0 0 10px"><b>Left off this ticket: '
+    +sk.length+' run-line leg'+(sk.length===1?'':'s')+'.</b> '
+    +sk.map(function(x){return esc(String(x));}).join(' ')
+    +' '+esc(String(tp.nestedNote||''))
+    +(tp.plus15Considered!=null
+      ?' <span class="a15code">'+tp.plus15Considered+' considered</span>':'')
+    +'</div>';
+}
 function renderParlay(){
   var tp=D.topParlay||{};
   if(TP_WORK===null){TP_WORK=(tp.legs||[]).map(function(l,i){var c=Object.assign({},l);c._id='s'+i;return c;});}
@@ -3065,7 +3159,7 @@ function renderParlay(){
     var num=0;
     order.forEach(function(pk){var gl=groups[pk];if(gl.length>=2)legHtml+='<div class="sgptag">▸ '+gl.length+'-leg same-game'+(gl[0].game?' — '+esc(gl[0].game):'')+'</div>';
       gl.forEach(function(l){num++;var bo=(l.bookOdds&&l.bookOdds.price!=null)?l.bookOdds:null;var a=bo?bo.price:fairAmNum(l.prob);var ti=legTierInfo(l);var ev='ev'+num;var bp=bo?' <span style="font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;background:#dbeafe;color:#1e40af" title="Real book price'+(bo.offbook?' (best available, not FD/DK)':'')+'">'+esc(bo.book)+(bo.offbook?'*':'')+'</span>':(l.playerId?' <span style="font-size:9px;color:#b45309" title="No posted FD/DK price yet — model-fair shown">⚠ no price</span>':'');var gp=(l.game&&gl.length<2)?' <span style="font-size:9px;color:#8893a8">'+esc(l.game)+'</span>':'';var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:#0c7a43" title="Edge: model % minus the book price\'s implied %">+'+(l.edge*100).toFixed(1)+'%</span>':'';var lk='';(function(){var bks=l.books||{};['fanduel','draftkings'].forEach(function(bk){var o=bks[bk];if(!o||o.price==null)return;var lab=(bk==='fanduel'?'FD':'DK')+' '+(o.price>0?'+':'')+o.price;var st='font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;color:#fff;background:'+(bk==='fanduel'?'#1493ff':'#0c7a43');lk+=o.link?' <a href="'+esc(o.link)+'" target="_blank" rel="noopener" style="'+st+';text-decoration:none" title="Open this market at '+bk+' — you confirm the bet there">'+lab+' →</a>':' <span style="'+st+'" title="Posted at '+bk+' (no deep link)">'+lab+'</span>';});if(!lk&&bo&&bo.link){lk=' <a href="'+esc(bo.link)+'" target="_blank" rel="noopener" style="font-size:9px;font-weight:800;text-decoration:none;padding:1px 7px;border-radius:8px;background:#1e40af;color:#fff">Bet '+esc(bo.book)+' →</a>';}})();
-        legHtml+='<div class="leg"><span class="ln">'+(l.rank||num)+'</span><span class="ld">'+esc(legDesc(l))+' <span class="badge '+ti[1]+'">'+ti[0]+'</span>'+bp+ep+lk+gp+' <span id="'+ev+'" class="evf"></span></span><input class="leg-od" data-game="'+pk+'" data-prob="'+l.prob+'" data-ev="'+ev+'" value="'+amStr(a)+'" oninput="tpRecalc()" title="Your book price"><span class="tprm" onclick="tpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';});
+        legHtml+='<div class="leg"><span class="ln">'+(l.rank||num)+'</span><span class="ld">'+esc(legDesc(l))+' <span class="badge '+ti[1]+'">'+ti[0]+'</span>'+bp+ep+lk+gp+' <span id="'+ev+'" class="evf"></span></span><input class="leg-od" data-game="'+pk+'" data-bt="'+esc(l.betType||'')+'" data-team="'+esc(l.team||'')+'" data-pid="'+(l.playerId!=null?l.playerId:'')+'" data-prob="'+l.prob+'" data-ev="'+ev+'" value="'+amStr(a)+'" oninput="tpRecalc()" title="Your book price"><span class="tprm" onclick="tpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';});
     });
   } else { legHtml='<div class="empty" style="padding:14px">No legs — add some below or reset to the model parlay.</div>'; }
   var ctrl='<div class="tpctrl"><button class="rf" onclick="tpAddOpen()">➕ Add leg</button><button class="rf" onclick="tpReset()">↺ Reset to model</button><button class="rf" id="tpAdd-fanduel" onclick="tpAddAll(\'fanduel\')" title="Adds every leg to your FanDuel slip — one tap per leg (browsers only allow one link per tap)">➕ Build FD slip</button><button class="rf" id="tpAdd-draftkings" onclick="tpAddAll(\'draftkings\')" title="Adds every leg to your DraftKings slip — one tap per leg">➕ Build DK slip</button><button class="rf" onclick="tpCopySlip(\'fanduel\')" title="Copy as text (FanDuel prices)">📋 copy</button></div><div id="tpAddBox" style="display:none;margin-top:8px"></div>';
@@ -3073,6 +3167,7 @@ function renderParlay(){
   var sugg=!_sv.valid?noParlayCard(tp.name||'Suggested Parlay',_sv,ctrl)
     :'<div class="card"><div class="card-h"><span>⭐ Suggested Parlay</span><span class="t">'+legs.length+' legs</span></div><div class="card-b">'
     +(tp.note?'<div class="note" style="margin:0 0 10px;padding:0">⚙ '+esc(tp.note)+'</div>':'')
+    +tpNestedNote(tp)
     +legHtml+'<div class="tppay" id="tpPay"></div>'+ctrl+'</div></div>';
   var BYO=[['ml','Moneyline',1],['over','Overs',1],['hit','1+ Hit',2],['2tb','2+ TB',1],['hrr','2+ HRR',1],['hr','Home Run',0]];
   var form='<div class="card"><div class="card-h">🛠 Build Your Own Parlay</div><div class="card-b"><div class="byo">'
@@ -3095,10 +3190,9 @@ function buildCustom(){
       +(picked.length?'A parlay needs at least two legs. The single leg above is a standalone bet, so no combined price or hit percentage is shown for it.'
                      :'Pick at least two legs, then Generate.')+'</div></div>';
     return;}
-  var byG={};picked.forEach(function(l){(byG[l.gamePk]=byG[l.gamePk]||[]).push(l);});
-  var dec=1;Object.keys(byG).forEach(function(g){var arr=byG[g],gd=1;arr.forEach(function(l){gd*=amDec(fairAmNum(l.prob));});dec*=arr.length>=2?(1+(gd-1)*SGP_ASSUMED):gd;});
+  var dec=1;picked.forEach(function(l){dec*=amDec(fairAmNum(l.prob));});
   $('byoResult').innerHTML=picked.map(function(l,i){var ti=legTierInfo(l);return '<div class="leg"><span class="ln">'+(i+1)+'</span><span class="ld">'+esc(legDesc(l))+' <span class="badge '+ti[1]+'">'+ti[0]+'</span></span><span class="lp">'+amStr(fairAmNum(l.prob))+'</span></div>';}).join('')
-    +'<div class="tppay">'+parlayPayoutHtml(dec,tpCorrelatedGames(byG),'MODEL','$10→$'+Math.round(10*dec).toLocaleString()+' · $100→$'+Math.round(100*dec).toLocaleString())+'</div>';
+    +'<div class="tppay">'+parlayPayoutHtml(dec,parlayDependence(picked),'MODEL')+'</div>';
 }
 
 function renderPerformance(){
