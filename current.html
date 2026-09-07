@@ -5408,16 +5408,19 @@ function xpPanel(){
       +esc(X.intendedPrelaunchStatus)+'.</b> '+esc(X.intendedPrelaunchNote||'')+'</div>';}
   h+='<div class="mkpair">'
     +'<div class="mkcard"><u>Paired rows</u><b>'+xpN(c.rows)+'</b><s>quoted '+xpN(c.quoted)+' &middot; awaiting '+xpN(c.awaitingQuote)+'</s></div>'
-    +'<div class="mkcard"><u>Qualifying 5pp+</u><b>'+xpN(c.qualifying)+'</b><s>settled '+xpN(c.qualifyingSettled)+'</s></div>'
-    +'<div class="mkcard"><u>Positive</u><b>'+xpN(c.positive)+'</b><s>model more bullish</s></div>'
-    +'<div class="mkcard"><u>Negative</u><b>'+xpN(c.negative)+'</b><s>model less bullish</s></div>'
-    +'<div class="mkcard"><u>Settled</u><b>'+xpN(c.settled)+'</b><s>outcome recorded</s></div>'
+    +'<div class="mkcard"><u>Forward qualifying</u><b>'+xpN(c.qualifying)+'</b><s>disagreement 5pp or more</s></div>'
+    +'<div class="mkcard"><u>Positive qualifying</u><b>'+xpN(c.qualifyingPositive)+'</b><s>model more bullish</s></div>'
+    +'<div class="mkcard"><u>Negative qualifying</u><b>'+xpN(c.qualifyingNegative)+'</b><s>model less bullish</s></div>'
+    +'<div class="mkcard"><u>Settled qualifying</u><b>'+xpN(c.qualifyingSettled)+'</b><s>of '+xpN(c.qualifying)+' &middot; scores the primary metric</s></div>'
+    +'<div class="mkcard"><u>Settled positive</u><b>'+xpN(c.positive)+'</b><s>outcome recorded</s></div>'
+    +'<div class="mkcard"><u>Settled negative</u><b>'+xpN(c.negative)+'</b><s>outcome recorded</s></div>'
     +'</div>';
   h+='<div class="mkpair">'
     +'<div class="mkcard"><u>Primary &mdash; mean signed residual</u><b>'+mkPp(p.meanSignedResidualPp)+'</b><s>n '+xpN(p.n)+' of '+xpN(X.evaluationN)+'</s></div>'
     +'<div class="mkcard"><u>95% interval</u><b>'+((p.ci95&&p.ci95[0]!=null)?(mkPp(p.ci95[0])+' to '+mkPp(p.ci95[1])):SH_ABSENT)+'</b><s>descriptive only</s></div>'
     +'<div class="mkcard"><u>Read</u><b>'+xpTag(p.status||'ACCUMULATING')+'</b><s>once, at n='+xpN(p.readAt||X.evaluationN)+'</s></div>'
     +'</div>';
+  h+='<div class="mkdef">'+esc(c.countsNote||'')+'</div>';
   h+='<div class="mknote"><b>Verdict:</b> '+esc(p.verdict||'')+'</div>';
   h+='<div class="mknote"><b>Promotion needs both:</b> '+esc(X.promotionCriterion||'')+'</div>';
   h+='<div class="mkdef">'+esc(X.powerNote||'')+'</div>';
