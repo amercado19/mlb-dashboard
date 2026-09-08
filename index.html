@@ -2856,13 +2856,37 @@ function hParlay(){
       +'<div class="hteam">book-priced ticket \u00b7 '+esc(legs.map(hLegShort).join(' + '))
       +'</div></div></div>', num, chip, '');
 }
+/* ONE TILE IS NOT THE WHOLE SLATE (2026-09-08).
+ *
+ * The daily hero lives inside renderSlate, so until now a single malformed
+ * tile payload — modelParlay.legs arriving as an object instead of an array,
+ * say — threw out of dailyHero, out of renderSlate, and took the entire game
+ * slate down with it. The slate is the product. It does not get to depend on
+ * the parlay tile being well formed.
+ *
+ * Each tile is now isolated the same way each section is: it fails in place,
+ * it says so where the tile was, and it records a diagnostic the E2E suite
+ * fails on. The blast radius of a bad tile is that tile. */
+function hTileSafe(code, build){
+  try{ return build(); }
+  catch(e){
+    renderDiag(code, e, 'hero-tile');
+    return hNone('Tile unavailable',
+      'This tile failed to render against today\u2019s payload ('
+      + esc(e && e.message || 'error') + '). The rest of the slate is unaffected.');
+  }
+}
 function dailyHero(){
-  var tiles=[hMoneyline(),hPlus15(),
-    hProp('Best 1+ hit','h1','1+ hit'),
-    hProp('Best 1+ double','h2','1+ double'),
-    hProp('Best 2+ total bases','tb2','2+ TB'),
-    hProp('Best H+R+RBI','hrr','hits + runs + RBI'),
-    hHomeRun(),hModelParlay(),hParlay()];
+  var tiles=[
+    hTileSafe('HERO_TILE_ML_ERROR', hMoneyline),
+    hTileSafe('HERO_TILE_PLUS15_ERROR', hPlus15),
+    hTileSafe('HERO_TILE_H1_ERROR', function(){return hProp('Best 1+ hit','h1','1+ hit');}),
+    hTileSafe('HERO_TILE_H2_ERROR', function(){return hProp('Best 1+ double','h2','1+ double');}),
+    hTileSafe('HERO_TILE_TB2_ERROR', function(){return hProp('Best 2+ total bases','tb2','2+ TB');}),
+    hTileSafe('HERO_TILE_HRR_ERROR', function(){return hProp('Best H+R+RBI','hrr','hits + runs + RBI');}),
+    hTileSafe('HERO_TILE_HR_ERROR', hHomeRun),
+    hTileSafe('HERO_TILE_MODEL_PARLAY_ERROR', hModelParlay),
+    hTileSafe('HERO_TILE_PRICED_PARLAY_ERROR', hParlay)];
   return '<div class="hero"><div class="heroh"><h2>Today’s top picks</h2>'
     +'<span class="hsub">'+esc(etStamp(D.generatedAt))+'</span></div>'
     +'<div class="herog">'+tiles.join('')+'</div>'
@@ -5324,6 +5348,10 @@ function renderAdmin(){
   var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
   var gcAll=(D.gameCards||[]).slice().sort(function(a,b){return (tms(a.time)||0)-(tms(b.time)||0);});
 
+  /* Render failures first: a core surface that threw is the most urgent thing
+     on this page, and it must not be buried under coverage tables. */
+  h+=renderDiagnosticsPanel();
+
   h+='<div class="note" style="background:var(--panel);border:1.5px solid var(--line);border-radius:10px;margin-bottom:12px">'
     +'<b>Admin / Health.</b> Everything the Slate deliberately does not show, plus everything needed to decide whether today&rsquo;s numbers can be trusted. '
     +'Coverage is judged <b>against the ticket lock</b>, not against a fixed threshold — a source at 0% two hours before lineups post is normal, '
@@ -7059,20 +7087,66 @@ function renderSimulator(){
 function simSetView(v){ SIM_VIEW = v; renderSimulator(); }
 function simSetSort(v){ SIM_SORT = v; renderSimulator(); }
 
+/* A CORE CARD MUST NEVER VANISH WITHOUT A TRACE (2026-09-08).
+ *
+ * Twice a core surface disappeared from production and the page still looked
+ * healthy: boards.diagnostics broke the Slate walk, and dependence.why broke
+ * the Model Parlay. Both were caught -- that part was right, a bad section must
+ * not blank the whole page -- but a caught exception left nothing a test could
+ * assert on, so the suite stayed green while the card was gone.
+ *
+ * The catch stays. What changes is that it now RECORDS. Normal users get the
+ * same graceful message; the E2E suite fails if this array is non-empty. */
+window.__RENDER_DIAGNOSTICS = [];
+var RENDER_DIAG_CODE = {
+  slate:'SLATE_RENDER_ERROR', picks:'HERO_RENDER_ERROR',
+  parlay:'MODEL_PARLAY_RENDER_ERROR', props:'PROP_RENDER_ERROR',
+  matchups:'MATCHUPS_RENDER_ERROR', performance:'PERFORMANCE_RENDER_ERROR',
+  backtests:'BACKTEST_RENDER_ERROR', admin:'ADMIN_RENDER_ERROR',
+  simulator:'SIMULATOR_RENDER_ERROR', library:'LIBRARY_RENDER_ERROR',
+  method:'METHOD_RENDER_ERROR', meta:'META_RENDER_ERROR'
+};
+function renderDiag(code, err, ctx){
+  var d={code:code, message:(err&&err.message)||String(err||'error'),
+         ctx:ctx||null, at:new Date().toISOString()};
+  try{ window.__RENDER_DIAGNOSTICS.push(d); }catch(_e){}
+  if(window.console&&console.error)
+    console.error('[RENDER_DIAGNOSTIC] '+code+': '+d.message, ctx||'');
+  return d;
+}
+function renderDiagnosticsPanel(){
+  var ds=window.__RENDER_DIAGNOSTICS||[];
+  if(!ds.length) return '';
+  return '<div class="card"><div class="card-h"><span>⚠ Render diagnostics</span>'
+    +'<span class="t">'+ds.length+' core surface(s) failed</span></div><div class="card-b">'
+    +'<div class="note" style="margin:0 0 8px;padding:0">A section threw while '
+    +'rendering today’s payload. The page stayed up; the card did not. '
+    +'This list is what makes that visible instead of silent.</div>'
+    +ds.map(function(d){return '<div style="font-family:var(--mono);font-size:11px;'
+      +'padding:4px 0;border-top:1px solid var(--line)"><b>'+esc(d.code)+'</b> · '
+      +esc(d.message)+'</div>';}).join('')+'</div></div>';
+}
 function renderAll(){
   /* every index below is derived from D — rebuild them all on every render */
   window._LUIX=null;window._PIX=null;window._SPIX=null;
+  window.__RENDER_DIAGNOSTICS=[];
   /* Each renderer is isolated: one bad section must not blank the whole page. */
   [['meta',renderMeta],['slate',renderSlate],['picks',renderPicks],['matchups',renderMatchups],
    ['props',renderProps],['parlay',renderParlay],['performance',renderPerformance],
    ['simulator',renderSimulator],['library',renderLibrary],['admin',renderAdmin],['method',renderMethod],
    ['backtests',renderBacktests]].forEach(function(r){
     try{r[1]();}catch(e){
-      if(window.console&&console.error)console.error('render '+r[0]+' failed',e);
+      renderDiag(RENDER_DIAG_CODE[r[0]]||'SECTION_RENDER_ERROR', e, r[0]);
       var el=$(r[0]);
       if(el)el.innerHTML='<div class="empty">This section failed to render against today’s payload ('+esc(e&&e.message||'error')+'). The rest of the page is unaffected.</div>';
     }
   });
+  /* Admin renders before the sections after it in this list, so a diagnostic
+     raised later would miss its own panel. One re-render, only when something
+     actually failed, and never recursing: renderAdmin is not in this path. */
+  if((window.__RENDER_DIAGNOSTICS||[]).length){
+    try{ renderAdmin(); }catch(_e){}
+  }
 }
 async function refresh(){if(!DATA_URL){location.reload();return;}try{var r=await fetch(DATA_URL+(DATA_URL.indexOf('?')<0?'?':'&')+'_='+Date.now());D=await r.json();MODEL_DATA=D;renderAll();}catch(e){location.reload();}}
 buildNav();renderAll();
