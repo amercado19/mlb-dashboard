@@ -37,6 +37,12 @@ eval(grab(/function hFace\(pid,name\)\{[\s\S]*?\n\}/, 'hFace'));
 eval(grab(/function hTeam\(ab\)\{[\s\S]*?\n\}/, 'hTeam'));
 eval(grab(/function hCard\(cat,subject,num,chips,why,extra\)\{[\s\S]*?\n\}/, 'hCard'));
 eval(grab(/function hNone\(cat,why,state\)\{[\s\S]*?\n\}/, 'hNone'));
+eval(grab(/var BOARD_NAME=\{[\s\S]*?\};/, 'BOARD_NAME'));
+eval(grab(/function boardMarket\(k\)\{[\s\S]*?\n\}/, 'boardMarket'));
+eval(grab(/function boardDiag\(k\)\{[\s\S]*?\n\}/, 'boardDiag'));
+eval(grab(/function boardRetired\(k\)\{[\s\S]*?\n\}/, 'boardRetired'));
+eval(grab(/function boardWhyText\(k\)\{[\s\S]*?\n\}/, 'boardWhyText'));
+eval(grab(/function boardState\(k\)\{[\s\S]*?\n\}/, 'boardState'));
 eval(grab(/function hPropChip\(row\)\{[\s\S]*?\n\}/, 'hPropChip'));
 eval(grab(/function hProp\(cat,fam,label\)\{[\s\S]*?\n\}/, 'hProp'));
 eval(grab(/function mpBandRow\(l\)\{[\s\S]*?\n\}/, 'mpBandRow'));
@@ -113,8 +119,15 @@ t('the model parlay leads the priced one',
   heroTxt.indexOf('Best model parlay') < heroTxt.indexOf('Best priced parlay'));
 t('an empty board still gets a card, not a gap',
   (hero.match(/class="hnone"/g) || []).length === 4);
-t('...saying the board was empty, not that nothing was worth showing',
-  /No eligible pick on today’s slate/.test(heroTxt));
+/* The old sentence here was "No eligible pick on today's slate for this
+   market", printed for every silence alike. Two of the four empty cards on
+   this fixture are RETIRED MARKETS, and one sentence about today's slate was
+   wrong about both. The card now says which silence it is. */
+t('...and the empty card says which silence it is',
+  /MARKET RETIRED|NOTHING TO RANK|NO PICK TODAY|LINEUPS PENDING|UNEXPLAINED/
+    .test(heroTxt));
+t('...never calling a retirement a judgement about today’s slate',
+  !/No eligible pick on today’s slate/.test(heroTxt));
 
 /* ---- 2. NO NUMBER IS INVENTED ---------------------------------------- */
 /* Every prop board today publishes model_prob: null because its calibration
