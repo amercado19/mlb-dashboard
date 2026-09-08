@@ -40,7 +40,11 @@ const t = (name, cond) => {
   try { assert(cond); console.log('  [PASS] ' + name); pass++; }
   catch (e) { console.log('  [FAIL] ' + name); fail++; }
 };
-const strip = s => s.replace(/<[^>]+>/g, ' ').replace(/&middot;/g, '·')
+/* What a reader actually sees: tags removed, entities decoded. The rule
+   contains a "<", so a surface that did NOT escape it would be the bug. */
+const strip = s => s.replace(/<[^>]+>/g, ' ')
+  .replace(/&middot;/g, '·').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&quot;/g, '"').replace(/&amp;/g, '&')
   .replace(/\s+/g, ' ').trim();
 
 /* The real tb2, as run #636 published it. */
@@ -95,6 +99,8 @@ t('...and is named as the only one compared with zero',
 
 /* ---- 5. "STILL RETIRED" NEVER MEANS "STILL FAILING THE CLV TEST" ---- */
 t('the rule is printed verbatim', /excess_clv_ci_hi < 0/.test(out));
+t('...and its "<" reaches the page escaped, not raw',
+  /excess_clv_ci_hi &lt; 0/.test(clvLedger('tb2')));
 t('...and the criterion that actually fired is named', /fired on ROI/.test(out));
 t('...and the reason says outright it was not the CLV test',
   /NOT the CLV test/.test(out));
