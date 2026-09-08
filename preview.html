@@ -144,6 +144,8 @@ section{display:none}section.active{display:block}
 .hnum small{font-size:10px;font-weight:400;color:var(--muted);margin-left:4px}
 .hwhy{font-size:11px;color:var(--muted);line-height:1.45}
 .hnone{font-size:11.5px;color:var(--muted);line-height:1.45;padding:2px 0}
+.hstate{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);font-family:var(--mono);margin:2px 0 4px}
+.heronote{font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}
 .hchips{display:flex;flex-wrap:wrap;gap:4px}
 .pnote{margin-top:6px;font-size:11px;color:var(--muted);line-height:1.55}
 .pnote b{color:var(--txt)}
@@ -2613,14 +2615,26 @@ function hTeam(ab){
       +' onerror="this.outerHTML=\'<span class=&quot;hini&quot;>'+esc(hInit(ab))+'</span>\'">'
     : '<span class="hini">'+esc(hInit(ab))+'</span>';
 }
-function hCard(cat,subject,num,chips,why){
+function hCard(cat,subject,num,chips,why,extra){
   return '<div class="hcard"><div class="hcat">'+esc(cat)+'</div>'
     +(subject||'')+(num?'<div class="hnum">'+num+'</div>':'')
     +(chips?'<div class="hchips">'+chips+'</div>':'')
+    // RAW HTML SLOT. `why` is escaped prose; `extra` carries a rendered row
+    // that has to travel WITH the number above it — today the calibration
+    // band, which is meaningless once it is separated from its probability.
+    +(extra||'')
     +(why?'<div class="hwhy">'+esc(why)+'</div>':'')+'</div>';
 }
-function hNone(cat,why){
+/* A TILE WITH NO PICK STILL NEEDS A HEADLINE (2026-09-08).
+   The +1.5 tile rendered its refusal as four lines of engineering prose in
+   the primary picks list — "the artifact on disk is for a DIFFERENT date...
+   It is refused, not reused." Correct, and the reader could not tell at a
+   glance whether that tile held a pick or not. The state leads; the reason
+   stays underneath in full, because a zero without its reason is worse
+   than an ugly one. */
+function hNone(cat,why,state){
   return '<div class="hcard"><div class="hcat">'+esc(cat)+'</div>'
+    +'<div class="hstate">'+esc(state||'NO PICK TODAY')+'</div>'
     +'<div class="hnone">'+esc(why)+'</div></div>';
 }
 /* A prop board row publishes model_prob only when its calibration is
@@ -2636,8 +2650,12 @@ function hProp(cat,fam,label){
   var rows=((D.boards||{})[fam])||[];
   var r=rows[0];
   if(!r) return hNone(cat,'No eligible pick on today’s slate for this market.');
+  /* SCORES ARE NOT COMPARABLE ACROSS MARKETS. The rendered Hero showed
+     "82 score", "2.71 score" and "66 score" in one column: three different
+     quantities under one word, inviting a reader to rank them against each
+     other. The scale is named, and the note under the grid says it once. */
   var num=isNum(r.model_prob)? (100*r.model_prob).toFixed(1)+'%'
-        : esc(String(r.metric))+'<small>score</small>';
+        : esc(String(r.metric))+'<small>'+esc(label)+' score</small>';
   return hCard(cat,
     '<div class="hsubj">'+hFace(r.playerId,r.name)
       +'<div style="min-width:0"><div class="hname">'+esc(r.name||'')+'</div>'
@@ -2645,6 +2663,32 @@ function hProp(cat,fam,label){
     num, pill('TOP MODEL PICK','b-unk','The board’s top-ranked candidate for this market.')
       +hPropChip(r),
     (isNum(r.order)?'Batting '+r.order+'. ':'')+'Ranked #1 of '+rows.length+'.');
+}
+/* WHICH NUMBER IS THE MODEL'S CALL? (corrected 2026-09-08)
+   This tile published `conf` — the V3.3 RULE SCORE the tier thresholds are
+   cut on — as "68.0% model". The same payload's win probability for that
+   game was 0.8718, and the model-parlay card on this same site printed
+   87.2% for the same team. Two surfaces, one game, two "model %".
+   `conf` is not a chance and has never been measured as one; the
+   calibration bands are keyed on the win probability. So the probability is
+   what publishes, for THE SIDE THIS TILE NAMES, with the band that measured
+   it — or the named absence of one. */
+function mlSideProb(m,team){
+  if(!m||!team) return null;
+  if(m.home===team && isNum(m.homeWinProb)) return m.homeWinProb;
+  if(m.away===team && isNum(m.awayWinProb)) return m.awayWinProb;
+  if(m.projectedWinner===team && isNum(m.winProb)) return m.winProb;
+  return null;
+}
+function mlBand(gamePk){
+  var p=(D.predictions||[]).filter(function(x){return x.gamePk===gamePk;})[0];
+  var mc=((p||{}).decision||{}).modelConfidence||{};
+  var b=mc.measuredBand;
+  if(b&&isNum(b.n)) return {measuredBandN:b.n,measuredBandWinRate:b.measuredWinRate,
+    measuredBandStatus:b.sampleStatus,measuredBandGapPp:b.calibrationGapPp};
+  if(mc.why) return {measuredBandN:null,
+    measuredBandStatus:'NO_BAND_COVERS_THIS_PROBABILITY',measuredBandWhy:mc.why};
+  return {};
 }
 function hMoneyline(){
   var rows=(D.ml||[]).filter(function(m){return isNum(m.conf);});
@@ -2656,27 +2700,35 @@ function hMoneyline(){
     return ta-tb || (b.edge||-99)-(a.edge||-99);});
   var m=rows[0];
   var g=(D.gameCards||[]).filter(function(x){return x.gamePk===m.gamePk;})[0]||{};
-  var team=m.team||g.betTeam||g.projectedWinner||(m.pickSide==='home'?g.home_sp&&g.home_sp.team:g.away_sp&&g.away_sp.team)||'';
+  var team=m.team||m.projectedWinner||g.betTeam||g.projectedWinner
+    ||(m.pickSide==='home'?g.home_sp&&g.home_sp.team:g.away_sp&&g.away_sp.team)||'';
   var tier=String(m.tier||'').toUpperCase();
   /* THE MODEL'S CALL AND THE BET VERDICT ARE DIFFERENT ANSWERS. A PASS is a
      verdict on the PRICE; the model still has a winner and it is shown. */
   var chip=(tier==='STRONG')?pill('STRONG','b-ok','Meets the strong-bet thresholds.')
       :(tier==='LEAN')?pill('LEAN','b-warn','Meets the lean thresholds.')
       :pill('NO BET AT THIS PRICE','b-unk','The model has a winner; the price does not clear the bet thresholds.');
+  var prob=mlSideProb(m,team);
+  var num=isNum(prob)
+    ? (100*prob).toFixed(1)+'%<small>win probability</small>'
+    : '<span class="mprank">PROBABILITY NOT PUBLISHED</span>';
+  var band=isNum(prob)?mpBandRow(mlBand(m.gamePk)):'';
   return hCard('Best moneyline',
     '<div class="hsubj">'+hTeam(team)
       +'<div style="min-width:0"><div class="hname">'+esc(team||'—')+'</div>'
       +'<div class="hteam">'+esc(g.game||'')+'</div></div></div>',
-    m.conf.toFixed(1)+'%<small>model</small>', chip,
-    (isNum(m.edge)?((m.edge>0?'+':'')+m.edge.toFixed(1)+'pt vs the price. '):'')
-      +(tier==='PASS'?'Shown as the model’s best call, not as a bet.':''));
+    num, chip,
+    (isNum(prob)?'':'The model rates this side but publishes no win probability for it. ')
+      +(isNum(m.edge)?((m.edge>0?'+':'')+m.edge.toFixed(1)+'pt vs the price. '):'')
+      +(tier==='PASS'?'Shown as the model\u2019s best call, not as a bet.':''),
+    band);
 }
 function hPlus15(){
   var a=D.alt15;
-  if(!a) return hNone('Best +1.5','This slate was published before the +1.5 model was wired in.');
-  if(!a.available) return hNone('Best +1.5', a.why||'Not published for this slate.');
+  if(!a) return hNone('Best +1.5','This slate was published before the +1.5 model was wired in.','NOT WIRED IN YET');
+  if(!a.available) return hNone('Best +1.5', a.why||'Not published for this slate.','NOT PUBLISHED TODAY');
   var q=(a.picks||[])[0];
-  if(!q) return hNone('Best +1.5','The +1.5 model priced no game on this slate.');
+  if(!q) return hNone('Best +1.5','The +1.5 model priced no game on this slate.','NO PICK TODAY');
   var g=String(q.game||'');
   return hCard('Best +1.5',
     '<div class="hsubj">'+hTeam(q.bestPlus15Team)
@@ -2695,7 +2747,7 @@ function hHomeRun(){
     '<div class="hsubj">'+hFace(r.playerId,r.name)
       +'<div style="min-width:0"><div class="hname">'+esc(r.name||'')+'</div>'
       +'<div class="hteam">'+esc(r.team||'')+' · '+esc(r.park||'')+'</div></div></div>',
-    esc(String(r.score))+'<small>score</small>',
+    esc(String(r.score))+'<small>home run score</small>',
     pill('LONGSHOT RANKING','b-unk','Home runs are ranked, not priced as a probability.')
       +(isNum(r.model_prob)?'':pill('NO BOOK PRICE','b-unk','No sportsbook price was captured for this prop.')),
     [(r.iso!=null?'ISO '+r.iso:''),(r.hr!=null?r.hr+' HR':''),
@@ -2768,7 +2820,13 @@ function dailyHero(){
     hHomeRun(),hModelParlay(),hParlay()];
   return '<div class="hero"><div class="heroh"><h2>Today’s top picks</h2>'
     +'<span class="hsub">'+esc(etStamp(D.generatedAt))+'</span></div>'
-    +'<div class="herog">'+tiles.join('')+'</div></div>';
+    +'<div class="herog">'+tiles.join('')+'</div>'
+    // SAID ONCE, RATHER THAN SIX TIMES ON SIX TILES.
+    +'<div class="heronote">Board scores are market-specific. An 82 on one '
+    +'market and a 2.71 on another are different scales measured on '
+    +'different things, and cannot be compared. Each tile says where its '
+    +'pick ranks inside its own board, which is what the evidence '
+    +'licenses.</div></div>';
 }
 function renderSlate(){
   var gc=(D.gameCards||[]).slice();
