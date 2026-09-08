@@ -39,6 +39,7 @@ function pill(txt, cls, tip) {
 }
 eval(grab(/function mpPct\(v\)\{[\s\S]*?\n\}/, 'mpPct'));
 eval(grab(/function mpLabelTone\(l\)\{[\s\S]*?\n\}/, 'mpLabelTone'));
+eval(grab(/function mpBandRow\(l\)\{[\s\S]*?\n\}/, 'mpBandRow'));
 eval(grab(/function mpLegRow\(l,i\)\{[\s\S]*?\n\}/, 'mpLegRow'));
 eval(grab(/function mpStatusRow\(k,v,tone,tip\)\{[\s\S]*?\n\}/, 'mpStatusRow'));
 eval(grab(/function mpFunnel\(f\)\{[\s\S]*?\n\}/, 'mpFunnel'));
@@ -203,6 +204,41 @@ t('the priced card is named as book-priced',
   /Best priced parlay<\/span><span class="t">book-priced/.test(html));
 t('the hero uses the model parlay as its primary parlay tile',
   /hHomeRun\(\),hModelParlay\(\),hParlay\(\)/.test(html));
+
+/* ---- 12. A PROBABILITY CARRIES THE BAND THAT MEASURED IT ------------
+ * The moneyline leg publishes P(win). That number has been measured band
+ * by band, and the bands are wildly uneven: 0.50-0.60 holds n=332 while
+ * 0.80+ holds n=2. An 87% leg printed the same way as a 55% leg tells the
+ * reader those two claims are equally supported. They are not.
+ */
+const thin = mpLegRow({desc:'KC ML', team:'KC', likelihood:0.8718,
+  baseRate:0.5, baseRateStatus:'PUBLISHED', baseRateSource:'arithmetic',
+  label:'MODERATE_MODEL', measuredBandN:2, measuredBandWinRate:0.0,
+  measuredBandStatus:'UNDERPOWERED', measuredBandGapPp:-81.3}, 0);
+t('a moneyline leg prints its calibration band', /band n=2/.test(thin));
+t('...and what that band actually did', /measured 0\.0%/.test(thin));
+t('...and the gap between the two', /-81\.3pp gap/.test(thin));
+t('...and the sample status in words', /underpowered/.test(thin));
+t('...flagged, so a thin band does not read like a thick one',
+  /mpband mpthin/.test(thin));
+t('...while the lift over base is still shown',
+  /\+37\.2pp vs base/.test(thin));
+
+const thick = mpLegRow({desc:'PHI ML', team:'PHI', likelihood:0.5495,
+  baseRate:0.5, baseRateStatus:'PUBLISHED', baseRateSource:'arithmetic',
+  label:'MODERATE_MODEL', measuredBandN:332, measuredBandWinRate:0.5482,
+  measuredBandStatus:'ADEQUATE_SAMPLE', measuredBandGapPp:1.0}, 0);
+t('a well-sampled band is not flagged', !/mpthin/.test(thick));
+t('...and still prints its n', /band n=332/.test(thick));
+t('...and its status', /adequate sample/.test(thick));
+
+const noband = mpLegRow({desc:'Judge 1+ Hit', playerId:1, likelihood:null,
+  baseRate:0.612, baseRateStatus:'PUBLISHED', baseRateSource:'universe',
+  label:'MODERATE'}, 0);
+t('a leg with no measured band prints no band row', !/mpband/.test(noband));
+t('...and still reads RANKING ONLY', /RANKING ONLY/.test(noband));
+t('a band row is never invented from an absent n',
+  mpBandRow({measuredBandN:null, measuredBandStatus:'UNDERPOWERED'}) === '');
 
 console.log('\n  ' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
