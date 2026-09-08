@@ -1,0 +1,32 @@
+name: tests
+
+# The dashboard is a single HTML file that a bot rewrites every day. That is
+# exactly the kind of thing that breaks quietly, so the suite runs on every
+# push and every pull request — including the bot's own publish commits, which
+# is where two of this season's three incidents actually entered.
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  suite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # The contract test renders the real page in a real browser. Without a
+      # browser it cannot run, and it is written to FAIL rather than skip —
+      # a contract test that silently skips is the problem, not the fix.
+      - name: Install Playwright and Chromium
+        run: |
+          npm install --no-save playwright@1.47.0
+          npx playwright install --with-deps chromium
+
+      - name: Run the suite
+        run: bash tests/run_all.sh
