@@ -2974,8 +2974,58 @@ function boardState(k){
   if(D.lineupsProjected)return 'LINEUPS PENDING';
   return 'UNEXPLAINED';
 }
+/* FOUR DIFFERENT THINGS, NAMED SEPARATELY (2026-09-08).
+ * The payload used to carry one CLV number, and a reader treated it as all
+ * four of these:
+ *   RAW CLV              vig-inclusive. A bet struck at the fair CLOSING price
+ *                        scores NEGATIVE here by construction — about -2.38 pp
+ *                        at -110/-110. It is not a profit and not a loss.
+ *   BREAK-EVEN CLV       what a fairly-priced bet in THIS market scores. Its
+ *                        own number. Not a constant, and not zero.
+ *   EXCESS VS BREAK-EVEN raw minus break-even, normalised per bet. This is the
+ *                        measured quantity and the only one compared to zero.
+ *   RETIREMENT TEST      the rule, and which criterion actually fired.
+ * Run #636 is why this exists: tb2 showed raw -3.2 and read as "losing to the
+ * close". Its excess over its own break-even was +0.11. What retired it was
+ * ROI. Collapsing the four into one number is how that gets read backwards. */
+function clvPp(v){return isNum(v)?((v>0?'+':'')+v.toFixed(2)+' pp'):'—';}
+function clvCiTxt(ci){
+  return (Array.isArray(ci)&&ci.length===2&&isNum(ci[0])&&isNum(ci[1]))
+    ? (clvPp(ci[0])+' to '+clvPp(ci[1])) : null;
+}
+function clvRow(label,val,why){
+  return '<div style="display:flex;gap:8px;align-items:baseline;padding:3px 0">'
+    +'<span style="flex:0 0 150px;font-size:9.5px;letter-spacing:.06em;'
+    +'text-transform:uppercase;color:var(--muted)">'+esc(label)+'</span>'
+    +'<span style="font-variant-numeric:tabular-nums;font-size:11.5px">'+val+'</span>'
+    +'</div>'+(why?'<div style="font-size:10.5px;line-height:1.5;color:var(--muted);'
+    +'padding:0 0 5px 158px">'+esc(why)+'</div>':'');
+}
+function clvLedger(k){
+  var mk=boardMarket(k)||{}, c=mk.clv||{};
+  var num=function(a,b){return isNum(a)?a:(isNum(b)?b:null);};
+  var raw=num(c.rawClvPp,mk.mean_clv_pp), be=num(c.breakEvenClvPp,mk.clvBreakEvenPp);
+  var exc=num(c.excessClvPp,mk.meanExcessClvPp);
+  if(raw==null&&be==null&&exc==null) return '';
+  var rawCi=clvCiTxt(c.rawClvCi||mk.clvCi), excCi=clvCiTxt(c.excessClvCi||mk.excessClvCi);
+  var kt=mk.killTest||{};
+  var cm=((((D||{}).learned||{}).retirementHistory||{})[k]||{}).correctedMeasurement||{};
+  var fired=cm.retainedBy?(' · fired on '+cm.retainedBy):'';
+  var h='<div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--line)">'
+    +'<div style="font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;'
+    +'color:var(--muted);margin-bottom:5px">Closing-line measurement</div>';
+  h+=clvRow('Raw CLV',clvPp(raw)+(rawCi?'<span style="color:var(--muted)"> · 95% CI '+rawCi+'</span>':''),
+    'Vig-inclusive. A bet struck at the fair closing price scores negative here by construction. This number is not a profit or a loss.');
+  h+=clvRow('Break-even CLV',clvPp(be),
+    "This market's own break-even, not a constant and not zero.");
+  h+=clvRow('Excess vs break-even',clvPp(exc)+(excCi?'<span style="color:var(--muted)"> · 95% CI '+excCi+'</span>':''),
+    'Raw minus break-even, normalised on every bet before the interval. The only one of these compared with zero.');
+  h+=clvRow('Retirement test',esc(kt.rule||'excess_clv_ci_hi < 0')+esc(fired),
+    cm.retainedByWhy||kt.why||'');
+  return h+'</div>';
+}
 function boardEmpty(k){
-  return '<div class="empty" style="text-align:left">'+esc(boardWhyText(k))+'</div>';
+  return '<div class="empty" style="text-align:left">'+esc(boardWhyText(k))+clvLedger(k)+'</div>';
 }
 function openProp(k,btn){
   var sqs=document.querySelectorAll('#props .psq');for(var i=0;i<sqs.length;i++)sqs[i].classList.remove('on');
