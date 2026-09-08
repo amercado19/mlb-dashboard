@@ -43,6 +43,7 @@ eval(grab(/function mpBandRow\(l\)\{[\s\S]*?\n\}/, 'mpBandRow'));
 eval(grab(/function mpLegRow\(l,i\)\{[\s\S]*?\n\}/, 'mpLegRow'));
 eval(grab(/function mpStatusRow\(k,v,tone,tip\)\{[\s\S]*?\n\}/, 'mpStatusRow'));
 eval(grab(/function mpFunnel\(f\)\{[\s\S]*?\n\}/, 'mpFunnel'));
+eval(grab(/function depWhyText\(w\)\{[\s\S]*?\n\}/, 'depWhyText'));
 eval(grab(/function modelParlayCard\(\)\{[\s\S]*?\n\}/, 'modelParlayCard'));
 eval(grab(/function mpLegShort\(l\)\{[\s\S]*?\n\}/, 'mpLegShort'));
 
@@ -82,7 +83,12 @@ const BASE = {
   evWhy: 'expected value needs a price and a validated ticket probability. This ticket has neither',
   baseRateNote: 'a probability is only meaningful against its market\'s base rate.',
   notBettableNote: 'This is the model\'s most likely combination, not a priced ticket.',
-  dependence: { independenceLicensed: true, why: [] },
+  /* A STRING, which is what the pipeline actually publishes. This line said
+     `why: []` and the suite stayed green while the card was absent from
+     production for want of a .join that a string does not have. */
+  dependence: { independenceLicensed: true,
+    why: 'every pair is in a different game, so multiplying them under an '
+      + 'explicit independence assumption is licensed' },
   whyTheseLegs: ['3 leg(s) carry the model\'s own outcome probability'],
   funnel: { considered: 9, selected: 3, conserves: true,
             note: 'the two products have separate funnels',
@@ -257,5 +263,24 @@ t('...and the full reason rides in the title',
 t('a leg with neither an n nor a reason still renders no band row',
   mpBandRow({measuredBandN:null}) === '');
 
+
+/* ---- THE SHAPE THE PIPELINE ACTUALLY SHIPS ----
+ * Found by rendering the published page headless, not by reading the code:
+ *   render parlay failed TypeError: (dep.why || []).join is not a function
+ * The card threw, the caller caught, and MODEL PARLAY was simply missing.
+ */
+D = { modelParlay: Object.assign({}, BASE, {
+  legs: [LEG_P15, LEG_ML], legCount: 2,
+  combinedProbability: 0.4505,
+  combinedProbabilityStatus: 'INDEPENDENCE_ESTIMATE',
+  combinedProbabilityWhy: 'licensed' }) };
+t('a string reason renders, because that is what is published',
+  /different game/.test(modelParlayCard()));
+t('...and the card is not empty', modelParlayCard().length > 200);
+t('depWhyText takes a string', depWhyText('a reason') === 'a reason');
+t('...and an array, joined', depWhyText(['a', 'b']) === 'a; b');
+t('...and drops empty entries', depWhyText(['a', '', null]) === 'a');
+t('...and refuses to guess at anything else', depWhyText({x: 1}) === '');
+t('...including undefined', depWhyText(undefined) === '');
 console.log('\n  ' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
