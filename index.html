@@ -148,6 +148,27 @@ section{display:none}section.active{display:block}
 .pnote{margin-top:6px;font-size:11px;color:var(--muted);line-height:1.55}
 .pnote b{color:var(--txt)}
 .a15code{font-family:var(--mono);font-size:10px;opacity:.7}
+.mpleg{display:grid;grid-template-columns:22px 34px 1fr auto;gap:9px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.mpn{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center}
+.mppic img{width:30px;height:30px;border-radius:50%;object-fit:cover}
+.mpd{min-width:0}
+.mpd b{font-size:13px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mpbase{font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:2px}
+.mpnob{font-style:italic}
+.mpv{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.mpv b{font-family:var(--mono);font-size:14px}
+.mprank{font-size:9px;font-weight:800;letter-spacing:.05em;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:1px 5px}
+.mpsts{display:flex;flex-wrap:wrap;gap:8px;margin:11px 0 4px}
+.mpst{display:flex;align-items:center;gap:6px;font-size:11px}
+.mpst i{font-style:normal;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.mpwhy{font-size:11px;color:var(--muted);margin:8px 0 0}
+.mpwhy i{font-style:normal;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.mpwhy ul{margin:4px 0 0;padding-left:16px;line-height:1.6}
+.mpfun{margin-top:10px;font-size:11px}
+.mpfun summary{cursor:pointer;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.mprej{margin:7px 0;line-height:1.55;color:var(--muted)}
+.mprej b{color:var(--txt)}
+@media(max-width:520px){.mpleg{grid-template-columns:18px 28px 1fr;grid-template-areas:'n p d' '. . v';row-gap:4px}.mpn{grid-area:n}.mppic{grid-area:p}.mpd{grid-area:d}.mpv{grid-area:v;justify-content:flex-start}}
 .pecorr{border:1px solid var(--line);border-left:3px solid var(--warn,#b45309);border-radius:8px;padding:9px 11px;margin:8px 0;background:var(--panel)}
 .pecid{font-family:var(--mono);font-size:9px;font-weight:800;letter-spacing:.05em;color:var(--muted);margin-bottom:6px}
 .pecrow{display:grid;grid-template-columns:150px 1fr;gap:10px;font-size:11px;line-height:1.6;margin-bottom:5px}
@@ -2683,11 +2704,44 @@ function hHomeRun(){
 function hLegShort(l){
   return String(legDesc(l)||'').split(' \u2014 ')[0].split(' - ')[0].trim();
 }
+/* THE HERO'S PRIMARY PARLAY IS THE MODEL ONE (2026-09-07, decided).
+   The reader's first question is "what does the system like today", not
+   "what has a book quoted". So the model combination leads, and the priced
+   ticket is a second tile beside it rather than a replacement — a weaker
+   combination does not get promoted just because its legs happen to carry
+   captured prices. */
+function hModelParlay(){
+  var t=D.modelParlay||{};
+  var legs=t.legs||[];
+  if(t.buildFailed)
+    return hNone('Best model parlay',
+      'The model parlay could not be built for this payload.');
+  if(legs.length<2)
+    return hNone('Best model parlay',
+      'Fewer than two candidates cleared the model\u2019s own gates today.');
+  var num=isNum(t.combinedProbability)
+    ? (100*t.combinedProbability).toFixed(1)+'%<small>independence estimate</small>'
+    : legs.length+'<small>legs</small>';
+  var chip=isNum(t.combinedProbability)
+    ? pill('INDEPENDENCE ESTIMATE','b-unk',
+        t.combinedProbabilityWhy||'Multiplied because no two legs share a game.')
+    : pill('COMBINED CHANCE NOT MEASURED','b-unk',
+        t.combinedProbabilityWhy||'No joint model exists for these legs.');
+  return hCard('Best model parlay',
+    '<div class="hsubj"><div style="min-width:0"><div class="hname">'
+      +esc(legs.map(mpLegShort).join(' + '))+'</div>'
+      +'<div class="hteam">most likely combination \u00b7 not a priced ticket</div>'
+      +'</div></div>', num, chip, '');
+}
+function mpLegShort(l){
+  var d=String((l&&l.desc)||'');
+  return d.length>26?d.slice(0,25)+'\u2026':d;
+}
 function hParlay(){
-  var t=D.topParlay||{};
+  var t=D.pricedParlay||D.topParlay||{};
   var legs=t.legs||[];
   if(!t.parlayValid||legs.length<2)
-    return hNone('Best parlay', t.noParlayReason||'No two legs cleared the gates together today.');
+    return hNone('Best priced parlay', t.noParlayReason||'No two legs cleared the gates together today.');
   var c=t.combined||{};
   var num=c.americanOdds?esc(String(c.americanOdds))+'<small>combined</small>':'';
   /* NO FABRICATED TICKET PROBABILITY. It shows only when the pipeline says
@@ -2697,9 +2751,9 @@ function hParlay(){
         c.correlationNote||'Multiplied under an explicit independence assumption.')
     : pill('HIT PROBABILITY NOT MEASURED','b-unk',
         c.correlationNote||c.probUnavailableReason||'No joint probability is published for this ticket.');
-  return hCard('Best parlay',
+  return hCard('Best priced parlay',
     '<div class="hsubj"><div style="min-width:0"><div class="hname">'+legs.length+' legs</div>'
-      +'<div class="hteam">'+esc(legs.map(hLegShort).join(' + '))
+      +'<div class="hteam">book-priced ticket \u00b7 '+esc(legs.map(hLegShort).join(' + '))
       +'</div></div></div>', num, chip, '');
 }
 function dailyHero(){
@@ -2708,7 +2762,7 @@ function dailyHero(){
     hProp('Best 1+ double','h2','1+ double'),
     hProp('Best 2+ total bases','tb2','2+ TB'),
     hProp('Best H+R+RBI','hrr','hits + runs + RBI'),
-    hHomeRun(),hParlay()];
+    hHomeRun(),hModelParlay(),hParlay()];
   return '<div class="hero"><div class="heroh"><h2>Today’s top picks</h2>'
     +'<span class="hsub">'+esc(etStamp(D.generatedAt))+'</span></div>'
     +'<div class="herog">'+tiles.join('')+'</div></div>';
@@ -3212,6 +3266,112 @@ function tpNestedNote(tp){
       ?' <span class="a15code">'+tp.plus15Considered+' considered</span>':'')
     +'</div>';
 }
+/* ==== THE MODEL PARLAY CARD ==========================================
+   A bet slip's styling without a bet slip's claim. Every number on it is
+   either the model's own or an explicit absence: no price, no EV, and a
+   combined chance only when the pipeline says multiplying was licensed.
+
+   The base rate beside each probability is the part that stops the card
+   lying by omission. A +1.5 cover runs ~64% before any model runs and a
+   moneyline is 50% by construction, so 71% on one is not the same claim as
+   71% on the other. Showing both is the difference between "likely" and
+   "the model has something to say". */
+function mpPct(v){return isNum(v)?(100*v).toFixed(1)+'%':SH_ABSENT;}
+function mpLabelTone(l){
+  var L=String(l||'').toUpperCase();
+  if(L==='STRONG')return 'b-strong';
+  if(L==='LEAN'||L==='MODERATE')return 'b-lean';
+  if(L==='PROVISIONAL'||L==='TOP MODEL PICK'||L==='MODEL-FAVORED')return 'b-unk';
+  return 'b-unk';
+}
+function mpLegRow(l,i){
+  var pic='';
+  if(l.playerId!=null) pic=hFace(l.playerId,l.name);
+  else if(l.team) pic=hTeam(l.team);
+  var num=isNum(l.likelihood)
+    ? '<b>'+mpPct(l.likelihood)+'</b>'
+    : '<span class="mprank">RANKING ONLY</span>';
+  var base='';
+  if(l.baseRateStatus==='PUBLISHED'&&isNum(l.baseRate)){
+    var lift=isNum(l.likelihood)?(100*(l.likelihood-l.baseRate)):null;
+    base='<div class="mpbase" title="'+esc(l.baseRateSource||'')+'">base '
+      +mpPct(l.baseRate)
+      +(lift!=null?' · '+(lift>=0?'+':'')+lift.toFixed(1)+'pp vs base':'')
+      +'</div>';
+  }else{
+    base='<div class="mpbase mpnob" title="'+esc(l.baseRateWhy||'')
+      +'">base rate not available</div>';
+  }
+  return '<div class="mpleg"><span class="mpn">'+(i+1)+'</span>'
+    +'<span class="mppic">'+pic+'</span>'
+    +'<span class="mpd"><b>'+esc(l.desc||'')+'</b>'+base+'</span>'
+    +'<span class="mpv">'+num
+    +'<span class="badge '+mpLabelTone(l.label)+'">'+esc(l.label||'')+'</span>'
+    +'</span></div>';
+}
+function mpStatusRow(k,v,tone,tip){
+  return '<div class="mpst"><i>'+esc(k)+'</i>'
+    +'<span class="lab-st '+(tone||'s-unk')+'"'
+    +(tip?' title="'+esc(tip)+'"':'')+'>'+esc(v)+'</span></div>';
+}
+function modelParlayCard(){
+  var t=D.modelParlay;
+  if(!t) return '';
+  if(t.buildFailed)
+    return '<div class="card"><div class="card-h"><span>⭐ Best model parlay</span>'
+      +'<span class="t">unavailable</span></div><div class="card-b">'
+      +'<div class="npar"><div class="nph">NOT BUILT</div><div class="npr">'
+      +esc(t.why||'The model parlay could not be built for this payload.')
+      +'</div></div></div></div>';
+  var legs=t.legs||[];
+  if(legs.length<2)
+    return '<div class="card"><div class="card-h"><span>⭐ Best model parlay</span>'
+      +'<span class="t">'+legs.length+' leg</span></div><div class="card-b">'
+      +'<div class="npar"><div class="nph">NOT A PARLAY</div><div class="npr">'
+      +'Fewer than two candidates cleared the model’s own gates today, so no '
+      +'combination is published. A parlay needs at least two legs.</div></div>'
+      +'</div></div>';
+  var dep=t.dependence||{};
+  var combined=isNum(t.combinedProbability)
+    ? mpStatusRow('Combined chance', mpPct(t.combinedProbability)
+        +' · INDEPENDENCE ESTIMATE','s-warn',t.combinedProbabilityWhy)
+    : mpStatusRow('Combined chance','NOT MEASURED','s-unk',
+        t.combinedProbabilityWhy);
+  return '<div class="card"><div class="card-h">'
+    +'<span>⭐ Best model parlay</span>'
+    +'<span class="t">'+legs.length+' legs · most likely combination</span>'
+    +'</div><div class="card-b">'
+    +'<div class="note" style="margin:0 0 10px;padding:0">'
+    +esc(t.notBettableNote||'')+'</div>'
+    +legs.map(mpLegRow).join('')
+    +'<div class="mpsts">'
+      +combined
+      +mpStatusRow('Dependence', dep.independenceLicensed
+          ? 'NO SHARED GAME' : 'PRESENT',
+          dep.independenceLicensed?'s-meas':'s-warn',
+          (dep.why||[]).join('; ')||'No two legs share a game.')
+      +mpStatusRow('Book price','NOT CAPTURED','s-unk',t.priceWhy)
+      +mpStatusRow('EV','NOT MEASURED','s-unk',t.evWhy)
+    +'</div>'
+    +((t.whyTheseLegs||[]).length
+        ? '<div class="mpwhy"><i>Why these legs</i><ul>'
+          +(t.whyTheseLegs||[]).map(function(w){return '<li>'+esc(w)+'</li>';}).join('')
+          +'</ul></div>' : '')
+    +'<div class="pnote">'+esc(t.baseRateNote||'')+'</div>'
+    +mpFunnel(t.funnel)
+    +'</div></div>';
+}
+function mpFunnel(f){
+  if(!f||!(f.rejected||[]).length)return '';
+  var top=(f.rejected||[]).slice(0,6);
+  return '<details class="mpfun"><summary>What was left off ('
+    +(f.rejected||[]).length+' of '+f.considered+' candidates)</summary>'
+    +top.map(function(r){
+        return '<div class="mprej"><b>'+esc(r.desc||'')+'</b> '
+          +'<span class="a15code">'+esc(String(r.reason||'').replace(/_/g,' '))
+          +'</span><div>'+esc(r.why||'')+'</div></div>';}).join('')
+    +'<div class="pnote">'+esc(f.note||'')+'</div></details>';
+}
 function renderParlay(){
   var tp=D.topParlay||{};
   if(TP_WORK===null){TP_WORK=(tp.legs||[]).map(function(l,i){var c=Object.assign({},l);c._id='s'+i;return c;});}
@@ -3226,9 +3386,10 @@ function renderParlay(){
     });
   } else { legHtml='<div class="empty" style="padding:14px">No legs — add some below or reset to the model parlay.</div>'; }
   var ctrl='<div class="tpctrl"><button class="rf" onclick="tpAddOpen()">➕ Add leg</button><button class="rf" onclick="tpReset()">↺ Reset to model</button><button class="rf" id="tpAdd-fanduel" onclick="tpAddAll(\'fanduel\')" title="Adds every leg to your FanDuel slip — one tap per leg (browsers only allow one link per tap)">➕ Build FD slip</button><button class="rf" id="tpAdd-draftkings" onclick="tpAddAll(\'draftkings\')" title="Adds every leg to your DraftKings slip — one tap per leg">➕ Build DK slip</button><button class="rf" onclick="tpCopySlip(\'fanduel\')" title="Copy as text (FanDuel prices)">📋 copy</button></div><div id="tpAddBox" style="display:none;margin-top:8px"></div>';
+  var _mpcard=modelParlayCard();
   var _sv=parlayVerdict(tp,legs);
-  var sugg=!_sv.valid?noParlayCard(tp.name||'Suggested Parlay',_sv,ctrl)
-    :'<div class="card"><div class="card-h"><span>⭐ Suggested Parlay</span><span class="t">'+legs.length+' legs</span></div><div class="card-b">'
+  var sugg=!_sv.valid?noParlayCard('Best priced parlay',_sv,ctrl)
+    :'<div class="card"><div class="card-h"><span>💵 Best priced parlay</span><span class="t">book-priced · '+legs.length+' legs</span></div><div class="card-b">'
     +(tp.note?'<div class="note" style="margin:0 0 10px;padding:0">⚙ '+esc(tp.note)+'</div>':'')
     +tpNestedNote(tp)
     +legHtml+'<div class="tppay" id="tpPay"></div>'+ctrl+'</div></div>';
@@ -3236,7 +3397,7 @@ function renderParlay(){
   var form='<div class="card"><div class="card-h">🛠 Build Your Own Parlay</div><div class="card-b"><div class="byo">'
     +BYO.map(function(b){return '<label class="byoin">'+b[1]+'<input type="number" id="byo-'+b[0]+'" min="0" max="8" value="'+b[2]+'"></label>';}).join('')
     +'<button class="rf" onclick="buildCustom()">⚡ Generate</button></div><div id="byoResult"><div class="note" style="padding:0">Set how many of each prop type, then Generate. Best available legs from today’s boards (no duplicate players).</div></div></div></div>';
-  var TL=D.ticketsLocked,SP=D.slatePlan||{};var lockBan='';function _hm(s){return esc(String(s||'').slice(11,16));}function _ex(){return (SP.excluded?' <span style="font-weight:600">'+SP.excluded+' game(s) at '+esc((SP.excludedAt||[]).join(', '))+' are NOT in this ticket \u2014 their lineups post after the lock.</span>':'');}if(TL){lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#dcfce7;color:#166534;border-radius:8px;font-weight:700">\ud83d\udd12 LOCKED '+_hm(TL.at)+' ET \u2014 READY TO BET. '+esc(TL.trigger||'')+'. Main slate: '+(SP.games||'?')+' games, first pitch '+_hm(SP.firstPitch)+'. These legs are frozen for the rest of the day.'+_ex()+'</div>';}else if(SP.lockAt){lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#fef3c7;color:#92400e;border-radius:8px;font-weight:700">\u23f3 NOT LOCKED \u2014 locks '+_hm(SP.lockAt)+' ET (15 min before the '+_hm(SP.firstPitch)+' first pitch), or sooner once all lineups post. '+(SP.official||0)+'/'+(SP.games||'?')+' main-slate lineups in. Legs can still change until then.'+_ex()+'</div>';}else{lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#fef3c7;color:#92400e;border-radius:8px;font-weight:700">\u26a0 NOT LOCKED YET \u2014 waiting on the slate. Wait for the green \ud83d\udd12 before betting.</div>';}$('parlay').innerHTML=lockBan+sugg+mlpHtml()+lateHtml()+hpHtml()+form; tpRecalc();
+  var TL=D.ticketsLocked,SP=D.slatePlan||{};var lockBan='';function _hm(s){return esc(String(s||'').slice(11,16));}function _ex(){return (SP.excluded?' <span style="font-weight:600">'+SP.excluded+' game(s) at '+esc((SP.excludedAt||[]).join(', '))+' are NOT in this ticket \u2014 their lineups post after the lock.</span>':'');}if(TL){lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#dcfce7;color:#166534;border-radius:8px;font-weight:700">\ud83d\udd12 LOCKED '+_hm(TL.at)+' ET \u2014 READY TO BET. '+esc(TL.trigger||'')+'. Main slate: '+(SP.games||'?')+' games, first pitch '+_hm(SP.firstPitch)+'. These legs are frozen for the rest of the day.'+_ex()+'</div>';}else if(SP.lockAt){lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#fef3c7;color:#92400e;border-radius:8px;font-weight:700">\u23f3 NOT LOCKED \u2014 locks '+_hm(SP.lockAt)+' ET (15 min before the '+_hm(SP.firstPitch)+' first pitch), or sooner once all lineups post. '+(SP.official||0)+'/'+(SP.games||'?')+' main-slate lineups in. Legs can still change until then.'+_ex()+'</div>';}else{lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#fef3c7;color:#92400e;border-radius:8px;font-weight:700">\u26a0 NOT LOCKED YET \u2014 waiting on the slate. Wait for the green \ud83d\udd12 before betting.</div>';}$('parlay').innerHTML=lockBan+_mpcard+sugg+mlpHtml()+lateHtml()+hpHtml()+form; tpRecalc();
 }
 function buildCustom(){
   var order=['ml','over','hit','2tb','hrr','hr'];

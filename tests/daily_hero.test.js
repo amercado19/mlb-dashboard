@@ -43,6 +43,8 @@ eval(grab(/function hMoneyline\(\)\{[\s\S]*?\n\}/, 'hMoneyline'));
 eval(grab(/function hPlus15\(\)\{[\s\S]*?\n\}/, 'hPlus15'));
 eval(grab(/function hHomeRun\(\)\{[\s\S]*?\n\}/, 'hHomeRun'));
 eval(grab(/function hLegShort\(l\)\{[\s\S]*?\n\}/, 'hLegShort'));
+eval(grab(/function mpLegShort\(l\)\{[\s\S]*?\n\}/, 'mpLegShort'));
+eval(grab(/function hModelParlay\(\)\{[\s\S]*?\n\}/, 'hModelParlay'));
 eval(grab(/function hParlay\(\)\{[\s\S]*?\n\}/, 'hParlay'));
 eval(grab(/function dailyHero\(\)\{[\s\S]*?\n\}/, 'dailyHero'));
 
@@ -84,12 +86,19 @@ const hero = dailyHero();
 const heroTxt = strip(hero);
 
 /* ---- 1. EVERY CATEGORY IS PRESENT, EVEN WHEN EMPTY ------------------- */
-t('all eight categories render', (hero.match(/class="hcard"/g) || []).length === 8);
+/* Nine now: the parlay slot split into the two products, because a model
+   combination and a book-priced ticket are different recommendations and
+   collapsing them into one tile would make the reader guess which they are
+   looking at. */
+t('all nine categories render', (hero.match(/class="hcard"/g) || []).length === 9);
 ['Best moneyline', 'Best +1.5', 'Best 1+ hit', 'Best 1+ double',
- 'Best 2+ total bases', 'Best H+R+RBI', 'Top home run', 'Best parlay']
+ 'Best 2+ total bases', 'Best H+R+RBI', 'Top home run',
+ 'Best model parlay', 'Best priced parlay']
   .forEach(c => t('"' + c + '" has a card', heroTxt.indexOf(c) >= 0));
+t('the model parlay leads the priced one',
+  heroTxt.indexOf('Best model parlay') < heroTxt.indexOf('Best priced parlay'));
 t('an empty board still gets a card, not a gap',
-  (hero.match(/class="hnone"/g) || []).length === 3);
+  (hero.match(/class="hnone"/g) || []).length === 4);
 t('...saying the board was empty, not that nothing was worth showing',
   /No eligible pick on today’s slate/.test(heroTxt));
 
