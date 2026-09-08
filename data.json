@@ -1,6 +1,6 @@
 {
  "date": "2026-09-07",
- "generated_at": "2026-09-08T00:55:42",
+ "generated_at": "2026-09-08T01:28:36",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "b2d93eb"
+  "gitCommit": "1406fb6"
  },
  "games": [
   {
@@ -103,15 +103,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "cf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "out_mph": 0
    }
@@ -207,15 +207,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "cf": {
      "dir": "in",
-     "mph": 13
+     "mph": 12
     },
     "rf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "out_mph": 0
    }
@@ -229,7 +229,7 @@
    "confidence": 0.592,
    "tier": "PASS",
    "total": 9.1,
-   "book_total_line": 7.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -254,22 +254,22 @@
    "pick": "lad",
    "confidence": 0.47,
    "tier": "PASS",
-   "total": 8.5,
+   "total": 8.8,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 2
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 3
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 2
     },
-    "out_mph": 8
+    "out_mph": 3
    }
   },
   {
@@ -540,7 +540,7 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 616,
+    "pa_season": 617,
     "factors": {
      "sp": 1.076,
      "park": 0.85,
@@ -563,42 +563,43 @@
    ]
   },
   {
-   "player": "Elly De La Cruz",
-   "team": "cin",
-   "game": "cin-lad",
+   "player": "Fernando Tatis Jr.",
+   "team": "sd",
+   "game": "wsh-sd",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 556,
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 625,
     "factors": {
-     "sp": 0.993,
-     "temp": 1.084,
-     "wind": 1.03
+     "sp": 1.071,
+     "park": 0.86,
+     "temp": 1.114,
+     "wind": 0.937
     },
-    "hr_rate_pa": 0.0418
+    "hr_rate_pa": 0.0305
    },
-   "edge_score": 59,
+   "edge_score": 55,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 14.6,
-    "hard_hit_pct": 52.3,
-    "avg_exit_velo": 94.4,
-    "xiso": 0.206,
-    "recent_hr_rate": 0.031
+    "barrel_pct": 12.8,
+    "hard_hit_pct": 54.1,
+    "avg_exit_velo": 92.9,
+    "xiso": 0.194,
+    "recent_hr_rate": 0.094
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 278 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
-   "player": "Sal Stewart",
-   "team": "cin",
-   "game": "cin-lad",
+   "player": "Bryce Eldridge",
+   "team": "sf",
+   "game": "stl-sf",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -607,22 +608,23 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 621,
+    "pa_season": 409,
     "factors": {
-     "sp": 0.993,
-     "temp": 1.084,
-     "wind": 1.03
+     "sp": 1.076,
+     "park": 0.85,
+     "temp": 1.042,
+     "wind": 1.06
     },
-    "hr_rate_pa": 0.0485
+    "hr_rate_pa": 0.0346
    },
-   "edge_score": 56,
+   "edge_score": 55,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.9,
-    "hard_hit_pct": 39.1,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.224,
-    "recent_hr_rate": 0.0472
+    "barrel_pct": 11.4,
+    "hard_hit_pct": 51.6,
+    "avg_exit_velo": 92.3,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.0351
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 278 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -795,11 +797,11 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 408,
+    "pa_season": 409,
     "factors": {
      "sp": 1.057
     },
-    "hit_rate_pa": 0.2371
+    "hit_rate_pa": 0.2367
    },
    "edge_score": 77,
    "score_type": "model_score_0_100",
@@ -857,11 +859,11 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 616,
+    "pa_season": 617,
     "factors": {
      "sp": 1.057
     },
-    "hit_rate_pa": 0.2401
+    "hit_rate_pa": 0.2398
    },
    "edge_score": 75,
    "score_type": "model_score_0_100",
@@ -950,7 +952,7 @@
    "prob_inputs": {
     "epa": 4.25,
     "order": 5,
-    "pa_season": 28,
+    "pa_season": 29,
     "factors": {
      "sp": 0.998
     },
@@ -1043,7 +1045,7 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 602,
+    "pa_season": 603,
     "factors": {
      "sp": 0.998
     },
@@ -1094,37 +1096,6 @@
    ]
   },
   {
-   "player": "Sal Stewart",
-   "team": "cin",
-   "game": "cin-lad",
-   "stat": "H+R+RBI",
-   "line": 1.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "poisson_ge2",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 621,
-    "factors": {
-     "sp": 0.995
-    },
-    "lambda_pg": 2.257
-   },
-   "edge_score": 2.34,
-   "score_type": "per_game_rate",
-   "statcast": {
-    "barrel_pct": 12.9,
-    "hard_hit_pct": 39.1,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.224,
-    "recent_hr_rate": 0.0472
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 279 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Elly De La Cruz",
    "team": "cin",
    "game": "cin-lad",
@@ -1136,13 +1107,13 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 556,
+    "pa_season": 557,
     "factors": {
      "sp": 0.995
     },
-    "lambda_pg": 2.278
+    "lambda_pg": 2.288
    },
-   "edge_score": 2.33,
+   "edge_score": 2.34,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 14.6,
@@ -1150,6 +1121,37 @@
     "avg_exit_velo": 94.4,
     "xiso": 0.206,
     "recent_hr_rate": 0.031
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 279 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Sal Stewart",
+   "team": "cin",
+   "game": "cin-lad",
+   "stat": "H+R+RBI",
+   "line": 1.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "poisson_ge2",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 622,
+    "factors": {
+     "sp": 0.995
+    },
+    "lambda_pg": 2.242
+   },
+   "edge_score": 2.32,
+   "score_type": "per_game_rate",
+   "statcast": {
+    "barrel_pct": 12.9,
+    "hard_hit_pct": 39.1,
+    "avg_exit_velo": 90.1,
+    "xiso": 0.224,
+    "recent_hr_rate": 0.0472
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hrr market is BLIND (not measurable yet \u2014 279 settled (need 40), 24 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
