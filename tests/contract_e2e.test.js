@@ -188,10 +188,55 @@ function buildPayload() {
   check('settlement carries a correction, an UNRESOLVED and a void candidate', () => {
     const s = real.settlementIntegrity;
     assert(s.correctionsApplied.length >= 1, 'no correction in the fixture');
+    assert(Array.isArray(s.unresolved), 'unresolved must be a list of records');
     assert(s.unresolved.length >= 1, 'no UNRESOLVED row in the fixture');
     assert.strictEqual(s.unresolved[0].settlementState, 'UNRESOLVED');
     assert(s.unresolved[0].attemptCount >= 1, 'UNRESOLVED must carry retry metadata');
     assert.strictEqual(s.voidCandidates[0].financialSettlement, 'UNKNOWN_BOOK_RULE');
+  });
+
+  /* ------------------------------------------------------------------ *
+   * THE SETTLEMENT POPULATION, AS THE PRODUCER ACTUALLY SHIPS IT.       *
+   *                                                                    *
+   * These read the payload the page ships, NOT the overlay, because the *
+   * claim under test is about what the pipeline publishes: a row nobody *
+   * could grade is represented, carries its history, and is never a     *
+   * loss. This block would have failed outright before 2026-09-08, when *
+   * the field was the string NOT_PERSISTED.                            *
+   * ------------------------------------------------------------------ */
+  console.log('\nthe shipped settlement block tells the truth about unresolved rows');
+  const shipped = JSON.parse(PAGE.slice(bodyStart, bodyEnd)).settlementIntegrity || {};
+  check('unresolved persistence is operational, not a placeholder', () =>
+    assert.strictEqual(shipped.unresolvedPersistence, 'OPERATIONAL',
+      'got ' + JSON.stringify(shipped.unresolvedPersistence)));
+  check('unresolved is a list of records', () =>
+    assert(Array.isArray(shipped.unresolved),
+      'unresolved is ' + JSON.stringify(shipped.unresolved).slice(0, 80)));
+  check('every published unresolved row is genuinely non-terminal', () =>
+    shipped.unresolved.forEach(r => assert(
+      ['PENDING', 'UNRESOLVED'].includes(r.settlementState),
+      r.pickId + ' is published as unresolved but reads ' + r.settlementState)));
+  check('no unresolved row was quietly settled as a loss', () =>
+    shipped.unresolved.forEach(r => {
+      assert.notStrictEqual(r.statisticalOutcome, 'MISS', r.pickId + ' became a MISS');
+      assert.notStrictEqual(r.financialSettlement, 'LOSS', r.pickId + ' became a LOSS');
+    }));
+  check('every unresolved row carries the metadata needed to retry it', () =>
+    shipped.unresolved.forEach(r => {
+      assert(r.settlementReason, r.pickId + ' has no settlement reason');
+      assert(r.identityResolution, r.pickId + ' has no identity resolution');
+      assert(r.graderVersion, r.pickId + ' has no grader version');
+      assert(r.firstAttemptedAt, r.pickId + ' has no first attempt');
+      assert(r.lastAttemptedAt, r.pickId + ' has no last attempt');
+      assert(Number(r.attemptCount) >= 1, r.pickId + ' has no attempt count');
+      assert(r.market, r.pickId + ' has no market family');
+    }));
+  check('the per-market counts match the rows they claim to count', () => {
+    const tally = {};
+    shipped.unresolved.forEach(r => { tally[r.market] = (tally[r.market] || 0) + 1; });
+    assert.deepStrictEqual(shipped.unresolvedCounts || {}, tally,
+      'counts ' + JSON.stringify(shipped.unresolvedCounts)
+      + ' do not match the published rows ' + JSON.stringify(tally));
   });
 
   /* ------------------------------------------------------------------ *
