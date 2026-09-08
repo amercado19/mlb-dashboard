@@ -1,6 +1,6 @@
 {
  "date": "2026-09-07",
- "generated_at": "2026-09-08T00:11:38",
+ "generated_at": "2026-09-08T00:55:42",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "7e8ab0f"
+  "gitCommit": "b2d93eb"
  },
  "games": [
   {
@@ -25,7 +25,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 2
     },
     "cf": {
      "dir": "cross",
@@ -33,9 +33,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 3
+     "mph": 2
     },
-    "out_mph": 3
+    "out_mph": 2
    }
   },
   {
@@ -103,15 +103,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 2
+     "mph": 4
     },
     "cf": {
      "dir": "in",
-     "mph": 3
+     "mph": 5
     },
     "rf": {
      "dir": "in",
-     "mph": 2
+     "mph": 4
     },
     "out_mph": 0
    }
@@ -202,20 +202,20 @@
    "pick": "sd",
    "confidence": 0.677,
    "tier": "LEAN",
-   "total": 8.5,
+   "total": 8.3,
    "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 10
+     "mph": 9
     },
     "cf": {
      "dir": "in",
-     "mph": 14
+     "mph": 13
     },
     "rf": {
      "dir": "in",
-     "mph": 10
+     "mph": 9
     },
     "out_mph": 0
    }
@@ -229,21 +229,21 @@
    "confidence": 0.592,
    "tier": "PASS",
    "total": 9.1,
-   "book_total_line": 8.5,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 9
+     "mph": 8
     },
     "cf": {
      "dir": "out",
-     "mph": 13
+     "mph": 11
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 8
     },
-    "out_mph": 13
+    "out_mph": 11
    }
   },
   {
@@ -366,40 +366,6 @@
    ]
   },
   {
-   "player": "Rafael Devers",
-   "team": "sf",
-   "game": "stl-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 615,
-    "factors": {
-     "sp": 1.076,
-     "park": 0.85,
-     "temp": 1.024,
-     "wind": 1.08
-    },
-    "hr_rate_pa": 0.049
-   },
-   "edge_score": 66,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 51.7,
-    "avg_exit_velo": 93.1,
-    "xiso": 0.23,
-    "recent_hr_rate": 0.0945
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 278 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Kyle Schwarber",
    "team": "phi",
    "game": "atl-phi",
@@ -498,40 +464,6 @@
    ]
   },
   {
-   "player": "Bryce Eldridge",
-   "team": "sf",
-   "game": "stl-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 407,
-    "factors": {
-     "sp": 1.076,
-     "park": 0.85,
-     "temp": 1.024,
-     "wind": 1.08
-    },
-    "hr_rate_pa": 0.0348
-   },
-   "edge_score": 62,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.4,
-    "hard_hit_pct": 51.6,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.204,
-    "recent_hr_rate": 0.0351
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 278 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Bryce Harper",
    "team": "phi",
    "game": "atl-phi",
@@ -597,6 +529,40 @@
    ]
   },
   {
+   "player": "Rafael Devers",
+   "team": "sf",
+   "game": "stl-sf",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 616,
+    "factors": {
+     "sp": 1.076,
+     "park": 0.85,
+     "temp": 1.042,
+     "wind": 1.06
+    },
+    "hr_rate_pa": 0.0488
+   },
+   "edge_score": 59,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.3,
+    "hard_hit_pct": 51.7,
+    "avg_exit_velo": 93.1,
+    "xiso": 0.23,
+    "recent_hr_rate": 0.0945
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 278 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Elly De La Cruz",
    "team": "cin",
    "game": "cin-lad",
@@ -624,6 +590,39 @@
     "avg_exit_velo": 94.4,
     "xiso": 0.206,
     "recent_hr_rate": 0.031
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 278 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Sal Stewart",
+   "team": "cin",
+   "game": "cin-lad",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 621,
+    "factors": {
+     "sp": 0.993,
+     "temp": 1.084,
+     "wind": 1.03
+    },
+    "hr_rate_pa": 0.0485
+   },
+   "edge_score": 56,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.9,
+    "hard_hit_pct": 39.1,
+    "avg_exit_velo": 90.1,
+    "xiso": 0.224,
+    "recent_hr_rate": 0.0472
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 278 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -796,11 +795,11 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 407,
+    "pa_season": 408,
     "factors": {
      "sp": 1.057
     },
-    "hit_rate_pa": 0.2375
+    "hit_rate_pa": 0.2371
    },
    "edge_score": 77,
    "score_type": "model_score_0_100",
@@ -858,11 +857,11 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 615,
+    "pa_season": 616,
     "factors": {
      "sp": 1.057
     },
-    "hit_rate_pa": 0.2391
+    "hit_rate_pa": 0.2401
    },
    "edge_score": 75,
    "score_type": "model_score_0_100",
@@ -951,13 +950,13 @@
    "prob_inputs": {
     "epa": 4.25,
     "order": 5,
-    "pa_season": 27,
+    "pa_season": 28,
     "factors": {
      "sp": 0.998
     },
-    "lambda_pg": 1.758
+    "lambda_pg": 1.72
    },
-   "edge_score": 3.17,
+   "edge_score": 2.71,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": null,
@@ -1044,13 +1043,13 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 601,
+    "pa_season": 602,
     "factors": {
      "sp": 0.998
     },
-    "lambda_pg": 2.315
+    "lambda_pg": 2.3
    },
-   "edge_score": 2.47,
+   "edge_score": 2.45,
    "score_type": "per_game_rate",
    "statcast": {
     "barrel_pct": 13.2,
