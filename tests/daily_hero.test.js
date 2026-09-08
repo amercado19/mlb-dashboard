@@ -56,6 +56,14 @@ eval(grab(/function hLegShort\(l\)\{[\s\S]*?\n\}/, 'hLegShort'));
 eval(grab(/function mpLegShort\(l\)\{[\s\S]*?\n\}/, 'mpLegShort'));
 eval(grab(/function hModelParlay\(\)\{[\s\S]*?\n\}/, 'hModelParlay'));
 eval(grab(/function hParlay\(\)\{[\s\S]*?\n\}/, 'hParlay'));
+/* dailyHero now isolates each tile, so the tile wrapper and the diagnostic
+   sink it calls have to come across with it. Stubbing renderDiag here would
+   hide a throw; this records it so the assertions below can see one. */
+const RENDER_DIAGNOSTICS = [];
+function renderDiag(code, err, ctx) {
+  RENDER_DIAGNOSTICS.push({ code: code, message: (err && err.message) || String(err), ctx: ctx });
+}
+eval(grab(/function hTileSafe\(code, build\)\{[\s\S]*?\n\}/, 'hTileSafe'));
 eval(grab(/function dailyHero\(\)\{[\s\S]*?\n\}/, 'dailyHero'));
 
 let pass = 0, fail = 0;
