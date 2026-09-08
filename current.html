@@ -589,6 +589,10 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
 .g2team{font-weight:700;font-size:14px}
 .g2prob{font-variant-numeric:tabular-nums;font-weight:700}
 .g2proj{color:var(--muted);font-size:11.5px;font-variant-numeric:tabular-nums}
+.g2lbl{color:var(--muted);font-size:9.5px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.g2why{flex:0 0 100%;color:var(--muted);font-size:11px;line-height:1.5;padding-top:2px}
+.masum{font-size:11.5px;color:var(--muted);line-height:1.6;padding:8px 12px;margin-bottom:10px;border:1px solid var(--line);border-radius:9px;background:var(--panel)}
+.masum b{color:var(--txt);font-family:var(--mono);font-size:10.5px;letter-spacing:.04em}
 .g2bet{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .g2price{font-variant-numeric:tabular-nums;font-size:12px}
 .g2why{color:var(--muted);font-size:11.5px;line-height:1.5;flex:1 1 100%;min-width:0}
@@ -1043,7 +1047,8 @@ function lineupIndex(){
     if(!ix[r.playerId])ix[r.playerId]=rec;
   }
   var bf=D.boardsFull||D.boards||{};
-  Object.keys(bf).forEach(function(k){(bf[k]||[]).forEach(take);});
+  /* boards carries a `diagnostics` DICT alongside the board ARRAYS (pipeline PR #77). Iterating every key and calling .forEach threw on it, and the throw happened inside renderSlate — so the Slate, the default tab, rendered nothing at all in production on 2026-09-08. A container is not a board unless it is a list. */
+  Object.keys(bf).forEach(function(k){if(Array.isArray(bf[k]))bf[k].forEach(take);});
   (D.hrProps||[]).forEach(take);(D.hitProps||[]).forEach(take);
   window._LUIX=ix;return ix;
 }
@@ -2428,6 +2433,35 @@ function gamePicksRow(g){
     +'</div></div>';
   return '<div class="g2row"><i>Picks</i><div class="g2picks">'+bits+'</div></div>';
 }
+/* THE TWO MODELS, AS THE PIPELINE PUBLISHED THEM (2026-09-08).
+ * `modelAgreement` is computed ONCE, in mlb_picks/model_agreement.py, from the
+ * RAW run projections. Nothing here recomputes it: the rounded pair this card
+ * prints is display, and a 0.04-run gap renders as "4.7 - 4.6", so a surface
+ * that derived direction from what it draws would invent disagreements.
+ * When the field is absent the card renders exactly as it did before. */
+/* ONE LINE AT THE TOP OF THE SLATE. Six model splits used to reach a reader
+ * only as six consistency warnings on an admin page, which reads as "the
+ * system is unhealthy on half the slate". It is not a health fact at all —
+ * it is decision uncertainty, and it belongs here, in counts. */
+function maSummary(){
+  var s=D.modelAgreementSummary;
+  if(!s||typeof s!=='object'||!s.games||!s.mixed) return '';
+  var bits=[];
+  if(s.agreement)bits.push(s.agreement+' agree');
+  if(s.nearTie)bits.push(s.nearTie+' near-even');
+  if(s.disagreement)bits.push(s.disagreement+' split');
+  if(s.notMeasurable)bits.push(s.notMeasurable+' not measurable');
+  return '<div class="masum"><b>'+esc(s.label)+'</b> &middot; '+esc(bits.join(' · '))
+    +'<br>'+esc(s.why||'')+'</div>';
+}
+function maOf(P){var a=(P||{}).modelAgreement;return (a&&typeof a==='object')?a:null;}
+function maMixed(P){var a=maOf(P);return !!(a&&(a.status==='NEAR_TIE'||a.status==='DISAGREEMENT'));}
+function maChip(P){
+  var a=maOf(P); if(!a||!a.userLabel) return '';
+  var tip=(a.userWhy||'')+(a.magnitude?' ['+a.magnitude.toLowerCase()+' run edge, '
+    +(a.projectedRunDiffRaw!=null?a.projectedRunDiffRaw.toFixed(2)+' raw runs':'')+']':'');
+  return ' '+pill(a.userLabel,'b-unk',tip);
+}
 function slateCard2(g,m){
   var b=betFor(g,m),st=b.state,p=b.pred,P=predOf(g,m)||{};
   var tm={away:p.away||teamsOf(g).away,home:p.home||teamsOf(g).home};
@@ -2446,9 +2480,18 @@ function slateCard2(g,m){
   var proj=(isNum(p.awayRuns)&&isNum(p.homeRuns))
     ? esc(tm.away)+' '+p.awayRuns.toFixed(1)+' &ndash; '+p.homeRuns.toFixed(1)+' '+esc(tm.home)
     : null;
-  var model='<div class="g2model"><span class="g2team">'+esc(p.winner||'—')+'</span>'
+  /* TWO QUESTIONS, LABELLED. "MODEL WINNER" is the moneyline model's answer to
+     who wins. "PROJECTED SCORE" is the run model's answer to what score
+     environment this is. They are separate models and the card stops implying
+     that one is a restatement of the other. */
+  var _ma=maOf(P);
+  var _near=(_ma&&_ma.runProjectionNote)?'<span class="g2lbl"> '+esc(_ma.runProjectionNote)+'</span>':'';
+  var _why=(_ma&&_ma.userWhy)?'<div class="g2why">'+esc(_ma.userWhy)+'</div>':'';
+  var model='<div class="g2model"><span class="g2lbl">model winner</span>'
+    +'<span class="g2team">'+esc(p.winner||'—')+'</span>'
     +(isNum(p.wp)?'<span class="g2prob">'+p.wp.toFixed(0)+'%</span>':'')
-    +(proj?'<span class="g2proj">'+proj+'</span>':'')+prov+dis+'</div>';
+    +(proj?'<span class="g2lbl">projected score</span><span class="g2proj">'+proj+_near+'</span>':'')
+    +prov+dis+maChip(P)+_why+'</div>';
 
   /* BET: a verdict on the price, in its own vocabulary. */
   /* A price belongs to a SIDE. `betTeam` is the canonical side the price and
@@ -2859,7 +2902,7 @@ function renderSlate(){
   });
   if(!body)body='<div class="empty">No games match the '+esc(SLATE_FILTER)+' filter. '
     +(SLATE_FILTER==='BET'?'The model still projects a winner in every game — switch to ALL to see them.':'Switch to ALL to see the full slate.')+'</div>';
-  $('slate').innerHTML=dailyHero()+decisionSummaryStrip()+head+alt15Note()+body;
+  $('slate').innerHTML=dailyHero()+decisionSummaryStrip()+maSummary()+head+alt15Note()+body;
 }
 function renderMatchups(){
   var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});var mlByPk={};(D.ml||[]).forEach(function(m){mlByPk[m.gamePk]=m;});
@@ -3767,7 +3810,8 @@ function lineupCensus(){
     byState[s]=(byState[s]||0)+1;
   }
   var bf=D.boardsFull||D.boards||{};
-  Object.keys(bf).forEach(function(k){(bf[k]||[]).forEach(take);});
+  /* boards carries a `diagnostics` DICT alongside the board ARRAYS (pipeline PR #77). Iterating every key and calling .forEach threw on it, and the throw happened inside renderSlate — so the Slate, the default tab, rendered nothing at all in production on 2026-09-08. A container is not a board unless it is a list. */
+  Object.keys(bf).forEach(function(k){if(Array.isArray(bf[k]))bf[k].forEach(take);});
   (D.hrProps||[]).forEach(take);(D.hitProps||[]).forEach(take);
   return {byState:byState,total:total,eligible:elig};
 }
@@ -5302,7 +5346,8 @@ function renderAdmin(){
       rosterCount[s]=(rosterCount[s]||0)+1;
     }
     var bf=D.boardsFull||D.boards||{};
-    Object.keys(bf).forEach(function(k){(bf[k]||[]).forEach(take);});
+    /* boards carries a `diagnostics` DICT alongside the board ARRAYS (pipeline PR #77). Iterating every key and calling .forEach threw on it, and the throw happened inside renderSlate — so the Slate, the default tab, rendered nothing at all in production on 2026-09-08. A container is not a board unless it is a list. */
+  Object.keys(bf).forEach(function(k){if(Array.isArray(bf[k]))bf[k].forEach(take);});
     (D.hrProps||[]).forEach(take);(D.hitProps||[]).forEach(take);
     (D.hrCandidates||[]).forEach(take);
   })();
