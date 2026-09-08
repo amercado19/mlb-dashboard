@@ -240,5 +240,22 @@ t('...and still reads RANKING ONLY', /RANKING ONLY/.test(noband));
 t('a band row is never invented from an absent n',
   mpBandRow({measuredBandN:null, measuredBandStatus:'UNDERPOWERED'}) === '');
 
+/* An absent band is SAID, not omitted. Production shipped SD 0.8908 and
+ * KC 0.8718 whose measuredBand is null: the most confident-looking numbers
+ * on the page and the least supported. An omitted row reads as "nothing to
+ * say here", which is the opposite of the truth. */
+const nb = mpLegRow({desc:'KC ML', team:'KC', likelihood:0.8718,
+  baseRate:0.5, baseRateStatus:'PUBLISHED', baseRateSource:'arithmetic',
+  label:'LOW_MODEL', measuredBandN:null,
+  measuredBandStatus:'NO_BAND_COVERS_THIS_PROBABILITY',
+  measuredBandWhy:'no measured band covers this probability, so nothing supports a confidence claim about it'}, 0);
+t('a leg no band covers says so', /no measured band covers this probability/.test(nb));
+t('...and is flagged like any thin band', /mpband mpthin/.test(nb));
+t('...while the probability itself is still printed', /87\.2%/.test(nb));
+t('...and the full reason rides in the title',
+  /nothing supports a confidence claim/.test(nb));
+t('a leg with neither an n nor a reason still renders no band row',
+  mpBandRow({measuredBandN:null}) === '');
+
 console.log('\n  ' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);

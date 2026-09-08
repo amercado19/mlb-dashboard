@@ -3292,7 +3292,14 @@ function mpBandRow(l){
   // The moneyline number is a model probability whose calibration has been
   // measured band by band. The band travels with the number or the number
   // is not shown honestly.
-  if(!isNum(l.measuredBandN)) return '';
+  if(!isNum(l.measuredBandN)){
+    // AN ABSENT BAND IS SAID, NOT OMITTED. An 89% leg whose probability no
+    // measured band covers is the most confident-looking number on the page
+    // and the least supported; an omitted row reads as "nothing to say".
+    if(!l.measuredBandWhy) return '';
+    return '<div class="mpband mpthin" title="'+esc(l.measuredBandWhy)+'">'
+      +esc('no measured band covers this probability')+'</div>';
+  }
   var thin=l.measuredBandN<50||l.measuredBandStatus==='UNDERPOWERED';
   var bits=[];
   bits.push('band n='+l.measuredBandN);
