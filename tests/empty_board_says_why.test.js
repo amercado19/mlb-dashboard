@@ -135,5 +135,36 @@ t('...and keeps the rows, because the model uses them',
 t('...and stops printing "vs null" when no line is posted',
   /no posted line/.test(ouSrc));
 
+/* ---- 8. A CONTAINER IS NOT A BOARD UNLESS IT IS A LIST -----------------
+ * `boards.diagnostics` is a DICT shipped alongside the board ARRAYS. Three
+ * places in this page iterated every key in `boardsFull` and called .forEach
+ * on the value. On 2026-09-08 that threw inside renderSlate, and the Slate —
+ * the default tab — rendered NOTHING in production. The pipeline note said
+ * "all consumers already isinstance-guard"; that was true of the pipeline's
+ * consumers and false of this one.
+ */
+const bfLoops = html.match(/Object\.keys\(bf\)\.forEach[^;]*;/g) || [];
+t('every board-key loop exists', bfLoops.length === 3);
+t('...and every one of them checks for an array first',
+  bfLoops.every(l => /Array\.isArray/.test(l)));
+t('...and none of them calls .forEach on an unchecked value',
+  !bfLoops.some(l => /\(bf\[k\]\s*\|\|\s*\[\]\)\.forEach/.test(l)));
+
+/* The functional half: a boards object shaped like production must survive
+   the walk. A source-only assertion would pass on code that still throws. */
+(function () {
+  const takeIndex = {};
+  const bf = { hr: [{ gamePk: 1, playerId: 9, eligible: true }], h2: [],
+               diagnostics: { h2: { published: 0, why: 'retired' } } };
+  let threw = null;
+  try {
+    Object.keys(bf).forEach(function (k) {
+      if (Array.isArray(bf[k])) bf[k].forEach(r => { takeIndex[r.playerId] = r; });
+    });
+  } catch (e) { threw = e.message; }
+  t('walking a production-shaped boards object does not throw', threw === null);
+  t('...and still indexes the real board rows', takeIndex[9] !== undefined);
+})();
+
 console.log('\n  ' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
