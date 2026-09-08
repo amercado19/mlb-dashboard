@@ -2649,7 +2649,7 @@ function hPropChip(row){
 function hProp(cat,fam,label){
   var rows=((D.boards||{})[fam])||[];
   var r=rows[0];
-  if(!r) return hNone(cat,'No eligible pick on today’s slate for this market.');
+  if(!r) return hNone(cat,boardWhyText(fam),boardState(fam));
   /* SCORES ARE NOT COMPARABLE ACROSS MARKETS. The rendered Hero showed
      "82 score", "2.71 score" and "66 score" in one column: three different
      quantities under one word, inviting a reader to rank them against each
@@ -2885,9 +2885,52 @@ function renderMatchups(){
 var PROP_SQ=[['hr','HR','⚾'],['h1','1+ Hit','🎯'],['tb2','2+ TB','💥'],['hrr','2+ HRR','🔢'],['nrfi','NRFI/YRFI','🅾'],['ml','Moneyline','💰'],['spread','Spread','📏']];
 function propCount(k){var bf=D.boardsFull||D.boards||{};if(k==='nrfi')return (D.nrfi||[]).length;if(k==='ou')return (bf.ou||[]).length;if(k==='ml')return (D.ml||[]).filter(function(p){return p.tier==='STRONG'||p.tier==='LEAN';}).length;if(k==='spread')return (D.gameCards||[]).length;return (bf[k]||[]).length;}
 function renderProps(){
-  var sq=PROP_SQ.map(function(d){var n=propCount(d[0]);var sub=d[0]==='ml'?(n+' actionable'):d[0]==='spread'?(n+' games'):(n+' picks');return '<div class="psq" onclick="openProp(\''+d[0]+'\',this)"><div class="ic">'+d[2]+'</div><div class="lb">'+d[1]+'</div><div class="ct">'+sub+'</div></div>';}).join('');
+  var sq=PROP_SQ.map(function(d){var n=propCount(d[0]);var sub=boardRetired(d[0])?'retired':d[0]==='ml'?(n+' actionable'):d[0]==='spread'?(n+' games'):(n+' picks');return '<div class="psq" onclick="openProp(\''+d[0]+'\',this)"><div class="ic">'+d[2]+'</div><div class="lb">'+d[1]+'</div><div class="ct">'+sub+'</div></div>';}).join('');
   $('props').innerHTML='<div class="prop-grid">'+sq+'</div><div class="card"><div id="propPanel"></div></div>';
   openProp('hr');
+}
+/* AN EMPTY BOARD SAYS WHAT EMPTIED IT (2026-09-08).
+ * For a month h2 and tb2 rendered "Board posts with confirmed lineups." —
+ * a sentence about a wait that was never going to end. Neither board was
+ * waiting on anything: the 2B market was retired 2026-08-07 and 2+TB on
+ * 2026-09-06, both on measurement. The payload now carries the reason in
+ * learned.markets and the counts in boards.diagnostics; this reads them
+ * instead of guessing, and when it has nothing to read it says THAT. */
+var BOARD_NAME={h2:'1+ double',tb2:'2+ total bases',hrr:'H+R+RBI',hr:'home run',h1:'1+ hit',ou:'over/under'};
+function boardMarket(k){return (((D.learned||{}).markets)||{})[k]||{};}
+function boardDiag(k){var bf=D.boardsFull||{},b=D.boards||{};
+  return ((bf.diagnostics||b.diagnostics||{})[k])||{};}
+function boardRetired(k){var st=boardMarket(k).status;return st==='KILL'||st==='RETIRED';}
+function boardWhyText(k){
+  var mk=boardMarket(k),dg=boardDiag(k),nm=BOARD_NAME[k]||k;
+  if(boardRetired(k)){
+    var s='The '+nm+' market is retired — '
+      +(mk.reason||'no reason recorded in the payload')+'.';
+    if(dg.ranked!=null)s+=' The model still ranked '+dg.ranked+' player'
+      +(dg.ranked===1?'':'s')+' today; the retirement published none.';
+    if(mk.retiredBy)s+=' Retired by '+mk.retiredBy+'.';
+    return s;
+  }
+  if(dg.why)return dg.why.charAt(0).toUpperCase()+dg.why.slice(1)+'.';
+  if(D.lineupsProjected)return 'Board posts with confirmed lineups.';
+  return 'This board published nothing and the payload does not say why — '
+    +'no retirement, no producer counts. That is a fault in the pipeline, not '
+    +'a judgement about today’s players.';
+}
+/* FOUR DIFFERENT SILENCES, FOUR DIFFERENT HEADLINES. "No eligible pick on
+ * today's slate" was printed for all of them, and it is a claim about today's
+ * players — which is exactly what a retired market and a producer gap are
+ * NOT. */
+function boardState(k){
+  if(boardRetired(k))return 'MARKET RETIRED';
+  var dg=boardDiag(k);
+  if(dg.withMetric===0||dg.candidates===0)return 'NOTHING TO RANK';
+  if(dg.why)return 'NO PICK TODAY';
+  if(D.lineupsProjected)return 'LINEUPS PENDING';
+  return 'UNEXPLAINED';
+}
+function boardEmpty(k){
+  return '<div class="empty" style="text-align:left">'+esc(boardWhyText(k))+'</div>';
 }
 function openProp(k,btn){
   var sqs=document.querySelectorAll('#props .psq');for(var i=0;i<sqs.length;i++)sqs[i].classList.remove('on');
@@ -2896,7 +2939,20 @@ function openProp(k,btn){
   if(k==='nrfi'){p.innerHTML=(D.nrfi||[]).map(function(r){var c=(''+r.tier).indexOf('STRONG')>=0?'b-strong':'b-pass';var n=nrfiProbTxt(r);
     return '<div class="prow" style="flex-wrap:wrap"><span class="pnm" style="cursor:default">'+esc(r.away)+' @ '+esc(r.home)+'</span><span class="badge '+c+'">'+esc(r.bet||r.tier)+'</span>'+n.chip+'<span class="pmetric">'+esc(n.txt)+'</span>'
       +(n.why?'<div style="flex:0 0 100%;font-size:10.5px;color:var(--muted);padding:2px 0 0 34px">'+esc(n.why)+'</div>':'')+'</div>';}).join('')||'<div class="empty">No NRFI data.</div>';return;}
-  if(k==='ou'){p.innerHTML=(bf.ou||[]).map(function(o){var lb=o.lean==='OVER'?'b-over':o.lean==='UNDER'?'b-under':'b-pass';return '<div class="prow"><span class="pnm" style="cursor:default">'+esc(o.game)+'</span><span class="badge '+lb+'">'+esc(o.lean||'')+'</span><span class="pmetric">'+o.proj+'<span class="unit"> vs '+o.line+'</span></span></div>';}).join('')||'<div class="empty">No O/U data.</div>';return;}
+  if(k==='ou'){
+    /* O/U IS RETIRED AND ITS BOARD STILL PUBLISHES (2026-09-08). The rows feed
+     * the model's per-team run projections, so the pipeline cannot delete them.
+     * What it CAN stop doing is dressing them as bets: no OVER/UNDER badge on a
+     * market the measurement retired at 42.5%. */
+    var ouRet=boardRetired('ou'),ouMk=boardMarket('ou');
+    var head=ouRet?('<div class="empty" style="text-align:left"><b>The over/under market is retired \u2014 these are not bets.</b><br>'
+      +esc(ouMk.reason||'no reason recorded in the payload')+'.<br><span class="unit">The projected totals still drive the model\u2019s run distribution, so they stay published as projections. No row here is a recommendation.</span></div>'):'';
+    p.innerHTML=head+((bf.ou||[]).map(function(o){
+      var lb=ouRet?'b-pass':(o.lean==='OVER'?'b-over':o.lean==='UNDER'?'b-under':'b-pass');
+      var lbl=ouRet?'PROJECTION':(o.lean||'');
+      var vs=(o.line==null?'<span class="unit"> no posted line</span>':'<span class="unit"> vs '+esc(o.line)+'</span>');
+      return '<div class="prow"><span class="pnm" style="cursor:default">'+esc(o.game)+'</span><span class="badge '+lb+'">'+esc(lbl)+'</span><span class="pmetric">'+esc(o.proj)+vs+'</span></div>';
+    }).join('')||'<div class="empty">No O/U data.</div>');return;}
   if(k==='ml'){var ml=(D.ml||[]).slice().sort(function(a,b){return (b.edge==null?-99:b.edge)-(a.edge==null?-99:a.edge);});p.innerHTML=ml.map(function(m){var tm=m.team||(m.pickSide==='home'?m.home:m.away);var c=m.tier==='STRONG'?'b-strong':m.tier==='LEAN'?'b-lean':'b-pass';return '<div class="prow"><span class="pnm" style="cursor:default;display:flex;gap:6px;align-items:center">'+teamLogo(tm)+'<b>'+esc(tm)+'</b><span class="ptm">'+esc(m.away)+'@'+esc(m.home)+'</span></span><span class="badge '+c+'">'+esc(m.tier)+'</span>'+formBadge(m.form)+'<span class="pmetric">'+(m.conf!=null?m.conf+'%':'')+'</span></div>';}).join('');return;}
   if(k==='spread'){var rows=(D.gameCards||[]).filter(function(c){return c.away_runs!=null&&c.home_runs!=null;}).map(function(c){var tm=teamsOf(c);var m=c.home_runs-c.away_runs;var fH=m>=0;var fav=fH?tm.home:tm.away,dog=fH?tm.away:tm.home;var mm=Math.abs(m);return {pick:(mm>=1.5?fav+' -1.5':dog+' +1.5'),m:mm,team:(mm>=1.5?fav:dog)};}).sort(function(a,b){return b.m-a.m;});p.innerHTML='<div class="note">Run line derived from the model’s projected run margin.</div>'+rows.map(function(r,i){return '<div class="prow"><span class="rk">#'+(i+1)+'</span><span class="pnm" style="cursor:default;display:flex;gap:6px;align-items:center">'+teamLogo(r.team)+'<b>'+esc(r.pick)+'</b></span><span class="pmetric">'+r.m.toFixed(1)+'<span class="unit"> proj margin</span></span></div>';}).join('')||'<div class="empty">No projections.</div>';return;}
   var unit={h2:'2B/G',tb2:'TB/G',hrr:'H+R+RBI/G'}[k]||'score';
@@ -2923,7 +2979,7 @@ function openProp(k,btn){
           px+=' <span style="font-size:9px;font-weight:800;color:'+(_e>=0?'#0c7a43':'#b91c1c')+'" title="Edge: model HR % minus the price\'s implied %">'+(_e>=0?'+':'')+_e.toFixed(1)+'%</span>';}
       }}
     var gl=r.gamePk?' <span style="font-size:9px;color:#8893a8">'+esc((typeof gameLabelByPk==='function'&&gameLabelByPk(r.gamePk))||'')+'</span>':'';
-    return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+st+(r.eligible!==false?px:'')+gl+lineupTag(r)+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+'<span class="unit"> '+unit+'</span></span></div>';}).join('')||'<div class="empty">Board posts with confirmed lineups.</div>';
+    return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+st+(r.eligible!==false?px:'')+gl+lineupTag(r)+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+'<span class="unit"> '+unit+'</span></span></div>';}).join('')||boardEmpty(k);
 }
 
 function lineupTag(r,okLabel){if(!r)return '';var s=r.lineupStatus,el=r.eligible;if(s===undefined&&el===undefined)return '';/* legacy row */
