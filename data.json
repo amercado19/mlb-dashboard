@@ -1,6 +1,6 @@
 {
  "date": "2026-09-08",
- "generated_at": "2026-09-08T20:23:04",
+ "generated_at": "2026-09-08T21:57:12",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "be978ba"
+  "gitCommit": "aec737d"
  },
  "games": [
   {
@@ -47,7 +47,7 @@
    "confidence": 0.568,
    "tier": "PASS",
    "total": 9.0,
-   "book_total_line": 8.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -55,7 +55,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "rf": {
      "dir": "in",
@@ -99,7 +99,7 @@
    "confidence": 0.592,
    "tier": "PASS",
    "total": 8.7,
-   "book_total_line": 8.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -181,15 +181,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "in",
-     "mph": 7
+     "mph": 6
     },
     "rf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "out_mph": 0
    }
@@ -280,20 +280,20 @@
    "pick": "sd",
    "confidence": 0.568,
    "tier": "PASS",
-   "total": 8.7,
+   "total": 8.5,
    "book_total_line": 8.0,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 7
+     "mph": 8
     },
     "cf": {
      "dir": "in",
-     "mph": 10
+     "mph": 11
     },
     "rf": {
      "dir": "in",
-     "mph": 7
+     "mph": 8
     },
     "out_mph": 0
    }
@@ -301,12 +301,12 @@
   {
    "away": "tex",
    "home": "sea",
-   "away_win_prob": 0.529,
-   "home_win_prob": 0.361,
-   "pick": "tex",
-   "confidence": 0.529,
+   "away_win_prob": 0.482,
+   "home_win_prob": 0.508,
+   "pick": "sea",
+   "confidence": 0.508,
    "tier": "PASS",
-   "total": 9.0,
+   "total": 8.3,
    "book_total_line": 8.0,
    "wind": {
     "lf": {
@@ -337,7 +337,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -345,9 +345,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 3
+     "mph": 4
     },
-    "out_mph": 3
+    "out_mph": 4
    }
   },
   {
@@ -363,17 +363,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 9
+     "mph": 8
     },
     "cf": {
      "dir": "out",
-     "mph": 13
+     "mph": 12
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 8
     },
-    "out_mph": 13
+    "out_mph": 12
    }
   },
   {
@@ -468,10 +468,10 @@
     "factors": {
      "sp": 1.013,
      "park": 1.07,
-     "temp": 1.042,
+     "temp": 1.048,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0579
+    "hr_rate_pa": 0.0582
    },
    "edge_score": 64,
    "score_type": "model_score_0_100",
@@ -502,9 +502,9 @@
     "factors": {
      "sp": 0.973,
      "park": 1.175,
-     "temp": 1.054
+     "temp": 1.048
     },
-    "hr_rate_pa": 0.0565
+    "hr_rate_pa": 0.0562
    },
    "edge_score": 63,
    "score_type": "model_score_0_100",
@@ -568,10 +568,10 @@
     "factors": {
      "sp": 1.013,
      "park": 1.175,
-     "temp": 1.102,
-     "wind": 0.982
+     "temp": 1.096,
+     "wind": 0.991
     },
-    "hr_rate_pa": 0.0659
+    "hr_rate_pa": 0.0661
    },
    "edge_score": 59,
    "score_type": "model_score_0_100",
@@ -635,9 +635,9 @@
     "factors": {
      "sp": 0.973,
      "park": 1.175,
-     "temp": 1.054
+     "temp": 1.048
     },
-    "hr_rate_pa": 0.0613
+    "hr_rate_pa": 0.0609
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
@@ -668,10 +668,10 @@
     "factors": {
      "sp": 1.001,
      "park": 1.105,
-     "temp": 1.048,
+     "temp": 1.054,
      "wind": 1.01
     },
-    "hr_rate_pa": 0.0595
+    "hr_rate_pa": 0.0598
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
