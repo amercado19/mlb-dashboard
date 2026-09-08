@@ -1,6 +1,6 @@
 {
  "date": "2026-09-08",
- "generated_at": "2026-09-08T19:20:01",
+ "generated_at": "2026-09-08T19:32:42",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "face66e"
+  "gitCommit": "5bcff36"
  },
  "games": [
   {
@@ -813,7 +813,7 @@
    ]
   },
   {
-   "player": "Wade Meckler",
+   "player": "Vaughn Grissom",
    "team": "laa",
    "game": "laa-bos",
    "stat": "H",
@@ -822,22 +822,22 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 272,
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 397,
     "factors": {
      "sp": 1.054
     },
-    "hit_rate_pa": 0.2598
+    "hit_rate_pa": 0.2319
    },
    "edge_score": 75,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 3.2,
-    "hard_hit_pct": 33.2,
-    "avg_exit_velo": 86.8,
-    "xiso": 0.099,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 7.3,
+    "hard_hit_pct": 37.8,
+    "avg_exit_velo": 87.9,
+    "xiso": 0.141,
+    "recent_hr_rate": 0.0275
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the h1 market is BLIND (not measurable yet \u2014 287 settled (need 40), 24 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
