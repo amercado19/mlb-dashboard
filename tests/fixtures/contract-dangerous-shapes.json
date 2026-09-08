@@ -10,7 +10,9 @@
     "- which is the actual thing production serves - and applies these overlays",
     "to it. Every entry below is a shape that has already broken production once,",
     "or a lifecycle state that must be representable. Adding a shape here is how",
-    "you say 'the dashboard must survive this'."
+    "you say 'the dashboard must survive this'.",
+    "",
+    "settlementIntegrity.unresolved is a LIST of persisted records, not the NOT_PERSISTED placeholder it was until 2026-09-08. Every row here is non-terminal and carries its own retry history."
   ],
   "settlementIntegrity": {
     "schemaVersion": 1,
@@ -30,10 +32,15 @@
     "unresolved": [
       {
         "pickId": "2026-09-04_824511_hrr_Unresolvable-Name",
+        "date": "2026-09-04",
         "market": "hrr",
+        "gamePk": "824511",
+        "playerId": null,
         "settlementState": "UNRESOLVED",
-        "settlementReason": "NO_IDENTITY",
-        "identityResolution": "NONE",
+        "statisticalOutcome": "UNRESOLVED",
+        "financialSettlement": "UNRESOLVED",
+        "settlementReason": "PLAYER_NOT_IN_BOXSCORE",
+        "identityResolution": "PLAYER_ID_NOT_FOUND",
         "graderVersion": "GRADER-2",
         "firstAttemptedAt": "2026-09-05T05:11:00Z",
         "lastAttemptedAt": "2026-09-08T18:03:00Z",
@@ -49,7 +56,13 @@
         "financialSettlement": "UNKNOWN_BOOK_RULE"
       }
     ],
-    "note": "UNRESOLVED is a state, not a loss. A VOID CANDIDATE is a question this pipeline cannot answer, because the book rule is not ours to hold."
+    "note": "UNRESOLVED is a state, not a loss. A VOID CANDIDATE is a question this pipeline cannot answer, because the book rule is not ours to hold.",
+    "unresolvedPersistence": "OPERATIONAL",
+    "unresolvedStore": "ledger/settlement_unresolved.csv",
+    "unresolvedCounts": {
+      "hrr": 1
+    },
+    "unresolvedNote": "PENDING -> UNRESOLVED -> terminal, one way only. A row that still cannot be matched stays UNRESOLVED however many times it is retried; it is never converted to a LOSS, it carries no units, and it is excluded from every ROI and hit-rate denominator until it reaches a terminal state on evidence."
   },
   "legacyDependenceWhy": [
     "legacy producers emitted dependence.why as a list",
