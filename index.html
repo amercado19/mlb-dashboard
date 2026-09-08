@@ -987,7 +987,9 @@ function slateClock(){
            LINEUP_WINDOW:'inside the lineup window',EARLY:'before the lineup window'}[phase]};
 }
 var SEV_RANK={CRITICAL:0,HIGH:1,MEDIUM:2,LOW:3,OK:4};
-function sevPill(s){return pill(s,{CRITICAL:'b-crit',HIGH:'b-crit',MEDIUM:'b-warn',LOW:'b-info',OK:'b-ok'}[s]||'b-unk');}
+/* INFO is not a lesser warning. It is a finding that is true and is not a
+   fault, so it must not wear warning colour. */
+function sevPill(s){return pill(s,{CRITICAL:'b-crit',HIGH:'b-crit',MEDIUM:'b-warn',LOW:'b-info',INFO:'b-unk',OK:'b-ok'}[s]||'b-unk');}
 function sourceSeverity(s,ck){
   var st=String((s&&s.status)||'').toUpperCase();
   var cov=(s&&isNum(s.coverage))?s.coverage:null;
@@ -3869,7 +3871,14 @@ function systemHealth(){
   var tbd=sp.filter(function(p){return p.tbd===true||!p.name;}).length;
   if(tbd)warn(ck.phase==='POST_LOCK'?'HIGH':'MEDIUM','starting pitchers',tbd+' starter(s) still TBD.');
   var cons=D.consistency;
-  if(cons&&cons.failed)warn('HIGH','consistency',cons.failed+' of '+nz(cons.checked,'?')+' cross-field consistency checks failed.');
+  /* SEVERITY, NOT COUNT (2026-09-08). This keyed on `failed`, which counts
+     every finding including the ones that are not faults. Six model splits —
+     the win model and the run projection naming different teams, which is a
+     fact about those games — made this read "6 of 435 consistency checks
+     failed" at HIGH. INFO is never a warning; a WARN is MEDIUM; only SEVERE
+     is HIGH, because only SEVERE stops a publish. */
+  if(cons&&cons.severe)warn('HIGH','consistency',cons.severe+' SEVERE cross-field contradiction(s) of '+nz(cons.checked,'?')+' checks.');
+  else if(cons&&cons.warnings)warn('MEDIUM','consistency',cons.warnings+' cross-field warning(s) of '+nz(cons.checked,'?')+' checks — recorded, not publish-blocking.');
   /* Our own check, run in the browser: does gameCards.pick/conf imply the same
      winner as the ml row? Real payloads disagree on some games. */
   var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
@@ -5573,12 +5582,12 @@ function renderAdmin(){
 
   /* 13. CROSS-FIELD CONSISTENCY */
   var cons=D.consistency;
-  h+=ahs('Cross-field consistency',cons?statusPill(cons.failed?'CRITICAL':'OK'):statusPill('UNKNOWN'),
-    cons?('<div class="ahgrid">'+ahbox('Checked',nz(cons.checked,0),'')+ahbox('Passed',nz(cons.passed,0),'')+ahbox('Failed',nz(cons.failed,0),'')+'</div>'
+  h+=ahs('Cross-field consistency',cons?statusPill(cons.severe?'CRITICAL':(cons.warnings?'DEGRADED':'OK')):statusPill('UNKNOWN'),
+    cons?('<div class="ahgrid">'+ahbox('Checked',nz(cons.checked,0),'')+ahbox('Passed',nz(cons.passed,0),'')+ahbox('Severe',nz(cons.severe,0),'stops a publish')+ahbox('Warnings',nz(cons.warnings,0),'recorded, not blocking')+ahbox('Info',nz(cons.info,0),'true, and not a fault')+'</div>'
       +((cons.issues||[]).length?'<div class="tblwrap"><table class="aht"><tr><th>Check</th><th>Severity</th><th>Game</th><th>Message</th></tr>'
         +cons.issues.map(function(i){
           if(typeof i==='string')return '<tr><td colspan="4" class="wrap">'+esc(i)+'</td></tr>';
-          return '<tr><td>'+esc(nz(i.check,''))+'</td><td>'+sevPill(String(i.severity||'').toUpperCase()==='WARN'?'MEDIUM':String(i.severity||'UNKNOWN').toUpperCase())+'</td>'
+          return '<tr><td>'+esc(nz(i.check,''))+'</td><td>'+sevPill({WARN:'MEDIUM',INFO:'INFO'}[String(i.severity||'').toUpperCase()]||String(i.severity||'UNKNOWN').toUpperCase())+'</td>'
             +'<td>'+esc(nz(i.gameId,''))+'</td><td class="wrap">'+esc(nz(i.message,''))+'</td></tr>';}).join('')
         +'</table></div>':'<div class="note">No issues listed.</div>'))
     :'<div class="empty">consistency is '+NOT_IN_BUILD+' — nothing verifies that the projected winner, win probabilities and recommendation agree with each other.</div>');
