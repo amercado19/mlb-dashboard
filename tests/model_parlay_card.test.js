@@ -269,6 +269,11 @@ t('a leg with neither an n nor a reason still renders no band row',
  *   render parlay failed TypeError: (dep.why || []).join is not a function
  * The card threw, the caller caught, and MODEL PARLAY was simply missing.
  */
+D = { modelParlay: Object.assign({}, BASE, {
+  legs: [LEG_P15, LEG_ML], legCount: 2,
+  combinedProbability: 0.4505,
+  combinedProbabilityStatus: 'INDEPENDENCE_ESTIMATE',
+  combinedProbabilityWhy: 'licensed' }) };
 t('a string reason renders, because that is what is published',
   /different game/.test(modelParlayCard()));
 t('...and the card is not empty', modelParlayCard().length > 200);
