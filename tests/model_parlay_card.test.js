@@ -208,8 +208,14 @@ t('...before the priced one',
   html.indexOf('_mpcard+sugg') > 0);
 t('the priced card is named as book-priced',
   /Best priced parlay<\/span><span class="t">book-priced/.test(html));
+/* Each hero tile is wrapped so one bad payload cannot take the Slate down,
+   so the assertion is about ORDER — model parlay before priced parlay — not
+   about the literal call text it used to be written against. */
 t('the hero uses the model parlay as its primary parlay tile',
-  /hHomeRun\(\),hModelParlay\(\),hParlay\(\)/.test(html));
+  html.indexOf("hTileSafe('HERO_TILE_MODEL_PARLAY_ERROR', hModelParlay)") > 0);
+t('...and the priced parlay tile comes after it',
+  html.indexOf("hTileSafe('HERO_TILE_PRICED_PARLAY_ERROR', hParlay)")
+  > html.indexOf("hTileSafe('HERO_TILE_MODEL_PARLAY_ERROR', hModelParlay)"));
 
 /* ---- 12. A PROBABILITY CARRIES THE BAND THAT MEASURED IT ------------
  * The moneyline leg publishes P(win). That number has been measured band
