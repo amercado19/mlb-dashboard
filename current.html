@@ -155,6 +155,9 @@ section{display:none}section.active{display:block}
 .mpd b{font-size:13px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mpbase{font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:2px}
 .mpnob{font-style:italic}
+.mpband{font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:2px}
+.mpband b{color:var(--fg);font-weight:700}
+.mpband.mpthin{color:var(--warn,#e8a030)}
 .mpv{display:flex;align-items:center;gap:7px;white-space:nowrap}
 .mpv b{font-family:var(--mono);font-size:14px}
 .mprank{font-size:9px;font-weight:800;letter-spacing:.05em;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:1px 5px}
@@ -3284,6 +3287,26 @@ function mpLabelTone(l){
   if(L==='PROVISIONAL'||L==='TOP MODEL PICK'||L==='MODEL-FAVORED')return 'b-unk';
   return 'b-unk';
 }
+function mpBandRow(l){
+  // AN 87% LEG IN A BAND OF n=2 IS NOT THE CLAIM 87% LOOKS LIKE.
+  // The moneyline number is a model probability whose calibration has been
+  // measured band by band. The band travels with the number or the number
+  // is not shown honestly.
+  if(!isNum(l.measuredBandN)) return '';
+  var thin=l.measuredBandN<50||l.measuredBandStatus==='UNDERPOWERED';
+  var bits=[];
+  bits.push('band n='+l.measuredBandN);
+  if(isNum(l.measuredBandWinRate))
+    bits.push('measured '+mpPct(l.measuredBandWinRate));
+  if(isNum(l.measuredBandGapPp))
+    bits.push((l.measuredBandGapPp>=0?'+':'')+l.measuredBandGapPp.toFixed(1)+'pp gap');
+  if(l.measuredBandStatus) bits.push(String(l.measuredBandStatus).replace(/_/g,' ').toLowerCase());
+  return '<div class="mpband'+(thin?' mpthin':'')+'" title="'
+    +esc('this probability sits in a calibration band with '+l.measuredBandN
+         +' settled game(s). The band is what has actually been measured; '
+         +'the probability itself is the model\'s claim.')
+    +'">'+esc(bits.join(' · '))+'</div>';
+}
 function mpLegRow(l,i){
   var pic='';
   if(l.playerId!=null) pic=hFace(l.playerId,l.name);
@@ -3304,7 +3327,7 @@ function mpLegRow(l,i){
   }
   return '<div class="mpleg"><span class="mpn">'+(i+1)+'</span>'
     +'<span class="mppic">'+pic+'</span>'
-    +'<span class="mpd"><b>'+esc(l.desc||'')+'</b>'+base+'</span>'
+    +'<span class="mpd"><b>'+esc(l.desc||'')+'</b>'+base+mpBandRow(l)+'</span>'
     +'<span class="mpv">'+num
     +'<span class="badge '+mpLabelTone(l.label)+'">'+esc(l.label||'')+'</span>'
     +'</span></div>';
