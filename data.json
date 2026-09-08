@@ -1,6 +1,6 @@
 {
  "date": "2026-09-08",
- "generated_at": "2026-09-08T04:30:53",
+ "generated_at": "2026-09-08T05:19:59",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "edc4112"
+  "gitCommit": "4fd3340"
  },
  "games": [
   {
@@ -572,7 +572,7 @@
    ]
   },
   {
-   "player": "Jes\u00fas S\u00e1nchez",
+   "player": "Kazuma Okamoto",
    "team": "tor",
    "game": "tor-ath",
    "stat": "HR",
@@ -581,24 +581,24 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 295,
+    "epa": 4.25,
+    "order": 5,
+    "pa_season": 568,
     "factors": {
      "sp": 0.996,
      "park": 1.105,
      "temp": 1.114
     },
-    "hr_rate_pa": 0.0357
+    "hr_rate_pa": 0.0541
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 10.9,
-    "hard_hit_pct": 45.5,
-    "avg_exit_velo": 90.9,
-    "xiso": 0.17,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 12.9,
+    "hard_hit_pct": 43.9,
+    "avg_exit_velo": 90.5,
+    "xiso": 0.209,
+    "recent_hr_rate": 0.0495
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 288 settled (need 40), 0 priced (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
