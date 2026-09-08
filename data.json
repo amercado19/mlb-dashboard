@@ -1,6 +1,6 @@
 {
  "date": "2026-09-08",
- "generated_at": "2026-09-08T20:01:49",
+ "generated_at": "2026-09-08T20:23:04",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "73e0ccd"
+  "gitCommit": "be978ba"
  },
  "games": [
   {
@@ -28,14 +28,14 @@
      "mph": 4
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 6
     },
     "rf": {
-     "dir": "out",
+     "dir": "in",
      "mph": 4
     },
-    "out_mph": 4
+    "out_mph": 0
    }
   },
   {
@@ -181,15 +181,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "out_mph": 0
    }
@@ -207,17 +207,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
     "cf": {
      "dir": "out",
-     "mph": 10
+     "mph": 8
     },
     "rf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
-    "out_mph": 10
+    "out_mph": 8
    }
   },
   {
@@ -233,17 +233,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 7
+    "out_mph": 6
    }
   },
   {
@@ -285,15 +285,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "cf": {
      "dir": "in",
-     "mph": 8
+     "mph": 10
     },
     "rf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "out_mph": 0
    }
@@ -468,10 +468,10 @@
     "factors": {
      "sp": 1.013,
      "park": 1.07,
-     "temp": 1.048,
+     "temp": 1.042,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0582
+    "hr_rate_pa": 0.0579
    },
    "edge_score": 64,
    "score_type": "model_score_0_100",
@@ -569,9 +569,9 @@
      "sp": 1.013,
      "park": 1.175,
      "temp": 1.102,
-     "wind": 0.991
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0665
+    "hr_rate_pa": 0.0659
    },
    "edge_score": 59,
    "score_type": "model_score_0_100",
@@ -668,10 +668,10 @@
     "factors": {
      "sp": 1.001,
      "park": 1.105,
-     "temp": 1.054,
-     "wind": 1.02
+     "temp": 1.048,
+     "wind": 1.01
     },
-    "hr_rate_pa": 0.0604
+    "hr_rate_pa": 0.0595
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
@@ -687,9 +687,9 @@
    ]
   },
   {
-   "player": "Pete Alonso",
-   "team": "bal",
-   "game": "cle-bal",
+   "player": "Juan Soto",
+   "team": "nym",
+   "game": "nym-mia",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -698,22 +698,21 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 628,
+    "pa_season": 396,
     "factors": {
-     "sp": 1.011,
-     "park": 1.105,
-     "temp": 1.066
+     "sp": 0.973,
+     "park": 0.93
     },
-    "hr_rate_pa": 0.0543
+    "hr_rate_pa": 0.042
    },
    "edge_score": 56,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 57.0,
-    "avg_exit_velo": 94.1,
-    "xiso": 0.256,
-    "recent_hr_rate": 0.0794
+    "barrel_pct": 13.8,
+    "hard_hit_pct": 48.2,
+    "avg_exit_velo": 92.4,
+    "xiso": 0.283,
+    "recent_hr_rate": 0.0541
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 288 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
