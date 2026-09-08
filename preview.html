@@ -3553,6 +3553,16 @@ function mpStatusRow(k,v,tone,tip){
     +'<span class="lab-st '+(tone||'s-unk')+'"'
     +(tip?' title="'+esc(tip)+'"':'')+'>'+esc(v)+'</span></div>';
 }
+/* `dependence.why` IS A STRING (2026-09-08). This surface called .join on
+ * it, which threw inside modelParlayCard — and because the caller catches,
+ * the page looked fine and the MODEL PARLAY card was simply ABSENT in
+ * production. tests/model_parlay_card.test.js passed the whole time, on a
+ * fixture that had `why: []`. The fixture was wrong, not the payload.
+ * A field is whatever the pipeline publishes, not what the surface assumed. */
+function depWhyText(w){
+  if(Array.isArray(w))return w.filter(Boolean).join('; ');
+  return (typeof w==='string')?w:'';
+}
 function modelParlayCard(){
   var t=D.modelParlay;
   if(!t) return '';
@@ -3588,7 +3598,7 @@ function modelParlayCard(){
       +mpStatusRow('Dependence', dep.independenceLicensed
           ? 'NO SHARED GAME' : 'PRESENT',
           dep.independenceLicensed?'s-meas':'s-warn',
-          (dep.why||[]).join('; ')||'No two legs share a game.')
+          depWhyText(dep.why)||'No two legs share a game.')
       +mpStatusRow('Book price','NOT CAPTURED','s-unk',t.priceWhy)
       +mpStatusRow('EV','NOT MEASURED','s-unk',t.evWhy)
     +'</div>'
