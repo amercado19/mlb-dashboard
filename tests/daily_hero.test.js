@@ -35,10 +35,14 @@ eval(grab(/function legDesc\([\s\S]*?\n\}/, 'legDesc'));
 eval(grab(/function hInit\(n\)\{[\s\S]*?\n\}/, 'hInit'));
 eval(grab(/function hFace\(pid,name\)\{[\s\S]*?\n\}/, 'hFace'));
 eval(grab(/function hTeam\(ab\)\{[\s\S]*?\n\}/, 'hTeam'));
-eval(grab(/function hCard\(cat,subject,num,chips,why\)\{[\s\S]*?\n\}/, 'hCard'));
-eval(grab(/function hNone\(cat,why\)\{[\s\S]*?\n\}/, 'hNone'));
+eval(grab(/function hCard\(cat,subject,num,chips,why,extra\)\{[\s\S]*?\n\}/, 'hCard'));
+eval(grab(/function hNone\(cat,why,state\)\{[\s\S]*?\n\}/, 'hNone'));
 eval(grab(/function hPropChip\(row\)\{[\s\S]*?\n\}/, 'hPropChip'));
 eval(grab(/function hProp\(cat,fam,label\)\{[\s\S]*?\n\}/, 'hProp'));
+eval(grab(/function mpBandRow\(l\)\{[\s\S]*?\n\}/, 'mpBandRow'));
+eval(grab(/function mpPct\(v\)\{[\s\S]*?\n\}/, 'mpPct'));
+eval(grab(/function mlSideProb\(m,team\)\{[\s\S]*?\n\}/, 'mlSideProb'));
+eval(grab(/function mlBand\(gamePk\)\{[\s\S]*?\n\}/, 'mlBand'));
 eval(grab(/function hMoneyline\(\)\{[\s\S]*?\n\}/, 'hMoneyline'));
 eval(grab(/function hPlus15\(\)\{[\s\S]*?\n\}/, 'hPlus15'));
 eval(grab(/function hHomeRun\(\)\{[\s\S]*?\n\}/, 'hHomeRun'));
@@ -61,8 +65,18 @@ const BASE = {
   generatedAt: '2026-09-07T18:17:29Z',
   gameCards: [{ gamePk: 1, game: 'AZ@KC', projectedWinner: 'KC',
                 home_sp: { team: 'KC' }, away_sp: { team: 'AZ' } }],
-  ml: [{ gamePk: 1, tier: 'LEAN', conf: 68.0, edge: 8.3, pickSide: 'home' },
-       { gamePk: 2, tier: 'PASS', conf: 67.7, edge: 1.9, pickSide: 'home' }],
+  // Shaped like a production ml row. `conf` is the rule score the tier is
+  // cut on; the win probability is a different number entirely, and it is
+  // the one the calibration bands were measured on.
+  ml: [{ gamePk: 1, tier: 'LEAN', conf: 68.0, edge: 8.3, pickSide: 'home',
+         home: 'KC', away: 'AZ', projectedWinner: 'KC',
+         homeWinProb: 0.8718, awayWinProb: 0.1282, winProb: 0.8718 },
+       { gamePk: 2, tier: 'PASS', conf: 67.7, edge: 1.9, pickSide: 'home',
+         home: 'SD', away: 'WSH', projectedWinner: 'SD',
+         homeWinProb: 0.8908, awayWinProb: 0.1092, winProb: 0.8908 }],
+  predictions: [{ gamePk: 1, decision: { modelConfidence: {
+      tier: 'LOW_MODEL', winProbability: 0.8718, measuredBand: null,
+      why: 'no measured band covers this probability, so nothing supports a confidence claim about it' } } }],
   boards: {
     h1: [{ playerId: 11, name: 'Bobby Witt Jr.', team: 'KC', metric: 82,
            order: 2, model_prob: null, p_raw: 0.7989 }],
@@ -106,12 +120,12 @@ t('...saying the board was empty, not that nothing was worth showing',
 /* Every prop board today publishes model_prob: null because its calibration
    is UNVERIFIED. The Hero must show the ranking score, never a percentage. */
 t('a suppressed prop shows its score, not a probability',
-  /82 score/.test(heroTxt) && heroTxt.indexOf('79.9%') < 0);
+  /82 1\+ hit score/.test(heroTxt) && heroTxt.indexOf('79.9%') < 0);
 t('...and says the ranking is all it is', /RANKING ONLY/.test(heroTxt));
 t('...alongside what it IS: the board’s top pick', /TOP MODEL PICK/.test(heroTxt));
-t('the H+R+RBI card does the same', /3.17 score/.test(heroTxt));
+t('the H+R+RBI card does the same', /3\.17 hits \+ runs \+ RBI score/.test(heroTxt));
 t('the home-run card ranks rather than prices',
-  /66 score/.test(heroTxt) && /LONGSHOT RANKING/.test(heroTxt));
+  /66 home run score/.test(heroTxt) && /LONGSHOT RANKING/.test(heroTxt));
 t('...and says no book priced it', /NO BOOK PRICE/.test(heroTxt));
 /* the raw internal code must not reach the reader */
 t('internal refusal codes stay out of the Hero',
@@ -129,13 +143,44 @@ t('...and drops the RANKING ONLY chip',
 
 /* ---- 3. THE MODEL'S CALL AND THE BET VERDICT ARE DIFFERENT ----------- */
 global.D = JSON.parse(JSON.stringify(BASE));
+const ml1 = strip(hMoneyline());
 t('the best moneyline is the highest tier, not the highest confidence',
-  /68.0% model/.test(strip(hMoneyline())));
-t('...labelled with its tier', /LEAN/.test(strip(hMoneyline())));
-D.ml = [{ gamePk: 1, tier: 'PASS', conf: 53.9, edge: -17.0, pickSide: 'home' }];
+  /KC/.test(ml1) && !/SD/.test(ml1));
+t('...labelled with its tier', /LEAN/.test(ml1));
+
+/* THE NUMBER IS THE WIN PROBABILITY, NOT THE RULE SCORE.
+   This tile published `conf` as "68.0% model" while the same payload's win
+   probability for that game was 0.8718 — and the model-parlay card on this
+   same site printed 87.2% for the same team. One game, two "model %". */
+t('the tile publishes the win probability', /87\.2%/.test(ml1));
+t('...labelled as a win probability', /win probability/.test(ml1));
+t('...and the rule score is not printed as a percentage',
+  !/68\.0%/.test(ml1));
+t('...with the band that measured it, or its named absence',
+  /no measured band covers this probability/.test(ml1));
+
+/* the probability shown belongs to the side the tile NAMES */
+global.D = JSON.parse(JSON.stringify(BASE));
+D.ml[0].team = 'AZ';               // a dog-edge bet on the projected loser
+const dog = strip(hMoneyline());
+t('a bet on the other side shows THAT side\u2019s probability',
+  /12\.8%/.test(dog) && !/87\.2%/.test(dog));
+
+/* and where no probability exists for the named side, nothing is borrowed */
+global.D = JSON.parse(JSON.stringify(BASE));
+D.ml = [{ gamePk: 1, tier: 'LEAN', conf: 68.0, edge: 8.3, pickSide: 'home' }];
+const noprob = strip(hMoneyline());
+t('a row with no published probability says so',
+  /PROBABILITY NOT PUBLISHED/.test(noprob));
+t('...and does not fall back to the rule score', !/68\.0%/.test(noprob));
+
+global.D = JSON.parse(JSON.stringify(BASE));
+D.ml = [{ gamePk: 1, tier: 'PASS', conf: 53.9, edge: -17.0, pickSide: 'home',
+          home: 'KC', away: 'AZ', projectedWinner: 'KC',
+          homeWinProb: 0.539, awayWinProb: 0.461, winProb: 0.539 }];
 const allPass = strip(hMoneyline());
 t('an all-PASS slate still publishes the model’s best call',
-  /53.9% model/.test(allPass));
+  /53.9%/.test(allPass));
 t('...marked as not a bet at this price', /NO BET AT THIS PRICE/.test(allPass));
 t('...and says so in words', /not as a bet/.test(allPass));
 t('a PASS is never rendered as a recommendation', !/\bSTRONG\b/.test(allPass));
@@ -192,6 +237,40 @@ t('renderSlate puts the Hero first', /dailyHero\(\)\+decisionSummaryStrip\(\)/.t
 t('the Hero is defined once', (html.match(/function dailyHero\(\)/g) || []).length === 1);
 t('...and does not collide with the per-game hero block',
   /function heroBlock\(/.test(html));
+
+/* ---- 10. A TILE WITH NO PICK STILL HAS A HEADLINE -------------------
+ * The +1.5 tile rendered its refusal as four lines of engineering prose in
+ * the primary picks list. The reason must survive - a zero without its
+ * reason is worse than an ugly one - but the reader has to be able to tell
+ * at a glance that the tile holds no pick.
+ */
+global.D = JSON.parse(JSON.stringify(BASE));
+D.alt15 = { available: false, why: "the artifact on disk is for a DIFFERENT date. It is refused, not reused." };
+const refused = strip(hPlus15());
+t('a refused +1.5 leads with its state', /NOT PUBLISHED TODAY/.test(refused));
+t('...and keeps the whole reason', /refused, not reused/.test(refused));
+D.alt15 = { available: true, picks: [] };
+t('an empty board says NO PICK TODAY', /NO PICK TODAY/.test(strip(hPlus15())));
+delete D.alt15;
+t('a payload predating the block says THAT', /NOT WIRED IN YET/.test(strip(hPlus15())));
+
+/* ---- 11. A SCORE NAMES ITS SCALE ------------------------------------
+ * "82 score", "2.71 score" and "66 score" appeared in one column: three
+ * different quantities under one word, inviting a reader to rank them
+ * against each other.
+ */
+global.D = JSON.parse(JSON.stringify(BASE));
+const h1c = strip(hProp('Best 1+ hit', 'h1', '1+ hit'));
+const hrc = strip(hProp('Best H+R+RBI', 'hrr', 'hits + runs + RBI'));
+t('a board score names its market', /1\+ hit score/.test(h1c));
+t('...and another market names its own', /hits \+ runs \+ RBI score/.test(hrc));
+t('...so the bare word "score" is not what labels the number',
+  !/\b82\s*score\b/.test(h1c));
+const grid = strip(dailyHero());
+t('the grid says once that scores are not comparable',
+  /different scales/.test(grid) && /cannot be compared/.test(grid));
+t('...and points at the rank as what the evidence licenses',
+  /ranks inside its own board/.test(grid));
 
 console.log('\n  ' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
