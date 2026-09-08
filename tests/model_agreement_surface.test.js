@@ -133,5 +133,32 @@ t('the surface hardcodes no run threshold of its own',
 t('...and derives no magnitude band itself',
   !/TINY|CLEAR/.test(cardSrc.replace(/magnitude/g, '')));
 
+/* ---- 7. THE ADMIN PAGE DOES NOT CALL A SPLIT A FAILURE -----------------
+ * Two places keyed on `consistency.failed`, which counts EVERY finding.
+ * Six model splits therefore rendered "6 of 435 consistency checks failed"
+ * at HIGH, and put a CRITICAL pill on cross-field consistency. That is the
+ * same defect one level up: a fact about the games, presented as a fault in
+ * the system.
+ */
+const adminSrc = html;
+t('the health warning keys on severe, not on every finding',
+  /if\(cons&&cons\.severe\)warn\('HIGH'/.test(adminSrc));
+t('...and a warning is MEDIUM, not HIGH',
+  /else if\(cons&&cons\.warnings\)warn\('MEDIUM'/.test(adminSrc));
+t('...and nothing warns on `cons.failed` any more',
+  !/cons&&cons\.failed\)warn/.test(adminSrc));
+t('the consistency pill is CRITICAL only when something is severe',
+  /statusPill\(cons\.severe\?'CRITICAL':\(cons\.warnings\?'DEGRADED':'OK'\)\)/.test(adminSrc));
+t('...so a payload with 0 severe and 6 info is not CRITICAL',
+  !/statusPill\(cons\.failed\?'CRITICAL'/.test(adminSrc));
+t('the counts box reports info separately from warnings',
+  /ahbox\('Info'/.test(adminSrc) && /ahbox\('Warnings'/.test(adminSrc)
+  && /ahbox\('Severe'/.test(adminSrc));
+
+eval(grab(/function sevPill\(s\)\{[\s\S]*?\n\}/, 'sevPill'));
+t('INFO does not wear warning colour', /b-unk/.test(sevPill('INFO')));
+t('...and WARN still does', /b-warn/.test(sevPill('MEDIUM')));
+t('...and SEVERE still reads critical', /b-crit/.test(sevPill('CRITICAL')));
+
 console.log('\n  ' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
