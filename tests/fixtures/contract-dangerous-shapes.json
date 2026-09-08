@@ -1,0 +1,58 @@
+{
+  "_readme": [
+    "OVERLAYS, NOT A SNAPSHOT.",
+    "",
+    "This file used to be a 1.3MB copy of one day's published payload. A frozen",
+    "copy rots: the producer moves, the copy does not, and the contract test",
+    "slowly ends up proving that the dashboard can still render March.",
+    "",
+    "So the contract test reads the REAL payload out of the shipped current.html",
+    "- which is the actual thing production serves - and applies these overlays",
+    "to it. Every entry below is a shape that has already broken production once,",
+    "or a lifecycle state that must be representable. Adding a shape here is how",
+    "you say 'the dashboard must survive this'."
+  ],
+  "settlementIntegrity": {
+    "schemaVersion": 1,
+    "correctionsApplied": [
+      {
+        "pickId": "2026-09-02_824470_h1_Fernando-Tatis",
+        "market": "h1",
+        "originalResult": "loss",
+        "correctedResult": "win",
+        "originalStatisticalOutcome": "MISS",
+        "correctedStatisticalOutcome": "HIT",
+        "identityResolution": "PLAYER_ID",
+        "repairReason": "REGRADE_DISAGREEMENT",
+        "repairVersion": "SETTLEMENT-REPAIR-1"
+      }
+    ],
+    "unresolved": [
+      {
+        "pickId": "2026-09-04_824511_hrr_Unresolvable-Name",
+        "market": "hrr",
+        "settlementState": "UNRESOLVED",
+        "settlementReason": "NO_IDENTITY",
+        "identityResolution": "NONE",
+        "graderVersion": "GRADER-2",
+        "firstAttemptedAt": "2026-09-05T05:11:00Z",
+        "lastAttemptedAt": "2026-09-08T18:03:00Z",
+        "attemptCount": 4
+      }
+    ],
+    "voidCandidates": [
+      {
+        "pickId": "2026-08-30_824400_h1_Scratched-Starter",
+        "market": "h1",
+        "concern": "DID_NOT_APPEAR",
+        "statisticalOutcome": "NOT_APPLICABLE",
+        "financialSettlement": "UNKNOWN_BOOK_RULE"
+      }
+    ],
+    "note": "UNRESOLVED is a state, not a loss. A VOID CANDIDATE is a question this pipeline cannot answer, because the book rule is not ours to hold."
+  },
+  "legacyDependenceWhy": [
+    "legacy producers emitted dependence.why as a list",
+    "a consumer that assumes a string breaks here; one that assumes a list breaks on the string. Both shapes have shipped."
+  ]
+}
