@@ -33,6 +33,14 @@ eval(grab(/var BOARD_NAME=\{[\s\S]*?\};/, 'BOARD_NAME'));
 eval(grab(/function boardMarket\(k\)\{[\s\S]*?\n\}/, 'boardMarket'));
 eval(grab(/function boardDiag\(k\)\{[\s\S]*?\n\}/, 'boardDiag'));
 eval(grab(/function boardRetired\(k\)\{[\s\S]*?\n\}/, 'boardRetired'));
+/* boardEmpty now appends the closing-line measurement after the reason, so
+   its helpers have to exist here too. What they render is pinned separately
+   in clv_four_numbers.test.js; this file only needs boardEmpty to run. */
+eval(grab(/function isNum\(v\)\{[\s\S]*?\n\}/, 'isNum'));
+eval(grab(/function clvPp\(v\)\{[^\n]*\}/, 'clvPp'));
+eval(grab(/function clvCiTxt\(ci\)\{[\s\S]*?\n\}/, 'clvCiTxt'));
+eval(grab(/function clvRow\(label,val,why\)\{[\s\S]*?\n\}/, 'clvRow'));
+eval(grab(/function clvLedger\(k\)\{[\s\S]*?\n\}/, 'clvLedger'));
 eval(grab(/function boardEmpty\(k\)\{[\s\S]*?\n\}/, 'boardEmpty'));
 
 let pass = 0, fail = 0;
