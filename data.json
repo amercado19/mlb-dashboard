@@ -1,6 +1,6 @@
 {
  "date": "2026-09-10",
- "generated_at": "2026-09-10T21:40:03",
+ "generated_at": "2026-09-10T23:31:28",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "579e7d8"
+  "gitCommit": "2d3d5ce"
  },
  "games": [
   {
@@ -73,7 +73,7 @@
    "confidence": 0.508,
    "tier": "PASS",
    "total": 8.4,
-   "book_total_line": 5.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -99,7 +99,7 @@
    "confidence": 0.658,
    "tier": "PASS",
    "total": 9.1,
-   "book_total_line": 8.5,
+   "book_total_line": 9.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -107,13 +107,13 @@
     },
     "cf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
     "rf": {
      "dir": "out",
      "mph": 4
     },
-    "out_mph": 5
+    "out_mph": 6
    }
   },
   {
@@ -156,16 +156,16 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 599,
+    "pa_season": 600,
     "factors": {
      "sp": 1.068,
      "park": 1.175,
      "temp": 1.078,
-     "wind": 1.0
+     "wind": 1.01
     },
-    "hr_rate_pa": 0.0682
+    "hr_rate_pa": 0.0688
    },
-   "edge_score": 75,
+   "edge_score": 77,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.2,
@@ -190,16 +190,16 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 120,
+    "pa_season": 121,
     "factors": {
      "sp": 1.068,
      "park": 1.175,
      "temp": 1.078,
-     "wind": 1.0
+     "wind": 1.01
     },
-    "hr_rate_pa": 0.0493
+    "hr_rate_pa": 0.0529
    },
-   "edge_score": 71,
+   "edge_score": 73,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.2,
@@ -347,40 +347,6 @@
    ]
   },
   {
-   "player": "Munetaka Murakami",
-   "team": "cws",
-   "game": "pit-cws",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 482,
-    "factors": {
-     "sp": 0.972,
-     "park": 1.105,
-     "temp": 0.994,
-     "wind": 1.0
-    },
-    "hr_rate_pa": 0.055
-   },
-   "edge_score": 46,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 19.3,
-    "hard_hit_pct": 57.5,
-    "avg_exit_velo": 94.0,
-    "xiso": 0.255,
-    "recent_hr_rate": 0.0407
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 308 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Joc Pederson",
    "team": "tex",
    "game": "tex-sea",
@@ -399,7 +365,7 @@
     },
     "hr_rate_pa": 0.0444
    },
-   "edge_score": 44,
+   "edge_score": 46,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 11.2,
@@ -424,14 +390,14 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 463,
+    "pa_season": 465,
     "factors": {
      "sp": 0.967,
      "park": 0.93
     },
-    "hr_rate_pa": 0.0357
+    "hr_rate_pa": 0.0356
    },
-   "edge_score": 44,
+   "edge_score": 46,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.0,
@@ -439,6 +405,40 @@
     "avg_exit_velo": 91.1,
     "xiso": 0.213,
     "recent_hr_rate": 0.0256
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 308 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Munetaka Murakami",
+   "team": "cws",
+   "game": "pit-cws",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 482,
+    "factors": {
+     "sp": 0.972,
+     "park": 1.105,
+     "temp": 0.988,
+     "wind": 1.0
+    },
+    "hr_rate_pa": 0.0547
+   },
+   "edge_score": 46,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 19.3,
+    "hard_hit_pct": 57.5,
+    "avg_exit_velo": 94.0,
+    "xiso": 0.255,
+    "recent_hr_rate": 0.0407
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 308 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -460,10 +460,10 @@
     "factors": {
      "sp": 0.972,
      "park": 1.105,
-     "temp": 0.994,
+     "temp": 0.988,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0451
+    "hr_rate_pa": 0.0448
    },
    "edge_score": 41,
    "score_type": "model_score_0_100",
@@ -485,16 +485,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7009,
+   "model_prob": 0.7043,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 120,
+    "pa_season": 121,
     "factors": {
      "sp": 1.051
     },
-    "hit_rate_pa": 0.2575
+    "hit_rate_pa": 0.2599
    },
    "edge_score": 80,
    "score_type": "model_score_0_100",
@@ -514,16 +514,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6898,
+   "model_prob": 0.6893,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 502,
+    "pa_season": 503,
     "factors": {
      "sp": 1.051
     },
-    "hit_rate_pa": 0.2401
+    "hit_rate_pa": 0.2398
    },
    "edge_score": 78,
    "score_type": "model_score_0_100",
@@ -659,16 +659,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6653,
+   "model_prob": 0.6649,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 596,
+    "pa_season": 597,
     "factors": {
      "sp": 0.984
     },
-    "hit_rate_pa": 0.2291
+    "hit_rate_pa": 0.2289
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
@@ -688,16 +688,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6563,
+   "model_prob": 0.6589,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 463,
+    "pa_season": 465,
     "factors": {
      "sp": 0.975
     },
-    "hit_rate_pa": 0.2198
+    "hit_rate_pa": 0.2206
    },
    "edge_score": 56,
    "score_type": "model_score_0_100",
