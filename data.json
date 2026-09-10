@@ -1,6 +1,6 @@
 {
  "date": "2026-09-10",
- "generated_at": "2026-09-10T19:54:11",
+ "generated_at": "2026-09-10T21:40:03",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "705cd79"
+  "gitCommit": "579e7d8"
  },
  "games": [
   {
@@ -73,7 +73,7 @@
    "confidence": 0.508,
    "tier": "PASS",
    "total": 8.4,
-   "book_total_line": 7.0,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -133,7 +133,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "rf": {
      "dir": "in",
@@ -363,9 +363,9 @@
      "sp": 0.972,
      "park": 1.105,
      "temp": 0.994,
-     "wind": 0.991
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0545
+    "hr_rate_pa": 0.055
    },
    "edge_score": 46,
    "score_type": "model_score_0_100",
@@ -375,38 +375,6 @@
     "avg_exit_velo": 94.0,
     "xiso": 0.255,
     "recent_hr_rate": 0.0407
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 308 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Dominic Canzone",
-   "team": "sea",
-   "game": "tex-sea",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 461,
-    "factors": {
-     "sp": 0.967,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0358
-   },
-   "edge_score": 44,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.0,
-    "hard_hit_pct": 44.5,
-    "avg_exit_velo": 91.1,
-    "xiso": 0.213,
-    "recent_hr_rate": 0.0256
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 308 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -424,14 +392,14 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 421,
+    "pa_season": 424,
     "factors": {
      "sp": 0.978,
      "park": 0.93
     },
-    "hr_rate_pa": 0.0433
+    "hr_rate_pa": 0.0444
    },
-   "edge_score": 41,
+   "edge_score": 44,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 11.2,
@@ -445,7 +413,39 @@
    ]
   },
   {
-   "player": "Andrew Benintendi",
+   "player": "Dominic Canzone",
+   "team": "sea",
+   "game": "tex-sea",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 463,
+    "factors": {
+     "sp": 0.967,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0357
+   },
+   "edge_score": 44,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.0,
+    "hard_hit_pct": 44.5,
+    "avg_exit_velo": 91.1,
+    "xiso": 0.213,
+    "recent_hr_rate": 0.0256
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 308 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Miguel Vargas",
    "team": "cws",
    "game": "pit-cws",
    "stat": "HR",
@@ -456,23 +456,23 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 432,
+    "pa_season": 630,
     "factors": {
      "sp": 0.972,
      "park": 1.105,
      "temp": 0.994,
-     "wind": 0.991
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0337
+    "hr_rate_pa": 0.0451
    },
-   "edge_score": 35,
+   "edge_score": 41,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 8.8,
-    "hard_hit_pct": 45.6,
-    "avg_exit_velo": 89.3,
-    "xiso": 0.163,
-    "recent_hr_rate": 0.0247
+    "barrel_pct": 13.5,
+    "hard_hit_pct": 45.1,
+    "avg_exit_velo": 90.5,
+    "xiso": 0.239,
+    "recent_hr_rate": 0.0496
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 308 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -659,16 +659,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6663,
+   "model_prob": 0.6653,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 593,
+    "pa_season": 596,
     "factors": {
      "sp": 0.984
     },
-    "hit_rate_pa": 0.23
+    "hit_rate_pa": 0.2291
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
@@ -688,16 +688,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6584,
+   "model_prob": 0.6563,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 461,
+    "pa_season": 463,
     "factors": {
      "sp": 0.975
     },
-    "hit_rate_pa": 0.2204
+    "hit_rate_pa": 0.2198
    },
    "edge_score": 56,
    "score_type": "model_score_0_100",
@@ -740,31 +740,31 @@
    "flags": []
   },
   {
-   "player": "Randal Grichuk",
+   "player": "Miguel Vargas",
    "team": "cws",
    "game": "pit-cws",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6394,
+   "model_prob": 0.6472,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 33,
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 630,
     "factors": {
      "sp": 0.979
     },
-    "hit_rate_pa": 0.2117
+    "hit_rate_pa": 0.208
    },
-   "edge_score": 53,
+   "edge_score": 54,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 11.5,
-    "hard_hit_pct": 48.5,
-    "avg_exit_velo": 91.4,
-    "xiso": 0.191,
-    "recent_hr_rate": 0.0625
+    "barrel_pct": 13.5,
+    "hard_hit_pct": 45.1,
+    "avg_exit_velo": 90.5,
+    "xiso": 0.239,
+    "recent_hr_rate": 0.0496
    },
    "flags": []
   }
