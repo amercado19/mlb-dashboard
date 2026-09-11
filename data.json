@@ -1,6 +1,6 @@
 {
  "date": "2026-09-11",
- "generated_at": "2026-09-11T17:11:22",
+ "generated_at": "2026-09-11T19:56:53",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "e8e9c4f"
+  "gitCommit": "d0b8e39"
  },
  "games": [
   {
@@ -21,11 +21,11 @@
    "confidence": 0.527,
    "tier": "PASS",
    "total": 8.4,
-   "book_total_line": 8.5,
+   "book_total_line": 14.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "cf": {
      "dir": "cross",
@@ -33,9 +33,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 7
     },
-    "out_mph": 6
+    "out_mph": 7
    }
   },
   {
@@ -51,7 +51,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "cf": {
      "dir": "cross",
@@ -59,9 +59,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 3
     },
-    "out_mph": 4
+    "out_mph": 3
    }
   },
   {
@@ -77,15 +77,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 2
+     "mph": 3
     },
     "cf": {
      "dir": "in",
-     "mph": 3
+     "mph": 4
     },
     "rf": {
      "dir": "in",
-     "mph": 2
+     "mph": 3
     },
     "out_mph": 0
    }
@@ -152,7 +152,21 @@
    "tier": "PASS",
    "total": 9.2,
    "book_total_line": 8.5,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "out",
+     "mph": 4
+    },
+    "cf": {
+     "dir": "out",
+     "mph": 6
+    },
+    "rf": {
+     "dir": "out",
+     "mph": 4
+    },
+    "out_mph": 6
+   }
   },
   {
    "away": "hou",
@@ -219,17 +233,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 14
+     "mph": 9
     },
     "cf": {
      "dir": "out",
-     "mph": 20
+     "mph": 13
     },
     "rf": {
      "dir": "out",
-     "mph": 14
+     "mph": 9
     },
-    "out_mph": 20
+    "out_mph": 13
    }
   },
   {
@@ -271,7 +285,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 9
+     "mph": 10
     },
     "cf": {
      "dir": "cross",
@@ -279,9 +293,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 9
+     "mph": 10
     },
-    "out_mph": 9
+    "out_mph": 10
    }
   },
   {
@@ -293,11 +307,11 @@
    "confidence": 0.484,
    "tier": "PASS",
    "total": 9.5,
-   "book_total_line": 8.5,
+   "book_total_line": 8.0,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 2
     },
     "cf": {
      "dir": "cross",
@@ -305,9 +319,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 3
+     "mph": 2
     },
-    "out_mph": 3
+    "out_mph": 2
    }
   },
   {
@@ -323,28 +337,28 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
     "cf": {
      "dir": "out",
-     "mph": 10
+     "mph": 8
     },
     "rf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
-    "out_mph": 10
+    "out_mph": 8
    }
   },
   {
    "away": "tex",
    "home": "az",
-   "away_win_prob": 0.4,
-   "home_win_prob": 0.39,
+   "away_win_prob": 0.523,
+   "home_win_prob": 0.367,
    "pick": "tex",
-   "confidence": 0.4,
+   "confidence": 0.523,
    "tier": "PASS",
-   "total": 9.9,
+   "total": 9.6,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
@@ -371,7 +385,7 @@
    "confidence": 0.471,
    "tier": "PASS",
    "total": 8.2,
-   "book_total_line": 8.0,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -406,10 +420,10 @@
     "factors": {
      "sp": 1.043,
      "park": 1.105,
-     "temp": 1.048,
-     "wind": 1.05
+     "temp": 1.06,
+     "wind": 1.03
     },
-    "hr_rate_pa": 0.0502
+    "hr_rate_pa": 0.0498
    },
    "edge_score": 72,
    "score_type": "model_score_0_100",
@@ -440,10 +454,10 @@
     "factors": {
      "sp": 0.991,
      "park": 1.175,
-     "temp": 1.03,
-     "wind": 1.15
+     "temp": 1.06,
+     "wind": 1.08
     },
-    "hr_rate_pa": 0.0683
+    "hr_rate_pa": 0.066
    },
    "edge_score": 71,
    "score_type": "model_score_0_100",
@@ -459,7 +473,7 @@
    ]
   },
   {
-   "player": "Ronald Acu\u00f1a",
+   "player": "Ronald Acu\u00f1a Jr.",
    "team": "atl",
    "game": "phi-atl",
    "stat": "HR",
@@ -474,10 +488,10 @@
     "factors": {
      "sp": 0.991,
      "park": 1.175,
-     "temp": 1.03,
-     "wind": 1.15
+     "temp": 1.06,
+     "wind": 1.08
     },
-    "hr_rate_pa": 0.049
+    "hr_rate_pa": 0.0474
    },
    "edge_score": 67,
    "score_type": "model_score_0_100",
@@ -508,10 +522,10 @@
     "factors": {
      "sp": 1.043,
      "park": 1.105,
-     "temp": 1.048,
-     "wind": 1.05
+     "temp": 1.06,
+     "wind": 1.03
     },
-    "hr_rate_pa": 0.0444
+    "hr_rate_pa": 0.044
    },
    "edge_score": 66,
    "score_type": "model_score_0_100",
@@ -521,6 +535,39 @@
     "avg_exit_velo": null,
     "xiso": 0.273,
     "recent_hr_rate": 0.087
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 318 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Aaron Judge",
+   "team": "nyy",
+   "game": "nym-nyy",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 268,
+    "factors": {
+     "sp": 0.972,
+     "park": 1.175,
+     "temp": 1.036
+    },
+    "hr_rate_pa": 0.0548
+   },
+   "edge_score": 65,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 21.1,
+    "hard_hit_pct": 57.1,
+    "avg_exit_velo": 94.0,
+    "xiso": 0.321,
+    "recent_hr_rate": null
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 318 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -587,37 +634,6 @@
     "avg_exit_velo": 92.3,
     "xiso": 0.287,
     "recent_hr_rate": 0.0625
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 318 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Wilyer Abreu",
-   "team": "bos",
-   "game": "kc-bos",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 624,
-    "factors": {
-     "sp": 1.059
-    },
-    "hr_rate_pa": 0.0382
-   },
-   "edge_score": 62,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.4,
-    "hard_hit_pct": 43.7,
-    "avg_exit_velo": 89.8,
-    "xiso": 0.219,
-    "recent_hr_rate": 0.0323
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 318 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -750,7 +766,7 @@
    "flags": []
   },
   {
-   "player": "Vladimir Guerrero",
+   "player": "Vladimir Guerrero Jr.",
    "team": "tor",
    "game": "bal-tor",
    "stat": "H",
@@ -895,31 +911,31 @@
    "flags": []
   },
   {
-   "player": "Wilyer Abreu",
+   "player": "Adley Rutschman",
    "team": "bos",
    "game": "kc-bos",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6746,
+   "model_prob": 0.6507,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 624,
+    "pa_season": 75,
     "factors": {
      "sp": 1.045
     },
-    "hit_rate_pa": 0.2325
+    "hit_rate_pa": 0.218
    },
    "edge_score": 76,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.4,
-    "hard_hit_pct": 43.7,
-    "avg_exit_velo": 89.8,
-    "xiso": 0.219,
-    "recent_hr_rate": 0.0323
+    "barrel_pct": 7.3,
+    "hard_hit_pct": 39.7,
+    "avg_exit_velo": 88.7,
+    "xiso": 0.166,
+    "recent_hr_rate": 0.0533
    },
    "flags": []
   },
@@ -930,11 +946,11 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6727,
+   "model_prob": 0.678,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
+    "epa": 4.55,
+    "order": 2,
     "pa_season": 192,
     "factors": {
      "sp": 1.048
@@ -959,11 +975,11 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7053,
+   "model_prob": 0.6983,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
+    "epa": 4.35,
+    "order": 4,
     "pa_season": 618,
     "factors": {
      "sp": 1.038
