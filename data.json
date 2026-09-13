@@ -1,6 +1,6 @@
 {
  "date": "2026-09-13",
- "generated_at": "2026-09-13T04:54:02",
+ "generated_at": "2026-09-13T06:29:04",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "c1d7547"
+  "gitCommit": "0993a89"
  },
  "games": [
   {
@@ -25,7 +25,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "cf": {
      "dir": "cross",
@@ -33,9 +33,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 7
     },
-    "out_mph": 6
+    "out_mph": 7
    }
   },
   {
@@ -50,18 +50,18 @@
    "book_total_line": 9.5,
    "wind": {
     "lf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "in",
+     "mph": 2
     },
     "cf": {
      "dir": "cross",
-     "mph": 2
+     "mph": 0
     },
     "rf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "out",
+     "mph": 2
     },
-    "out_mph": 0
+    "out_mph": 2
    }
   },
   {
@@ -102,18 +102,18 @@
    "book_total_line": 7.5,
    "wind": {
     "lf": {
-     "dir": "neutral",
-     "mph": 0
+     "dir": "out",
+     "mph": 3
     },
     "cf": {
-     "dir": "neutral",
-     "mph": 0
+     "dir": "out",
+     "mph": 4
     },
     "rf": {
-     "dir": "neutral",
-     "mph": 0
+     "dir": "out",
+     "mph": 3
     },
-    "out_mph": 0
+    "out_mph": 4
    }
   },
   {
@@ -150,7 +150,7 @@
    "pick": "tb",
    "confidence": 0.54,
    "tier": "PASS",
-   "total": 8.3,
+   "total": 8.6,
    "book_total_line": 8.0,
    "wind": {
     "lf": {
@@ -258,18 +258,18 @@
    "book_total_line": null,
    "wind": {
     "lf": {
-     "dir": "out",
-     "mph": 2
+     "dir": "cross",
+     "mph": 1
     },
     "cf": {
-     "dir": "out",
-     "mph": 3
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
-     "dir": "out",
-     "mph": 2
+     "dir": "cross",
+     "mph": 1
     },
-    "out_mph": 3
+    "out_mph": 0
    }
   },
   {
@@ -323,7 +323,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 6
     },
     "cf": {
      "dir": "cross",
@@ -331,9 +331,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
-    "out_mph": 5
+    "out_mph": 6
    }
   },
   {
@@ -406,8 +406,7 @@
     "factors": {
      "sp": 1.094,
      "park": 1.0,
-     "temp": 1.072,
-     "wind": 1.0
+     "temp": 1.072
     },
     "hr_rate_pa": 0.0527
    },
@@ -421,7 +420,7 @@
     "recent_hr_rate": 0.0
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -454,7 +453,7 @@
     "recent_hr_rate": 0.0259
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -473,8 +472,7 @@
     "factors": {
      "sp": 1.094,
      "park": 1.0,
-     "temp": 1.072,
-     "wind": 1.0
+     "temp": 1.072
     },
     "hr_rate_pa": 0.0403
    },
@@ -488,7 +486,7 @@
     "recent_hr_rate": 0.0225
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -521,7 +519,7 @@
     "recent_hr_rate": 0.0244
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -540,9 +538,9 @@
     "factors": {
      "sp": 1.056,
      "park": 0.93,
-     "temp": 1.048
+     "temp": 1.054
     },
-    "hr_rate_pa": 0.0586
+    "hr_rate_pa": 0.0589
    },
    "edge_score": 61,
    "score_type": "model_score_0_100",
@@ -554,7 +552,7 @@
     "recent_hr_rate": 0.0563
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -573,10 +571,9 @@
     "factors": {
      "sp": 1.076,
      "park": 0.93,
-     "temp": 1.078,
-     "wind": 1.0
+     "temp": 1.084
     },
-    "hr_rate_pa": 0.0449
+    "hr_rate_pa": 0.0452
    },
    "edge_score": 61,
    "score_type": "model_score_0_100",
@@ -588,7 +585,7 @@
     "recent_hr_rate": 0.0382
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -607,10 +604,9 @@
     "factors": {
      "sp": 1.076,
      "park": 0.93,
-     "temp": 1.078,
-     "wind": 1.0
+     "temp": 1.084
     },
-    "hr_rate_pa": 0.0549
+    "hr_rate_pa": 0.0552
    },
    "edge_score": 61,
    "score_type": "model_score_0_100",
@@ -622,7 +618,7 @@
     "recent_hr_rate": 0.04
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -655,7 +651,7 @@
     "recent_hr_rate": 0.0248
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -674,9 +670,10 @@
     "factors": {
      "sp": 0.985,
      "park": 1.175,
-     "temp": 1.03
+     "temp": 1.036,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0544
+    "hr_rate_pa": 0.0547
    },
    "edge_score": 59,
    "score_type": "model_score_0_100",
@@ -688,7 +685,7 @@
     "recent_hr_rate": 0.0
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
@@ -720,7 +717,7 @@
     "recent_hr_rate": 0.058
    },
    "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 328 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 338 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
