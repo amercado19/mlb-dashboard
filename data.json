@@ -1,6 +1,6 @@
 {
  "date": "2026-09-13",
- "generated_at": "2026-09-13T21:38:53",
+ "generated_at": "2026-09-13T23:31:40",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "e48f7b5"
+  "gitCommit": "6c37e49"
  },
  "games": [
   {
@@ -307,7 +307,7 @@
    "confidence": 0.591,
    "tier": "PASS",
    "total": 8.0,
-   "book_total_line": 6.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "cross",
@@ -329,11 +329,11 @@
    "home": "ath",
    "away_win_prob": 0.502,
    "home_win_prob": 0.488,
-   "pick": "ath",
-   "confidence": 0.488,
-   "tier": "LEAN",
+   "pick": "sea",
+   "confidence": 0.502,
+   "tier": "PASS",
    "total": 9.2,
-   "book_total_line": 12.5,
+   "book_total_line": 13.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -353,13 +353,13 @@
   {
    "away": "tex",
    "home": "az",
-   "away_win_prob": 0.557,
+   "away_win_prob": 0.507,
    "home_win_prob": 0.413,
    "pick": "tex",
-   "confidence": 0.557,
+   "confidence": 0.507,
    "tier": "PASS",
    "total": 9.5,
-   "book_total_line": 9.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -385,7 +385,7 @@
    "confidence": 0.586,
    "tier": "PASS",
    "total": 7.0,
-   "book_total_line": 7.5,
+   "book_total_line": 9.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -581,13 +581,13 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 477,
+    "pa_season": 479,
     "factors": {
      "sp": 0.965,
      "park": 1.105,
      "temp": 1.03
     },
-    "hr_rate_pa": 0.0442
+    "hr_rate_pa": 0.0441
    },
    "edge_score": 60,
    "score_type": "model_score_0_100",
@@ -1003,16 +1003,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7045,
+   "model_prob": 0.7039,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 404,
+    "pa_season": 405,
     "factors": {
      "sp": 1.011
     },
-    "hit_rate_pa": 0.255
+    "hit_rate_pa": 0.2546
    },
    "edge_score": 69,
    "score_type": "model_score_0_100",
