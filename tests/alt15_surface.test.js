@@ -134,8 +134,13 @@ t('...and a real one prints', a15Pct(0.5) === '50.0%');
 
 /* ---- 6. THE CARD AND THE SLATE ACTUALLY CALL THEM --------------------- */
 t('slateCard2 renders the +1.5 row', /\+alt15Row\(g\)/.test(html));
+/* The claim worth defending is the ORDER — price verdict before the +1.5
+   row — not the indentation it happens to sit at. Pinning the whitespace
+   made this fail when both rows moved into View analysis together, which
+   changed nothing about the ordering. */
 t('...after the Bet row, so price verdict comes first',
-  html.indexOf("<i>Bet</i>'+bet+'</div>'\n      +alt15Row(g)") >= 0);
+  html.indexOf("<i>Bet</i>'+bet+'</div>'") > 0
+  && html.indexOf("+alt15Row(g)") > html.indexOf("<i>Bet</i>'+bet+'</div>'"));
 t('renderSlate prints the unavailable line once, not per card',
   /head\+alt15Note\(\)\+body/.test(html));
 

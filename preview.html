@@ -644,6 +644,65 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
   .gc2 .g2when{order:3}
 }
 
+/* ---- SLATE v3: five facts, four dropdowns (2026-09-12) ---- */
+.s3b{padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.s3sp{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;font-size:12.5px;line-height:1.35}
+.s3sp>b{min-width:34px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.04em}
+.s3nm{font-weight:700;color:var(--txt)}
+.s3h{font-size:10px;color:var(--muted);font-family:var(--mono)}
+.s3prob{font-size:9.5px;font-weight:800;color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:7px}
+.s3r{margin-left:auto;font-size:11.5px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+.s3r>b{color:var(--txt);font-size:13px}
+.s3rno{margin-left:auto;font-size:11px;color:var(--muted);font-family:var(--mono)}
+.s3none{color:var(--muted)}
+.s3env{display:flex;gap:8px;align-items:baseline;font-size:12px}
+.s3env>i{font-style:normal;min-width:34px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.04em}
+.s3sup{color:var(--muted)}
+.s3win{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  padding:8px 10px;border-radius:9px;background:var(--soft);border:1px solid var(--line)}
+.s3wl{font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--muted)}
+.s3wt{font-size:19px;font-weight:800;color:var(--txt);line-height:1}
+.s3wp{font-size:15px;font-weight:800;color:var(--txt);font-family:var(--mono)}
+.s3wmix{font-size:10.5px;color:var(--muted)}
+.s3ps{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.s3ps>b{color:var(--txt)}
+.s3lu2{display:flex;gap:8px;align-items:baseline;font-size:12px}
+.s3lu2>i{font-style:normal;min-width:34px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.04em}
+.s3st{font-weight:800;font-size:12px;padding:1px 7px;border-radius:8px}
+.s3st.ok{background:#dcfce7;color:#166534}
+.s3st.pj{background:#fef3c7;color:#92400e}
+.s3st.pd{background:var(--soft);color:var(--muted)}
+.s3d{border:1px solid var(--line);border-radius:9px;background:var(--panel);overflow:hidden}
+.s3d>summary{cursor:pointer;list-style:none;padding:9px 11px;font-size:12.5px;font-weight:700;
+  display:flex;align-items:center;gap:8px;color:var(--txt)}
+.s3d>summary::-webkit-details-marker{display:none}
+.s3d>summary::after{content:'\25BE';margin-left:auto;color:var(--muted);font-size:10px}
+.s3d[open]>summary::after{content:'\25B4'}
+.s3d>summary:hover{background:var(--soft)}
+.s3n{font-size:10px;font-weight:800;color:var(--muted);font-family:var(--mono);
+  background:var(--soft);padding:1px 6px;border-radius:7px}
+.s3db{padding:2px 11px 11px;display:flex;flex-direction:column;gap:5px;
+  border-top:1px solid var(--line)}
+.s3leg{display:flex;gap:8px;align-items:baseline;font-size:12.5px;padding:3px 0;flex-wrap:wrap}
+.s3i{font-family:var(--mono);font-size:10px;font-weight:800;color:var(--muted);min-width:14px}
+.s3lt{font-weight:700;color:var(--txt)}
+.s3lw{font-size:10.5px;color:var(--muted)}
+.s3note{font-size:10.5px;color:var(--muted);line-height:1.5;padding-top:3px}
+.s3pr{display:flex;gap:8px;align-items:baseline;font-size:12px;padding:3px 0;flex-wrap:wrap}
+.s3pr>i{font-style:normal;min-width:104px;color:var(--muted);font-size:10.5px;font-weight:800}
+.s3ev{font-size:9.5px;font-weight:800;color:#0c7a43;letter-spacing:.03em}
+.s3lu{margin-top:4px}
+.s3luh{font-size:10.5px;font-weight:800;color:var(--muted);padding:3px 0}
+.s3lr{display:flex;gap:8px;align-items:baseline;font-size:12px;padding:1.5px 0}
+.s3o{font-family:var(--mono);font-size:10px;color:var(--muted);min-width:14px}
+.s3ln{font-weight:600;color:var(--txt);flex:1 1 auto;min-width:0}
+.s3lp,.s3lh{font-size:10px;color:var(--muted);font-family:var(--mono)}
+@media(max-width:430px){
+  .s3pr>i{min-width:0;flex:0 0 100%}
+  .s3r,.s3rno{margin-left:0;flex:0 0 100%}
+  .s3wt{font-size:17px}
+}
+
 
 /* ---------- ADMIN HEALTH v2 (2026-09-06) -------------------------------
    The page was several screens of prose per subsystem. Every paragraph was
@@ -2464,6 +2523,219 @@ function maChip(P){
     +(a.projectedRunDiffRaw!=null?a.projectedRunDiffRaw.toFixed(2)+' raw runs':'')+']':'');
   return ' '+pill(a.userLabel,'b-unk',tip);
 }
+/* ================= SLATE v3 — DECIDE IN FIVE SECONDS (2026-09-12) =====
+   The collapsed card had grown to twenty badges and six rows of research
+   metadata, and the one thing a person opens this page to learn -- who is
+   playing, who is pitching, what the model thinks, and whether the lineup is
+   in -- was buried among things only an engineer reads.
+
+   v3 keeps EXACTLY the decisions v2 made. Every value below is still read
+   from the canonical producer and none of it is recomputed here. What
+   changed is what the collapsed card shows: the five facts, then four
+   dropdowns. Everything else moved behind "View analysis", which is the same
+   markup that used to be inline. Nothing was deleted from the product. */
+
+/* PITCHER RATING IS A DISPLAY TRANSFORM, NOT A NEW MODEL.
+   xERA is the canonical starter number this system already trusts (R1/R2 fire
+   on it). This maps it onto the 0-10 scale a person can read at a glance:
+   2.50 xERA and better is a 10, 6.00 and worse is a 0, linear in between.
+   Deterministic, documented, and it touches no prediction. */
+function spRating10(xera){
+  if(!isNum(xera)) return null;
+  var r=10*(6.0-xera)/3.5;
+  return Math.max(0,Math.min(10,r));
+}
+function spxOf(gamePk){
+  var L=D.startingPitchers||[];
+  for(var i=0;i<L.length;i++) if(String(L[i].gamePk)===String(gamePk)) return L[i];
+  return null;
+}
+/* One starter, one line: team, name, hand, rating. "Probable" is said only
+   when the club has not filed the card yet. */
+function sp3(team,sp,x){
+  sp=sp||{};x=x||{};
+  var nm=sp.name||x.name;
+  if(!nm) return '<div class="s3sp"><b>'+esc(team)+'</b><span class="s3none">'+SH_ABSENT+'</span></div>';
+  var hand=(x.throws||sp.throws)?'<span class="s3h">'+esc(x.throws||sp.throws)+'HP</span>':'';
+  var st=String(sp.status||x.status||'').toUpperCase();
+  var prob=(st&&st!=='CONFIRMED')?'<span class="s3prob">Probable</span>':'';
+  var r=spRating10(isNum(x.xera)?x.xera:sp.xera);
+  var rate=(r===null)
+    ? '<span class="s3rno" title="No xERA published for this starter, so no rating is shown. A blank is not a zero.">Rating '+SH_ABSENT+'</span>'
+    : '<span class="s3r" title="Display transform of the canonical xERA '
+      +esc((isNum(x.xera)?x.xera:sp.xera).toFixed(2))+': 2.50 maps to 10, 6.00 maps to 0. Display only — it changes no prediction.">Rating <b>'
+      +r.toFixed(1)+'</b>/10</span>';
+  return '<div class="s3sp"><b>'+esc(team)+'</b><span class="s3nm">'+esc(nm)+'</span>'
+    +hand+prob+rate+'</div>';
+}
+
+/* ONE environmental line. The direction trust gate still owns whether a
+   direction may be named -- this only chooses fewer words. */
+function wind3(g,e,shown,wsum){
+  var roof=e&&e.roof?String(e.roof).toUpperCase():'';
+  if(roof.indexOf('CLOSED')>=0)
+    return '<div class="s3env"><i>ROOF</i><span>CLOSED</span></div>';
+  var mph=isNum(g.wind_mph)?g.wind_mph:(e&&isNum(e.mph)?e.mph:null);
+  if(!shown){
+    return '<div class="s3env"><i>WIND</i><span class="s3sup">'
+      +(isNum(mph)?esc(mph+' mph')+' · ':'')+'direction not shown</span></div>';
+  }
+  var txt=wsum||'';
+  if(!txt&&isNum(mph)) txt=mph+' mph';
+  return '<div class="s3env"><i>WIND</i><span>'+esc(txt||SH_ABSENT)+'</span></div>';
+}
+
+/* A board row may only reach a recommendation if the lineup gate lets it.
+   A player the official card leaves out is not today's top starter prop. */
+function propRowOk(r){
+  var s=String(r&&r.lineupStatus||'').toUpperCase();
+  if(s.indexOf('BENCH')>=0||s.indexOf('NOT_IN')>=0||s.indexOf('SCRATCH')>=0||s.indexOf('OUT')>=0)
+    return false;
+  return true;
+}
+/* The published board is the TOP TEN across the whole slate, so most games
+   have no row in it. That is a publication cut, not a statement that the game
+   has no ranked candidate -- boardsFull carries the wider ranking the same
+   producer wrote, and hrCandidates carries the HR universe. Fall through in
+   that order so a per-game dropdown can say something true instead of "none",
+   and keep the same lineup gate on every source. A RETIRED family is still
+   refused upstream of this, by boardRetired. */
+function boardFor(k,gamePk){
+  var srcs=[((D.boards||{})[k]), ((D.boardsFull||{})[k])];
+  if(k==='hr') srcs.push(D.hrCandidates);
+  if(k==='h1') srcs.push(D.hitProps);
+  var seen={},out=[];
+  for(var s=0;s<srcs.length;s++){
+    var rows=srcs[s];
+    if(!Array.isArray(rows)) continue;
+    for(var i=0;i<rows.length;i++){
+      var r=rows[i];
+      if(String(r.gamePk)!==String(gamePk)) continue;
+      if(!propRowOk(r)) continue;
+      var key=String(r.playerId||r.name||i);
+      if(seen[key]) continue;
+      seen[key]=1; out.push(r);
+    }
+  }
+  return out;
+}
+
+/* ---- PER-GAME 4-LEG MODEL PARLAY --------------------------------------
+   A MODEL COMBINATION, not a priced ticket. It needs no straight-bet edge,
+   it quotes no combined probability it has not measured, and it will not
+   resurrect a retired family to reach four. If only three legitimate legs
+   exist it says three. */
+function gameParlay4(g,m,tm){
+  var pk=g.gamePk, legs=[];
+  var mlr=null,L=D.ml||[];
+  for(var i=0;i<L.length;i++) if(String(L[i].gamePk)===String(pk)) mlr=L[i];
+  var P=predOf(g,m)||{};
+  var wnr=P.projectedWinner||g.projectedWinner||(mlr&&mlr.pick);
+  var wp=isNum(g.winProb)?g.winProb:(isNum(P.homeWinProb)&&wnr===tm.home?P.homeWinProb:null);
+  if(wnr) legs.push({t:esc(wnr)+' ML',
+    why:'model favors '+esc(wnr)+(isNum(wp)?' at '+(wp*100).toFixed(0)+'%':'')});
+
+  /* +1.5 on the SAME team as the ML leg is nested, not diversifying. */
+  var a=((D.alt15||{}).picks)||[],p15=null;
+  for(var j=0;j<a.length;j++) if(String(a[j].gamePk)===String(pk)) p15=a[j];
+  if(p15&&p15.bestPlus15Team&&p15.bestPlus15Team!==wnr)
+    legs.push({t:esc(p15.bestPlus15Team)+' +1.5',
+      why:'run-line side the distribution favors'});
+
+  var h1=boardFor('h1',pk);
+  if(!boardRetired('h1')){
+    for(var k2=0;k2<h1.length&&legs.length<3;k2++)
+      legs.push({t:esc(h1[k2].name)+' 1+ Hit',
+        why:'top contact matchup'+(isNum(h1[k2].order)?', batting '+h1[k2].order:'')});
+  }
+  var hr=boardFor('hr',pk);
+  if(!boardRetired('hr')&&hr.length&&legs.length<4)
+    legs.push({t:esc(hr[0].name)+' Home Run',
+      why:'HR ranking signal'+(isNum(hr[0].iso)?', ISO '+hr[0].iso.toFixed(3):'')});
+  /* Still short? take a second 1+ hit before giving up. */
+  for(var k3=1;k3<h1.length&&legs.length<4;k3++){
+    var nm=esc(h1[k3].name)+' 1+ Hit';
+    var dup=false;for(var z=0;z<legs.length;z++) if(legs[z].t===nm) dup=true;
+    if(!dup) legs.push({t:nm,why:'second-best contact spot in this game'});
+  }
+  return legs.slice(0,4);
+}
+function parlayDrop3(g,m,tm){
+  var legs=gameParlay4(g,m,tm);
+  if(!legs.length)
+    return '<details class="s3d"><summary>4-leg game parlay</summary>'
+      +'<div class="s3db"><div class="s3note">No qualified legs for this game today.</div></div></details>';
+  var short=legs.length<4
+    ? '<div class="s3note">ONLY '+legs.length+' QUALIFIED LEG'+(legs.length===1?'':'S')
+      +' TODAY — a fourth is not invented, and a retired market is not reopened to find one.</div>'
+    : '';
+  return '<details class="s3d"><summary>4-leg game parlay'
+    +'<span class="s3n">'+legs.length+'</span></summary><div class="s3db">'
+    +legs.map(function(l,i){return '<div class="s3leg"><span class="s3i">'+(i+1)+'</span>'
+      +'<span class="s3lt">'+l.t+'</span><span class="s3lw">'+esc(l.why)+'</span></div>';}).join('')
+    +short
+    +'<div class="s3note">A model combination, not a priced ticket. No book has quoted this, '
+    +'and its joint probability is NOT MEASURED.</div></div></details>';
+}
+
+/* ---- TOP PROP PER FAMILY ---------------------------------------------- */
+var S3FAM=[['h1','1+ Hit'],['h2','1+ Double'],['tb2','2+ Total Bases'],
+           ['hrr','H+R+RBI 2+'],['hr','Home Run']];
+function topPropsDrop3(g){
+  var rows=S3FAM.map(function(f){
+    var k=f[0],label=f[1];
+    if(boardRetired(k))
+      return '<div class="s3pr"><i>'+esc(label)+'</i><span class="s3sup">MARKET RETIRED</span></div>';
+    var mk=boardMarket(k),sup=((D.learned||{}).suppressedNotKilled||{})[k];
+    if(sup)
+      return '<div class="s3pr"><i>'+esc(label)+'</i><span class="s3sup">REACTIVATION REVIEW — NO ACTIVE PICK</span></div>';
+    var b=boardFor(k,g.gamePk);
+    if(!b.length)
+      return '<div class="s3pr"><i>'+esc(label)+'</i><span class="s3sup">NO ACTIVE PICK IN THIS GAME</span></div>';
+    var r=b[0];
+    var ev=(String(r.lineupStatus||'').toUpperCase().indexOf('CONFIRMED')>=0)
+      ? 'TOP MODEL PICK' : 'TOP MODEL PICK · PROJECTED LINEUP';
+    var why=[];
+    if(isNum(r.order)) why.push('batting '+r.order);
+    if(isNum(r.avg)) why.push('AVG '+r.avg.toFixed(3));
+    if(isNum(r.iso)) why.push('ISO '+r.iso.toFixed(3));
+    if(mk.status) why.push('market '+String(mk.status).toLowerCase());
+    return '<div class="s3pr"><i>'+esc(label)+'</i>'
+      +'<span><b>'+esc(r.name)+'</b> <span class="s3ev">'+esc(ev)+'</span>'
+      +(why.length?'<span class="s3lw">'+esc(why.join(' · '))+'</span>':'')+'</span></div>';
+  }).join('');
+  return '<details class="s3d"><summary>Top props</summary><div class="s3db">'+rows+'</div></details>';
+}
+
+/* ---- LINEUP ----------------------------------------------------------- */
+function lineupWord3(s){
+  return s==='CONFIRMED'?'CONFIRMED':s==='PROJECTED'?'PROJECTED':'PENDING';
+}
+function lineupDrop3(g,m,gState,tm){
+  var A=g.away_bat||[],H=g.home_bat||[];
+  if(!A.length&&!H.length)
+    return '<details class="s3d"><summary>View lineup</summary><div class="s3db">'
+      +'<div class="s3note">No batting order in today’s payload for this game.</div></div></details>';
+  function side(name,rows){
+    if(!rows||!rows.length) return '<div class="s3note">'+esc(name)+' — no order published.</div>';
+    return '<div class="s3lu"><div class="s3luh">'+esc(name)+'</div>'
+      +rows.slice(0,9).map(function(r){
+        return '<div class="s3lr"><span class="s3o">'+(isNum(r.order)?r.order:'')+'</span>'
+          +'<span class="s3ln">'+esc(r.name||'')+'</span>'
+          +'<span class="s3lp">'+esc(r.pos||r.position||'')+'</span>'
+          /* No bat hand here. The payload's `side` field reads "R" for all
+             nine in every game -- including Juan Soto, who bats left, and
+             Lindor, who switches -- so it is not the batter's handedness and
+             printing it as one would put a confident wrong letter next to a
+             real name. Omitted until the producer publishes batSide. */
+          +'</div>';}).join('')
+      +'</div>';
+  }
+  return '<details class="s3d"><summary>View lineup'
+    +'<span class="s3n">'+lineupWord3(gState)+'</span></summary><div class="s3db">'
+    +side(tm.away+' (away)',A)+side(tm.home+' (home)',H)+'</div></details>';
+}
+
 function slateCard2(g,m){
   var b=betFor(g,m),st=b.state,p=b.pred,P=predOf(g,m)||{};
   var tm={away:p.away||teamsOf(g).away,home:p.home||teamsOf(g).home};
@@ -2523,20 +2795,47 @@ function slateCard2(g,m){
       +'<div class="g2when">'+esc(etTime(g.time||m.time||p.pred.time))+'</div>'
       +'<div class="g2chips">'+stateChip(st)+'</div>'
     +'</div>'
-    +'<div class="g2body">'
-      +'<div class="g2row"><i>Starters</i>'+spBlock(P,tm)+'</div>'
-      +'<div class="g2row"><i>Model</i>'+model+'</div>'
-      +'<div class="g2row"><i>Bet</i>'+bet+'</div>'
-      +alt15Row(g)
-      +gamePicksRow(g)
-      +'<div class="g2row"><i>Decision</i>'+decisionChips(p.pred)+'</div>'
-      +(contextChips(p.pred)?'<div class="g2row"><i>Context</i>'+contextChips(p.pred)+'</div>':'')
-      +'<div class="g2row"><i>Wind</i>'+wind+'</div>'
-      +qualityStrip(P,e)
-    +'</div>'
-    +'<details class="g2det"><summary><span>Game details</span>'
-      +'<span class="g2chev" aria-hidden="true">&#9662;</span></summary>'
+    /* ---- THE FIVE FACTS. Everything here is canonical; nothing is
+           recomputed. Anything an engineer reads moved to View analysis. */
+    +'<div class="s3b">'
+      +sp3(tm.away,g.away_sp,(spxOf(g.gamePk)||{}).away)
+      +sp3(tm.home,g.home_sp,(spxOf(g.gamePk)||{}).home)
+      +wind3(g,e,shown,wsum)
+      +'<div class="s3win"><span class="s3wl">MODEL WINNER</span>'
+        +'<span class="s3wt">'+esc(p.winner||SH_ABSENT)+'</span>'
+        /* wp is ALREADY a percentage from betFor -- every other call site
+           formats it as p.wp.toFixed(0). Scaling it again printed 6493%. */
+        +(isNum(p.wp)?'<span class="s3wp">'+p.wp.toFixed(0)+'%</span>':'')
+        +((_ma&&_ma.status==='DISAGREEMENT')
+            ?'<span class="s3wmix" title="The moneyline model and the run-projection model point different ways. Two models of two quantities — see View analysis.">Mixed model signal</span>':'')
+      +'</div>'
+      +(proj?'<div class="s3ps">Projected score <b>'+proj+'</b></div>':'')
+      +'<div class="s3lu2"><i>LINEUP</i><span class="s3st '
+        +(gState==='CONFIRMED'?'ok':gState==='PROJECTED'?'pj':'pd')+'">'
+        +lineupWord3(gState)+'</span></div>'
+      +parlayDrop3(g,m,tm)
+      +topPropsDrop3(g)
+      +lineupDrop3(g,m,gState,tm)
+      /* The fourth drawer is a peer of the other three, so it is styled as
+         one -- s3d, inside the same stack, not the old full-bleed g2det bar
+         hanging off the bottom edge. Four buttons that look alike are four
+         buttons a person can find; one that looks different reads as a
+         different kind of thing. */
+      +'<details class="s3d"><summary><span>View analysis</span></summary>'
       +'<div class="g2dbody">'
+        /* THE ROWS THAT USED TO CROWD THE CARD. Not deleted -- moved. Bet
+           verdict, decision chips, context, alt15, game picks and the data
+           quality strip are all still here, in the same markup, one click
+           away instead of always on. */
+        +'<div class="g2row"><i>Model</i>'+model+'</div>'
+        +'<div class="g2row"><i>Bet</i>'+bet+'</div>'
+        +alt15Row(g)
+        +gamePicksRow(g)
+        +'<div class="g2row"><i>Decision</i>'+decisionChips(p.pred)+'</div>'
+        +(contextChips(p.pred)?'<div class="g2row"><i>Context</i>'+contextChips(p.pred)+'</div>':'')
+        +'<div class="g2row"><i>Wind</i>'+wind+'</div>'
+        +'<div class="g2row"><i>Starters</i>'+spBlock(P,tm)+'</div>'
+        +qualityStrip(P,e)
         +g2group('Matchup',
             g2kv('Away',tm.away)+g2kv('Home',tm.home)
             +g2kv('Venue',P.venue||g.venue)
@@ -2556,6 +2855,7 @@ function slateCard2(g,m){
         +lineupDetails(g,m,gState,tm)
         +detailsBlock(g,m)
       +'</div></details>'
+    +'</div>'
     +'</div>';
 }
 function g2group(t,inner){

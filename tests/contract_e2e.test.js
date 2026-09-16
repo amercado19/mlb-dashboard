@@ -109,6 +109,36 @@ async function render(browser, payload, widths) {
       const d = window.D || {};
       return ((d.boards || {}).hrr || []).length;
     })(),
+
+    /* SLATE v3 — the five facts a person decides on, and the four drawers
+       everything else went into. Read off the FIRST card, because "the page
+       has the markup somewhere" is not the claim; "the card a person looks
+       at carries it" is. */
+    card0: (function () {
+      const c = document.querySelector('#slate .sgrid > .gc2');
+      if (!c) return null;
+      const txt = c.innerText || '';
+      const sp = [...c.querySelectorAll('.s3sp')];
+      c.querySelectorAll('details.s3d').forEach(d => { d.open = true; });
+      return {
+        starters: sp.map(e => ((e.querySelector('.s3nm') || {}).textContent || '')),
+        ratings: sp.map(e => ((e.querySelector('.s3r') || {}).textContent || '')),
+        hasWind: !!c.querySelector('.s3env'),
+        winner: (c.querySelector('.s3wt') || {}).textContent || '',
+        winProb: (c.querySelector('.s3wp') || {}).textContent || '',
+        lineupWord: (c.querySelector('.s3st') || {}).textContent || '',
+        drawers: [...c.querySelectorAll('details.s3d > summary')]
+          .map(s => s.textContent.trim()),
+        lineupRows: c.querySelectorAll('.s3lr').length,
+        parlayLegs: c.querySelectorAll('.s3leg').length,
+        propRows: [...c.querySelectorAll('.s3pr')].map(e => e.textContent.trim()),
+        /* Engineering identifiers must not reach the collapsed card. Checked
+           against the text a person reads, not the DOM we hoped we wrote. */
+        clutter: ['modelVersion', 'rulebookVersion', 'featureVersion',
+          'predictionVersion', 'gitCommit', 'population N']
+          .filter(k => txt.indexOf(k) >= 0),
+      };
+    })(),
   }));
 
   const overflow = {};
@@ -264,6 +294,89 @@ function buildPayload() {
       assert.strictEqual(r.overflow[w], 0,
         w + 'px overflows by ' + r.overflow[w] + 'px'));
   }
+
+  /* ------------------------------------------------------------------ *
+   * THE SLATE CARD A PERSON ACTUALLY LOOKS AT.                          *
+   *                                                                    *
+   * Slate v3 moved the decision onto the collapsed card and everything  *
+   * else into four drawers. Both halves of that are load-bearing and    *
+   * both are invisible to a unit test: the v2 card rendered fine while  *
+   * never calling the lineup helpers at all, which is exactly how       *
+   * production told a person "lineups pending" about a game whose       *
+   * batting order the payload already held.                             *
+   * ------------------------------------------------------------------ */
+  console.log('\nthe collapsed Slate card carries the decision');
+  const c0 = r.card0;
+  check('there is a first game card to read', () =>
+    assert(c0, 'no .gc2 card rendered'));
+  check('both starting pitchers are named', () => {
+    assert.strictEqual(c0.starters.length, 2,
+      'expected 2 starter blocks, got ' + c0.starters.length);
+    c0.starters.forEach(n => assert(n.trim().length > 1, 'a starter is unnamed'));
+  });
+  check('both starters carry a pitcher rating', () =>
+    c0.ratings.forEach(t => assert(/\d\.\d\s*\/\s*10/.test(t),
+      'rating does not read n.n/10: ' + JSON.stringify(t))));
+  check('one environmental line renders', () =>
+    assert(c0.hasWind, 'no wind/roof line on the card'));
+  check('the model winner and its probability render', () => {
+    assert(c0.winner.trim().length > 0, 'no winner on the card');
+    /* Bound the VALUE, not just the shape. /\d+%/ passed happily on the
+       6493% this card printed when the already-percentage wp got scaled by
+       100 a second time -- a bug no text-shape assertion can see. */
+    const m = /^(\d+(?:\.\d+)?)%$/.exec(c0.winProb.trim());
+    assert(m, 'win probability is not a bare percentage: '
+      + JSON.stringify(c0.winProb));
+    const v = Number(m[1]);
+    assert(v >= 50 && v <= 100,
+      'the winner\'s own win probability reads ' + v + '%');
+  });
+  /* The bug this hotfix closed. PENDING is a legal answer; a card that
+     cannot say any of the four words is the defect. */
+  check('the lineup status renders as one of the four words', () =>
+    assert(['CONFIRMED', 'POSTED', 'PROJECTED', 'PENDING']
+      .includes(c0.lineupWord.trim()),
+    'lineup status reads ' + JSON.stringify(c0.lineupWord)));
+  check('all four drawers are present', () => {
+    const s = c0.drawers.join(' | ').toLowerCase();
+    ['parlay', 'top props', 'view lineup', 'view analysis']
+      .forEach(k => assert(s.indexOf(k) >= 0,
+        'no drawer matching "' + k + '" in ' + JSON.stringify(c0.drawers)));
+  });
+  check('the lineup drawer lists a batting order when the payload has one', () =>
+    assert(c0.lineupWord.trim() === 'PENDING' || c0.lineupRows >= 9,
+      'lineup reads ' + c0.lineupWord + ' but the drawer has '
+      + c0.lineupRows + ' rows'));
+  check('the game parlay offers between one and four legs', () => {
+    assert(c0.parlayLegs >= 1, 'the parlay drawer is empty');
+    assert(c0.parlayLegs <= 4, 'the parlay has ' + c0.parlayLegs + ' legs');
+  });
+  check('the top-props drawer names every prop family', () => {
+    assert.strictEqual(c0.propRows.length, 5,
+      'expected 5 families, got ' + c0.propRows.length);
+  });
+  /* Governance, seen from the surface. The overlay above sets hrr to WATCH
+     with a RETIRED history; the card must still refuse to pick for it. */
+  check('retired and under-review families never show a pick', () => {
+    /* Per ROW, not across the joined text: the joined string contains an
+       active family's legitimate pick, and an assertion that cannot tell
+       those apart passes for the wrong reason. */
+    const row = label => c0.propRows.find(t => t.indexOf(label) === 0) || '';
+    ['1+ Double', '2+ Total Bases'].forEach(k => {
+      const t = row(k);
+      assert(t, 'no row for ' + k + ' in ' + JSON.stringify(c0.propRows));
+      assert(/MARKET RETIRED/.test(t), k + ' is not marked retired: ' + t);
+      assert(!/TOP MODEL PICK|TOP HR MATCHUP/.test(t),
+        k + ' is retired and still produced a pick: ' + t);
+    });
+    const hrr = row('H+R+RBI');
+    assert(/REACTIVATION REVIEW|NO ACTIVE PICK|MARKET RETIRED/.test(hrr),
+      'hrr came back as an active pick: ' + hrr);
+    assert(!/TOP MODEL PICK|TOP HR MATCHUP/.test(hrr),
+      'an under-review family produced a pick: ' + hrr);
+  });
+  check('no engineering identifiers reached the collapsed card', () =>
+    assert.deepStrictEqual(c0.clutter, []));
 
   /* ------------------------------------------------------------------ *
    * NEGATIVE: the alarm has to actually sound. Each case reproduces a   *
