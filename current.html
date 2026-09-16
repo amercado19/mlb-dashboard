@@ -377,6 +377,10 @@ table.aht tr:last-child td{border-bottom:none}
    who / prediction / pitching / bet decision / lineups.
    ================================================================ */
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(430px,100%),1fr));gap:14px}
+.freshwarn{display:flex;flex-direction:column;gap:2px;margin:0 0 12px;padding:9px 12px;border:1px solid #b45309;border-left:4px solid #b45309;border-radius:9px;background:rgba(180,83,9,.10)}
+.freshwarn b{font-size:11.5px;font-weight:800;letter-spacing:.04em;color:#b45309}
+.freshwarn span{font-size:11px;color:var(--txt)}
+.freshwarn i{font-size:10.5px;font-style:normal;color:var(--muted)}
 @media(max-width:920px){.sgrid{grid-template-columns:1fr}}
 
 .sbar{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;box-shadow:var(--card-sh);padding:11px 14px;margin-bottom:6px}
@@ -3197,6 +3201,52 @@ function dailyHero(){
     +'pick ranks inside its own board, which is what the evidence '
     +'licenses.</div></div>';
 }
+/* ---------- FRESHNESS BANNER (2026-09-16) ----------------------------
+   On 2026-09-16 this page showed PROJECTED lineups for every game at 12:35
+   ET from a payload built at 06:18Z, and said nothing about it. PROJECTED was
+   not wrong -- at 2am no lineup exists -- but by lunchtime the same word was
+   a lie, and the page had no way to tell the difference.
+
+   So the banner is keyed on the AGE OF THE SOURCE CHECK, not on whether a
+   lineup happens to exist. "No official lineup posted yet" and "our data is
+   too old to know" are different states and only the second is a warning.
+   The thresholds mirror scripts/live_refresh_gate.py exactly; if the two ever
+   disagree, one of them is wrong and it should be visible.
+
+   It renders nothing at all when the payload is inside its limit, so a
+   healthy Slate stays exactly as clean as it was. */
+function freshLimitMins(minsToGame){
+  if(minsToGame===null||minsToGame===undefined) return 180;
+  if(minsToGame<=90)  return 15;
+  if(minsToGame<=180) return 30;
+  if(minsToGame<=360) return 60;
+  return 180;
+}
+function freshnessBanner(rows){
+  var gen=D.generatedAt; if(!gen) return '';
+  var t=Date.parse(gen); if(!t) return '';
+  var ageMin=(Date.now()-t)/60000;
+  /* the next game that has not started yet */
+  var next=null;
+  (rows||[]).forEach(function(r){
+    if(r.st&&r.st.group!=='UPCOMING') return;
+    var gt=r.t; if(!gt) return;
+    var mins=(gt-Date.now())/60000;
+    if(mins<-15) return;
+    if(next===null||mins<next) next=mins;
+  });
+  if(next===null) return '';              /* nothing upcoming: not a warning */
+  var limit=freshLimitMins(next);
+  if(ageMin<=limit) return '';            /* healthy -- render nothing */
+  var when=new Date(t).toLocaleTimeString('en-US',
+      {timeZone:'America/New_York',hour:'numeric',minute:'2-digit'});
+  return '<div class="freshwarn" role="status">'
+    +'<b>DATA REFRESH DELAYED</b>'
+    +'<span>Last update '+esc(when)+' ET · '+Math.round(ageMin)+' min ago'
+    +' · next game in '+Math.max(0,Math.round(next))+' min</span>'
+    +'<i>Lineups and props may not reflect cards posted since then.</i>'
+    +'</div>';
+}
 function renderSlate(){
   var gc=(D.gameCards||[]).slice();
   var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
@@ -3228,7 +3278,7 @@ function renderSlate(){
   });
   if(!body)body='<div class="empty">No games match the '+esc(SLATE_FILTER)+' filter. '
     +(SLATE_FILTER==='BET'?'The model still projects a winner in every game — switch to ALL to see them.':'Switch to ALL to see the full slate.')+'</div>';
-  $('slate').innerHTML=dailyHero()+decisionSummaryStrip()+maSummary()+head+alt15Note()+body;
+  $('slate').innerHTML=freshnessBanner(rows)+dailyHero()+decisionSummaryStrip()+maSummary()+head+alt15Note()+body;
 }
 function renderMatchups(){
   var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});var mlByPk={};(D.ml||[]).forEach(function(m){mlByPk[m.gamePk]=m;});
