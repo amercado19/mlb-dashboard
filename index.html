@@ -146,6 +146,10 @@ section{display:none}section.active{display:block}
 .hnone{font-size:11.5px;color:var(--muted);line-height:1.45;padding:2px 0}
 .hstate{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);font-family:var(--mono);margin:2px 0 4px}
 .heronote{font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}
+.heromore{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+.heromore>summary{cursor:pointer;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:4px 0}
+.heromore>summary:hover{color:var(--txt)}
+.heromore[open]>summary{margin-bottom:8px}
 .hchips{display:flex;flex-wrap:wrap;gap:4px}
 .pnote{margin-top:6px;font-size:11px;color:var(--muted);line-height:1.55}
 .pnote b{color:var(--txt)}
@@ -951,8 +955,8 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
   <div id="runnote" style="display:none"></div>
 </header>
 <main>
-  <section id="slate" class="active"></section>
-  <section id="picks"></section>
+  <section id="slate"></section>
+  <section id="picks" class="active"></section>
   <section id="matchups"></section>
   <section id="props"></section>
   <section id="parlay"></section>
@@ -3040,13 +3044,37 @@ function mlBand(gamePk){
   return {};
 }
 function hMoneyline(){
-  var rows=(D.ml||[]).filter(function(m){return isNum(m.conf);});
-  if(!rows.length) return hNone('Best moneyline','No moneyline was priced for this slate.');
-  var ORD={STRONG:0,LEAN:1,PASS:2};
+  /* THE HERO MUST NOT PICK A GAME THAT IS ALREADY BEING PLAYED (2026-09-16).
+     This tile used to sort on the moneyline row's own `tier`, which is a
+     model-side label and survives first pitch. On 2026-09-16 that selected
+     NYY at +830 in a game that had been underway for two and a half hours:
+     the row still read LEAN, the price was an in-play MIN -1520, and the
+     "edge" of +44.8pt was the model's 55.5% measured against a live 10.8%
+     implied. It was going to be the first thing on the page.
+
+     The pipeline already knew. predictions[].marketState read LIVE and
+     predictions[].moneylineRecommendation read PASS for that game, while
+     MIA@AZ read PREGAME / BET with a +14.4pt edge. So the tile now ranks on
+     the CANONICAL verdict through recFor() -- the same helper the Picks rows
+     use -- and refuses any game whose market is LIVE or CLOSED, because
+     there is no pregame market left to bet and the edge is measured against
+     the wrong number. */
+  var PIX=predIndex();
+  var DEAD={LIVE:1,CLOSED:1};
+  var all=(D.ml||[]).filter(function(m){return isNum(m.conf);});
+  if(!all.length) return hNone('Best moneyline','No moneyline was priced for this slate.');
+  var rows=all.filter(function(m){
+    var p=PIX['pk:'+m.gamePk]||{};
+    return !DEAD[String(p.marketState||'').toUpperCase()];});
+  if(!rows.length) return hNone('Best moneyline',
+    'Every game on this slate has already started or is final, so there is no '
+    +'pregame moneyline market left to pick from.','NO PREGAME MARKET');
+  var REC={BET:0,WATCH:1,PASS:2};
   rows.sort(function(a,b){
-    var ta=ORD[String(a.tier||'').toUpperCase()], tb=ORD[String(b.tier||'').toUpperCase()];
-    if(ta===undefined)ta=3; if(tb===undefined)tb=3;
-    return ta-tb || (b.edge||-99)-(a.edge||-99);});
+    var ra=(recFor({gamePk:a.gamePk},a)||{}).rec, rb=(recFor({gamePk:b.gamePk},b)||{}).rec;
+    var xa=REC[ra], xb=REC[rb];
+    if(xa===undefined)xa=3; if(xb===undefined)xb=3;
+    return xa-xb || (b.edge||-99)-(a.edge||-99);});
   var m=rows[0];
   var g=(D.gameCards||[]).filter(function(x){return x.gamePk===m.gamePk;})[0]||{};
   var team=m.team||m.projectedWinner||g.betTeam||g.projectedWinner
@@ -3181,19 +3209,38 @@ function hTileSafe(code, build){
   }
 }
 function dailyHero(){
+  /* THE FIVE THINGS THIS PAGE EXISTS TO ANSWER (2026-09-16).
+     Nine tiles is a research terminal. These five are the product: what to
+     pick on the moneyline, on +1.5, on 1+ hit, on a home run, and as one
+     model combination. Everything else moved into OTHER PICKS below. */
   var tiles=[
     hTileSafe('HERO_TILE_ML_ERROR', hMoneyline),
     hTileSafe('HERO_TILE_PLUS15_ERROR', hPlus15),
     hTileSafe('HERO_TILE_H1_ERROR', function(){return hProp('Best 1+ hit','h1','1+ hit');}),
-    hTileSafe('HERO_TILE_H2_ERROR', function(){return hProp('Best 1+ double','h2','1+ double');}),
-    hTileSafe('HERO_TILE_TB2_ERROR', function(){return hProp('Best 2+ total bases','tb2','2+ TB');}),
-    hTileSafe('HERO_TILE_HRR_ERROR', function(){return hProp('Best H+R+RBI','hrr','hits + runs + RBI');}),
     hTileSafe('HERO_TILE_HR_ERROR', hHomeRun),
-    hTileSafe('HERO_TILE_MODEL_PARLAY_ERROR', hModelParlay),
-    hTileSafe('HERO_TILE_PRICED_PARLAY_ERROR', hParlay)];
+    hTileSafe('HERO_TILE_MODEL_PARLAY_ERROR', hModelParlay)];
+  /* A RETIRED MARKET CANNOT OCCUPY A PICK SLOT, hero or otherwise. Filtered
+     through boardRetired() -- the same predicate the boards themselves use --
+     rather than a second hand-maintained list that could drift away from it.
+     1+ Double is retired and 2+ Total Bases is KILL, so neither appears. */
+  var otherTiles=[];
+  [['HERO_TILE_HRR_ERROR','hrr','Best H+R+RBI','hits + runs + RBI'],
+   ['HERO_TILE_H2_ERROR','h2','Best 1+ double','1+ double'],
+   ['HERO_TILE_TB2_ERROR','tb2','Best 2+ total bases','2+ TB']]
+    .forEach(function(t){
+      if(boardRetired(t[1]))return;
+      otherTiles.push(hTileSafe(t[0],
+        function(){return hProp(t[2],t[1],t[3]);}));
+    });
+  otherTiles.push(hTileSafe('HERO_TILE_PRICED_PARLAY_ERROR', hParlay));
+  var otherHtml=otherTiles.length
+    ? '<details class="heromore"><summary>Other picks ('
+      +otherTiles.length+')</summary><div class="herog">'
+      +otherTiles.join('')+'</div></details>'
+    : '';
   return '<div class="hero"><div class="heroh"><h2>Today’s top picks</h2>'
     +'<span class="hsub">'+esc(etStamp(D.generatedAt))+'</span></div>'
-    +'<div class="herog">'+tiles.join('')+'</div>'
+    +'<div class="herog">'+tiles.join('')+'</div>'+otherHtml
     // SAID ONCE, RATHER THAN SIX TIMES ON SIX TILES.
     +'<div class="heronote">Board scores are market-specific. An 82 on one '
     +'market and a 2.71 on another are different scales measured on '
@@ -3278,7 +3325,10 @@ function renderSlate(){
   });
   if(!body)body='<div class="empty">No games match the '+esc(SLATE_FILTER)+' filter. '
     +(SLATE_FILTER==='BET'?'The model still projects a winner in every game — switch to ALL to see them.':'Switch to ALL to see the full slate.')+'</div>';
-  $('slate').innerHTML=freshnessBanner(rows)+dailyHero()+decisionSummaryStrip()+maSummary()+head+alt15Note()+body;
+  /* The hero grid and the decision-summary strip moved to PICKS
+     (2026-09-16). Slate is the game-by-game view; it should open on
+     games, not on a summary of a page the reader has not reached. */
+  $('slate').innerHTML=freshnessBanner(rows)+maSummary()+head+alt15Note()+body;
 }
 function renderMatchups(){
   var gc=(D.gameCards||[]).slice().sort(function(a,b){return new Date(a.time||0)-new Date(b.time||0);});var mlByPk={};(D.ml||[]).forEach(function(m){mlByPk[m.gamePk]=m;});
@@ -3482,7 +3532,12 @@ function renderPicks(){
   function sec(title,arr,cls){if(!arr.length)return '';arr.sort(function(a,b){return (b.edge==null?-99:b.edge)-(a.edge==null?-99:a.edge);});
     return '<div class="card"><div class="card-h">'+title+' ('+arr.length+')</div>'+arr.map(function(p){var tm=teamOf(p);
       return '<div class="prow" style="flex-wrap:wrap"><span class="pnm" style="cursor:default;display:flex;align-items:center;gap:6px">'+teamLogo(tm)+'<b>'+esc(tm||'—')+'</b><span class="ptm">'+esc(p.away)+'@'+esc(p.home)+'</span></span><span class="badge '+cls+'">'+esc(p.tier)+'</span><span class="pmetric">'+(p.conf!=null?p.conf+'%':'—')+'<span class="unit">'+(p.edge!=null?' '+(p.edge>0?'+':'')+p.edge+'e':'')+'</span></span><span class="pmetric" style="color:var(--txt);min-width:auto">'+esc(p.odds||'')+'</span>'+predRow(p)+'</div>';}).join('')+'</div>';}
-  var html='<div class="note" style="background:var(--panel);border:1.5px solid var(--line);border-radius:10px;margin-bottom:12px">'
+  /* PICKS LEADS WITH THE PICKS (2026-09-16). The hero grid and the
+     decision-summary strip were rendering on Slate, so the page named
+     Picks opened on a moneyline tier table instead of the day's
+     answers. */
+  var html=dailyHero()+decisionSummaryStrip()
+    +'<div class="note" style="background:var(--panel);border:1.5px solid var(--line);border-radius:10px;margin-bottom:12px">'
     +'<b>Model prediction and bet recommendation are two different things.</b> Every game below has a projected winner — including the PASS games. '
     +'A PASS means the price is wrong for us, not that the model has no opinion.</div>';
   html+=sec('★ STRONG Picks — BET',g.STRONG,'b-strong')+sec('LEAN Picks — WATCH',g.LEAN,'b-lean');
@@ -4166,7 +4221,7 @@ function renderLibrary(){
   $('library').innerHTML=bar+body;
 }
 
-var TABS=[['slate','Slate'],['picks','Picks'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['simulator','Simulator'],['library','Library'],['admin','Admin / Health'],['method','How it works'],['backtests','Backtests']];
+var TABS=[['picks','Picks'],['slate','Slate'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['simulator','Simulator'],['library','Library'],['admin','Admin / Health'],['method','How it works'],['backtests','Backtests']];
 function buildNav(){$('nav').innerHTML=TABS.map(function(t,i){return '<button class="'+(i===0?'active':'')+'" data-s="'+t[0]+'" onclick="showTab(\''+t[0]+'\',this)">'+esc(t[1])+'</button>';}).join('');}
 function showTab(id,btn){var ss=document.querySelectorAll('main section');for(var i=0;i<ss.length;i++)ss[i].classList.remove('active');var sec=$(id);if(sec)sec.classList.add('active');var bs=document.querySelectorAll('nav button');for(var j=0;j<bs.length;j++){bs[j].classList.remove('active');if(!btn&&bs[j].getAttribute('data-s')===id)bs[j].classList.add('active');}if(btn)btn.classList.add('active');try{window.scrollTo(0,0);}catch(e){}}
 /* ---------- header meta, run cadence and run note ----------
