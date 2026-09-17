@@ -1,6 +1,6 @@
 {
  "date": "2026-09-17",
- "generated_at": "2026-09-17T20:20:22",
+ "generated_at": "2026-09-17T22:12:02",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "55ce083"
+  "gitCommit": "914a599"
  },
  "games": [
   {
@@ -99,11 +99,11 @@
    "confidence": 0.526,
    "tier": "PASS",
    "total": 10.3,
-   "book_total_line": 15.5,
+   "book_total_line": 11.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -111,9 +111,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 3
+     "mph": 4
     },
-    "out_mph": 3
+    "out_mph": 4
    }
   },
   {
@@ -124,7 +124,7 @@
    "pick": "hou",
    "confidence": 0.506,
    "tier": "PASS",
-   "total": 9.9,
+   "total": 9.6,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
@@ -155,17 +155,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "out",
-     "mph": 9
+     "mph": 7
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 5
     },
-    "out_mph": 9
+    "out_mph": 7
    }
   },
   {
@@ -181,15 +181,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 6
     },
     "cf": {
      "dir": "in",
-     "mph": 6
+     "mph": 8
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 6
     },
     "out_mph": 0
    }
@@ -233,17 +233,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 7
+    "out_mph": 6
    }
   }
  ],
@@ -324,13 +324,13 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 667,
+    "pa_season": 669,
     "factors": {
      "sp": 1.029,
      "park": 1.2,
-     "temp": 1.048
+     "temp": 1.042
     },
-    "hr_rate_pa": 0.0432
+    "hr_rate_pa": 0.0429
    },
    "edge_score": 68,
    "score_type": "model_score_0_100",
@@ -391,13 +391,13 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 638,
+    "pa_season": 639,
     "factors": {
      "sp": 1.029,
      "park": 1.2,
-     "temp": 1.048
+     "temp": 1.042
     },
-    "hr_rate_pa": 0.0514
+    "hr_rate_pa": 0.0511
    },
    "edge_score": 66,
    "score_type": "model_score_0_100",
@@ -447,40 +447,6 @@
    ]
   },
   {
-   "player": "Juan Soto",
-   "team": "nym",
-   "game": "phi-nym",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 435,
-    "factors": {
-     "sp": 0.998,
-     "park": 0.86,
-     "temp": 1.03,
-     "wind": 1.04
-    },
-    "hr_rate_pa": 0.0429
-   },
-   "edge_score": 62,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.5,
-    "hard_hit_pct": 48.5,
-    "avg_exit_velo": 92.6,
-    "xiso": 0.279,
-    "recent_hr_rate": 0.0526
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Yandy D\u00edaz",
    "team": "tb",
    "game": "ath-tb",
@@ -513,6 +479,74 @@
    ]
   },
   {
+   "player": "Dillon Dingler",
+   "team": "det",
+   "game": "det-cws",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 579,
+    "factors": {
+     "sp": 1.034,
+     "park": 1.105,
+     "temp": 0.988,
+     "wind": 0.973
+    },
+    "hr_rate_pa": 0.0454
+   },
+   "edge_score": 58,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.8,
+    "hard_hit_pct": 41.8,
+    "avg_exit_velo": 88.4,
+    "xiso": 0.2,
+    "recent_hr_rate": 0.0111
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Juan Soto",
+   "team": "nym",
+   "game": "phi-nym",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 435,
+    "factors": {
+     "sp": 0.998,
+     "park": 0.86,
+     "temp": 1.036,
+     "wind": 1.02
+    },
+    "hr_rate_pa": 0.0423
+   },
+   "edge_score": 57,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.5,
+    "hard_hit_pct": 48.5,
+    "avg_exit_velo": 92.6,
+    "xiso": 0.279,
+    "recent_hr_rate": 0.0526
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Jeremy Pe\u00f1a",
    "team": "hou",
    "game": "kc-hou",
@@ -539,40 +573,6 @@
     "avg_exit_velo": 88.5,
     "xiso": 0.153,
     "recent_hr_rate": 0.0485
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Dillon Dingler",
-   "team": "det",
-   "game": "det-cws",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.25,
-    "order": 5,
-    "pa_season": 579,
-    "factors": {
-     "sp": 1.034,
-     "park": 1.105,
-     "temp": 0.988,
-     "wind": 0.991
-    },
-    "hr_rate_pa": 0.0462
-   },
-   "edge_score": 54,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 9.8,
-    "hard_hit_pct": 41.8,
-    "avg_exit_velo": 88.4,
-    "xiso": 0.2,
-    "recent_hr_rate": 0.0111
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -701,16 +701,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7129,
+   "model_prob": 0.712,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 667,
+    "pa_season": 669,
     "factors": {
      "sp": 1.022
     },
-    "hit_rate_pa": 0.2526
+    "hit_rate_pa": 0.252
    },
    "edge_score": 70,
    "score_type": "model_score_0_100",
@@ -753,35 +753,6 @@
    "flags": []
   },
   {
-   "player": "Colt Keith",
-   "team": "det",
-   "game": "det-cws",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6765,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 417,
-    "factors": {
-     "sp": 1.026
-    },
-    "hit_rate_pa": 0.2367
-   },
-   "edge_score": 70,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 7.7,
-    "hard_hit_pct": 42.5,
-    "avg_exit_velo": 88.9,
-    "xiso": 0.152,
-    "recent_hr_rate": 0.0154
-   },
-   "flags": []
-  },
-  {
    "player": "Yandy D\u00edaz",
    "team": "tb",
    "game": "ath-tb",
@@ -807,6 +778,35 @@
     "avg_exit_velo": 91.0,
     "xiso": 0.162,
     "recent_hr_rate": 0.04
+   },
+   "flags": []
+  },
+  {
+   "player": "Dillon Dingler",
+   "team": "det",
+   "game": "det-cws",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6683,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 579,
+    "factors": {
+     "sp": 1.026
+    },
+    "hit_rate_pa": 0.2257
+   },
+   "edge_score": 69,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.8,
+    "hard_hit_pct": 41.8,
+    "avg_exit_velo": 88.4,
+    "xiso": 0.2,
+    "recent_hr_rate": 0.0111
    },
    "flags": []
   },
