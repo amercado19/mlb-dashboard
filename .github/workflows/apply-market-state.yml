@@ -1,0 +1,678 @@
+name: apply-market-state
+
+# ONE-SHOT INSTALLER. Teaches every consumer on the page the difference between
+# a model-side label and a live market.
+#
+# WHAT THIS IS FIXING, MEASURED
+# -----------------------------
+# Against the payload published at 2026-09-17T00:07Z, FOUR of the five hero
+# tiles were recommending bets on games that had already started:
+#
+#   BEST +1.5          LAD +1.5             LAD@CIN  marketState LIVE
+#   BEST 1+ HIT        Freddie Freeman      LAD@CIN  marketState LIVE
+#   TOP HOME RUN       Juan Soto            BAL@NYM  marketState LIVE
+#   BEST MODEL PARLAY  LAD +1.5 + TB +1.5   both games LIVE
+#
+# and the Picks tiers, the parlay builder, the market counter and the moneyline
+# browser were all still showing two LIVE games as LEAN at +25.1pt and +22.2pt
+# of "edge" -- arithmetic against an in-play implied probability that has
+# already absorbed the runs scored.
+#
+# Only BEST MONEYLINE was correct, because it was the one tile that had been
+# fixed. That is the shape of the bug: the fix was applied to a symptom.
+#
+# There is no new market-state system here. mktState() reads the same
+# predictions[].marketState, through the same predIndex(), that the pipeline's
+# market_state.py writes -- and mktDeadRow() prefers a row's own marketState
+# where the producer already published one, which the HR board has all along.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fingerprint the payloads BEFORE touching anything
+        run: |
+          python3 - <<'PYEOF'
+          import hashlib
+          import json
+          import pathlib
+          M = '<script id="bb-data" type="application/json">'
+          out = {}
+          for fn in ('current.html', 'index.html', 'preview.html'):
+              s = pathlib.Path(fn).read_text(encoding='utf-8')
+              i = s.index(M) + len(M)
+              j = s.index('</script>', i)
+              out[fn] = hashlib.sha256(s[i:j].encode('utf-8')).hexdigest()
+              print('%s payload %d bytes sha %s' % (fn, j - i, out[fn][:16]))
+          pathlib.Path('/tmp/payload_sha.json').write_text(json.dumps(out))
+          PYEOF
+
+      - name: Write the patch
+        run: |
+          mkdir -p /tmp/p
+          cat > /tmp/p/patch_market_state.py <<'CLAUDE_EOF'
+          """One market-state predicate, used by every consumer that can recommend a bet.
+
+          WHAT WAS STILL WRONG AFTER THE HERO FIX
+          ---------------------------------------
+          The previous change taught hMoneyline() that a game which has already started
+          has no pregame market left to bet. It fixed the tile. It did not fix the page,
+          because the tile was not the only thing reading a model-side label as if it
+          were a live verdict.
+
+          Measured against the payload published at 2026-09-17T00:07Z:
+
+            BAL@NYM   tier LEAN   "edge" +25.1pt   marketState LIVE   mlRec PASS
+            LAD@CIN   tier LEAN   "edge" +22.2pt   marketState LIVE   mlRec PASS
+            MIA@AZ    tier LEAN   "edge" +15.4pt   marketState PREGAME  mlRec BET
+
+          Both LIVE rows outranked the one real pick on "edge", and every consumer other
+          than the hero was still showing them:
+
+            renderPicks()    put both under "LEAN Picks - WATCH"
+            tpCandidates()   offered both as parlay legs
+            propCount('ml')  counted 3 "actionable" when 1 was actionable
+            openProp('ml')   badged both LEAN
+            gameParlay4()    built a 4-leg ticket whose ML leg was in-play
+            parlayVerdict()  validated any ticket regardless of its legs' markets
+
+          That last one is the reason this patch exists in this shape. The same payload's
+          MODEL PARLAY carried two legs -- LAD +1.5 and TB +1.5 -- on games that had
+          already started. Those are run-line legs, not moneyline legs, so the hero
+          moneyline fix could not have caught them and did not. The defect was never
+          "the moneyline tile ranks badly." It was "model-side labels never expire, and
+          nothing on the consumer side asked whether the market still existed."
+
+          So the predicate is defined ONCE and applied at every consumer. This is
+          deliberately not a second market-state system: mktState() reads
+          predictions[].marketState through the existing predIndex(), the same field the
+          pipeline's own market_state.py writes and the same field the hero fix used.
+          hMoneyline's private copy of the dead-state set is deleted and it calls the
+          shared helper instead.
+
+          WHAT THIS DOES NOT DO
+          ---------------------
+          It does not hide the rows. A LEAN that expired at first pitch is still a thing
+          the model said, and deleting it would replace one lie with a quieter one --
+          the page would look like it never had an opinion. The rows move into a section
+          that says what happened to them, keeps the tier they were given, and shows no
+          edge, because an edge measured against an in-play price is not an edge.
+
+          It also does not touch the producer. The pipeline should not be building a
+          parlay out of started games in the first place, and that is a separate fix in
+          a separate repo. Until it lands, the consumer refuses to present one, which is
+          the half that protects a person reading the page today.
+          """
+          from __future__ import annotations
+
+          import pathlib
+          import sys
+
+          FILES = ("current.html", "index.html", "preview.html")
+          FAIL: list[str] = []
+
+          EDITS: list[tuple[str, str, str]] = []
+
+
+          def edit(label: str, old: str, new: str) -> None:
+              EDITS.append((label, old, new))
+
+
+          # --------------------------------------------------------------- 1. the helper
+          edit(
+              "shared market-state predicate",
+              "function hMoneyline(){",
+              """/* ONE MARKET-STATE PREDICATE FOR THE WHOLE PAGE (2026-09-17).
+
+             D.ml[].tier, a parlay leg and a board row are all MODEL-SIDE labels. They
+             are computed before first pitch and they never expire -- nothing in the
+             payload retracts them when a game starts. predictions[].marketState does
+             expire, because the pipeline's market_state.py rewrites it as PREGAME ->
+             LIVE -> CLOSED.
+
+             Reading the first as a live verdict is how a +25.1pt "edge" on a game in its
+             sixth inning became the top moneyline on this page. The edge was real
+             arithmetic against the wrong number: model confidence minus an IN-PLAY
+             implied probability, which has already absorbed the runs scored.
+
+             This is not a second market-state system. It reads the same
+             predictions[].marketState through the same predIndex() the Picks rows use.
+             It exists so that exactly one place decides what "the market is gone" means,
+             and so a new consumer cannot quietly forget to ask. */
+          var DEAD_MARKET={LIVE:1,CLOSED:1};
+          function mktState(pk){
+            var p=predIndex()['pk:'+pk]||{};
+            return String(p.marketState||'').toUpperCase();
+          }
+          function mktDead(pk){ return !!DEAD_MARKET[mktState(pk)]; }
+          /* Some board rows carry their OWN marketState, written by the same producer
+             module for the price on that specific prop rather than for the game. That is
+             the finer-grained reading of the same field, not a competing one, so it wins
+             when present and the game-level state is the fallback. hrProps rows have
+             carried it all along -- row 1 of today's board reads marketState LIVE -- and
+             the tile simply never looked. */
+          function mktDeadRow(r){
+            if(!r) return false;
+            var own=String(r.marketState||'').toUpperCase();
+            if(own) return !!DEAD_MARKET[own];
+            return r.gamePk!=null ? mktDead(r.gamePk) : false;
+          }
+          function mktWhy(pk){
+            var s=mktState(pk);
+            return s==='LIVE' ? 'this game is underway'
+              : s==='CLOSED' ? 'this game is final'
+              : s==='STALE' ? 'the price behind this is stale'
+              : '';
+          }
+          function mktPill(pk){
+            var s=mktState(pk);
+            if(!DEAD_MARKET[s]) return '';
+            return '<span class="badge b-pass" title="'+esc(mktWhy(pk))
+              +'. A pregame price no longer exists, so there is nothing here to bet.">'
+              +(s==='LIVE'?'IN PLAY':'FINAL')+'</span>';
+          }
+
+          function hMoneyline(){""",
+          )
+
+          # ------------------------------------------- 2. hMoneyline uses the shared one
+          edit(
+              "hMoneyline drops its private copy",
+              """  var PIX=predIndex();
+            var DEAD={LIVE:1,CLOSED:1};
+            var all=(D.ml||[]).filter(function(m){return isNum(m.conf);});""",
+              """  /* The private DEAD set that used to live here is gone; mktDead() is the
+               page-wide predicate and every other consumer now calls it too. */
+            var all=(D.ml||[]).filter(function(m){return isNum(m.conf);});""",
+          )
+          edit(
+              "hMoneyline filter via mktDead",
+              """  var rows=all.filter(function(m){
+              var p=PIX['pk:'+m.gamePk]||{};
+              return !DEAD[String(p.marketState||'').toUpperCase()];});""",
+              """  var rows=all.filter(function(m){return !mktDead(m.gamePk);});""",
+          )
+
+          # -------------------------------------------------------------- 3. renderPicks
+          edit(
+              "renderPicks separates expired tiers",
+              """  var ml=(D.ml||[]).slice();var g={STRONG:[],LEAN:[],PASS:[]};
+            ml.forEach(function(p){var t=(p.tier||'PASS').toUpperCase();(g[t]||g.PASS).push(p);});""",
+              """  var ml=(D.ml||[]).slice();var g={STRONG:[],LEAN:[],PASS:[]};var gGone=[];
+            /* A STRONG or LEAN on a game that has started is not a pick any more, and
+               it must not sit in a section headed BET or WATCH. It is not deleted
+               either: the model did say it, and a page that silently drops its own
+               expired opinions looks like a page that never had them. */
+            ml.forEach(function(p){
+              var t=(p.tier||'PASS').toUpperCase();
+              if((t==='STRONG'||t==='LEAN')&&mktDead(p.gamePk)){gGone.push(p);return;}
+              (g[t]||g.PASS).push(p);});""",
+          )
+          edit(
+              "renderPicks renders the expired section",
+              """  html+=sec('★ STRONG Picks — BET',g.STRONG,'b-strong')+sec('LEAN Picks — WATCH',g.LEAN,'b-lean');
+            if(!g.STRONG.length&&!g.LEAN.length) html+='<div class="empty">No STRONG or LEAN moneyline picks today — the model still projects a winner in every game below, but no price offers enough edge to bet.</div>';""",
+              """  html+=sec('★ STRONG Picks — BET',g.STRONG,'b-strong')+sec('LEAN Picks — WATCH',g.LEAN,'b-lean');
+            if(!g.STRONG.length&&!g.LEAN.length) html+='<div class="empty">'
+              +(gGone.length
+                ? 'No moneyline pick is still bettable. '+gGone.length+' pick'
+                  +(gGone.length===1?'':'s')+' below reached first pitch before you got '
+                  +'here — see “No longer bettable”.'
+                : 'No STRONG or LEAN moneyline picks today — the model still projects a winner in every game below, but no price offers enough edge to bet.')
+              +'</div>';
+            if(gGone.length){
+              gGone.sort(function(a,b){return (b.conf||0)-(a.conf||0);});
+              html+='<div class="card"><div class="card-h"><span>No longer bettable ('
+                +gGone.length+')</span><span class="t">market gone</span></div>'
+                +'<div class="note" style="border:0;margin:0 0 6px">These were '
+                +'STRONG or LEAN before first pitch. The game has since started or '
+                +'finished, so there is no pregame price left and <b>no edge is shown</b>'
+                +' — an edge measured against an in-play price has already absorbed the '
+                +'runs scored, which is what made one of these read +25pt on a game in '
+                +'its sixth inning.</div>'
+                +gGone.map(function(p){var tm=teamOf(p);
+                  return '<div class="prow" style="flex-wrap:wrap">'
+                    +'<span class="pnm" style="cursor:default;display:flex;align-items:center;gap:6px">'
+                    +teamLogo(tm)+'<b>'+esc(tm||'—')+'</b>'
+                    +'<span class="ptm">'+esc(p.away)+'@'+esc(p.home)+'</span></span>'
+                    +'<span class="badge b-pass" style="opacity:.75">'+esc(p.tier)+' (expired)</span>'
+                    +mktPill(p.gamePk)
+                    +'<span class="pmetric" style="min-width:auto">'+esc(mktWhy(p.gamePk))+'</span>'
+                    +'</div>';}).join('')
+                +'</div>';}""",
+          )
+
+          # ------------------------------------------------------------- 4. tpCandidates
+          edit(
+              "tpCandidates will not offer a started game",
+              """  (D.ml||[]).forEach(function(p){if(p.tier==='STRONG'||p.tier==='LEAN'){out.push({desc:(p.team||'')+' ML ('+p.tier+')',betType:'ml',gamePk:p.gamePk,team:p.team,prob:(p.conf||55)/100});}});""",
+              """  /* A leg is only a candidate while its market exists. Without this the
+               builder offered two in-play moneylines as legs, at model probabilities
+               that no longer priced anything. */
+            (D.ml||[]).forEach(function(p){if((p.tier==='STRONG'||p.tier==='LEAN')&&!mktDead(p.gamePk)){out.push({desc:(p.team||'')+' ML ('+p.tier+')',betType:'ml',gamePk:p.gamePk,team:p.team,prob:(p.conf||55)/100});}});""",
+          )
+
+          # ----------------------------------------------------- 5. parlayVerdict (choke)
+          edit(
+              "parlayVerdict rejects a ticket with a started leg",
+              """  if(legs.length<2)
+              return {valid:false,legs:legs,reason:reason||(legs.length===1
+                ?'Only one leg survived the filters. A single leg is a standalone bet, not a parlay.'
+                :'No leg survived the filters today.')};
+            return {valid:true,legs:legs,reason:null};""",
+              """  if(legs.length<2)
+              return {valid:false,legs:legs,reason:reason||(legs.length===1
+                ?'Only one leg survived the filters. A single leg is a standalone bet, not a parlay.'
+                :'No leg survived the filters today.')};
+            /* THE CHOKEPOINT (2026-09-17). Every parlay card on this page -- model
+               parlay, priced parlay, ML/RL parlay, HR tickets -- renders through this
+               verdict, so this is the one place that can stop all of them at once.
+
+               It has to be here rather than in each card because the defect was not
+               confined to the moneyline. The payload published at 2026-09-17T00:07Z
+               built a MODEL PARLAY out of LAD +1.5 and TB +1.5 with both games already
+               underway. Those are run-line legs; the moneyline fix could not have seen
+               them. What they share with the in-play moneylines is only this: a leg
+               whose game has started cannot be placed at the price it was quoted at.
+
+               A ticket is refused rather than trimmed. Dropping a leg silently changes
+               the bet the pipeline priced and the payout it published, which would be a
+               different ticket wearing the same name. */
+            var gone=legs.filter(function(l){return l.gamePk!=null&&mktDead(l.gamePk);});
+            if(gone.length)
+              return {valid:false,legs:legs,reason:
+                gone.length+' of '+legs.length+' legs are on games that have already '
+                +'started or finished ('+gone.map(function(l){
+                    return (legDesc(l)||l.name||'leg')+' — '+mktWhy(l.gamePk);
+                  }).join('; ')+'). This ticket was priced before first pitch and cannot '
+                +'be placed at that price now, so it is not shown as a parlay. Trimming '
+                +'the dead legs would be a different bet with the same name.'};
+            return {valid:true,legs:legs,reason:null};""",
+          )
+
+          # --------------------------------------------------------------- 6. propCount
+          edit(
+              "propCount('ml') counts only what is bettable",
+              """if(k==='ml')return (D.ml||[]).filter(function(p){return p.tier==='STRONG'||p.tier==='LEAN';}).length;""",
+              """if(k==='ml')return (D.ml||[]).filter(function(p){return (p.tier==='STRONG'||p.tier==='LEAN')&&!mktDead(p.gamePk);}).length;""",
+          )
+
+          # ---------------------------------------------------------------- 7. openProp
+          edit(
+              "openProp('ml') badges the market, not a stale tier",
+              """var c=m.tier==='STRONG'?'b-strong':m.tier==='LEAN'?'b-lean':'b-pass';return '<div class="prow"><span class="pnm" style="cursor:default;display:flex;gap:6px;align-items:center">'+teamLogo(tm)+'<b>'+esc(tm)+'</b><span class="ptm">'+esc(m.away)+'@'+esc(m.home)+'</span></span><span class="badge '+c+'">'+esc(m.tier)+'</span>'+formBadge(m.form)+'<span class="pmetric">'+(m.conf!=null?m.conf+'%':'')+'</span></div>';""",
+              """var dead=mktDead(m.gamePk);var c=dead?'b-pass':m.tier==='STRONG'?'b-strong':m.tier==='LEAN'?'b-lean':'b-pass';return '<div class="prow"'+(dead?' style="opacity:.7"':'')+'><span class="pnm" style="cursor:default;display:flex;gap:6px;align-items:center">'+teamLogo(tm)+'<b>'+esc(tm)+'</b><span class="ptm">'+esc(m.away)+'@'+esc(m.home)+'</span></span><span class="badge '+c+'">'+esc(dead?m.tier+' (expired)':m.tier)+'</span>'+mktPill(m.gamePk)+formBadge(m.form)+'<span class="pmetric">'+(m.conf!=null?m.conf+'%':'')+'</span></div>';""",
+          )
+
+          # ------------------------------------------------------------- 8. gameParlay4
+          edit(
+              "gameParlay4 builds nothing for a started game",
+              """function gameParlay4(g,m,tm){
+            var pk=g.gamePk, legs=[];""",
+              """function gameParlay4(g,m,tm){
+            var pk=g.gamePk, legs=[];
+            /* Every leg of a per-game parlay is on the same game, so once that game
+               starts the whole ticket is in-play. There is nothing to salvage and
+               nothing to trim. */
+            if(mktDead(pk)) return [];""",
+          )
+          edit(
+              "parlayDrop3 says why there are no legs",
+              """  if(!legs.length)
+              return '<details class="s3d"><summary>4-leg game parlay</summary>'
+                +'<div class="s3db"><div class="s3note">No qualified legs for this game today.</div></div></details>';""",
+              """  if(!legs.length)
+              return '<details class="s3d"><summary>4-leg game parlay</summary>'
+                +'<div class="s3db"><div class="s3note">'
+                +(mktDead(g.gamePk)
+                  ? 'This game '+(mktState(g.gamePk)==='LIVE'?'is underway':'is final')
+                    +'. Every leg of a game parlay is on this game, so there is no '
+                    +'pregame ticket left to show.'
+                  : 'No qualified legs for this game today.')
+                +'</div></div></details>';""",
+          )
+
+
+          # ---------------------------------------------------- 9. the prop hero tiles
+          # The moneyline was never the only tile reading a pre-first-pitch label as a
+          # live one. Rendered against the 2026-09-17T00:07Z payload, FOUR of the five
+          # heroes were recommending bets on games already underway:
+          #
+          #   BEST +1.5          LAD +1.5          LAD@CIN   marketState LIVE
+          #   BEST 1+ HIT        Freddie Freeman   LAD@CIN   marketState LIVE
+          #   TOP HOME RUN       Juan Soto         BAL@NYM   marketState LIVE
+          #   BEST MODEL PARLAY  LAD +1.5 + TB +1.5   both games LIVE
+          #
+          # Only BEST MONEYLINE was right, because it was the one that had been fixed.
+          # Each board is already ranked, and each row already carries gamePk -- and the
+          # HR rows carry their own marketState. So the tile takes the best row whose
+          # market still exists, says which rank that is, and says how many it skipped.
+          # It does not silently promote row 2 as though it were row 1.
+          edit(
+              "hProp takes the best row whose market still exists",
+              """  var rows=((D.boards||{})[fam])||[];
+            var r=rows[0];
+            if(!r) return hNone(cat,boardWhyText(fam),boardState(fam));""",
+              """  var all=((D.boards||{})[fam])||[];
+            var rows=all.filter(function(x){return !mktDeadRow(x);});
+            var r=rows[0];
+            if(!r) return hNone(cat,
+              all.length
+                ? 'Every candidate on this board is in a game that has already started '
+                  + 'or finished, so there is no pregame price left to take.'
+                : boardWhyText(fam),
+              all.length ? 'NO PREGAME MARKET' : boardState(fam));""",
+          )
+          edit(
+              "hProp says which rank it actually took",
+              """    (isNum(r.order)?'Batting '+r.order+'. ':'')+'Ranked #1 of '+rows.length+'.');""",
+              """    (isNum(r.order)?'Batting '+r.order+'. ':'')
+                +'Ranked #1 of '+rows.length+' still bettable'
+                +(all.length>rows.length
+                  ? ' \u00b7 '+(all.length-rows.length)+' of '+all.length
+                    +' skipped, game underway or final'
+                  : '')+'.');""",
+          )
+          edit(
+              "hHomeRun takes the best row whose market still exists",
+              """  var rows=(D.hrProps||[]).length?D.hrProps:(D.hrCandidates||[]);
+            var r=rows[0];
+            if(!r) return hNone('Top home run','No home-run candidate cleared the lineup gate today.');""",
+              """  var all=(D.hrProps||[]).length?D.hrProps:(D.hrCandidates||[]);
+            /* These rows publish their own marketState and their own bettable flag. The
+               tile was taking row 1 regardless: today that is Juan Soto in a game in
+               progress. */
+            var rows=all.filter(function(x){return !mktDeadRow(x);});
+            var r=rows[0];
+            if(!r) return hNone('Top home run',
+              all.length
+                ? 'Every home-run candidate is in a game that has already started or '
+                  + 'finished, so there is no pregame price left to take.'
+                : 'No home-run candidate cleared the lineup gate today.',
+              all.length ? 'NO PREGAME MARKET' : undefined);""",
+          )
+          edit(
+              "hHomeRun footer names what it skipped",
+              """    [(r.iso!=null?'ISO '+r.iso:''),(r.hr!=null?r.hr+' HR':''),
+               (r.wind||''),(r.temp?r.temp+'\u00b0':'')].filter(Boolean).join(' \u00b7 '));""",
+              """    [(r.iso!=null?'ISO '+r.iso:''),(r.hr!=null?r.hr+' HR':''),
+               (r.wind||''),(r.temp?r.temp+'\u00b0':''),
+               (all.length>rows.length
+                  ? (all.length-rows.length)+' of '+all.length
+                    +' skipped, game underway or final'
+                  : '')].filter(Boolean).join(' \u00b7 '));""",
+          )
+          edit(
+              "hPlus15 takes the best game that has not started",
+              """  var q=(a.picks||[])[0];
+            if(!q) return hNone('Best +1.5','The +1.5 model priced no game on this slate.','NO PICK TODAY');""",
+              """  var allq=a.picks||[];
+            var qs=allq.filter(function(x){return !mktDeadRow(x);});
+            var q=qs[0];
+            if(!q) return hNone('Best +1.5',
+              allq.length
+                ? 'Every game the +1.5 model priced has already started or finished, so '
+                  + 'there is no pregame run line left to take.'
+                : 'The +1.5 model priced no game on this slate.',
+              allq.length ? 'NO PREGAME MARKET' : 'NO PICK TODAY');""",
+          )
+          edit(
+              "hModelParlay refuses a ticket whose games have started",
+              """  if(legs.length<2)
+              return hNone('Best model parlay',
+                'Fewer than two candidates cleared the model\\u2019s own gates today.');""",
+              """  if(legs.length<2)
+              return hNone('Best model parlay',
+                'Fewer than two candidates cleared the model\\u2019s own gates today.');
+            /* This tile does not render through parlayVerdict, which is why the
+               chokepoint there did not save it. Today's payload built the model parlay
+               from LAD +1.5 and TB +1.5 with BOTH games underway, and the tile showed
+               it as the day's best combination. The legs are not trimmed to rescue the
+               ticket: two legs minus a dead one is a single bet, and a single bet
+               presented as a parlay is a different product wearing this one's name. */
+            var mpGone=legs.filter(function(l){return l.gamePk!=null&&mktDead(l.gamePk);});
+            if(mpGone.length)
+              return hNone('Best model parlay',
+                mpGone.length+' of '+legs.length+' legs are on games that have already '
+                +'started or finished ('+mpGone.map(function(l){
+                    return String((l&&l.desc)||'leg')+' \u2014 '+mktWhy(l.gamePk);
+                  }).join('; ')+'). It cannot be placed at the price it was built on.',
+                'NO PREGAME MARKET');""",
+          )
+          edit(
+              "hParlay refuses a ticket whose games have started",
+              """  if(!t.parlayValid||legs.length<2)
+              return hNone('Best priced parlay', t.noParlayReason||'No two legs cleared the gates together today.');""",
+              """  if(!t.parlayValid||legs.length<2)
+              return hNone('Best priced parlay', t.noParlayReason||'No two legs cleared the gates together today.');
+            var ppGone=legs.filter(function(l){return l.gamePk!=null&&mktDead(l.gamePk);});
+            if(ppGone.length)
+              return hNone('Best priced parlay',
+                ppGone.length+' of '+legs.length+' legs are on games that have already '
+                +'started or finished. A book-priced ticket cannot be placed after first '
+                +'pitch at the price it was captured at.','NO PREGAME MARKET');""",
+          )
+
+
+          def main() -> int:
+              for fn in FILES:
+                  p = pathlib.Path(fn)
+                  if not p.exists():
+                      FAIL.append("%s: missing" % fn)
+                      continue
+                  s = p.read_text(encoding="utf-8")
+                  before = len(s)
+                  for label, old, new in EDITS:
+                      n = s.count(old)
+                      if n != 1:
+                          FAIL.append("%s / %s: anchor found %d time(s), expected 1"
+                                      % (fn, label, n))
+                          continue
+                      s = s.replace(old, new, 1)
+                  if FAIL:
+                      continue
+                  # The shared helper must be defined exactly once per file.
+                  if s.count("function mktDead(pk)") != 1:
+                      FAIL.append("%s: mktDead defined %d times"
+                                  % (fn, s.count("function mktDead(pk)")))
+                      continue
+                  if "var DEAD={LIVE:1,CLOSED:1};" in s:
+                      FAIL.append("%s: hMoneyline still has its private DEAD set" % fn)
+                      continue
+                  p.write_text(s, encoding="utf-8")
+                  print("  %-14s %d -> %d bytes" % (fn, before, len(s)))
+
+              if FAIL:
+                  print("\nANCHOR FAILURES -- nothing written:")
+                  for f in FAIL:
+                      print("  - " + f)
+                  return 1
+              print("\nall %d anchors matched in all %d files" % (len(EDITS), len(FILES)))
+              return 0
+
+
+          if __name__ == "__main__":
+              sys.exit(main())
+
+          CLAUDE_EOF
+          python3 -m py_compile /tmp/p/patch_market_state.py
+          echo "patch compiles"
+
+      - name: Apply it (fails loudly if any anchor moved)
+        run: |
+          cp /tmp/p/patch_market_state.py .
+          python3 patch_market_state.py
+          rm -f patch_market_state.py
+          rm -rf __pycache__
+
+      - name: The DATA PAYLOAD must be byte-identical
+        run: |
+          python3 - <<'PYEOF'
+          import hashlib
+          import json
+          import pathlib
+          import sys
+          M = '<script id="bb-data" type="application/json">'
+          want = json.loads(pathlib.Path('/tmp/payload_sha.json').read_text())
+          bad = []
+          for fn, sha in want.items():
+              s = pathlib.Path(fn).read_text(encoding='utf-8')
+              i = s.index(M) + len(M)
+              j = s.index('</script>', i)
+              got = hashlib.sha256(s[i:j].encode('utf-8')).hexdigest()
+              print('%s %s' % (fn, 'unchanged' if got == sha else 'CHANGED'))
+              if got != sha:
+                  bad.append(fn)
+          if bad:
+              sys.exit('this patch changed the data payload in %s -- it is a '
+                       'renderer change and must not touch a number' % bad)
+          print('every payload is byte-identical')
+          PYEOF
+
+      - name: Structure gates
+        run: |
+          python3 - <<'PYEOF'
+          import pathlib
+          import sys
+          FAIL = []
+          # (needle, expected count, why it matters)
+          CHECKS = [
+              ('function mktDead(pk)', 1,
+               'the shared predicate must be defined exactly once'),
+              ('function mktDeadRow(r)', 1,
+               'the row-level variant must be defined exactly once'),
+              ('var DEAD={LIVE:1,CLOSED:1};', 0,
+               "hMoneyline's private copy of the dead-state set must be gone"),
+              ('var rows=all.filter(function(m){return !mktDead(m.gamePk);});', 1,
+               'the moneyline hero must filter through the shared predicate'),
+              ('if((t===\'STRONG\'||t===\'LEAN\')&&mktDead(p.gamePk)){gGone.push(p);return;}', 1,
+               'the Picks tiers must not keep an expired STRONG or LEAN'),
+              ('No longer bettable (', 1,
+               'the expired picks must be shown, not deleted'),
+              ('var gone=legs.filter(function(l){return l.gamePk!=null&&mktDead(l.gamePk);});', 1,
+               'parlayVerdict must reject a ticket with a started leg'),
+              ('var mpGone=legs.filter(', 1,
+               'the model-parlay hero does not use parlayVerdict and needs its own gate'),
+              ('var ppGone=legs.filter(', 1,
+               'the priced-parlay hero needs the same gate'),
+              ('var rows=all.filter(function(x){return !mktDeadRow(x);});', 2,
+               'hProp and hHomeRun must both take the best LIVE-free row'),
+              ('var qs=allq.filter(function(x){return !mktDeadRow(x);});', 1,
+               'the +1.5 hero must skip a game that has started'),
+              ('if(mktDead(pk)) return [];', 1,
+               'a per-game parlay on a started game must build nothing'),
+              ('(p.tier===\'STRONG\'||p.tier===\'LEAN\')&&!mktDead(p.gamePk)', 2,
+               'tpCandidates and propCount must both agree on what is actionable'),
+              ('still bettable', 2,
+               'the prop heroes must say which rank they actually took'),
+              # These must survive from the previous change.
+              ('<section id="picks" class="active">', 1,
+               'Picks stays the default section'),
+              ("var TABS=[['picks','Picks'],['slate','Slate'],", 1,
+               'Picks stays the first tab'),
+              ('class="heromore"', 1, 'OTHER PICKS stays a closed drawer'),
+              ('boardRetired(t[1])', 1,
+               'a retired market still cannot reach a hero tile'),
+          ]
+          for fn in ('current.html', 'index.html', 'preview.html'):
+              s = pathlib.Path(fn).read_text(encoding='utf-8')
+              for needle, want, why in CHECKS:
+                  got = s.count(needle)
+                  if got != want:
+                      FAIL.append('%s: %r found %d, expected %d -- %s'
+                                  % (fn, needle[:52], got, want, why))
+          if FAIL:
+              print('STRUCTURE GATE FAILURES:')
+              for f in FAIL:
+                  print('  - ' + f)
+              sys.exit(1)
+          print('every structure gate passed in all three files')
+          PYEOF
+
+      - name: The page script must still parse
+        run: |
+          # A patch that breaks the inline script takes the whole page down, and
+          # a structural grep cannot see a syntax error. This does not render
+          # the page -- the render QA was done locally against these exact
+          # bytes at 375/414/768/1200/1440 -- it only proves the script is
+          # still valid JavaScript.
+          node - <<'JSEOF'
+          const fs = require('fs');
+          let bad = 0;
+          for (const fn of ['current.html', 'index.html', 'preview.html']) {
+            const s = fs.readFileSync(fn, 'utf8');
+            const re = /<script(?![^>]*type="application\/json")[^>]*>([\s\S]*?)<\/script>/g;
+            let m, n = 0, chars = 0;
+            while ((m = re.exec(s)) !== null) {
+              const code = m[1];
+              if (!code.trim()) continue;
+              n++; chars += code.length;
+              try { new Function(code); }
+              catch (e) {
+                console.log('SYNTAX ERROR in ' + fn + ' script #' + n + ': ' + e.message);
+                bad++;
+              }
+            }
+            console.log(fn + ': ' + n + ' inline script(s), ' + chars + ' chars, parsed');
+          }
+          if (bad) { console.log('FAIL: ' + bad + ' script(s) do not parse'); process.exit(1); }
+          console.log('every inline script parses');
+          JSEOF
+
+      - name: Commit, and remove this installer in the same commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/apply-market-state.yml
+          git add -A current.html index.html preview.html \
+            .github/workflows/apply-market-state.yml
+          git status --short
+          if git diff --cached --name-status | grep -E '^(A|M)\s+\.github/workflows/'; then
+            echo 'FAIL: this commit creates or updates a workflow file'; exit 1
+          fi
+          git commit -m "A pick whose game has started is not a pick" \
+            -m "Four of the five hero tiles were recommending bets on games already" \
+            -m "underway. Only the moneyline tile was right, because it was the only" \
+            -m "one that had been fixed -- which is the actual bug: the earlier change" \
+            -m "treated a symptom." \
+            -m "" \
+            -m "D.ml[].tier, a parlay leg and a board row are model-side labels." \
+            -m "They are computed before first pitch and nothing in the payload" \
+            -m "retracts them. predictions[].marketState does expire. Reading the" \
+            -m "first as a live verdict is how a +25.1pt edge on a game in its sixth" \
+            -m "inning outranked the slate: real arithmetic against an in-play" \
+            -m "implied probability that had already absorbed the runs scored." \
+            -m "" \
+            -m "One predicate now, read from the same marketState the pipeline" \
+            -m "writes, applied at every consumer that can recommend a bet: all five" \
+            -m "heroes, the Picks tiers, parlayVerdict, the parlay builder, the" \
+            -m "per-game parlay, the market counter and the moneyline browser." \
+            -m "" \
+            -m "Expired picks are not hidden. They move to a section that says what" \
+            -m "happened to them and shows no edge, because a page that silently" \
+            -m "drops its own expired opinions looks like a page that never had any." \
+            -m "Parlays are refused rather than trimmed: two legs minus a dead one" \
+            -m "is a single bet wearing a parlay's name." \
+            -m "" \
+            -m "The data payload is byte-identical. This changes only what the" \
+            -m "renderer is willing to call a bet." \
+            -m "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>" \
+            -m "Claude-Session: https://claude.ai/code/session_01ANJSLwtfnVuf8PPgpvpWtb"
+          git push origin HEAD:main || (git pull --rebase origin main && git push origin HEAD:main)
+
+      - name: Report
+        if: always()
+        run: |
+          {
+            echo "### market state"
+            echo
+            git log --oneline -1 || true
+          } >> "$GITHUB_STEP_SUMMARY"
