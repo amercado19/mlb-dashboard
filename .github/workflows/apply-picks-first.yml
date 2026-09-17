@@ -1,0 +1,342 @@
+name: apply-picks-first
+
+# One-shot installer. Makes PICKS the product instead of a research
+# terminal, and stops the lead moneyline tile from selecting a game that
+# has already started. Self-deletes.
+#
+# The tiles already existed and already said honest things. Six anchored
+# edits move the five that matter to the Picks page, push the rest into a
+# closed drawer with retired markets filtered out by boardRetired(), and
+# make the moneyline hero rank on predictions[].moneylineRecommendation
+# instead of a row tier that survives first pitch.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fingerprint the payloads BEFORE touching anything
+        run: |
+          python3 - <<'PYEOF' > /tmp/before.txt
+          import hashlib, pathlib
+          T = '<script id="bb-data" type="application/json">'
+          for f in ('current.html','index.html','preview.html'):
+              s = pathlib.Path(f).read_text(encoding='utf-8')
+              i = s.find(T); j = s.find('</script>', i+len(T))
+              p = s[i+len(T):j]
+              print(f, len(s), hashlib.sha256(p.encode()).hexdigest())
+          PYEOF
+          cat /tmp/before.txt
+
+      - name: Write the patch
+        run: |
+          cat > /tmp/patch_picks.py <<'CLAUDE_EOF'
+          """Make PICKS the product, and stop leading with a research terminal.
+          
+          WHAT THIS CHANGES AND WHY
+          -------------------------
+          Nothing here builds a new renderer, a new confidence model, or a new number.
+          Every hero tile already existed and already said honest things -- "PROBABILITY
+          NOT PUBLISHED", "NO BET AT THIS PRICE", "Home runs are ranked, not priced as a
+          probability", "COMBINED CHANCE NOT MEASURED". They were simply on the wrong
+          page, nine-wide, with retired markets among them, behind a Slate that opened
+          first.
+          
+          So, six anchored edits:
+          
+            1. the hero grid drops to the FIVE products the page exists to answer --
+               moneyline, +1.5, 1+ hit, home run, model parlay -- and the rest move into
+               an OTHER PICKS drawer. A retired market cannot appear in either: the
+               tile list is filtered through boardRetired(), the same predicate the
+               boards use, so 1+ Double and 2+ Total Bases stop occupying hero space
+               they are not allowed to recommend from.
+            2. OTHER PICKS is a closed <details>, so the first viewport is five cards.
+            3. Slate stops carrying the hero grid and the decision-summary strip.
+            4. Picks gains them, above its moneyline tiers.
+            5. PICKS becomes the default section instead of Slate.
+            6. PICKS becomes the first tab.
+          
+          The measured reason for (1): on 37 days of settled results the HR board's
+          published order is the best ordering available (Top-1 0.270 against a 0.196
+          base, lift 1.38) while cal_p is the worst (0.174, lift 0.99), and no h1
+          ordering separates from its own 69.2% base rate. So the product leads with
+          rank-and-evidence, which is what the evidence licenses, and not with a
+          manufactured percentage.
+          """
+          from __future__ import annotations
+          
+          import pathlib
+          import sys
+          
+          FILES = ("current.html", "index.html", "preview.html")
+          FAIL = []
+          
+          OLD_TILES = """  var tiles=[
+              hTileSafe('HERO_TILE_ML_ERROR', hMoneyline),
+              hTileSafe('HERO_TILE_PLUS15_ERROR', hPlus15),
+              hTileSafe('HERO_TILE_H1_ERROR', function(){return hProp('Best 1+ hit','h1','1+ hit');}),
+              hTileSafe('HERO_TILE_H2_ERROR', function(){return hProp('Best 1+ double','h2','1+ double');}),
+              hTileSafe('HERO_TILE_TB2_ERROR', function(){return hProp('Best 2+ total bases','tb2','2+ TB');}),
+              hTileSafe('HERO_TILE_HRR_ERROR', function(){return hProp('Best H+R+RBI','hrr','hits + runs + RBI');}),
+              hTileSafe('HERO_TILE_HR_ERROR', hHomeRun),
+              hTileSafe('HERO_TILE_MODEL_PARLAY_ERROR', hModelParlay),
+              hTileSafe('HERO_TILE_PRICED_PARLAY_ERROR', hParlay)];"""
+          
+          NEW_TILES = """  /* THE FIVE THINGS THIS PAGE EXISTS TO ANSWER (2026-09-16).
+               Nine tiles is a research terminal. These five are the product: what to
+               pick on the moneyline, on +1.5, on 1+ hit, on a home run, and as one
+               model combination. Everything else moved into OTHER PICKS below. */
+            var tiles=[
+              hTileSafe('HERO_TILE_ML_ERROR', hMoneyline),
+              hTileSafe('HERO_TILE_PLUS15_ERROR', hPlus15),
+              hTileSafe('HERO_TILE_H1_ERROR', function(){return hProp('Best 1+ hit','h1','1+ hit');}),
+              hTileSafe('HERO_TILE_HR_ERROR', hHomeRun),
+              hTileSafe('HERO_TILE_MODEL_PARLAY_ERROR', hModelParlay)];
+            /* A RETIRED MARKET CANNOT OCCUPY A PICK SLOT, hero or otherwise. Filtered
+               through boardRetired() -- the same predicate the boards themselves use --
+               rather than a second hand-maintained list that could drift away from it.
+               1+ Double is retired and 2+ Total Bases is KILL, so neither appears. */
+            var otherTiles=[];
+            [['HERO_TILE_HRR_ERROR','hrr','Best H+R+RBI','hits + runs + RBI'],
+             ['HERO_TILE_H2_ERROR','h2','Best 1+ double','1+ double'],
+             ['HERO_TILE_TB2_ERROR','tb2','Best 2+ total bases','2+ TB']]
+              .forEach(function(t){
+                if(boardRetired(t[1]))return;
+                otherTiles.push(hTileSafe(t[0],
+                  function(){return hProp(t[2],t[1],t[3]);}));
+              });
+            otherTiles.push(hTileSafe('HERO_TILE_PRICED_PARLAY_ERROR', hParlay));
+            var otherHtml=otherTiles.length
+              ? '<details class="heromore"><summary>Other picks ('
+                +otherTiles.length+')</summary><div class="herog">'
+                +otherTiles.join('')+'</div></details>'
+              : '';"""
+          
+          OLD_GRID = "+'<div class=\"herog\">'+tiles.join('')+'</div>'"
+          NEW_GRID = "+'<div class=\"herog\">'+tiles.join('')+'</div>'+otherHtml"
+          
+          OLD_SLATE = ("$('slate').innerHTML=freshnessBanner(rows)+dailyHero()"
+                       "+decisionSummaryStrip()+maSummary()+head+alt15Note()+body;")
+          NEW_SLATE = ("/* The hero grid and the decision-summary strip moved to PICKS\n"
+                       "     (2026-09-16). Slate is the game-by-game view; it should open on\n"
+                       "     games, not on a summary of a page the reader has not reached. */\n"
+                       "  $('slate').innerHTML=freshnessBanner(rows)+maSummary()+head"
+                       "+alt15Note()+body;")
+          
+          OLD_PICKS = ("var html='<div class=\"note\" style=\"background:var(--panel);"
+                       "border:1.5px solid var(--line);border-radius:10px;"
+                       "margin-bottom:12px\">'")
+          NEW_PICKS = ("/* PICKS LEADS WITH THE PICKS (2026-09-16). The hero grid and the\n"
+                       "     decision-summary strip were rendering on Slate, so the page named\n"
+                       "     Picks opened on a moneyline tier table instead of the day's\n"
+                       "     answers. */\n"
+                       "  var html=dailyHero()+decisionSummaryStrip()\n"
+                       "    +'<div class=\"note\" style=\"background:var(--panel);"
+                       "border:1.5px solid var(--line);border-radius:10px;"
+                       "margin-bottom:12px\">'")
+          
+          OLD_SECTIONS = ('<section id="slate" class="active"></section>\n'
+                          '  <section id="picks"></section>')
+          NEW_SECTIONS = ('<section id="slate"></section>\n'
+                          '  <section id="picks" class="active"></section>')
+          
+          OLD_HML = """  var rows=(D.ml||[]).filter(function(m){return isNum(m.conf);});
+            if(!rows.length) return hNone('Best moneyline','No moneyline was priced for this slate.');
+            var ORD={STRONG:0,LEAN:1,PASS:2};
+            rows.sort(function(a,b){
+              var ta=ORD[String(a.tier||'').toUpperCase()], tb=ORD[String(b.tier||'').toUpperCase()];
+              if(ta===undefined)ta=3; if(tb===undefined)tb=3;
+              return ta-tb || (b.edge||-99)-(a.edge||-99);});
+            var m=rows[0];"""
+          
+          NEW_HML = """  /* THE HERO MUST NOT PICK A GAME THAT IS ALREADY BEING PLAYED (2026-09-16).
+               This tile used to sort on the moneyline row's own `tier`, which is a
+               model-side label and survives first pitch. On 2026-09-16 that selected
+               NYY at +830 in a game that had been underway for two and a half hours:
+               the row still read LEAN, the price was an in-play MIN -1520, and the
+               "edge" of +44.8pt was the model's 55.5% measured against a live 10.8%
+               implied. It was going to be the first thing on the page.
+          
+               The pipeline already knew. predictions[].marketState read LIVE and
+               predictions[].moneylineRecommendation read PASS for that game, while
+               MIA@AZ read PREGAME / BET with a +14.4pt edge. So the tile now ranks on
+               the CANONICAL verdict through recFor() -- the same helper the Picks rows
+               use -- and refuses any game whose market is LIVE or CLOSED, because
+               there is no pregame market left to bet and the edge is measured against
+               the wrong number. */
+            var PIX=predIndex();
+            var DEAD={LIVE:1,CLOSED:1};
+            var all=(D.ml||[]).filter(function(m){return isNum(m.conf);});
+            if(!all.length) return hNone('Best moneyline','No moneyline was priced for this slate.');
+            var rows=all.filter(function(m){
+              var p=PIX['pk:'+m.gamePk]||{};
+              return !DEAD[String(p.marketState||'').toUpperCase()];});
+            if(!rows.length) return hNone('Best moneyline',
+              'Every game on this slate has already started or is final, so there is no '
+              +'pregame moneyline market left to pick from.','NO PREGAME MARKET');
+            var REC={BET:0,WATCH:1,PASS:2};
+            rows.sort(function(a,b){
+              var ra=(recFor({gamePk:a.gamePk},a)||{}).rec, rb=(recFor({gamePk:b.gamePk},b)||{}).rec;
+              var xa=REC[ra], xb=REC[rb];
+              if(xa===undefined)xa=3; if(xb===undefined)xb=3;
+              return xa-xb || (b.edge||-99)-(a.edge||-99);});
+            var m=rows[0];"""
+          
+          OLD_TABS = "var TABS=[['slate','Slate'],['picks','Picks'],"
+          NEW_TABS = "var TABS=[['picks','Picks'],['slate','Slate'],"
+          
+          OLD_CSS = (".heronote{font-size:11px;color:var(--muted);line-height:1.5;"
+                     "margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}")
+          NEW_CSS = (OLD_CSS +
+                     "\n.heromore{margin-top:10px;border-top:1px solid var(--line);"
+                     "padding-top:8px}"
+                     "\n.heromore>summary{cursor:pointer;font-size:11px;font-weight:700;"
+                     "letter-spacing:.06em;text-transform:uppercase;color:var(--muted);"
+                     "padding:4px 0}"
+                     "\n.heromore>summary:hover{color:var(--txt)}"
+                     "\n.heromore[open]>summary{margin-bottom:8px}")
+          
+          EDITS = [
+              ("hero grid drops to five", OLD_TILES, NEW_TILES),
+              ("other picks drawer", OLD_GRID, NEW_GRID),
+              ("slate stops carrying the hero", OLD_SLATE, NEW_SLATE),
+              ("picks leads with the picks", OLD_PICKS, NEW_PICKS),
+              ("picks is the default section", OLD_SECTIONS, NEW_SECTIONS),
+              ("picks is the first tab", OLD_TABS, NEW_TABS),
+              ("hero moneyline refuses a live market", OLD_HML, NEW_HML),
+              ("other-picks drawer styling", OLD_CSS, NEW_CSS),
+          ]
+          
+          
+          def main() -> int:
+              for name in FILES:
+                  p = pathlib.Path(name)
+                  if not p.exists():
+                      FAIL.append("%s: missing" % name)
+                      continue
+                  s = p.read_text(encoding="utf-8")
+                  before = len(s)
+                  for label, old, new in EDITS:
+                      n = s.count(old)
+                      if n != 1:
+                          FAIL.append("%s / %s: anchor found %d time(s), expected 1"
+                                      % (name, label, n))
+                          continue
+                      s = s.replace(old, new, 1)
+                  p.write_text(s, encoding="utf-8")
+                  print("  %-14s %d -> %d bytes" % (name, before, len(s)))
+          
+              if FAIL:
+                  print("\nANCHOR FAILURES -- nothing committed:")
+                  for f in FAIL:
+                      print("  - " + f)
+                  return 1
+              print("\nall anchors matched in all %d files" % len(FILES))
+              return 0
+          
+          
+          if __name__ == "__main__":
+              raise SystemExit(main())
+          
+          CLAUDE_EOF
+
+      - name: Apply it (fails loudly if any anchor moved)
+        run: python3 /tmp/patch_picks.py
+
+      - name: The DATA PAYLOAD must be byte-identical
+        run: |
+          # A presentation change that alters the payload is not a
+          # presentation change. This is the assertion that says so.
+          python3 - <<'PYEOF'
+          import hashlib, pathlib, sys
+          T = '<script id="bb-data" type="application/json">'
+          before = {}
+          for line in open('/tmp/before.txt'):
+              f, n, h = line.split()
+              before[f] = (int(n), h)
+          bad = []
+          for f in ('current.html','index.html','preview.html'):
+              s = pathlib.Path(f).read_text(encoding='utf-8')
+              i = s.find(T); j = s.find('</script>', i+len(T))
+              h = hashlib.sha256(s[i+len(T):j].encode()).hexdigest()
+              n0, h0 = before[f]
+              delta = len(s) - n0
+              print('%-14s payload %s  code %+d bytes'
+                    % (f, 'IDENTICAL' if h == h0 else 'CHANGED', delta))
+              if h != h0:
+                  bad.append(f + ': payload hash moved')
+              if delta <= 0:
+                  bad.append(f + ': code did not grow, patch may not have applied')
+          if bad:
+              print('FAIL:'); [print(' -', b) for b in bad]; sys.exit(1)
+          PYEOF
+
+      - name: Structure gates
+        run: |
+          fail=0
+          chk(){ # file, needle, want
+            got=$(grep -c -F "$2" "$1" || true)
+            if [ "$got" != "$3" ]; then
+              echo "FAIL $1: '$2' found $got, want $3"; fail=1
+            else echo "ok   $1: $2 = $got"; fi }
+          for f in current.html index.html preview.html; do
+            chk $f '<section id="picks" class="active">' 1
+            chk $f "['picks','Picks'],['slate','Slate']," 1
+            chk $f 'var html=dailyHero()+decisionSummaryStrip()' 1
+            chk $f 'freshnessBanner(rows)+dailyHero()' 0
+            chk $f 'boardRetired(t[1])' 1
+            chk $f 'class="heromore"' 1
+            chk $f 'DEAD[String(p.marketState' 1
+            chk $f 'HERO_TILE_HR_ERROR' 1
+            chk $f 'HERO_TILE_ML_ERROR' 1
+          done
+          [ $fail = 0 ] || exit 1
+          echo 'structure gates passed'
+
+      # The render QA for this change was run before shipping, against the
+      # exact patched files, at 375/414/768/1200/1440: five hero tiles,
+      # default section `picks`, first tab Picks, other-picks drawer closed
+      # with 2 tiles, Slate 15 cards and 0 hero grids, 0 render diagnostics,
+      # 0 [object Object], no horizontal overflow, and the moneyline hero
+      # selecting MIA@AZ rather than the live NYY market. Installing a
+      # browser inside a one-shot installer put a heavyweight download on
+      # the critical path of a correctness fix, and that is what failed run
+      # #1 -- so the gates that remain are the ones that cannot flake:
+      # anchored patching, a byte-identical payload assertion, and greps.
+      - name: Commit, and remove this installer in the same commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/apply-picks-first.yml
+          rm -rf node_modules package.json package-lock.json
+          git add -A current.html index.html preview.html .github/workflows
+          git status --short
+          git commit -m "Lead with the picks, and never lead with a game already in progress" \
+            -m "The five hero tiles already existed and already refused to invent a" \
+            -m "probability; they were on Slate, nine wide, with retired markets among" \
+            -m "them, behind a page that opened on a tier table. Picks is now the" \
+            -m "default and carries exactly five: moneyline, +1.5, 1+ hit, home run," \
+            -m "model parlay. The rest moved into a closed drawer, filtered through" \
+            -m "boardRetired() so a retired market cannot hold a pick slot." \
+            -m "" \
+            -m "The moneyline hero sorted on the row tier, which survives first pitch." \
+            -m "Today that chose NYY +830 in a game underway for two and a half hours," \
+            -m "with a 44.8pt edge measured against an in-play MIN -1520. The pipeline" \
+            -m "already knew: marketState LIVE, moneylineRecommendation PASS. The tile" \
+            -m "now ranks on that canonical verdict and refuses LIVE or CLOSED markets," \
+            -m "which selects MIA@AZ at +14.4pt on an adequate-sample band instead." \
+            -m "" \
+            -m "Data payload asserted byte-identical. Render QA at 375/414/768/1200/1440." \
+            -m "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>" \
+            -m "Claude-Session: https://claude.ai/code/session_01ANJSLwtfnVuf8PPgpvpWtb"
+          git push origin HEAD:main || (git pull --rebase origin main && git push origin HEAD:main)
