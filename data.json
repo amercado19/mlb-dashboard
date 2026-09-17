@@ -1,6 +1,6 @@
 {
  "date": "2026-09-17",
- "generated_at": "2026-09-17T22:12:02",
+ "generated_at": "2026-09-17T23:01:09",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "914a599"
+  "gitCommit": "8bd44cc"
  },
  "games": [
   {
@@ -99,7 +99,7 @@
    "confidence": 0.526,
    "tier": "PASS",
    "total": 10.3,
-   "book_total_line": 11.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -233,17 +233,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
      "dir": "out",
-     "mph": 6
+     "mph": 7
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
-    "out_mph": 6
+    "out_mph": 7
    }
   }
  ],
@@ -313,39 +313,6 @@
    ]
   },
   {
-   "player": "Fernando Tatis Jr.",
-   "team": "sd",
-   "game": "sd-col",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 669,
-    "factors": {
-     "sp": 1.029,
-     "park": 1.2,
-     "temp": 1.042
-    },
-    "hr_rate_pa": 0.0429
-   },
-   "edge_score": 68,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.6,
-    "hard_hit_pct": 53.8,
-    "avg_exit_velo": 93.0,
-    "xiso": 0.199,
-    "recent_hr_rate": 0.082
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Max Muncy",
    "team": "lad",
    "game": "lad-cin",
@@ -380,7 +347,7 @@
    ]
   },
   {
-   "player": "Manny Machado",
+   "player": "Fernando Tatis Jr.",
    "team": "sd",
    "game": "sd-col",
    "stat": "HR",
@@ -389,24 +356,24 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 639,
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 669,
     "factors": {
      "sp": 1.029,
      "park": 1.2,
      "temp": 1.042
     },
-    "hr_rate_pa": 0.0511
+    "hr_rate_pa": 0.0429
    },
    "edge_score": 66,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 9.8,
-    "hard_hit_pct": 44.0,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.179,
-    "recent_hr_rate": 0.0431
+    "barrel_pct": 12.6,
+    "hard_hit_pct": 53.8,
+    "avg_exit_velo": 93.0,
+    "xiso": 0.199,
+    "recent_hr_rate": 0.082
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -441,6 +408,39 @@
     "avg_exit_velo": 89.4,
     "xiso": 0.176,
     "recent_hr_rate": 0.0098
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Manny Machado",
+   "team": "sd",
+   "game": "sd-col",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 639,
+    "factors": {
+     "sp": 1.029,
+     "park": 1.2,
+     "temp": 1.042
+    },
+    "hr_rate_pa": 0.0511
+   },
+   "edge_score": 64,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.8,
+    "hard_hit_pct": 44.0,
+    "avg_exit_velo": 90.3,
+    "xiso": 0.179,
+    "recent_hr_rate": 0.0431
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -494,10 +494,10 @@
     "factors": {
      "sp": 1.034,
      "park": 1.105,
-     "temp": 0.988,
+     "temp": 0.994,
      "wind": 0.973
     },
-    "hr_rate_pa": 0.0454
+    "hr_rate_pa": 0.0456
    },
    "edge_score": 58,
    "score_type": "model_score_0_100",
