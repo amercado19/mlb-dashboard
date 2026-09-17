@@ -1,6 +1,6 @@
 {
  "date": "2026-09-17",
- "generated_at": "2026-09-17T16:58:57",
+ "generated_at": "2026-09-17T17:46:11",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -19,23 +19,23 @@
    "home_win_prob": 0.394,
    "pick": "mil",
    "confidence": 0.506,
-   "tier": "PASS",
+   "tier": "LEAN",
    "total": 7.8,
-   "book_total_line": 7.5,
+   "book_total_line": 11.5,
    "wind": {
     "lf": {
-     "dir": "out",
+     "dir": "in",
      "mph": 5
     },
     "cf": {
-     "dir": "out",
-     "mph": 7
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
      "dir": "out",
      "mph": 5
     },
-    "out_mph": 7
+    "out_mph": 5
    }
   },
   {
@@ -47,7 +47,7 @@
    "confidence": 0.478,
    "tier": "PASS",
    "total": 11.3,
-   "book_total_line": 11.5,
+   "book_total_line": 12.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -73,7 +73,7 @@
    "confidence": 0.631,
    "tier": "PASS",
    "total": 9.3,
-   "book_total_line": 7.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -98,22 +98,22 @@
    "pick": "sd",
    "confidence": 0.526,
    "tier": "PASS",
-   "total": 10.6,
+   "total": 10.3,
    "book_total_line": 10.5,
    "wind": {
     "lf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "in",
+     "mph": 2
     },
     "cf": {
      "dir": "cross",
-     "mph": 2
+     "mph": 0
     },
     "rf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "out",
+     "mph": 2
     },
-    "out_mph": 0
+    "out_mph": 2
    }
   },
   {
@@ -124,7 +124,7 @@
    "pick": "hou",
    "confidence": 0.452,
    "tier": "PASS",
-   "total": 10.3,
+   "total": 10.6,
    "book_total_line": 9.0,
    "wind": {
     "lf": {
@@ -155,17 +155,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
     "cf": {
      "dir": "out",
-     "mph": 7
+     "mph": 8
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
-    "out_mph": 7
+    "out_mph": 8
    }
   },
   {
@@ -181,17 +181,17 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
-     "dir": "in",
-     "mph": 6
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
-     "dir": "in",
-     "mph": 4
+     "dir": "out",
+     "mph": 5
     },
-    "out_mph": 0
+    "out_mph": 5
    }
   },
   {
@@ -233,17 +233,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 7
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 5
     },
-    "out_mph": 8
+    "out_mph": 7
    }
   }
  ],
@@ -260,14 +260,14 @@
    "prob_inputs": {
     "epa": 4.25,
     "order": 5,
-    "pa_season": 528,
+    "pa_season": 530,
     "factors": {
      "sp": 1.079,
      "park": 1.175,
      "temp": 1.12,
      "wind": 1.03
     },
-    "hr_rate_pa": 0.0659
+    "hr_rate_pa": 0.0657
    },
    "edge_score": 78,
    "score_type": "model_score_0_100",
@@ -294,14 +294,14 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 620,
+    "pa_season": 622,
     "factors": {
      "sp": 1.079,
      "park": 1.175,
      "temp": 1.12,
      "wind": 1.03
     },
-    "hr_rate_pa": 0.0402
+    "hr_rate_pa": 0.0401
    },
    "edge_score": 76,
    "score_type": "model_score_0_100",
@@ -335,7 +335,7 @@
     },
     "hr_rate_pa": 0.0596
    },
-   "edge_score": 71,
+   "edge_score": 73,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 16.2,
@@ -364,10 +364,9 @@
     "factors": {
      "sp": 1.029,
      "park": 1.2,
-     "temp": 1.09,
-     "wind": 1.0
+     "temp": 1.072
     },
-    "hr_rate_pa": 0.0451
+    "hr_rate_pa": 0.0443
    },
    "edge_score": 68,
    "score_type": "model_score_0_100",
@@ -398,10 +397,9 @@
     "factors": {
      "sp": 1.029,
      "park": 1.2,
-     "temp": 1.09,
-     "wind": 1.0
+     "temp": 1.072
     },
-    "hr_rate_pa": 0.0537
+    "hr_rate_pa": 0.0528
    },
    "edge_score": 66,
    "score_type": "model_score_0_100",
@@ -428,7 +426,7 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 659,
+    "pa_season": 660,
     "factors": {
      "sp": 1.046,
      "park": 0.93
@@ -464,12 +462,12 @@
     "factors": {
      "sp": 0.998,
      "park": 0.86,
-     "temp": 1.03,
-     "wind": 1.02
+     "temp": 1.018,
+     "wind": 1.03
     },
-    "hr_rate_pa": 0.0421
+    "hr_rate_pa": 0.042
    },
-   "edge_score": 57,
+   "edge_score": 62,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.5,
@@ -477,6 +475,39 @@
     "avg_exit_velo": 92.6,
     "xiso": 0.279,
     "recent_hr_rate": 0.0526
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Dillon Dingler",
+   "team": "det",
+   "game": "det-cws",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.25,
+    "order": 5,
+    "pa_season": 579,
+    "factors": {
+     "sp": 1.034,
+     "park": 1.105,
+     "temp": 0.982
+    },
+    "hr_rate_pa": 0.0463
+   },
+   "edge_score": 59,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.8,
+    "hard_hit_pct": 41.8,
+    "avg_exit_velo": 88.4,
+    "xiso": 0.2,
+    "recent_hr_rate": 0.0111
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -501,7 +532,7 @@
     },
     "hr_rate_pa": 0.0448
    },
-   "edge_score": 56,
+   "edge_score": 58,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 6.6,
@@ -515,7 +546,7 @@
    ]
   },
   {
-   "player": "Dillon Dingler",
+   "player": "Colt Keith",
    "team": "det",
    "game": "det-cws",
    "stat": "HR",
@@ -524,57 +555,24 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.25,
-    "order": 5,
-    "pa_season": 579,
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 417,
     "factors": {
      "sp": 1.034,
      "park": 1.105,
-     "temp": 0.988,
-     "wind": 0.991
+     "temp": 0.982
     },
-    "hr_rate_pa": 0.0462
+    "hr_rate_pa": 0.0302
    },
-   "edge_score": 54,
+   "edge_score": 58,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 9.8,
-    "hard_hit_pct": 41.8,
-    "avg_exit_velo": 88.4,
-    "xiso": 0.2,
-    "recent_hr_rate": 0.0111
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Yandy D\u00edaz",
-   "team": "tb",
-   "game": "ath-tb",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 650,
-    "factors": {
-     "sp": 1.046,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.032
-   },
-   "edge_score": 53,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 7.3,
-    "hard_hit_pct": 48.5,
-    "avg_exit_velo": 91.0,
-    "xiso": 0.162,
-    "recent_hr_rate": 0.04
+    "barrel_pct": 7.7,
+    "hard_hit_pct": 42.5,
+    "avg_exit_velo": 88.9,
+    "xiso": 0.152,
+    "recent_hr_rate": 0.0154
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 378 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -616,16 +614,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6825,
+   "model_prob": 0.6809,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 296,
+    "pa_season": 298,
     "factors": {
      "sp": 1.059
     },
-    "hit_rate_pa": 0.2336
+    "hit_rate_pa": 0.2326
    },
    "edge_score": 80,
    "score_type": "model_score_0_100",
@@ -645,16 +643,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7207,
+   "model_prob": 0.7216,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 620,
+    "pa_season": 622,
     "factors": {
      "sp": 1.059
     },
-    "hit_rate_pa": 0.2627
+    "hit_rate_pa": 0.2633
    },
    "edge_score": 77,
    "score_type": "model_score_0_100",
@@ -790,16 +788,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7305,
+   "model_prob": 0.73,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 650,
+    "pa_season": 651,
     "factors": {
      "sp": 1.034
     },
-    "hit_rate_pa": 0.2645
+    "hit_rate_pa": 0.2642
    },
    "edge_score": 69,
    "score_type": "model_score_0_100",
@@ -819,16 +817,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6899,
+   "model_prob": 0.6894,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 659,
+    "pa_season": 660,
     "factors": {
      "sp": 1.034
     },
-    "hit_rate_pa": 0.2473
+    "hit_rate_pa": 0.247
    },
    "edge_score": 68,
    "score_type": "model_score_0_100",
