@@ -1,6 +1,6 @@
 {
  "date": "2026-09-18",
- "generated_at": "2026-09-18T23:28:32",
+ "generated_at": "2026-09-18T23:43:46",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -21,7 +21,7 @@
    "confidence": 0.461,
    "tier": "PASS",
    "total": 9.1,
-   "book_total_line": 9.5,
+   "book_total_line": 11.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -47,7 +47,7 @@
    "confidence": 0.629,
    "tier": "LEAN",
    "total": 8.5,
-   "book_total_line": 10.5,
+   "book_total_line": 12.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -69,11 +69,11 @@
    "home": "bal",
    "away_win_prob": 0.517,
    "home_win_prob": 0.483,
-   "pick": "mil",
-   "confidence": 0.517,
-   "tier": "PASS",
+   "pick": "bal",
+   "confidence": 0.483,
+   "tier": "LEAN",
    "total": 9.3,
-   "book_total_line": 7.5,
+   "book_total_line": 9.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -97,9 +97,9 @@
    "home_win_prob": 0.551,
    "pick": "cle",
    "confidence": 0.551,
-   "tier": "PASS",
+   "tier": "LEAN",
    "total": 9.1,
-   "book_total_line": 11.5,
+   "book_total_line": 9.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -125,7 +125,7 @@
    "confidence": 0.468,
    "tier": "PASS",
    "total": 7.7,
-   "book_total_line": 8.5,
+   "book_total_line": 9.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -151,7 +151,7 @@
    "confidence": 0.556,
    "tier": "LEAN",
    "total": 8.2,
-   "book_total_line": 8.5,
+   "book_total_line": 11.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -177,7 +177,7 @@
    "confidence": 0.514,
    "tier": "PASS",
    "total": 8.2,
-   "book_total_line": 8.5,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -437,6 +437,39 @@
    ]
   },
   {
+   "player": "Jackson Chourio",
+   "team": "mil",
+   "game": "mil-bal",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 541,
+    "factors": {
+     "sp": 1.034,
+     "park": 1.105,
+     "temp": 1.066
+    },
+    "hr_rate_pa": 0.0482
+   },
+   "edge_score": 64,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.2,
+    "hard_hit_pct": 46.7,
+    "avg_exit_velo": 91.6,
+    "xiso": 0.207,
+    "recent_hr_rate": 0.0469
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Kody Clemens",
    "team": "min",
    "game": "min-laa",
@@ -465,6 +498,107 @@
     "avg_exit_velo": 92.1,
     "xiso": 0.205,
     "recent_hr_rate": 0.0446
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Chase DeLauter",
+   "team": "cle",
+   "game": "ath-cle",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 523,
+    "factors": {
+     "sp": 1.072,
+     "park": 1.0,
+     "temp": 1.0,
+     "wind": 0.991
+    },
+    "hr_rate_pa": 0.0301
+   },
+   "edge_score": 63,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 6.1,
+    "hard_hit_pct": 46.4,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.149,
+    "recent_hr_rate": 0.0145
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Pete Alonso",
+   "team": "bal",
+   "game": "mil-bal",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 666,
+    "factors": {
+     "sp": 1.008,
+     "park": 1.105,
+     "temp": 1.066
+    },
+    "hr_rate_pa": 0.0569
+   },
+   "edge_score": 61,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.1,
+    "hard_hit_pct": 56.0,
+    "avg_exit_velo": 93.9,
+    "xiso": 0.262,
+    "recent_hr_rate": 0.0738
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Jo Adell",
+   "team": "cle",
+   "game": "ath-cle",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 165,
+    "factors": {
+     "sp": 1.072,
+     "park": 1.0,
+     "temp": 1.0,
+     "wind": 0.991
+    },
+    "hr_rate_pa": 0.035
+   },
+   "edge_score": 61,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.0,
+    "hard_hit_pct": 43.9,
+    "avg_exit_velo": 90.1,
+    "xiso": 0.185,
+    "recent_hr_rate": 0.0351
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -536,6 +670,40 @@
    ]
   },
   {
+   "player": "Kyle Schwarber",
+   "team": "phi",
+   "game": "phi-nym",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 661,
+    "factors": {
+     "sp": 1.031,
+     "park": 0.86,
+     "temp": 1.03,
+     "wind": 0.991
+    },
+    "hr_rate_pa": 0.0511
+   },
+   "edge_score": 59,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 16.2,
+    "hard_hit_pct": 49.6,
+    "avg_exit_velo": 92.4,
+    "xiso": 0.257,
+    "recent_hr_rate": 0.0645
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Dominic Canzone",
    "team": "sea",
    "game": "sea-col",
@@ -569,190 +737,22 @@
    ]
   },
   {
-   "player": "Ryan Jeffers",
-   "team": "min",
-   "game": "min-laa",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 344,
-    "factors": {
-     "sp": 1.085,
-     "park": 1.0,
-     "temp": 1.024,
-     "wind": 1.0
-    },
-    "hr_rate_pa": 0.0402
-   },
-   "edge_score": 59,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.0,
-    "hard_hit_pct": 40.7,
-    "avg_exit_velo": 88.8,
-    "xiso": 0.193,
-    "recent_hr_rate": 0.0449
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Chase DeLauter",
-   "team": "cle",
-   "game": "ath-cle",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 522,
-    "factors": {
-     "sp": 1.072,
-     "park": 1.0,
-     "temp": 1.0,
-     "wind": 0.991
-    },
-    "hr_rate_pa": 0.0301
-   },
-   "edge_score": 58,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 6.1,
-    "hard_hit_pct": 46.4,
-    "avg_exit_velo": 91.5,
-    "xiso": 0.149,
-    "recent_hr_rate": 0.0145
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Kyle Schwarber",
-   "team": "phi",
-   "game": "phi-nym",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 661,
-    "factors": {
-     "sp": 1.031,
-     "park": 0.86,
-     "temp": 1.03,
-     "wind": 0.991
-    },
-    "hr_rate_pa": 0.0511
-   },
-   "edge_score": 57,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 16.2,
-    "hard_hit_pct": 49.6,
-    "avg_exit_velo": 92.4,
-    "xiso": 0.257,
-    "recent_hr_rate": 0.0645
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Matt Olson",
-   "team": "atl",
-   "game": "atl-hou",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 662,
-    "factors": {
-     "sp": 0.975,
-     "park": 1.105
-    },
-    "hr_rate_pa": 0.0541
-   },
-   "edge_score": 57,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.7,
-    "hard_hit_pct": 51.5,
-    "avg_exit_velo": 92.4,
-    "xiso": 0.257,
-    "recent_hr_rate": 0.0256
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Jo Adell",
-   "team": "cle",
-   "game": "ath-cle",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 164,
-    "factors": {
-     "sp": 1.072,
-     "park": 1.0,
-     "temp": 1.0,
-     "wind": 0.991
-    },
-    "hr_rate_pa": 0.035
-   },
-   "edge_score": 56,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 9.0,
-    "hard_hit_pct": 43.9,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.185,
-    "recent_hr_rate": 0.0351
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Jos\u00e9 Ram\u00edrez",
    "team": "cle",
    "game": "ath-cle",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.665,
+   "model_prob": 0.6646,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 506,
+    "pa_season": 507,
     "factors": {
      "sp": 1.054
     },
-    "hit_rate_pa": 0.2171
+    "hit_rate_pa": 0.2168
    },
    "edge_score": 77,
    "score_type": "model_score_0_100",
@@ -772,16 +772,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.71,
+   "model_prob": 0.7095,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 522,
+    "pa_season": 523,
     "factors": {
      "sp": 1.054
     },
-    "hit_rate_pa": 0.2604
+    "hit_rate_pa": 0.2601
    },
    "edge_score": 77,
    "score_type": "model_score_0_100",
