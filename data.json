@@ -1,6 +1,6 @@
 {
  "date": "2026-09-18",
- "generated_at": "2026-09-18T19:50:43",
+ "generated_at": "2026-09-18T21:25:36",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "dbf1c98"
+  "gitCommit": "58ad4a8"
  },
  "games": [
   {
@@ -145,12 +145,12 @@
   {
    "away": "phi",
    "home": "nym",
-   "away_win_prob": 0.404,
-   "home_win_prob": 0.406,
-   "pick": "nym",
-   "confidence": 0.406,
+   "away_win_prob": 0.556,
+   "home_win_prob": 0.354,
+   "pick": "phi",
+   "confidence": 0.556,
    "tier": "PASS",
-   "total": 8.9,
+   "total": 8.2,
    "book_total_line": 8.5,
    "wind": {
     "lf": {
@@ -180,18 +180,18 @@
    "book_total_line": 8.5,
    "wind": {
     "lf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "in",
+     "mph": 2
     },
     "cf": {
      "dir": "cross",
      "mph": 0
     },
     "rf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "out",
+     "mph": 2
     },
-    "out_mph": 0
+    "out_mph": 2
    }
   },
   {
@@ -233,7 +233,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 7
     },
     "cf": {
      "dir": "cross",
@@ -241,9 +241,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 7
     },
-    "out_mph": 4
+    "out_mph": 7
    }
   },
   {
@@ -359,7 +359,7 @@
    "confidence": 0.556,
    "tier": "PASS",
    "total": 8.8,
-   "book_total_line": 8.0,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -409,7 +409,7 @@
     },
     "hr_rate_pa": 0.0471
    },
-   "edge_score": 69,
+   "edge_score": 67,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 20.9,
@@ -507,7 +507,7 @@
     },
     "hr_rate_pa": 0.0514
    },
-   "edge_score": 63,
+   "edge_score": 61,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.0,
@@ -515,6 +515,39 @@
     "avg_exit_velo": 92.0,
     "xiso": 0.242,
     "recent_hr_rate": 0.042
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Hunter Goodman",
+   "team": "col",
+   "game": "sea-col",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 535,
+    "factors": {
+     "sp": 0.966,
+     "park": 1.2,
+     "temp": 0.988
+    },
+    "hr_rate_pa": 0.0649
+   },
+   "edge_score": 60,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.9,
+    "hard_hit_pct": 44.6,
+    "avg_exit_velo": 90.1,
+    "xiso": 0.228,
+    "recent_hr_rate": 0.0533
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -681,39 +714,6 @@
     "avg_exit_velo": 90.8,
     "xiso": 0.25,
     "recent_hr_rate": 0.1111
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Jackson Chourio",
-   "team": "mil",
-   "game": "mil-bal",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 539,
-    "factors": {
-     "sp": 1.034,
-     "park": 1.105,
-     "temp": 1.06
-    },
-    "hr_rate_pa": 0.0466
-   },
-   "edge_score": 55,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.2,
-    "hard_hit_pct": 46.7,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.207,
-    "recent_hr_rate": 0.0469
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 388 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
