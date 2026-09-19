@@ -1,6 +1,6 @@
 {
  "date": "2026-09-19",
- "generated_at": "2026-09-19T20:55:35",
+ "generated_at": "2026-09-19T21:08:33",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -21,7 +21,7 @@
    "confidence": 0.566,
    "tier": "PASS",
    "total": 9.0,
-   "book_total_line": 4.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "cross",
@@ -47,7 +47,7 @@
    "confidence": 0.511,
    "tier": "LEAN",
    "total": 8.7,
-   "book_total_line": 6.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -73,7 +73,7 @@
    "confidence": 0.457,
    "tier": "PASS",
    "total": 9.0,
-   "book_total_line": 5.5,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -99,7 +99,7 @@
    "confidence": 0.574,
    "tier": "PASS",
    "total": 8.4,
-   "book_total_line": 7.5,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -360,7 +360,21 @@
    "tier": "PASS",
    "total": 7.9,
    "book_total_line": 7.5,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "out",
+     "mph": 6
+    },
+    "cf": {
+     "dir": "out",
+     "mph": 8
+    },
+    "rf": {
+     "dir": "out",
+     "mph": 6
+    },
+    "out_mph": 8
+   }
   },
   {
    "away": "min",
@@ -524,6 +538,40 @@
    ]
   },
   {
+   "player": "Juan Soto",
+   "team": "nym",
+   "game": "phi-nym",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 445,
+    "factors": {
+     "sp": 1.027,
+     "park": 0.86,
+     "temp": 1.0,
+     "wind": 0.991
+    },
+    "hr_rate_pa": 0.0415
+   },
+   "edge_score": 64,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.9,
+    "hard_hit_pct": 48.4,
+    "avg_exit_velo": 92.7,
+    "xiso": 0.283,
+    "recent_hr_rate": 0.0588
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 398 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Michael Arroyo",
    "team": "sea",
    "game": "sea-col",
@@ -590,6 +638,39 @@
    ]
   },
   {
+   "player": "Munetaka Murakami",
+   "team": "cws",
+   "game": "det-cws",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 521,
+    "factors": {
+     "sp": 1.022,
+     "park": 1.105,
+     "temp": 0.982
+    },
+    "hr_rate_pa": 0.0558
+   },
+   "edge_score": 60,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 18.8,
+    "hard_hit_pct": 55.8,
+    "avg_exit_velo": 93.7,
+    "xiso": 0.247,
+    "recent_hr_rate": 0.0242
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 398 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Pete Alonso",
    "team": "bal",
    "game": "mil-bal",
@@ -649,73 +730,6 @@
     "avg_exit_velo": 92.8,
     "xiso": 0.225,
     "recent_hr_rate": 0.0492
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 398 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Juan Soto",
-   "team": "nym",
-   "game": "phi-nym",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 445,
-    "factors": {
-     "sp": 1.027,
-     "park": 0.86,
-     "temp": 1.0,
-     "wind": 0.991
-    },
-    "hr_rate_pa": 0.0415
-   },
-   "edge_score": 60,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 48.4,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.283,
-    "recent_hr_rate": 0.0588
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 398 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Christian Encarnacion-Strand",
-   "team": "bal",
-   "game": "mil-bal",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 194,
-    "factors": {
-     "sp": 1.005,
-     "park": 1.105,
-     "temp": 1.06
-    },
-    "hr_rate_pa": 0.046
-   },
-   "edge_score": 59,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.1,
-    "hard_hit_pct": 39.7,
-    "avg_exit_velo": 90.6,
-    "xiso": 0.248,
-    "recent_hr_rate": 0.0396
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 398 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
