@@ -1,6 +1,6 @@
 {
  "date": "2026-09-19",
- "generated_at": "2026-09-19T15:54:12",
+ "generated_at": "2026-09-19T16:51:07",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -67,12 +67,12 @@
   {
    "away": "bos",
    "home": "tb",
-   "away_win_prob": 0.324,
-   "home_win_prob": 0.476,
+   "away_win_prob": 0.393,
+   "home_win_prob": 0.457,
    "pick": "tb",
-   "confidence": 0.476,
+   "confidence": 0.457,
    "tier": "PASS",
-   "total": 8.6,
+   "total": 9.0,
    "book_total_line": 7.5,
    "wind": {
     "lf": {
@@ -353,12 +353,12 @@
   {
    "away": "sf",
    "home": "lad",
-   "away_win_prob": 0.288,
-   "home_win_prob": 0.612,
+   "away_win_prob": 0.327,
+   "home_win_prob": 0.573,
    "pick": "lad",
-   "confidence": 0.612,
+   "confidence": 0.573,
    "tier": "PASS",
-   "total": 8.4,
+   "total": 7.9,
    "book_total_line": 7.5,
    "wind": null
   },
@@ -593,6 +593,38 @@
    ]
   },
   {
+   "player": "Junior Caminero",
+   "team": "tb",
+   "game": "bos-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 669,
+    "factors": {
+     "sp": 1.07,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0517
+   },
+   "edge_score": 60,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.1,
+    "hard_hit_pct": 49.9,
+    "avg_exit_velo": 92.8,
+    "xiso": 0.225,
+    "recent_hr_rate": 0.0492
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 398 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "CJ Abrams",
    "team": "wsh",
    "game": "wsh-stl",
@@ -695,37 +727,62 @@
    ]
   },
   {
-   "player": "Pete Alonso",
-   "team": "bal",
-   "game": "mil-bal",
-   "stat": "HR",
+   "player": "Yandy D\u00edaz",
+   "team": "tb",
+   "game": "bos-tb",
+   "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": null,
+   "model_prob": 0.7338,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 660,
+    "factors": {
+     "sp": 1.053
+    },
+    "hit_rate_pa": 0.2661
+   },
+   "edge_score": 78,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 7.2,
+    "hard_hit_pct": 48.2,
+    "avg_exit_velo": 91.0,
+    "xiso": 0.16,
+    "recent_hr_rate": 0.0317
+   },
+   "flags": []
+  },
+  {
+   "player": "Jonathan Aranda",
+   "team": "tb",
+   "game": "bos-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6996,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 670,
+    "pa_season": 644,
     "factors": {
-     "sp": 1.005,
-     "park": 1.105,
-     "temp": 1.036
+     "sp": 1.053
     },
-    "hr_rate_pa": 0.0561
+    "hit_rate_pa": 0.2487
    },
-   "edge_score": 55,
+   "edge_score": 78,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 56.2,
-    "avg_exit_velo": 94.0,
-    "xiso": 0.263,
-    "recent_hr_rate": 0.0813
+    "barrel_pct": 9.6,
+    "hard_hit_pct": 45.7,
+    "avg_exit_velo": 91.1,
+    "xiso": 0.184,
+    "recent_hr_rate": 0.0556
    },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 398 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
+   "flags": []
   },
   {
    "player": "Pete Crow-Armstrong",
@@ -956,64 +1013,6 @@
     "avg_exit_velo": 87.3,
     "xiso": 0.115,
     "recent_hr_rate": 0.0
-   },
-   "flags": []
-  },
-  {
-   "player": "Pete Alonso",
-   "team": "bal",
-   "game": "mil-bal",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6742,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 670,
-    "factors": {
-     "sp": 1.004
-    },
-    "hit_rate_pa": 0.229
-   },
-   "edge_score": 69,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 56.2,
-    "avg_exit_velo": 94.0,
-    "xiso": 0.263,
-    "recent_hr_rate": 0.0813
-   },
-   "flags": []
-  },
-  {
-   "player": "Juan Soto",
-   "team": "nym",
-   "game": "phi-nym",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6752,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 444,
-    "factors": {
-     "sp": 1.02
-    },
-    "hit_rate_pa": 0.2303
-   },
-   "edge_score": 69,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 48.4,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.283,
-    "recent_hr_rate": 0.0588
    },
    "flags": []
   }
