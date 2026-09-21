@@ -1,6 +1,6 @@
 {
  "date": "2026-09-21",
- "generated_at": "2026-09-21T18:55:20",
+ "generated_at": "2026-09-21T20:14:55",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "a0c32fd"
+  "gitCommit": "d7b8afc"
  },
  "games": [
   {
@@ -25,15 +25,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "in",
-     "mph": 9
+     "mph": 7
     },
     "rf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "out_mph": 0
    }
@@ -93,8 +93,8 @@
  ],
  "props": [
   {
-   "player": "Andr\u00e9s Chaparro",
-   "team": "wsh",
+   "player": "Eduardo Valencia",
+   "team": "det",
    "game": "wsh-det",
    "stat": "HR",
    "line": 0.5,
@@ -102,24 +102,24 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 213,
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 115,
     "factors": {
      "park": 0.93,
      "temp": 0.928,
      "wind": 1.04
     },
-    "hr_rate_pa": 0.0355
+    "hr_rate_pa": 0.0331
    },
    "edge_score": 51,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.6,
-    "hard_hit_pct": 43.0,
-    "avg_exit_velo": 89.4,
-    "xiso": 0.21,
-    "recent_hr_rate": 0.0411
+    "barrel_pct": 15.9,
+    "hard_hit_pct": 47.6,
+    "avg_exit_velo": 90.0,
+    "xiso": 0.239,
+    "recent_hr_rate": 0.0
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 418 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -141,10 +141,10 @@
     "factors": {
      "sp": 1.025,
      "park": 0.85,
-     "temp": 0.922,
+     "temp": 0.934,
      "wind": 1.04
     },
-    "hr_rate_pa": 0.0342
+    "hr_rate_pa": 0.0347
    },
    "edge_score": 51,
    "score_type": "model_score_0_100",
@@ -175,10 +175,10 @@
     "factors": {
      "sp": 1.023,
      "park": 0.85,
-     "temp": 0.922,
+     "temp": 0.934,
      "wind": 1.04
     },
-    "hr_rate_pa": 0.03
+    "hr_rate_pa": 0.0304
    },
    "edge_score": 50,
    "score_type": "model_score_0_100",
@@ -227,7 +227,7 @@
    ]
   },
   {
-   "player": "Kazuma Okamoto",
+   "player": "George Springer",
    "team": "tor",
    "game": "tor-bal",
    "stat": "HR",
@@ -238,30 +238,30 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 613,
+    "pa_season": 502,
     "factors": {
      "sp": 1.007,
      "park": 1.105,
-     "temp": 0.982,
-     "wind": 0.964
+     "temp": 0.976,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0488
+    "hr_rate_pa": 0.0323
    },
-   "edge_score": 39,
+   "edge_score": 38,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.3,
-    "hard_hit_pct": 44.0,
-    "avg_exit_velo": 90.5,
-    "xiso": 0.225,
-    "recent_hr_rate": 0.066
+    "barrel_pct": 6.4,
+    "hard_hit_pct": 38.3,
+    "avg_exit_velo": 88.5,
+    "xiso": 0.14,
+    "recent_hr_rate": 0.0323
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 418 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
-   "player": "Vladimir Guerrero Jr.",
+   "player": "Sean Keys",
    "team": "tor",
    "game": "tor-bal",
    "stat": "HR",
@@ -270,58 +270,29 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 596,
+    "epa": 4.25,
+    "order": 5,
+    "pa_season": 52,
     "factors": {
      "sp": 1.007,
      "park": 1.105,
-     "temp": 0.982,
-     "wind": 0.964
+     "temp": 0.976,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0215
+    "hr_rate_pa": 0.0342
    },
-   "edge_score": 36,
+   "edge_score": 34,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 7.0,
-    "hard_hit_pct": 44.6,
-    "avg_exit_velo": 90.5,
-    "xiso": 0.121,
-    "recent_hr_rate": 0.0182
+    "barrel_pct": 6.7,
+    "hard_hit_pct": 60.0,
+    "avg_exit_velo": 90.7,
+    "xiso": 0.12,
+    "recent_hr_rate": 0.0667
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 418 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
-  },
-  {
-   "player": "Vladimir Guerrero Jr.",
-   "team": "tor",
-   "game": "tor-bal",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6742,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 596,
-    "factors": {
-     "sp": 1.005
-    },
-    "hit_rate_pa": 0.2315
-   },
-   "edge_score": 70,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 7.0,
-    "hard_hit_pct": 44.6,
-    "avg_exit_velo": 90.5,
-    "xiso": 0.121,
-    "recent_hr_rate": 0.0182
-   },
-   "flags": []
   },
   {
    "player": "Jung Hoo Lee",
@@ -382,6 +353,35 @@
    "flags": []
   },
   {
+   "player": "Alejandro Kirk",
+   "team": "tor",
+   "game": "tor-bal",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6753,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 295,
+    "factors": {
+     "sp": 1.005
+    },
+    "hit_rate_pa": 0.2404
+   },
+   "edge_score": 66,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 3.9,
+    "hard_hit_pct": 40.2,
+    "avg_exit_velo": 88.2,
+    "xiso": 0.109,
+    "recent_hr_rate": 0.0341
+   },
+   "flags": []
+  },
+  {
    "player": "James Wood",
    "team": "wsh",
    "game": "wsh-det",
@@ -409,29 +409,29 @@
    "flags": []
   },
   {
-   "player": "Andr\u00e9s Chaparro",
+   "player": "Daylen Lile",
    "team": "wsh",
    "game": "wsh-det",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6718,
+   "model_prob": 0.6735,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 213,
+    "pa_season": 634,
     "factors": {},
-    "hit_rate_pa": 0.2213
+    "hit_rate_pa": 0.2283
    },
    "edge_score": 65,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.6,
-    "hard_hit_pct": 43.0,
-    "avg_exit_velo": 89.4,
-    "xiso": 0.21,
-    "recent_hr_rate": 0.0411
+    "barrel_pct": 9.7,
+    "hard_hit_pct": 38.0,
+    "avg_exit_velo": 88.6,
+    "xiso": 0.19,
+    "recent_hr_rate": 0.0642
    },
    "flags": []
   },
