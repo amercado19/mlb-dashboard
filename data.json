@@ -1,6 +1,6 @@
 {
  "date": "2026-09-21",
- "generated_at": "2026-09-21T22:41:29",
+ "generated_at": "2026-09-21T23:27:52",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "ca7dec8"
+  "gitCommit": "5f65cf2"
  },
  "games": [
   {
@@ -21,7 +21,7 @@
    "confidence": 0.532,
    "tier": "PASS",
    "total": 8.6,
-   "book_total_line": 7.5,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -41,13 +41,13 @@
   {
    "away": "wsh",
    "home": "det",
-   "away_win_prob": 0.35,
-   "home_win_prob": 0.44,
+   "away_win_prob": 0.29,
+   "home_win_prob": 0.5,
    "pick": "det",
-   "confidence": 0.44,
+   "confidence": 0.5,
    "tier": "PASS",
-   "total": 8.9,
-   "book_total_line": 8.5,
+   "total": 10.0,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -104,15 +104,16 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 115,
+    "pa_season": 117,
     "factors": {
+     "sp": 1.114,
      "park": 0.93,
      "temp": 0.922,
      "wind": 1.03
     },
-    "hr_rate_pa": 0.0326
+    "hr_rate_pa": 0.0361
    },
-   "edge_score": 51,
+   "edge_score": 53,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 15.9,
@@ -160,8 +161,8 @@
    ]
   },
   {
-   "player": "James Wood",
-   "team": "wsh",
+   "player": "Riley Greene",
+   "team": "det",
    "game": "wsh-det",
    "stat": "HR",
    "line": 0.5,
@@ -169,24 +170,25 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 598,
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 572,
     "factors": {
+     "sp": 1.114,
      "park": 0.93,
      "temp": 0.922,
      "wind": 1.03
     },
-    "hr_rate_pa": 0.0387
+    "hr_rate_pa": 0.0342
    },
    "edge_score": 49,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 19.3,
-    "hard_hit_pct": 58.6,
-    "avg_exit_velo": 95.2,
-    "xiso": 0.289,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 15.3,
+    "hard_hit_pct": 47.0,
+    "avg_exit_velo": 90.2,
+    "xiso": 0.242,
+    "recent_hr_rate": 0.0641
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 418 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -246,7 +248,7 @@
     },
     "hr_rate_pa": 0.0327
    },
-   "edge_score": 43,
+   "edge_score": 45,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 6.4,
@@ -279,7 +281,7 @@
     },
     "hr_rate_pa": 0.0346
    },
-   "edge_score": 39,
+   "edge_score": 41,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 6.7,
@@ -293,31 +295,60 @@
    ]
   },
   {
-   "player": "Jung Hoo Lee",
-   "team": "sf",
-   "game": "min-sf",
+   "player": "Gleyber Torres",
+   "team": "det",
+   "game": "wsh-det",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6875,
+   "model_prob": 0.676,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 413,
+    "factors": {
+     "sp": 1.085
+    },
+    "hit_rate_pa": 0.2415
+   },
+   "edge_score": 75,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 6.2,
+    "hard_hit_pct": 32.8,
+    "avg_exit_velo": 86.4,
+    "xiso": 0.117,
+    "recent_hr_rate": 0.0
+   },
+   "flags": []
+  },
+  {
+   "player": "Hao-Yu Lee",
+   "team": "det",
+   "game": "wsh-det",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.69,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 579,
+    "pa_season": 337,
     "factors": {
-     "sp": 1.017
+     "sp": 1.085
     },
-    "hit_rate_pa": 0.2525
+    "hit_rate_pa": 0.2535
    },
-   "edge_score": 69,
+   "edge_score": 75,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 2.3,
-    "hard_hit_pct": 31.5,
-    "avg_exit_velo": 87.5,
-    "xiso": 0.094,
-    "recent_hr_rate": 0.0093
+    "barrel_pct": 8.8,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 89.6,
+    "xiso": 0.163,
+    "recent_hr_rate": 0.037
    },
    "flags": []
   },
@@ -380,60 +411,6 @@
    "flags": []
   },
   {
-   "player": "James Wood",
-   "team": "wsh",
-   "game": "wsh-det",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6722,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 598,
-    "factors": {},
-    "hit_rate_pa": 0.2185
-   },
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 19.3,
-    "hard_hit_pct": 58.6,
-    "avg_exit_velo": 95.2,
-    "xiso": 0.289,
-    "recent_hr_rate": 0.0
-   },
-   "flags": []
-  },
-  {
-   "player": "Daylen Lile",
-   "team": "wsh",
-   "game": "wsh-det",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6735,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 634,
-    "factors": {},
-    "hit_rate_pa": 0.2283
-   },
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 9.7,
-    "hard_hit_pct": 38.0,
-    "avg_exit_velo": 88.6,
-    "xiso": 0.19,
-    "recent_hr_rate": 0.0642
-   },
-   "flags": []
-  },
-  {
    "player": "Luke Keaschall",
    "team": "min",
    "game": "min-sf",
@@ -459,6 +436,35 @@
     "avg_exit_velo": 85.4,
     "xiso": 0.11,
     "recent_hr_rate": 0.0163
+   },
+   "flags": []
+  },
+  {
+   "player": "Brooks Lee",
+   "team": "min",
+   "game": "min-sf",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6741,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 605,
+    "factors": {
+     "sp": 1.018
+    },
+    "hit_rate_pa": 0.2358
+   },
+   "edge_score": 64,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 4.1,
+    "hard_hit_pct": 34.0,
+    "avg_exit_velo": 88.1,
+    "xiso": 0.12,
+    "recent_hr_rate": 0.0431
    },
    "flags": []
   }
