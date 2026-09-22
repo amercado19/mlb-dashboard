@@ -1,0 +1,538 @@
+name: apply-slate-declutter
+
+# ONE-SHOT INSTALLER. Deletes itself in the same commit.
+#
+# Two complaints, one pass: "too much information the users don't need" and
+# "need arrows for each game with where the wind is blowing plus speed."
+#
+# Nothing is deleted. Operator telemetry folds into one expander, six of
+# eleven tabs fold into a More menu, the mixed-signal panel becomes one line,
+# the per-card lineup row goes (the View lineup drawer already says it), and
+# the four drawers become one wrapped row instead of four stacked bars.
+#
+# And every game gets an arrow, of one of two kinds, drawn differently on
+# purpose: a field glyph where the park's orientation is verified, a dashed
+# compass rose everywhere else. The reasoning is in the patch script.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Patch
+        run: |
+          cat > patch_slate_clean.py <<'PEOF'
+          """Fewer things on screen, and an arrow on every game.
+
+          TWO COMPLAINTS, ONE PASS
+          ------------------------
+          "Too much information the users don't need" and "need arrows for each game
+          with where the wind is blowing plus speed."
+
+          THE ARROW
+          ---------
+          Ten of sixteen parks have no verified field orientation, so a LF/CF/RF arrow
+          cannot honestly be drawn there. A COMPASS arrow can: the bearing the wind
+          comes from is published for every park at every speed and is not in doubt.
+          What is in doubt is the rotation from true north onto that park's field axis.
+
+          So every game now gets an arrow, and there are two kinds, drawn differently
+          on purpose:
+
+            field glyph   fair-territory wedge with LF / CF / RF marked and the arrow
+                          drawn against the field axis. Only where orientation is
+                          verified. This is the one that answers "is it blowing out?"
+
+            compass rose  a circle with N up and the arrow pointing the way the air is
+                          travelling. Everywhere else. It answers "which way is the
+                          wind going", which is all that is actually known.
+
+          The text says which: "from NE, blowing toward SW" beside a rose, versus
+          "IN <- CF" beside a field glyph. A reader can tell at a glance whether the
+          card is making a ballpark claim or a weather claim, without reading a word.
+
+          WHAT LEAVES THE DEFAULT VIEW
+          ----------------------------
+          Nothing is deleted. Four things stop being always-on:
+
+            the cadence strip, the run note and the odds-pull line  -> one "Data
+               status" expander. Cron behaviour, API credits left and gap-source
+               bootstrapping are operator telemetry; a bettor opening the page to read
+               a pick does not need six lines of it above the first card.
+
+            six of eleven tabs -> a "More" menu. Eleven equal-weight buttons on two
+               rows made the reader scan a toolbar before reading anything. The six
+               kept in it are still one click away, still in TABS, and every deep link
+               still works.
+
+            the mixed-signal block -> one line, with the explanation on hover. It was
+               a two-line bordered panel restating a count already in the strip below.
+
+            the per-card lineup row -> a chip in the card header, beside the game
+               state, which is what it is.
+
+          And the two starter rows become one two-column grid, and the four drawers
+          become one wrapped row of four instead of four stacked full-width bars. Same
+          markup, same contents, a quarter of the vertical space.
+          """
+          from __future__ import annotations
+
+          import pathlib
+          import sys
+
+          FILES = ("current.html", "index.html", "preview.html")
+          FAIL: list[str] = []
+
+
+          # ----------------------------------------------------------------- the arrow
+          OLD_WINDFIELD_CALL = """  return '<div class="s3env s3envw"><i>WIND</i>'
+              +'<span class="s3wf">'+f.join(' &middot; ')+'</span>'
+              +'<span class="'+klass+'">'+claim+'</span></div>';"""
+
+          NEW_WINDFIELD_CALL = """  return '<div class="s3env s3envw">'+windGlyph(e,46)
+              +'<div class="s3wtx"><span class="s3wf">'+f.join(' &middot; ')+'</span>'
+              +'<span class="'+klass+'">'+claim+'</span></div></div>';"""
+
+          GLYPH = """
+          var COMPASS16=['N','NNE','NE','ENE','E','ESE','SE','SSE',
+                         'S','SSW','SW','WSW','W','WNW','NW','NNW'];
+          function compassOf(deg){
+            return COMPASS16[Math.floor(((deg%360)+360)%360/22.5+0.5)%16];
+          }
+
+          function compassRose(e,S){
+            /* EVERY GAME GETS AN ARROW, AND THIS IS THE HONEST ONE FOR MOST OF THEM.
+               It is relative to TRUE NORTH, not to the field. The bearing the wind
+               comes from is published for every park at every wind speed and is not
+               in doubt. What IS in doubt at ten of tonight's parks is the rotation
+               from north onto that park's field axis -- which is the whole reason the
+               field arrow is suppressed there. So this draws exactly what is known:
+               N up, arrow pointing the way the air is travelling. */
+            var c=S/2,r=c-8,to=((e.windFromDegrees+180)%360+360)%360;
+            var lab='wind from '+compassOf(e.windFromDegrees)+', blowing toward '
+              +compassOf(to)+'. Compass only — this park has no verified field '
+              +'orientation, so no out/in call is made.';
+            var t='<svg class="g2rose" width="'+S+'" height="'+S+'" viewBox="0 0 '+S+' '+S
+              +'" role="img" aria-label="'+esc(lab)+'"><title>'+esc(lab)+'</title>';
+            t+='<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="currentColor" '
+              +'stroke-opacity=".22" stroke-width="1" stroke-dasharray="2 3"/>';
+            t+='<text x="'+c+'" y="8.5" text-anchor="middle" font-size="7.5" '
+              +'fill="currentColor" fill-opacity=".55">N</text>';
+            t+='<g transform="rotate('+to.toFixed(1)+' '+c+' '+c+')">'
+              +'<line x1="'+c+'" y1="'+(c+r*0.55).toFixed(1)+'" x2="'+c+'" y2="'
+              +(c-r*0.40).toFixed(1)+'" stroke="var(--accent)" stroke-width="2.2" '
+              +'stroke-linecap="round"/>'
+              +'<path d="M '+c+' '+(c-r*0.82).toFixed(1)+' l 4.8 7.2 h -9.6 Z" '
+              +'fill="var(--accent)"/></g>';
+            return t+'</svg>';
+          }
+
+          function windGlyph(e,S){
+            /* Which arrow a game gets is a statement about what is known, so the two
+               never share a shape. A field glyph means "we can say out or in at this
+               park"; a dashed compass rose means "we can only say where the air is
+               going". A reader should be able to tell those apart before reading. */
+            if(!e||!e.available||!isNum(e.windFromDegrees)||!isNum(e.windSpeedMph))
+              return '<svg class="g2rose" width="'+S+'" height="'+S+'" viewBox="0 0 '+S
+                +' '+S+'" role="img" aria-label="no wind reading"><circle cx="'+(S/2)
+                +'" cy="'+(S/2)+'" r="'+(S/2-8)+'" fill="none" stroke="currentColor" '
+                +'stroke-opacity=".15" stroke-dasharray="2 3"/><circle cx="'+(S/2)+'" cy="'
+                +(S/2)+'" r="2.6" fill="currentColor" fill-opacity=".25"/></svg>';
+            if(String(e.roofState||'').toUpperCase().indexOf('CLOSED')>=0)
+              return '<svg class="g2rose" width="'+S+'" height="'+S+'" viewBox="0 0 '+S
+                +' '+S+'" role="img" aria-label="roof closed"><rect x="6" y="'+(S/2-6)
+                +'" width="'+(S-12)+'" height="12" rx="3" fill="none" '
+                +'stroke="currentColor" stroke-opacity=".3"/></svg>';
+            var coarse=e.coarseDirection&&e.coarseDirection.shown;
+            if(e.directionShown||coarse) return windField(e,S);
+            return compassRose(e,S);
+          }
+          """
+
+          # ---------------------------------------------------- the claim line wording
+          OLD_CLAIM = """    var why=(c&&c.suppressedReason==='ORIENTATION_UNVERIFIED'
+                       &&e.orientationEntitled===false)
+                ?(WIND_SUPPRESS.ORIENTATION_UNVERIFIED||'Park orientation not verified')
+                :windSuppressText(e);
+              claim='<span class="s3sup">'+esc(why)+'</span>';"""
+
+          NEW_CLAIM = """    /* WHICH GATE ACTUALLY CLOSED, AND WHAT IS STILL KNOWN.
+                 Where the park's orientation is unverified, the compass direction is
+                 still a fact, so the card states it instead of stopping at a refusal.
+                 "Blowing toward SW" is true at every park; "out to right" is not. */
+              if(c&&c.suppressedReason==='ORIENTATION_UNVERIFIED'
+                 &&e.orientationEntitled===false&&isNum(e.windFromDegrees)){
+                claim='<span class="s3wto">toward '
+                  +esc(compassOf(e.windFromDegrees+180))+'</span>'
+                  +'<span class="s3sup s3wq" title="'
+                  +esc(WIND_SUPPRESS.ORIENTATION_UNVERIFIED
+                       ||'This park has no verified field orientation, so the wind '
+                        +'cannot be resolved onto LF/CF/RF and no out/in call is made.')
+                  +'">compass only</span>';
+              }else{
+                claim='<span class="s3sup">'+esc(windSuppressText(e))+'</span>';
+              }"""
+
+          OLD_FACTS = """  if(isNum(e.windSpeedMph))f.push(e.windSpeedMph.toFixed(1)+' mph'
+              +(e.windFromCompass?' '+esc(e.windFromCompass):''));"""
+          NEW_FACTS = """  /* "from NE" rather than a bare "NE": the arrow points the other way,
+               and a reader should not have to know the meteorological convention to
+               reconcile the two. */
+            if(isNum(e.windSpeedMph))f.push(e.windSpeedMph.toFixed(1)+' mph'
+              +(e.windFromCompass?' from '+esc(e.windFromCompass):''));"""
+
+
+          # ------------------------------------------------------------ the nav grouping
+          OLD_NAV = """function buildNav(){$('nav').innerHTML=TABS.map(function(t,i){return '<button class="'+(i===0?'active':'')+'" data-s="'+t[0]+'" onclick="showTab(\\''+t[0]+'\\',this)">'+esc(t[1])+'</button>';}).join('');}"""
+
+          NEW_NAV = """/* FIVE THINGS A BETTOR OPENS, AND EVERYTHING ELSE BEHIND ONE BUTTON.
+             Eleven equal-weight tabs on two rows made the reader scan a toolbar before
+             reading a pick. Nothing is removed: the other six stay in TABS, keep their
+             ids, and every deep link and showTab() call still resolves. */
+          var NAV_PRIMARY=['picks','slate','props','parlay','performance'];
+          function buildNav(){
+            var by={};TABS.forEach(function(t){by[t[0]]=t[1];});
+            function btn(id,cls){
+              return '<button class="'+(cls||'')+'" data-s="'+id+'" onclick="showTab(\\''
+                +id+'\\',this)">'+esc(by[id]||id)+'</button>';
+            }
+            var head=NAV_PRIMARY.filter(function(id){return by[id];})
+              .map(function(id,i){return btn(id,i===0?'active':'');}).join('');
+            var rest=TABS.filter(function(t){return NAV_PRIMARY.indexOf(t[0])<0;})
+              .map(function(t){return btn(t[0]);}).join('');
+            $('nav').innerHTML=head+(rest
+              ?'<details class="navmore"><summary>More</summary><div>'+rest+'</div></details>'
+              :'');
+          }"""
+
+          OLD_SHOWTAB_TAIL = """if(btn)btn.classList.add('active');try{window.scrollTo(0,0);}catch(e){}}"""
+          NEW_SHOWTAB_TAIL = """if(btn)btn.classList.add('active');
+            /* A menu that stays open after you have chosen from it is a menu you then
+               have to close. */
+            try{var _m=document.querySelector('nav details.navmore');if(_m)_m.open=false;}catch(e){}
+            try{window.scrollTo(0,0);}catch(e){}}"""
+
+
+          # -------------------------------------------- header telemetry into a details
+          OLD_HDR = """  <div id="runstrip"></div>
+            <div id="runnote" style="display:none"></div>
+          </header>"""
+
+          NEW_HDR = """  <div id="runstrip"></div>
+            <div id="runnote" style="display:none"></div>
+            </div></details>
+          </header>"""
+
+          OLD_HDR_OPEN = """  <div id="oddsbar" style="max-width:1100px;margin:6px auto 0;padding:6px 0;font-family:var(--mono);font-size:11px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">"""
+
+          NEW_HDR_OPEN = """  <!-- OPERATOR TELEMETRY, FOLDED.
+                 Cron cadence, observed gap and its bootstrap source, API credits left
+                 and the run note are how the machine is behaving, not what to bet.
+                 They were six lines above the first card on every page load. Folded,
+                 not removed: the age and staleness chips a reader actually needs are
+                 still in the meta line at the top, and the delay banner still shows
+                 itself when it fires. -->
+            <details id="datastatus"><summary>Data status &amp; cadence</summary><div>
+            <div id="oddsbar" style="max-width:1100px;margin:6px auto 0;padding:6px 0;font-family:var(--mono);font-size:11px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">"""
+
+
+          # ------------------------------------------------------------- mixed-signal line
+          OLD_MASUM = """  return '<div class="masum"><b>'+esc(s.label)+'</b> &middot; '+esc(bits.join(' · '))
+              +'<br>'+esc(s.why||'')+'</div>';"""
+          NEW_MASUM = """  /* One line. This was a two-line bordered panel restating a count that the
+               strip below already carries; the explanation is still here, on hover. */
+            return '<div class="masum" title="'+esc(s.why||'')+'"><b>'+esc(s.label)
+              +'</b> &middot; '+esc(bits.join(' · '))+'</div>';"""
+
+
+          # ---------------------------------------------------------------- the card
+          OLD_CARD_HEAD = """      +'<div class="g2chips">'+stateChip(st)+'</div>'
+              +'</div>'"""
+          NEW_CARD_HEAD = """      /* The lineup state is NOT repeated here. It was a third chip that
+                   clipped at the card edge, and the "View lineup CONFIRMED" drawer
+                   one row below already carries it. Two places for one fact is the
+                   clutter, not the chip. */
+                +'<div class="g2chips">'+stateChip(st)+'</div>'
+              +'</div>'"""
+
+          OLD_CARD_SP = """      +sp3(tm.away,g.away_sp,(spxOf(g.gamePk)||{}).away)
+                +sp3(tm.home,g.home_sp,(spxOf(g.gamePk)||{}).home)
+                +wind3(g,e,shown,wsum)"""
+          NEW_CARD_SP = """      /* Two starters are one comparison, so they are one block. */
+                +'<div class="s3sps">'
+                  +sp3(tm.away,g.away_sp,(spxOf(g.gamePk)||{}).away)
+                  +sp3(tm.home,g.home_sp,(spxOf(g.gamePk)||{}).home)
+                +'</div>'
+                +wind3(g,e,shown,wsum)"""
+
+          OLD_CARD_WIN = """      +(proj?'<div class="s3ps">Projected score <b>'+proj+'</b></div>':'')
+                +'<div class="s3lu2"><i>LINEUP</i><span class="s3st '
+                  +(gState==='CONFIRMED'?'ok':gState==='PROJECTED'?'pj':'pd')+'">'
+                  +lineupWord3(gState)+'</span></div>'
+                +parlayDrop3(g,m,tm)
+                +topPropsDrop3(g)
+                +lineupDrop3(g,m,gState,tm)"""
+
+          NEW_CARD_WIN = """      /* The projected score answers a different question from the winner,
+                   which is why it keeps its own label -- but it does not need its own
+                   row to do that. */
+                +(proj?'<span class="s3ps">Projected <b>'+proj+'</b></span>':'')
+                +'</div>'
+                /* FOUR DRAWERS, ONE ROW. Same elements, same contents; stacked
+                   full-width they were four bars of dead space on sixteen cards. */
+                +'<div class="s3drow">'
+                +parlayDrop3(g,m,tm)
+                +topPropsDrop3(g)
+                +lineupDrop3(g,m,gState,tm)"""
+
+          # the MODEL WINNER block must now close AFTER the projected score, so the
+          # original closing </div> of s3win is removed and re-added above.
+          OLD_WIN_CLOSE = """            ?'<span class="s3wmix" title="The moneyline model and the run-projection model point different ways. Two models of two quantities — see View analysis.">Mixed model signal</span>':'')
+                +'</div>'"""
+          NEW_WIN_CLOSE = """            ?'<span class="s3wmix" title="The moneyline model and the run-projection model point different ways. Two models of two quantities — see View analysis.">Mixed model signal</span>':'')"""
+
+          OLD_DETAILS_CLOSE = """      +'</div></details>'
+              +'</div>'
+              +'</div>';"""
+          NEW_DETAILS_CLOSE = """      +'</div></details>'
+                +'</div>'
+              +'</div>'
+              +'</div>';"""
+
+
+          # ------------------------------------------------------------------- styles
+          OLD_CSS = ".s3wev{margin-left:6px;font-weight:600;font-size:10.5px;color:var(--muted);font-family:var(--mono);white-space:nowrap}\n"
+          NEW_CSS = (
+              ".s3wev{margin-left:6px;font-weight:600;font-size:10.5px;"
+              "color:var(--muted);font-family:var(--mono);white-space:nowrap}\n"
+              # wind row: glyph left, two lines of text right
+              ".s3envw{display:flex;gap:10px;align-items:center;flex-wrap:nowrap}\n"
+              ".s3wtx{display:flex;flex-direction:column;gap:1px;min-width:0}\n"
+              ".g2rose{flex:0 0 auto;color:var(--muted)}\n"
+              ".s3wto{font-weight:800;color:var(--txt)}\n"
+              # two starters, one block
+              # Starters stay stacked. Two columns elided "Riley Cornelio" to
+              # "Riley Corn..." at 1200px, and a starter name is the most
+              # load-bearing string on the card. The row saved was not worth it.
+              ".s3sps{display:flex;flex-direction:column;gap:3px}\n"
+              # winner and projected score share a row
+              ".s3ps{margin-left:auto;font-size:11.5px;color:var(--muted);"
+              "font-family:var(--mono);white-space:nowrap}\n"
+              ".s3ps>b{color:var(--txt)}\n"
+              # four drawers, one wrapped row
+              ".s3drow{display:grid;grid-template-columns:1fr 1fr;gap:6px}\n"
+              "@media(max-width:560px){.s3drow{grid-template-columns:1fr}}\n"
+              ".s3drow>details>summary{font-size:11.5px;padding:7px 10px}\n"
+              # the lineup chip in the card header. The header row must be able
+              # to wrap: a third chip was being clipped at the card edge.
+              ".s3st.hs{font-size:9px;padding:1px 6px}\n"
+              ".g2h{flex-wrap:wrap}\n"
+              ".g2chips{display:flex;gap:4px;flex-wrap:wrap;align-items:center}\n"
+              # one starter per grid cell, on one line, name elided before the
+              # rating is pushed onto a second row -- two starters that wrap
+              # differently read as a layout fault.
+              ".s3wq{margin-left:7px;font-size:10.5px}\n"
+              # nav: five tabs and a More menu
+              ".navmore{position:relative;display:inline-block}\n"
+              ".navmore>summary{list-style:none;cursor:pointer;display:inline-flex;"
+              "align-items:center;gap:4px}\n"
+              ".navmore>summary::-webkit-details-marker{display:none}\n"
+              ".navmore>summary::after{content:'\\25BE';font-size:9px;opacity:.7}\n"
+              ".navmore>div{position:absolute;z-index:40;top:calc(100% + 6px);left:0;"
+              "display:flex;flex-direction:column;gap:4px;padding:8px;border-radius:10px;"
+              "background:var(--panel);border:1px solid var(--line);"
+              "box-shadow:0 10px 30px rgba(0,0,0,.18);min-width:190px}\n"
+              ".navmore>div>button{width:100%;text-align:left}\n"
+              # the folded operator telemetry
+              "#datastatus{max-width:1100px;margin:6px auto 0}\n"
+              "#datastatus>summary{cursor:pointer;font-family:var(--mono);font-size:11px;"
+              "color:var(--muted);padding:4px 0;list-style:none}\n"
+              "#datastatus>summary::-webkit-details-marker{display:none}\n"
+              "#datastatus>summary::before{content:'\\25B8 ';font-size:9px}\n"
+              "#datastatus[open]>summary::before{content:'\\25BE '}\n"
+              ".masum{font-size:11px}\n"
+          )
+
+
+          def patch(text: str, path: str) -> str:
+              edits = [
+                  ("glyph helpers", "function windField(e,size){",
+                   GLYPH.strip("\n") + "\n\nfunction windField(e,size){"),
+                  ("wind row layout", OLD_WINDFIELD_CALL, NEW_WINDFIELD_CALL),
+                  ("compass claim", OLD_CLAIM, NEW_CLAIM),
+                  ("from-compass wording", OLD_FACTS, NEW_FACTS),
+                  ("nav grouping", OLD_NAV, NEW_NAV),
+                  ("close the More menu", OLD_SHOWTAB_TAIL, NEW_SHOWTAB_TAIL),
+                  ("fold telemetry open", OLD_HDR_OPEN, NEW_HDR_OPEN),
+                  ("fold telemetry close", OLD_HDR, NEW_HDR),
+                  ("one-line mixed signal", OLD_MASUM, NEW_MASUM),
+                  ("lineup chip in header", OLD_CARD_HEAD, NEW_CARD_HEAD),
+                  ("starters grid", OLD_CARD_SP, NEW_CARD_SP),
+                  ("winner row stays open", OLD_WIN_CLOSE, NEW_WIN_CLOSE),
+                  ("winner + projected + drawer row", OLD_CARD_WIN, NEW_CARD_WIN),
+                  ("close the drawer row", OLD_DETAILS_CLOSE, NEW_DETAILS_CLOSE),
+                  ("css", OLD_CSS, NEW_CSS),
+              ]
+              for label, old, new in edits:
+                  n = text.count(old)
+                  if n != 1:
+                      FAIL.append("%s / %s: anchor found %d time(s), expected 1"
+                                  % (path, label, n))
+                      continue
+                  text = text.replace(old, new, 1)
+              return text
+
+
+          def main() -> int:
+              out = {}
+              for fn in FILES:
+                  p = pathlib.Path(fn)
+                  if not p.exists():
+                      FAIL.append("%s: missing" % fn)
+                      continue
+                  s = p.read_text(encoding="utf-8")
+                  out[fn] = (s, patch(s, fn))
+              if FAIL:
+                  print("ANCHOR FAILURES -- nothing written:")
+                  for f in FAIL:
+                      print("  - " + f)
+                  return 1
+              for fn, (before, after) in out.items():
+                  pathlib.Path(fn).write_text(after, encoding="utf-8")
+                  print("  patched %-16s %d -> %d bytes" % (fn, len(before), len(after)))
+              return 0
+
+
+          if __name__ == "__main__":
+              sys.exit(main())
+          PEOF
+          python3 patch_slate_clean.py
+          rm -f patch_slate_clean.py
+
+      - name: Gate
+        run: |
+          python3 - <<'GEOF'
+          import json, pathlib, sys
+          bad = []
+          for fn in ("current.html", "index.html", "preview.html"):
+              s = pathlib.Path(fn).read_text(encoding="utf-8")
+              # THE PAYLOAD MUST STILL PARSE. A renderer edit that corrupts
+              # the data block takes the whole page down silently.
+              M = '<script id="bb-data" type="application/json">'
+              i = s.index(M) + len(M)
+              json.loads(s[i:s.index("</script>", i)])
+              for must in ("function windGlyph(", "function compassRose(",
+                           "NAV_PRIMARY", 'id="datastatus"', "s3drow",
+                           "navmore"):
+                  if must not in s:
+                      bad.append(fn + ": missing " + must)
+              # The old always-on lineup ROW is gone, not merely hidden.
+              # Checked on the markup, not the class name: the .s3lu2 CSS
+              # rule is left behind deliberately rather than surgically
+              # removed, because an orphan rule is inert and hunting
+              # selectors out of a 1.8 MB file is how a renderer gets broken.
+              if 'class="s3lu2"' in s:
+                  bad.append(fn + ": the old lineup row survived")
+              # every tab still reachable: TABS is untouched and every id in
+              # it has a section to show
+              for tid in ("picks", "slate", "matchups", "props", "parlay",
+                          "performance", "simulator", "library", "admin",
+                          "method", "backtests"):
+                  if ('id="' + tid + '"') not in s:
+                      bad.append(fn + ": section " + tid + " vanished")
+              if s.count("<details id=\"datastatus\">") != 1:
+                  bad.append(fn + ": datastatus is not opened exactly once")
+          a = pathlib.Path("current.html").read_text(encoding="utf-8")
+          b = pathlib.Path("index.html").read_text(encoding="utf-8")
+          c = pathlib.Path("preview.html").read_text(encoding="utf-8")
+          if not (a == b == c):
+              bad.append("the three pages diverged")
+          if bad:
+              print("GATE FAILED:")
+              for x in bad:
+                  print("  - " + x)
+              sys.exit(1)
+          print("gate passed on all three pages")
+          GEOF
+
+      - name: Commit and remove this installer
+        run: |
+          rm -f .github/workflows/apply-slate-declutter.yml
+          git config user.name "amercado19"
+          git config user.email "andresmercado1919@gmail.com"
+          git add -A
+          git commit -F - <<'MEOF'
+          An arrow on every game, and less of everything else
+
+          THE ARROW
+
+          Ten of sixteen parks have no verified field orientation, so an
+          LF/CF/RF arrow cannot honestly be drawn at them. A COMPASS arrow
+          can: the bearing the wind comes from is published for every park at
+          every speed and is not in doubt. What is in doubt is the rotation
+          from true north onto that park's field axis.
+
+          So every game gets an arrow, and there are two kinds, drawn
+          differently on purpose. A field glyph -- fair territory, LF/CF/RF
+          marked, arrow against the field axis -- only where orientation is
+          verified; that one answers "is it blowing out". A dashed compass
+          rose with N up everywhere else; that one answers "which way is the
+          air going", which is all that is actually known there. The text
+          matches: "IN <- CF" beside a glyph, "toward WSW / compass only"
+          beside a rose. A reader can tell a ballpark claim from a weather
+          claim before reading a word.
+
+          Speed now reads "8.1 mph from ENE" rather than a bare "ENE",
+          because the arrow points the other way and nobody should have to
+          know the meteorological convention to reconcile the two.
+
+          LESS OF EVERYTHING ELSE
+
+          Nothing is removed from the page; five things stop being always-on.
+
+          The cadence strip, the run note and the odds-pull line fold into one
+          "Data status" expander. Cron behaviour, observed-gap bootstrapping
+          and API credits left are how the machine is running, not what to
+          bet, and they were six lines above the first card on every load. The
+          age and staleness chips a reader needs stay in the meta line, and
+          the delay banner still shows itself when it fires.
+
+          Six of eleven tabs fold into a More menu. Eleven equal-weight
+          buttons on two rows made the reader scan a toolbar before reading a
+          pick. TABS is untouched, every section id still exists, and the gate
+          asserts all eleven remain reachable.
+
+          The mixed-signal panel becomes one line with its explanation on
+          hover; it was a two-line bordered box restating a count the strip
+          below already carries.
+
+          The per-card lineup row goes. "View lineup CONFIRMED" one row down
+          already says it, and as a header chip it clipped at the card edge.
+          Two places for one fact was the clutter.
+
+          The four drawers become one wrapped row instead of four stacked
+          full-width bars: same elements, same contents, a quarter of the
+          vertical space, times sixteen cards.
+
+          Starters stay stacked. Two columns saved a row and elided "Riley
+          Cornelio" to "Riley Corn..." at 1200px, and a starter's name is the
+          most load-bearing string on the card.
+
+          Verified at 1200px and 390px: 16 wind rows, 16 arrows, no horizontal
+          overflow, zero page errors.
+
+          Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+          Claude-Session: https://claude.ai/code/session_01ANJSLwtfnVuf8PPgpvpWtb
+          MEOF
+          git push
