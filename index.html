@@ -17,7 +17,7 @@
 <meta name="apple-mobile-web-app-title" content="MLB Picks">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
-:root{--bg:#eef1f7;--panel:#ffffff;--panel2:#e6ebf4;--line:#bcc7db;--txt:#0a1a3a;--muted:#566586;--accent:#0a3161;--accent2:#bf0a30;--win:#0a3161;--draw:#8893a8;--lose:#bf0a30;--gold:#c8992f;--mono:'Space Mono','SFMono-Regular',ui-monospace,monospace;--sans:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;--card-sh:3px 3px 0 rgba(10,26,58,.16);}
+:root{color-scheme:dark;--bg:#0b1220;--panel:#121a2b;--panel2:#182237;--line:#26314a;--line2:#33415e;--elev:#1c2740;--txt:#e8edf7;--muted:#93a2bf;--accent:#4d90fe;--accent2:#ff5c72;--win:#3ddc97;--draw:#8893a8;--lose:#ff5c72;--gold:#e3b341;--mono:'Space Mono','SFMono-Regular',ui-monospace,monospace;--sans:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;--card-sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.28);}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--sans);background-image:radial-gradient(rgba(10,49,97,.06) 1px,transparent 1px);background-size:18px 18px;}
 header{padding:20px 16px 0;max-width:1100px;margin:0 auto}
@@ -27,14 +27,14 @@ h1 span{color:var(--accent2)}
 .meta .rf{font-family:var(--mono);background:var(--panel);border:2px solid var(--txt);color:var(--txt);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;box-shadow:2px 2px 0 rgba(44,34,24,.18)}
 nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 nav button{background:var(--panel);border:2px solid var(--txt);color:var(--txt);padding:7px 15px;border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-family:var(--mono);box-shadow:2px 2px 0 rgba(44,34,24,.18);transition:.08s}
-nav button.active{background:var(--accent2);color:#fdf8ec;border-color:var(--txt)}
+nav button.active{background:var(--accent2);color:#f2e6c8;border-color:var(--txt)}
 nav button:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 rgba(44,34,24,.22)}
 main{max-width:1100px;margin:0 auto;padding:0 16px 60px}
 section{display:none}section.active{display:block}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
 @media(max-width:880px){.grid{grid-template-columns:1fr}}
 .card{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;box-shadow:var(--card-sh);overflow:hidden;margin-bottom:14px}
-.card-h{background:var(--accent);color:#fdf8ec;text-transform:uppercase;letter-spacing:1px;font-weight:700;font-size:13px;padding:10px 14px;font-family:var(--mono);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card-h{background:var(--accent);color:#f2e6c8;text-transform:uppercase;letter-spacing:1px;font-weight:700;font-size:13px;padding:10px 14px;font-family:var(--mono);display:flex;justify-content:space-between;align-items:center;gap:8px}
 .card-h .t{font-size:11px;opacity:.85;font-weight:400}
 .card-b{padding:13px 14px}
 .tlogo{width:22px;height:22px;object-fit:contain;vertical-align:middle}
@@ -109,7 +109,7 @@ section{display:none}section.active{display:block}
 .b-loss{background:rgba(204,70,49,.18);color:var(--lose)}
 .prop-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .prop-tabs button{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;background:var(--panel);border:1.5px solid var(--line);border-radius:7px;padding:5px 11px;cursor:pointer;letter-spacing:.5px}
-.prop-tabs button.on{background:var(--accent);color:#fdf8ec;border-color:var(--accent)}
+.prop-tabs button.on{background:var(--accent);color:#f2e6c8;border-color:var(--accent)}
 .prow{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line)}
 .prow:last-child{border-bottom:none}
 .prow .rk{font-family:var(--mono);font-weight:700;color:var(--muted);font-size:11px;width:24px}
@@ -211,7 +211,7 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
 #mxOverlay{display:none;position:fixed;inset:0;background:rgba(44,34,24,.55);z-index:9998;overflow-y:auto;padding:22px 12px}
 #mxModal{max-width:1000px;margin:0 auto;background:var(--panel);border:1.5px solid var(--txt);border-radius:14px;box-shadow:5px 5px 0 rgba(44,34,24,.25);position:relative;padding:16px 16px 28px}
 #mxClose{position:absolute;top:8px;right:12px;font-size:18px;color:var(--accent2);cursor:pointer;font-weight:800;font-family:var(--mono)}
-.mx-h2{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#fdf8ec;background:var(--accent);margin:16px -2px 8px;padding:6px 10px;border-radius:6px;font-weight:700}
+.mx-h2{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#f2e6c8;background:var(--accent);margin:16px -2px 8px;padding:6px 10px;border-radius:6px;font-weight:700}
 .mx-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1.5px solid var(--line);padding-bottom:10px}
 .mx-bat,.mx-pit{display:flex;align-items:center;gap:8px}.mx-pit{flex-direction:row-reverse;text-align:right}
 .mx-nm{font-family:var(--mono);font-size:15px;color:var(--txt);font-weight:700}
@@ -249,11 +249,11 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
 .prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:14px}
 .psq{background:var(--panel);border:1.5px solid var(--line);border-radius:14px;box-shadow:var(--card-sh);padding:14px 8px;text-align:center;cursor:pointer;aspect-ratio:1/1;display:flex;flex-direction:column;justify-content:center;transition:.08s}
 .psq:hover{transform:translate(-1px,-1px)}
-.psq.on{background:var(--accent2);color:#fdf8ec;border-color:var(--txt)}
+.psq.on{background:var(--accent2);color:#f2e6c8;border-color:var(--txt)}
 .psq .ic{font-size:26px}
 .psq .lb{font-family:var(--mono);font-weight:700;font-size:12px;text-transform:uppercase;margin-top:6px;letter-spacing:.5px}
 .psq .ct{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:3px}
-.psq.on .ct{color:#fdf8ec}
+.psq.on .ct{color:#f2e6c8}
 .gprops{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
 .gprops summary{cursor:pointer;font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
 
@@ -264,18 +264,18 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
 .tppay{font-family:var(--mono);font-size:12px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;margin:10px 0;line-height:1.5}
 .evf{font-family:var(--mono);font-size:9px;font-weight:800;color:var(--lose);margin-left:4px}
 
-.luok{color:#1b9e4b;font-weight:800;font-family:var(--mono);margin-left:4px}
+.luok{color:#4ade80;font-weight:800;font-family:var(--mono);margin-left:4px}
 
 /* ==== health / status vocabulary (2026-09-02) ====================
    One badge family for every "how good is this data" statement.
    b-unk is deliberately grey + dashed: UNKNOWN must never read as green. */
-.b-ok{background:#dcfce7;color:#0c7a43;border:1px solid #86efac}
-.b-warn{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
-.b-crit{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
-.b-unk{background:#eef2f7;color:#475569;border:1px dashed #94a3b8}
-.b-info{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+.b-ok{background:#08351f;color:#4ade80;border:1px solid #116b3f}
+.b-warn{background:#2e2208;color:#fbbf24;border:1px solid #5a4510}
+.b-crit{background:#361318;color:#f87171;border:1px solid #63222a}
+.b-unk{background:var(--panel2);color:var(--muted);border:1px dashed var(--line2)}
+.b-info{background:#102542;color:#7cb0ff;border:1px solid #1d4e8f}
 /* ELITE gets its own solid treatment — it used to share the GOOD badge */
-.b-elite{background:var(--accent);color:#fdf8ec;border:1px solid var(--accent);box-shadow:1px 1px 0 rgba(10,26,58,.32)}
+.b-elite{background:var(--accent);color:#f2e6c8;border:1px solid var(--accent);box-shadow:1px 1px 0 rgba(10,26,58,.32)}
 .b-good{background:rgba(19,128,134,.18);color:var(--accent);border:1px solid rgba(19,128,134,.35)}
 
 /* ==== canonical prediction block on the game card ==== */
@@ -298,9 +298,9 @@ details.pl-day summary{cursor:pointer;font-family:var(--mono);font-size:13px;fon
 /* ==== admin / health tab ==== */
 #runstrip{max-width:1100px;margin:2px auto 0;padding:5px 0;font-family:var(--mono);font-size:10.5px;color:var(--muted);display:flex;gap:6px 14px;align-items:center;flex-wrap:wrap}
 #runstrip b{color:var(--txt)}
-#runnote{max-width:1100px;margin:4px auto 0;font-size:11px;line-height:1.55;color:#4b3a12;background:#fffbeb;border:1px solid #e7cf8a;border-radius:8px;padding:7px 11px}
+#runnote{max-width:1100px;margin:4px auto 0;font-size:11px;line-height:1.55;color:#e3b341;background:#241a05;border:1px solid #3d3313;border-radius:8px;padding:7px 11px}
 .ahs{background:var(--panel);border:1.5px solid var(--line);border-radius:12px;box-shadow:var(--card-sh);margin-bottom:12px;overflow:hidden}
-.ahs>.ahh{background:var(--accent);color:#fdf8ec;font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:1px;padding:8px 13px;font-weight:700;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.ahs>.ahh{background:var(--accent);color:#f2e6c8;font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:1px;padding:8px 13px;font-weight:700;display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
 .ahb{padding:11px 13px}
 .ahb .note{padding:0;margin:6px 0 0}
 .ahgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:9px}
@@ -325,10 +325,10 @@ table.aht tr:last-child td{border-bottom:none}
    + dashed + italic) can never be mistaken for a measured number.
    A missing denominator and a real zero are different claims. */
 .sshbanner{border:1.5px solid var(--line);border-left:5px solid var(--muted);border-radius:10px;padding:10px 12px;background:var(--panel2);margin-bottom:11px}
-.sshbanner.ss-ok{border-left-color:#0c7a43;background:#f0fdf4}
-.sshbanner.ss-warn{border-left-color:#92400e;background:#fffbeb}
-.sshbanner.ss-crit{border-left-color:#b91c1c;background:#fef2f2}
-.sshbanner.ss-unk{border-left-color:#94a3b8;background:var(--panel2)}
+.sshbanner.ss-ok{border-left-color:#0c7a43;background:#062617}
+.sshbanner.ss-warn{border-left-color:#92400e;background:#241a05}
+.sshbanner.ss-crit{border-left-color:#b91c1c;background:#2a0f12}
+.sshbanner.ss-unk{border-left-color:var(--line2);background:var(--panel2)}
 .sshhl{font-family:var(--mono);font-size:12px;font-weight:700;line-height:1.55;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
 .sshcause{font-size:11.5px;line-height:1.6;margin-top:7px;color:var(--txt)}
 .sshcause b{font-family:var(--mono)}
@@ -345,34 +345,34 @@ table.aht tr:last-child td{border-bottom:none}
 .sshcard.ss-ok{border-left-color:#0c7a43}
 .sshcard.ss-warn{border-left-color:#92400e}
 .sshcard.ss-crit{border-left-color:#b91c1c}
-.sshcard.ss-unk{border-left-color:#94a3b8}
+.sshcard.ss-unk{border-left-color:var(--line2)}
 .sshhead{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
 .sshlab{font-family:var(--mono);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--txt)}
 .sshid{font-family:var(--mono);font-size:9px;color:var(--muted);margin:4px 0 2px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .sshtag{font-family:var(--mono);font-size:8.5px;font-weight:800;letter-spacing:.5px;padding:1px 5px;border-radius:4px;text-transform:uppercase}
-.sst-crit{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
-.sst-imp{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
-.sst-opt{background:#eef2f7;color:#475569;border:1px solid #cbd5e1}
-.sst-unk{background:#eef2f7;color:#475569;border:1px dashed #94a3b8}
-.sshwhy{font-size:11px;line-height:1.55;border-radius:7px;padding:6px 8px;margin-top:6px;color:#7f1d1d;background:#fef2f2;border:1px solid #fecaca}
-.sshcard.ss-ok .sshwhy{color:#14532d;background:#f0fdf4;border-color:#bbf7d0}
-.sshcard.ss-warn .sshwhy{color:#7c3d12;background:#fffbeb;border-color:#fde68a}
-.sshcard.ss-unk .sshwhy{color:#334155;background:var(--panel2);border-color:var(--line)}
+.sst-crit{background:#361318;color:#f87171;border:1px solid #63222a}
+.sst-imp{background:#102542;color:#7cb0ff;border:1px solid #1d4e8f}
+.sst-opt{background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+.sst-unk{background:var(--panel2);color:var(--muted);border:1px dashed var(--line2)}
+.sshwhy{font-size:11px;line-height:1.55;border-radius:7px;padding:6px 8px;margin-top:6px;color:#f87171;background:#2a0f12;border:1px solid #4d1a20}
+.sshcard.ss-ok .sshwhy{color:#4ade80;background:#062617;border-color:#0d4a2c}
+.sshcard.ss-warn .sshwhy{color:#fbbf24;background:#241a05;border-color:#4a3a0d}
+.sshcard.ss-unk .sshwhy{color:var(--muted);background:var(--panel2);border-color:var(--line)}
 .sshkv{display:flex;gap:8px;padding:3px 0;border-bottom:1px dotted var(--line);flex-wrap:wrap;align-items:baseline}
 .sshkv:last-child{border-bottom:none}
 .sshkv .k{font-family:var(--mono);font-size:8.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;flex:0 0 112px}
 .sshkv .v{flex:1;min-width:130px;font-family:var(--mono);font-size:10.5px;line-height:1.55;word-break:break-word}
 .sshkv .v b{color:var(--txt)}
-.sshabs{font-family:var(--sans);font-style:italic;font-size:10px;color:#475569;background:repeating-linear-gradient(45deg,#f1f5f9,#f1f5f9 4px,#e2e8f0 4px,#e2e8f0 8px);border:1px dashed #94a3b8;border-radius:4px;padding:0 5px;display:inline-block;line-height:1.7;white-space:nowrap}
-.sshnone{font-family:var(--mono);font-size:10px;color:#475569}
+.sshabs{font-family:var(--sans);font-style:italic;font-size:10px;color:var(--muted);background:repeating-linear-gradient(45deg,var(--panel2),var(--panel2) 4px,var(--elev) 4px,var(--elev) 8px);border:1px dashed var(--line2);border-radius:4px;padding:0 5px;display:inline-block;line-height:1.7;white-space:nowrap}
+.sshnone{font-family:var(--mono);font-size:10px;color:var(--muted)}
 .sshage{color:var(--muted);font-weight:400}
-.sshc{font-family:var(--mono);font-size:9px;word-break:break-word;max-width:100%;background:#eef2f7;border:1px solid #cbd5e1;border-radius:4px;padding:1px 4px;color:#334155;display:inline-block;margin:1px 2px 1px 0}
+.sshc{font-family:var(--mono);font-size:9px;word-break:break-word;max-width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:1px 4px;color:var(--muted);display:inline-block;margin:1px 2px 1px 0}
 .sshverdict{border-radius:9px;padding:9px 11px;font-size:11.5px;line-height:1.6;margin-bottom:10px;border:1.5px solid}
 .sshverdict b{font-family:var(--mono);text-transform:uppercase;letter-spacing:.6px}
-.sshverdict.ss-ok{background:#f0fdf4;border-color:#86efac;color:#14532d}
-.sshverdict.ss-warn{background:#fffbeb;border-color:#fcd34d;color:#7c3d12}
-.sshverdict.ss-crit{background:#fef2f2;border-color:#fca5a5;color:#7f1d1d}
-.sshverdict.ss-unk{background:var(--panel2);border-color:var(--line);color:#334155}
+.sshverdict.ss-ok{background:#062617;border-color:#116b3f;color:#4ade80}
+.sshverdict.ss-warn{background:#241a05;border-color:#5a4510;color:#fbbf24}
+.sshverdict.ss-crit{background:#2a0f12;border-color:#63222a;color:#f87171}
+.sshverdict.ss-unk{background:var(--panel2);border-color:var(--line);color:var(--muted)}
 @media(max-width:430px){.sshkv .k{flex:0 0 100%}}
 
 /* ================================================================
@@ -382,7 +382,7 @@ table.aht tr:last-child td{border-bottom:none}
    ================================================================ */
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(430px,100%),1fr));gap:14px}
 .freshwarn{display:flex;flex-direction:column;gap:2px;margin:0 0 12px;padding:9px 12px;border:1px solid #b45309;border-left:4px solid #b45309;border-radius:9px;background:rgba(180,83,9,.10)}
-.freshwarn b{font-size:11.5px;font-weight:800;letter-spacing:.04em;color:#b45309}
+.freshwarn b{font-size:11.5px;font-weight:800;letter-spacing:.04em;color:#fbbf24}
 .freshwarn span{font-size:11px;color:var(--txt)}
 .freshwarn i{font-size:10.5px;font-style:normal;color:var(--muted)}
 @media(max-width:920px){.sgrid{grid-template-columns:1fr}}
@@ -398,7 +398,7 @@ table.aht tr:last-child td{border-bottom:none}
 .hbtn{background:none;border:0;padding:0;cursor:pointer;font:inherit}
 .sfil{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
 .sfil button{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;background:var(--panel);border:1.5px solid var(--line);border-radius:7px;padding:5px 12px;cursor:pointer;color:var(--txt);box-shadow:2px 2px 0 rgba(10,26,58,.10)}
-.sfil button.on{background:var(--accent);color:#fdf8ec;border-color:var(--accent)}
+.sfil button.on{background:var(--accent);color:#f2e6c8;border-color:var(--accent)}
 .ghead{font-family:var(--mono);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:20px 0 10px;display:flex;align-items:center;gap:10px}
 .ghead:after{content:'';flex:1;height:1px;background:var(--line)}
 .ghead .gn{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:1px 9px;font-size:10px;color:var(--txt)}
@@ -442,12 +442,12 @@ table.aht tr:last-child td{border-bottom:none}
 .spconf{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:7px;line-height:1.55}
 
 .bet{border-radius:11px;padding:11px 12px;border:1.5px solid var(--line);background:var(--panel)}
-.bet.is-bet{background:#ecfdf3;border-color:#63d095}
-.bet.is-watch{background:#fffbeb;border-color:#dfb63f}
-.bet.is-pass{background:#f2f5fa;border-color:#c3ccdd}
-.bet.is-closed{background:#eef2f7;border-color:#94a3b8;border-style:dashed}
+.bet.is-bet{background:#062617;border-color:#116b3f}
+.bet.is-watch{background:#241a05;border-color:#5a4510}
+.bet.is-pass{background:var(--panel2);border-color:var(--line)}
+.bet.is-closed{background:var(--panel2);border-color:var(--line2);border-style:dashed}
 .bet-v{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.6px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.bet-v.c-bet{color:#0c7a43}.bet-v.c-watch{color:#8a6d00}.bet-v.c-pass{color:#475569}.bet-v.c-closed{color:#475569}
+.bet-v.c-bet{color:#4ade80}.bet-v.c-watch{color:#e3b341}.bet-v.c-pass{color:var(--muted)}.bet-v.c-closed{color:var(--muted)}
 .bet-line{font-family:var(--mono);font-size:12px;margin-top:7px;line-height:1.65;word-break:break-word}
 .bet-why{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55}
 .bet-why b{color:var(--txt)}
@@ -471,8 +471,8 @@ details.gdet[open]>summary:before{content:'\25BE  '}
 .lurow2 .lnm{flex:1;min-width:100px}
 .lurow2.bad .lnm{opacity:.6;text-decoration:line-through}
 
-.npar{background:#f2f5fa;border:1.5px dashed #94a3b8;border-radius:10px;padding:12px 14px}
-.npar .nph{font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:.6px;color:#475569}
+.npar{background:var(--panel2);border:1.5px dashed var(--line2);border-radius:10px;padding:12px 14px}
+.npar .nph{font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:.6px;color:var(--muted)}
 .npar .npr{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55}
 @media(max-width:520px){.pred .pwin{font-size:16px}.ahgrid{grid-template-columns:repeat(auto-fit,minmax(128px,1fr))}}
 
@@ -485,7 +485,7 @@ details.gdet[open]>summary:before{content:'\25BE  '}
    Vocabulary: NOT_MEASURABLE · NOT_SCORABLE · INCONCLUSIVE ·
                PENDING · STALE · VALIDATED · REJECTED
    ================================================================ */
-.b-refused{background:#fee2e2;color:#b91c1c;border:1px dashed #b91c1c}
+.b-refused{background:#361318;color:#f87171;border:1px dashed #b91c1c}
 .bt-era{background:var(--panel);border:1.5px solid var(--line);border-left:5px solid var(--accent2);border-radius:10px;box-shadow:var(--card-sh);padding:11px 14px;margin-bottom:12px}
 .bt-eral{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
 .bt-eras{display:flex;gap:10px 26px;flex-wrap:wrap;margin-top:8px}
@@ -494,23 +494,23 @@ details.gdet[open]>summary:before{content:'\25BE  '}
 .bt-era1 .el{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);font-weight:700;margin-top:3px}
 .bt-lede{font-size:12px;color:var(--muted);line-height:1.55;margin-top:9px}
 .bt-lede b{color:var(--txt)}
-.bt-absent{background:#f2f5fa;border:1.5px dashed #94a3b8;border-radius:10px;padding:12px 14px;margin-top:2px}
+.bt-absent{background:var(--panel2);border:1.5px dashed var(--line2);border-radius:10px;padding:12px 14px;margin-top:2px}
 .bt-absent+.bt-absent,.bt-absent+.tblwrap,.tblwrap+.bt-absent{margin-top:11px}
-.bt-absent .ah{font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.5px;color:#475569;display:flex;gap:9px;align-items:center;flex-wrap:wrap;line-height:1.35}
+.bt-absent .ah{font-family:var(--mono);font-weight:700;font-size:13px;letter-spacing:.5px;color:var(--muted);display:flex;gap:9px;align-items:center;flex-wrap:wrap;line-height:1.35}
 .bt-absent .ar{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.55}
 .bt-absent .ar b{color:var(--txt)}
-.bt-absent .aw{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed #94a3b8;line-height:1.6}
-.bt-absent.a-pend{background:#f0f6ff;border-color:#93c5fd}
-.bt-absent.a-pend .ah{color:#1e40af}
-.bt-absent.a-ref{background:#fff5f5;border-color:#fca5a5}
-.bt-absent.a-ref .ah{color:#b91c1c}
-.bt-absent.a-ok{background:#f0fdf4;border-color:#86efac;border-style:solid}
-.bt-absent.a-ok .ah{color:#0c7a43}
+.bt-absent .aw{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line2);line-height:1.6}
+.bt-absent.a-pend{background:#0d1b30;border-color:#1d4e8f}
+.bt-absent.a-pend .ah{color:#7cb0ff}
+.bt-absent.a-ref{background:#2a0f12;border-color:#63222a}
+.bt-absent.a-ref .ah{color:#f87171}
+.bt-absent.a-ok{background:#062617;border-color:#116b3f;border-style:solid}
+.bt-absent.a-ok .ah{color:#4ade80}
 .bt-abgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:11px}
 .bt-n{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap}
 .bt-ci{font-family:var(--mono);font-size:10px;color:var(--muted);white-space:nowrap}
 .bt-worse{color:var(--lose);font-weight:700}
-.bt-better{color:#0c7a43;font-weight:700}
+.bt-better{color:#4ade80;font-weight:700}
 .bt-legg{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:8px 18px;margin-top:2px}
 .bt-legi{font-size:11px;color:var(--muted);line-height:1.5;display:flex;gap:7px;align-items:flex-start}
 .bt-legi span.badge{flex:0 0 auto;margin-top:1px}
@@ -520,8 +520,8 @@ table.aht tr.tot td{border-top:1.5px solid var(--line);font-weight:700}
 .simctl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:12px 0 8px}
 .simtabs,.simsorts{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .simtabs button,.simsorts button{font:600 11px/1 var(--sans);padding:6px 10px;border:1px solid var(--line);
-  background:#fff;color:#334155;border-radius:999px;cursor:pointer}
-.simtabs button.on,.simsorts button.on{background:#0f172a;border-color:#0f172a;color:#fff}
+  background:var(--panel);color:var(--muted);border-radius:999px;cursor:pointer}
+.simtabs button.on,.simsorts button.on{background:var(--bg);border-color:var(--bg);color:#fff}
 .simsortlab{font:800 9px/1 var(--mono);letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-right:2px}
 .simwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px}
 .simwrap.simstale{opacity:.62;filter:grayscale(.45)}
@@ -530,30 +530,30 @@ table.aht tr.tot td{border-top:1.5px solid var(--line);font-weight:700}
 table.simtab{width:100%;border-collapse:collapse;font:12px/1.35 var(--sans);min-width:760px}
 table.simtab th{font:800 9px/1.2 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
   padding:8px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;
-  position:sticky;top:0;background:#fff;z-index:1}
+  position:sticky;top:0;background:var(--panel);z-index:1}
 table.simtab th.l{text-align:left}
-table.simtab td{padding:7px 8px;border-bottom:1px solid #f1f5f9;text-align:center;white-space:nowrap}
+table.simtab td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
 table.simtab td.l{text-align:left}
 table.simtab td.num{text-align:right;font-family:var(--mono);font-size:11px}
 table.simtab td.p{text-align:right;font-family:var(--mono);font-size:11px}
-table.simtab tr:hover td{background:#f8fafc}
-tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;
-  color:#475569;text-align:left}
+table.simtab tr:hover td{background:var(--panel2)}
+tr.simgrp td{background:var(--panel2);font:800 9px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);text-align:left}
 .simname{color:var(--muted);font-size:11px}
-.simdiv{color:#475569;font-size:11px}
-.simbar{display:block;height:3px;background:#e2e8f0;border-radius:2px;margin-top:3px;overflow:hidden}
-.simbar i{display:block;height:100%;background:#0f172a}
+.simdiv{color:var(--muted);font-size:11px}
+.simbar{display:block;height:3px;background:var(--elev);border-radius:2px;margin-top:3px;overflow:hidden}
+.simbar i{display:block;height:100%;background:var(--bg)}
 .simtiny{color:var(--muted);font-style:italic}
 .simna{color:#cbd5e1}
 .simout{color:#94a3b8;font-weight:700;font-size:10px}
-.simbub{color:#b45309;font-weight:800;font-size:10px}
+.simbub{color:#fbbf24;font-weight:800;font-size:10px}
 .simnote{color:var(--muted);font-size:10px}
-.simok{color:#0c7a43;font-size:10px;font-weight:700}
-.simbad{color:#b91c1c;font-size:10px;font-weight:800}
+.simok{color:#4ade80;font-size:10px;font-weight:700}
+.simbad{color:#f87171;font-size:10px;font-weight:800}
 .simcal{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;padding:8px 10px;
-  background:#fffbeb;border:1px solid #fde68a;border-radius:8px}
-.simcallab{font:800 9px/1 var(--mono);letter-spacing:.1em;color:#92400e}
-.simcaltxt{font-size:11px;color:#78350f;flex:1 1 240px}
+  background:#241a05;border:1px solid #4a3a0d;border-radius:8px}
+.simcallab{font:800 9px/1 var(--mono);letter-spacing:.1em;color:#fbbf24}
+.simcaltxt{font-size:11px;color:#fcd34d;flex:1 1 240px}
 .simcaveat{margin-top:8px;font-size:11px;color:var(--muted);line-height:1.5}
 .simfoot{margin-top:10px;font-size:11px;color:var(--muted);line-height:1.55}
 .simempty{color:var(--muted);padding:14px;text-align:center}
@@ -658,7 +658,7 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
 .s3sp>b{min-width:34px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.04em}
 .s3nm{font-weight:700;color:var(--txt)}
 .s3h{font-size:10px;color:var(--muted);font-family:var(--mono)}
-.s3prob{font-size:9.5px;font-weight:800;color:#92400e;background:#fef3c7;padding:1px 5px;border-radius:7px}
+.s3prob{font-size:9.5px;font-weight:800;color:#fbbf24;background:#2e2208;padding:1px 5px;border-radius:7px}
 .s3r{margin-left:auto;font-size:11.5px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
 .s3r>b{color:var(--txt);font-size:13px}
 .s3rno{margin-left:auto;font-size:11px;color:var(--muted);font-family:var(--mono)}
@@ -709,8 +709,8 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
 .s3lu2{display:flex;gap:8px;align-items:baseline;font-size:12px}
 .s3lu2>i{font-style:normal;min-width:34px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.04em}
 .s3st{font-weight:800;font-size:12px;padding:1px 7px;border-radius:8px}
-.s3st.ok{background:#dcfce7;color:#166534}
-.s3st.pj{background:#fef3c7;color:#92400e}
+.s3st.ok{background:#08351f;color:#4ade80}
+.s3st.pj{background:#2e2208;color:#fbbf24}
 .s3st.pd{background:var(--soft);color:var(--muted)}
 .s3d{border:1px solid var(--line);border-radius:9px;background:var(--panel);overflow:hidden}
 .s3d>summary{cursor:pointer;list-style:none;padding:9px 11px;font-size:12.5px;font-weight:700;
@@ -730,7 +730,7 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
 .s3note{font-size:10.5px;color:var(--muted);line-height:1.5;padding-top:3px}
 .s3pr{display:flex;gap:8px;align-items:baseline;font-size:12px;padding:3px 0;flex-wrap:wrap}
 .s3pr>i{font-style:normal;min-width:104px;color:var(--muted);font-size:10.5px;font-weight:800}
-.s3ev{font-size:9.5px;font-weight:800;color:#0c7a43;letter-spacing:.03em}
+.s3ev{font-size:9.5px;font-weight:800;color:#4ade80;letter-spacing:.03em}
 .s3lu{margin-top:4px}
 .s3luh{font-size:10.5px;font-weight:800;color:var(--muted);padding:3px 0}
 .s3lr{display:flex;gap:8px;align-items:baseline;font-size:12px;padding:1.5px 0}
@@ -845,49 +845,49 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
   border:1px solid transparent;white-space:nowrap}
 .dchip i{font-style:normal;opacity:.62;font-weight:600;font-size:9px}
 .dc-strong{background:#0a1f14;color:#4dd08a;border-color:#14432c}
-.dc-mod{background:#101a2c;color:#6fa8ff;border-color:#1d3155}
-.dc-low{background:#1a1a1a;color:#8a8a8a;border-color:#282828}
+.dc-mod{background:var(--bg);color:#9cc4ff;border-color:var(--line)}
+.dc-low{background:var(--panel2);color:var(--muted);border-color:var(--line)}
 .dc-bet{background:#0a1f14;color:#22c88a;border-color:#14432c}
-.dc-lean{background:#101a2c;color:#3a8fff;border-color:#1d3155}
-.dc-pass{background:#161616;color:#7d7d7d;border-color:#242424}
+.dc-lean{background:var(--bg);color:#7cb0ff;border-color:var(--line)}
+.dc-pass{background:var(--panel);color:var(--muted);border-color:var(--line)}
 .dc-block{background:#1f0a0a;color:#e87070;border-color:#3d1414}
 .dc-core{background:#14210a;color:#9ede45;border-color:#2b4413}
-.dc-qual{background:#101a2c;color:#6fa8ff;border-color:#1d3155}
+.dc-qual{background:var(--bg);color:#9cc4ff;border-color:var(--line)}
 .dc-spec{background:#1a1200;color:#e8a030;border-color:#3a2a06}
-.dc-inel{background:#161616;color:#6f6f6f;border-color:#242424}
-.dcwhy{font-size:10px;color:#6a6a6a;line-height:1.55;margin-top:4px}
-.dcwhy b{color:#9a9a9a;font-weight:600}
+.dc-inel{background:var(--panel);color:var(--muted);border-color:var(--line)}
+.dcwhy{font-size:10px;color:var(--muted);line-height:1.55;margin-top:4px}
+.dcwhy b{color:var(--muted);font-weight:600}
 .dcsum{display:flex;gap:14px;flex-wrap:wrap;padding:9px 12px;margin:0 0 10px;
-  background:#131313;border:1px solid #222;border-radius:9px}
+  background:var(--panel);border:1px solid var(--line);border-radius:9px}
 .dcsum>div{display:flex;flex-direction:column;gap:3px;min-width:96px}
-.dcsum u{text-decoration:none;font-size:9px;letter-spacing:.07em;color:#4a4a4a;
+.dcsum u{text-decoration:none;font-size:9px;letter-spacing:.07em;color:var(--muted);
   text-transform:uppercase;font-weight:700}
-.dcsum s{text-decoration:none;font-size:10px;color:#7d7d7d}
+.dcsum s{text-decoration:none;font-size:10px;color:var(--muted)}
 .dcsum b{font-size:13px;color:#ddd}
-.dcnote{font-size:10px;color:#555;padding:0 12px 10px;line-height:1.6}
+.dcnote{font-size:10px;color:var(--muted);padding:0 12px 10px;line-height:1.6}
 .dcorient{margin-top:7px;padding:7px 9px;background:#161200;border:1px solid #2a2206;
   border-radius:6px;display:grid;gap:3px}
 .dcorient b{font-size:10px;letter-spacing:.05em;color:#e8a030;font-weight:700}
-.dcorient span{font-size:10px;color:#7d7259;line-height:1.6}
-.dcorient em{font-style:normal;font-size:9px;color:#5c5443;font-family:monospace}
-.dcunval{font-size:9px;color:#6a5a2a;background:#161200;border:1px solid #2a2206;
+.dcorient span{font-size:10px;color:#e3b341;line-height:1.6}
+.dcorient em{font-style:normal;font-size:9px;color:#e3b341;font-family:monospace}
+.dcunval{font-size:9px;color:#e3b341;background:#161200;border:1px solid #2a2206;
   border-radius:4px;padding:2px 6px;display:inline-block;margin-top:4px}
 
 /* --- measured-band evidence ----------------------------------------- */
-.mbev{margin-top:6px;border:1px solid #1d2740;background:#0d1220;border-radius:7px;
+.mbev{margin-top:6px;border:1px solid var(--line);background:var(--bg);border-radius:7px;
   padding:8px 10px;display:grid;gap:5px}
-.mbev>b{font-size:9px;letter-spacing:.07em;color:#6fa8ff;font-weight:700;
+.mbev>b{font-size:9px;letter-spacing:.07em;color:#9cc4ff;font-weight:700;
   text-transform:uppercase}
 .mbg{display:flex;flex-wrap:wrap;gap:5px}
 .mbg span{font-size:10px;font-family:var(--mono,monospace);color:#8fa8c8;
-  background:#111826;border:1px solid #1d2740;border-radius:4px;padding:2px 7px}
-.mbg span u{text-decoration:none;color:#4d5f7d;margin-right:4px}
-.mbev em{font-style:normal;font-size:10px;color:#6a7a92;line-height:1.6}
-.mbgap-over{color:#e8a030}.mbgap-under{color:#6fa8ff}.mbgap-ok{color:#4dd08a}
-.mbhigh{font-size:10px;color:#7d7259;background:#161200;border:1px solid #2a2206;
+  background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:2px 7px}
+.mbg span u{text-decoration:none;color:var(--muted);margin-right:4px}
+.mbev em{font-style:normal;font-size:10px;color:var(--muted);line-height:1.6}
+.mbgap-over{color:#e8a030}.mbgap-under{color:#9cc4ff}.mbgap-ok{color:#4dd08a}
+.mbhigh{font-size:10px;color:#e3b341;background:#161200;border:1px solid #2a2206;
   border-radius:5px;padding:5px 8px;line-height:1.6;margin-top:6px}
 .mbhigh b{color:#e8a030;font-weight:700}
-.mbraw{font-size:10px;color:#6a6a6a;margin-top:4px;line-height:1.6}
+.mbraw{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.6}
 .mbraw b{color:#ddd;font-weight:700}
 
 /* --- competitive context -------------------------------------------- */
@@ -896,28 +896,28 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
   font-weight:700;letter-spacing:.03em;padding:3px 8px;border-radius:20px;
   border:1px solid transparent;white-space:nowrap}
 .ctxc i{font-style:normal;opacity:.6;font-weight:600;font-size:9px}
-.cx-series{background:#101a2c;color:#6fa8ff;border-color:#1d3155}
+.cx-series{background:var(--bg);color:#9cc4ff;border-color:var(--line)}
 .cx-rubber{background:#1a1200;color:#e8a030;border-color:#3a2a06}
 .cx-sweep{background:#1f0a0a;color:#e87070;border-color:#3d1414}
 .cx-lead{background:#0a1f14;color:#4dd08a;border-color:#14432c}
-.cx-flat{background:#161616;color:#8a8a8a;border-color:#282828}
+.cx-flat{background:var(--panel);color:var(--muted);border-color:var(--line)}
 .cx-race{background:#14210a;color:#9ede45;border-color:#2b4413}
-.cx-rest{background:#1a0a2a;color:#a888f0;border-color:#2f1a4a}
-.ctxstk{font-size:10px;color:#6a6a6a;line-height:1.65;margin-top:4px}
-.ctxstk b{color:#9a9a9a;font-weight:600}
-.ctxrule{font-size:9px;color:#4f4f4f;font-family:var(--mono,monospace);
+.cx-rest{background:#1a0a2a;color:#c0a6ff;border-color:#2f1a4a}
+.ctxstk{font-size:10px;color:var(--muted);line-height:1.65;margin-top:4px}
+.ctxstk b{color:var(--muted);font-weight:600}
+.ctxrule{font-size:9px;color:var(--muted);font-family:var(--mono,monospace);
   line-height:1.6;margin-top:3px}
-.ctxdo{font-size:9px;color:#5c5443;background:#161200;border:1px solid #2a2206;
+.ctxdo{font-size:9px;color:#e3b341;background:#161200;border:1px solid #2a2206;
   border-radius:4px;padding:3px 7px;display:inline-block;margin-top:5px}
 .penr{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px}
 .penr span{font-size:10px;font-family:var(--mono,monospace);padding:2px 7px;
-  border-radius:4px;background:#141414;border:1px solid #242424;color:#8a8a8a}
-.penr span u{text-decoration:none;color:#555;margin-right:4px}
+  border-radius:4px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
+.penr span u{text-decoration:none;color:var(--muted);margin-right:4px}
 
 /* --- interval + evidence strength ------------------------------------ */
 .mbtab{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin-top:2px}
 .mbtab dt{font-size:9px;letter-spacing:.06em;text-transform:uppercase;
-  color:#4d5f7d;font-weight:700;align-self:center;white-space:nowrap}
+  color:var(--muted);font-weight:700;align-self:center;white-space:nowrap}
 .mbtab dd{margin:0;font-size:11px;color:#a9c0dc;font-family:var(--mono,monospace)}
 .mbtab dd b{color:#dce8f6;font-weight:700}
 .mbci{color:#8fa8c8}
@@ -928,49 +928,107 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
   font-weight:700;letter-spacing:.04em;padding:2px 8px;border-radius:20px;
   border:1px solid transparent}
 .mbpill i{font-style:normal;opacity:.62;font-weight:600;font-size:9px}
-.mbinside{font-size:10px;color:#7d7259;background:#161200;border:1px solid #2a2206;
+.mbinside{font-size:10px;color:#e3b341;background:#161200;border:1px solid #2a2206;
   border-radius:5px;padding:5px 8px;line-height:1.6;margin-top:5px}
 .mbinside b{color:#e8a030;font-weight:700}
-.mbclaim{font-size:10px;color:#6a7a92;line-height:1.65;margin-top:5px}
+.mbclaim{font-size:10px;color:var(--muted);line-height:1.65;margin-top:5px}
 .mbclaim b{color:#9fb4cc;font-weight:600}
 .mbregion{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
 .mbregion span{font-size:10px;font-family:var(--mono,monospace);color:#8fa8c8;
-  background:#111826;border:1px solid #1d2740;border-radius:4px;padding:2px 7px}
-.mbregion span u{text-decoration:none;color:#4d5f7d;margin-right:4px}
+  background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:2px 7px}
+.mbregion span u{text-decoration:none;color:var(--muted);margin-right:4px}
 
 /* --- market study panel ---------------------------------------------- */
 .mkwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .mkt{border-collapse:collapse;width:100%;min-width:640px;font-size:11px}
-.mkt th{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#4d5f7d;
-  font-weight:700;text-align:left;padding:5px 8px;border-bottom:1px solid #1d2740;
+.mkt th{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+  font-weight:700;text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);
   white-space:nowrap}
-.mkt td{padding:5px 8px;border-bottom:1px solid #111a26;font-size:11px;
+.mkt td{padding:5px 8px;border-bottom:1px solid var(--line);font-size:11px;
   color:#8fa8c8;font-family:var(--mono,monospace);white-space:nowrap}
 .mkt td:first-child{color:#dce8f6;font-weight:700}
-.mkt tr.mk-hi td{background:#0d1220}
+.mkt tr.mk-hi td{background:var(--bg)}
 .mkpair{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:8px;margin:8px 0}
-.mkcard{background:#0d1220;border:1px solid #1d2740;border-radius:7px;padding:9px 11px}
+.mkcard{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:9px 11px}
 .mkcard u{text-decoration:none;display:block;font-size:9px;letter-spacing:.06em;
-  text-transform:uppercase;color:#4d5f7d;font-weight:700;margin-bottom:4px}
+  text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:4px}
 .mkcard b{font-size:15px;color:#dce8f6;display:block;font-family:var(--mono,monospace)}
-.mkcard s{text-decoration:none;font-size:10px;color:#6a7a92;display:block;margin-top:3px}
-.mkbetter{color:#4dd08a}.mkworse{color:#e8a030}.mksame{color:#8a8a8a}
-.mknote{font-size:10px;color:#6a7a92;line-height:1.65;margin:6px 0}
+.mkcard s{text-decoration:none;font-size:10px;color:var(--muted);display:block;margin-top:3px}
+.mkbetter{color:#4dd08a}.mkworse{color:#e8a030}.mksame{color:var(--muted)}
+.mknote{font-size:10px;color:var(--muted);line-height:1.65;margin:6px 0}
 .mknote b{color:#9fb4cc;font-weight:600}
-.mkdef{font-size:9px;color:#4f4f4f;font-family:var(--mono,monospace);
+.mkdef{font-size:9px;color:var(--muted);font-family:var(--mono,monospace);
   line-height:1.6;margin-top:5px}
-.mkflag{font-size:10px;color:#7d7259;background:#161200;border:1px solid #2a2206;
+.mkflag{font-size:10px;color:#e3b341;background:#161200;border:1px solid #2a2206;
   border-radius:5px;padding:6px 9px;line-height:1.6;margin:7px 0}
 .mkflag b{color:#e8a030;font-weight:700}
 .mkref{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
-.mkref span{font-size:10px;font-family:var(--mono,monospace);color:#8a8a8a;
-  background:#141414;border:1px solid #242424;border-radius:4px;padding:2px 7px}
+.mkref span{font-size:10px;font-family:var(--mono,monospace);color:var(--muted);
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:2px 7px}
 .mkstat{font-size:9px;font-weight:700;letter-spacing:.04em;padding:1px 6px;
   border-radius:20px;border:1px solid transparent}
 .mks-ok{background:#0a1f14;color:#4dd08a;border-color:#14432c}
 .mks-lim{background:#1a1200;color:#e8b040;border-color:#3a2a06}
 .mks-und{background:#1f0a0a;color:#e87070;border-color:#3d1414}
+
+/* ---------------- HOME ---------------- */
+.hmsec{margin:0 0 22px}
+.hmh{display:flex;align-items:baseline;gap:10px;margin:0 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.hmh h2{font-size:15px;font-weight:800;letter-spacing:.01em;color:var(--txt);margin:0}
+.hmsub{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.hmmore{margin-left:auto;background:none;border:0;cursor:pointer;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent);padding:2px 0}
+.hmmore:hover{text-decoration:underline}
+.hmgrp{display:flex;align-items:center;gap:7px;margin:10px 0 7px;font-size:10px;font-weight:800;letter-spacing:.07em;color:var(--muted);text-transform:uppercase}
+.hmgrp>i{font-style:normal;background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:0 7px;font-size:10px}
+.hmgg{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:9px}
+.hmg{text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:11px 12px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:border-color .12s,transform .12s;color:inherit;font:inherit}
+.hmg:hover{border-color:var(--accent);transform:translateY(-1px)}
+.hmg-live{border-color:#b9601a}
+.hmg-done{opacity:.66}
+.hmgt{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:800;color:var(--txt)}
+.hmat{color:var(--muted);font-weight:500}
+.hmgm{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.hmlive{background:#3a1d08;color:#ffb066;border:1px solid #6b3a12;border-radius:20px;padding:0 7px;font-size:9px;font-weight:800;letter-spacing:.06em}
+.hmfin{background:var(--panel2);color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:0 7px;font-size:9px;font-weight:800;letter-spacing:.06em}
+.hmgw{display:flex;align-items:baseline;gap:6px;font-size:13px}
+.hmgwl{font-size:9.5px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.hmgw>b{color:var(--txt);font-weight:800}
+.hmgwp{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.hmgn{font-size:10px;font-weight:700;letter-spacing:.04em;color:#ffb066}
+.hmpg{display:grid;grid-template-columns:repeat(auto-fill,minmax(246px,1fr));gap:10px}
+.hmp{display:flex;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+.hmpf{flex:0 0 auto}
+.hmpf .hpic,.hmpf .hini{width:64px;height:64px;border-radius:50%;object-fit:cover;background:var(--panel2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:var(--muted)}
+.hmpb{min-width:0;display:flex;flex-direction:column;gap:3px}
+.hmpn{font-size:14.5px;font-weight:800;color:var(--txt);line-height:1.15}
+.hmpt{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-family:var(--mono)}
+.hmpt .hlogo,.hmpt .hini{width:16px;height:16px;font-size:9px}
+.hmpm{margin-left:4px;text-transform:uppercase;letter-spacing:.05em;font-size:9.5px;font-weight:800}
+.hmpv{display:flex;align-items:baseline;gap:6px;margin-top:2px}
+.hmpv>b{font-size:22px;font-weight:800;color:var(--txt);font-family:var(--mono);line-height:1}
+.hmpv>span{font-size:10px;color:var(--muted)}
+.hmpc{margin-top:1px}
+.hmpw{font-size:11px;color:var(--muted);line-height:1.45}
+.hmparg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
+.hmpar{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.hmparh{display:flex;align-items:baseline;gap:8px;font-size:10px;font-weight:800;letter-spacing:.07em;color:var(--txt);margin-bottom:8px}
+.hmparh>span{font-weight:600;letter-spacing:0;color:var(--muted);font-size:10px}
+.hmparl{margin:0 0 9px;padding-left:18px;font-size:12.5px;color:var(--txt);line-height:1.7}
+.hmparf{font-family:var(--mono);font-size:16px;font-weight:800;color:var(--txt)}
+.hmparf span{font-size:10px;font-weight:600;color:var(--muted);font-family:var(--sans)}
+.hmparn{font-size:12px;color:var(--muted)}
+.hmrw2{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 12px 10px}
+.hmrt{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px}
+.hmrt th{text-align:left;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:800;padding:8px 8px 6px;border-bottom:1px solid var(--line)}
+.hmrt td{padding:6px 8px;border-bottom:1px solid var(--line)}
+.hmrt tr:last-child td{border-bottom:0}
+.hmrd{color:var(--muted)}
+.hmrw{color:var(--win);font-weight:800}
+.hmrl{color:var(--lose);font-weight:800}
+.hmrx{color:var(--muted)}
+.hmrn{font-size:10.5px;color:var(--muted);line-height:1.5;margin-top:8px}
+@media(max-width:520px){.hmgg{grid-template-columns:1fr}.hmpg{grid-template-columns:1fr}.hmpf .hpic,.hmpf .hini{width:54px;height:54px;font-size:17px}}
 </style>
 </head>
 <body>
@@ -987,7 +1045,7 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
        itself when it fires. -->
   <details id="datastatus"><summary>Data status &amp; cadence</summary><div>
   <div id="oddsbar" style="max-width:1100px;margin:6px auto 0;padding:6px 0;font-family:var(--mono);font-size:11px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-    <button onclick="refresh()" title="Reloads the latest published slate + odds in place (same as the slate refresh). The page can't pull new prices itself — for a brand-new pull use 'force fresh pull'." style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1.5px solid #3a8fff;border-radius:7px;background:none;color:#3a8fff;font-family:var(--mono);font-weight:700;font-size:11px;cursor:pointer">&#8635; Refresh odds</button>
+    <button onclick="refresh()" title="Reloads the latest published slate + odds in place (same as the slate refresh). The page can't pull new prices itself — for a brand-new pull use 'force fresh pull'." style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1.5px solid #3a8fff;border-radius:7px;background:none;color:#7cb0ff;font-family:var(--mono);font-weight:700;font-size:11px;cursor:pointer">&#8635; Refresh odds</button>
     <span id="oddsfresh" style="color:var(--muted)">props post ~3&ndash;4h before first pitch</span>
     <a href="https://github.com/amercado19/mlb-pipeline/actions" target="_blank" rel="noopener" title="Runs the pipeline to pull brand-new odds (~1–2 min). Private repo — sign in to GitHub if you see a 404." style="color:var(--muted);text-decoration:underline;white-space:nowrap">force fresh pull &#8599;</a>
   </div>
@@ -996,8 +1054,9 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
   </div></details>
 </header>
 <main>
+  <section id="home" class="active"></section>
   <section id="slate"></section>
-  <section id="picks" class="active"></section>
+  <section id="picks"></section>
   <section id="matchups"></section>
   <section id="props"></section>
   <section id="parlay"></section>
@@ -3491,6 +3550,18 @@ function hModelParlay(){
      it as the day's best combination. The legs are not trimmed to rescue the
      ticket: two legs minus a dead one is a single bet, and a single bet
      presented as a parlay is a different product wearing this one's name. */
+  /* AND THE MARKET MUST BE ALIVE TOO. The started-game rule above was
+     added after a ticket was published on two games already underway; the
+     same ticket shape can also carry a leg whose MARKET is retired, which
+     today's payload does (a 1+ Double leg, h2, status KILL). Refused on the
+     same terms and for the same reason: a three-leg ticket minus its dead
+     leg is a different bet under this one's name. */
+  var mpRet=retiredLegNames(legs);
+  if(mpRet.length)
+    return hNone('Best model parlay',
+      'A leg sits in a retired market (' + mpRet.join(', ')
+      + '). The ticket is refused rather than trimmed.',
+      'RETIRED MARKET IN TICKET');
   var mpGone=legs.filter(function(l){return l.gamePk!=null&&mktDead(l.gamePk);});
   if(mpGone.length)
     return hNone('Best model parlay',
@@ -3832,8 +3903,8 @@ function openProp(k,btn){
   p.innerHTML=(bf[k]||[]).map(function(r,i){var oc=r.playerId?' onclick="openMatchupModal('+r.playerId+','+r.gamePk+',&quot;'+esc(r.name).replace(/&quot;|"/g,'')+'&quot;,&quot;'+esc(r.team||'')+'&quot;)"':'';
     var st='';var pr=r.propResult||((((D.hrProps)||[]).filter(function(x){return x.playerId===r.playerId;})[0])||{}).propResult;
     if(pr==='hit'){st=' <span style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#0c7a43;color:#fff">✓ HIT</span>';}
-    else if(pr==='pend'){st=' <span style="font-size:9px;font-weight:700;padding:1px 7px;border-radius:8px;background:#fffbeb;color:#8a6d00;border:1px solid #d6a520">⏳ in play</span>';}
-    else if(pr==='miss'){st=' <span style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#fef2f2;color:#bf0a30">✗</span>';}
+    else if(pr==='pend'){st=' <span style="font-size:9px;font-weight:700;padding:1px 7px;border-radius:8px;background:#241a05;color:#e3b341;border:1px solid #d6a520">⏳ in play</span>';}
+    else if(pr==='miss'){st=' <span style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#2a0f12;color:#bf0a30">✗</span>';}
     var px='';if(k==='hr'){var hp=((D.hrProps)||[]).filter(function(x){return x.playerId===r.playerId;})[0];
       if(hp){
         var bks=hp.books||{};var got=false;
@@ -3842,21 +3913,21 @@ function openProp(k,btn){
           var st='font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;color:#fff;background:'+(bk==='fanduel'?'#1493ff':'#0c7a43');
           px+=o.link?' <a href="'+esc(o.link)+'" target="_blank" rel="noopener" style="'+st+';text-decoration:none" title="Open this HR market at '+bk+'">'+lab+' →</a>':' <span style="'+st+'">'+lab+'</span>';});
         var _bo=hp.bookOdds||{};
-        if(!got&&_bo.price!=null&&_bo.offbook){px=' <span style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;background:#e5e7eb;color:#6b7280" title="Reference price from '+esc(_bo.book)+' — not FD/DK">ref '+(_bo.price>0?'+':'')+_bo.price+'</span>';}
-        else if(!got&&_bo.price==null){px=' <span style="font-size:9px;color:#b45309" title="No posted FD/DK anytime-HR price yet">⚠ no price</span>';}
+        if(!got&&_bo.price!=null&&_bo.offbook){px=' <span style="font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;background:var(--line2);color:#6b7280" title="Reference price from '+esc(_bo.book)+' — not FD/DK">ref '+(_bo.price>0?'+':'')+_bo.price+'</span>';}
+        else if(!got&&_bo.price==null){px=' <span style="font-size:9px;color:#fbbf24" title="No posted FD/DK anytime-HR price yet">⚠ no price</span>';}
         if(hp.model_prob==null){px+=' '+pill(String(hp.probStatus||'').toUpperCase()==='UNVERIFIED'?'PROB UNVERIFIED':'NO PROB','b-unk','No home-run probability was published for this candidate'+(hp.probStatus?' (probStatus '+hp.probStatus+')':'')+'. The score and rank are real; no probability is shown because none exists.');}
         if(_bo.price!=null&&hp.model_prob!=null){
           var _imp=_bo.price<0?(-_bo.price)/(-_bo.price+100):100/(_bo.price+100);
           var _mp=hp.model_prob>1?hp.model_prob/100:hp.model_prob;
           var _e=(_mp-_imp)*100;
-          px+=' <span style="font-size:9px;font-weight:800;color:'+(_e>=0?'#0c7a43':'#b91c1c')+'" title="Edge: model HR % minus the price\'s implied %">'+(_e>=0?'+':'')+_e.toFixed(1)+'%</span>';}
+          px+=' <span style="font-size:9px;font-weight:800;color:'+(_e>=0?'#4ade80':'#f87171')+'" title="Edge: model HR % minus the price\'s implied %">'+(_e>=0?'+':'')+_e.toFixed(1)+'%</span>';}
       }}
     var gl=r.gamePk?' <span style="font-size:9px;color:#8893a8">'+esc((typeof gameLabelByPk==='function'&&gameLabelByPk(r.gamePk))||'')+'</span>':'';
     return '<div class="prow"><span class="rk">#'+(i+1)+'</span>'+hs(r.playerId)+'<span class="pnm"'+oc+'>'+esc(r.name)+st+(r.eligible!==false?px:'')+gl+lineupTag(r)+'</span><span class="ptm">'+esc(r.team||'')+'</span><span class="pmetric">'+(r.metric!=null?r.metric:'—')+'<span class="unit"> '+unit+'</span></span></div>';}).join('')||boardEmpty(k);
 }
 
 function lineupTag(r,okLabel){if(!r)return '';var s=r.lineupStatus,el=r.eligible;if(s===undefined&&el===undefined)return '';/* legacy row */
- if(el===true){return ' <span title="Confirmed starter in the official lineup — bettable." style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#ecfdf3;color:#0c7a43;border:1px solid #63d095">'+esc(okLabel||'BET')+'</span>';}
+ if(el===true){return ' <span title="Confirmed starter in the official lineup — bettable." style="font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;background:#062617;color:#4ade80;border:1px solid #116b3f">'+esc(okLabel||'BET')+'</span>';}
  var why=r.lineupReason||({PROJECTED:'Projected lineup — official not released',NO_LINEUP:'Official lineup not released',UNKNOWN:'Not in the official lineup',BENCHED:'On the bench',SCRATCHED:'Scratched',LATE_SCRATCH:'Late scratch',INACTIVE:'Inactive',INVALID_ORDER:'No batting order',POSTPONED:'Game postponed',DUPLICATE:'Duplicate selection'}[s]||'Not a confirmed starter');
  var hard=(s==='BENCHED'||s==='SCRATCHED'||s==='LATE_SCRATCH'||s==='INACTIVE'||s==='POSTPONED'||s==='DUPLICATE'||s==='INVALID_ORDER');
  var lbl=hard?'NOT STARTING':'WATCH';
@@ -4182,10 +4253,10 @@ function hpCardHtml(ix){
       var lab=(bk==='fanduel'?'FD':'DK')+' '+(o.price>0?'+':'')+o.price;
       var st='font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;color:#fff;background:'+(bk==='fanduel'?'#1493ff':'#0c7a43');
       lk+=o.link?' <a href="'+esc(o.link)+'" target="_blank" rel="noopener" style="'+st+';text-decoration:none">'+lab+' →</a>':' <span style="'+st+'">'+lab+'</span>';});
-    if(!lk&&bo&&bo.offbook){lk=' <span style="font-size:9px;font-weight:700;padding:1px 7px;border-radius:8px;background:#e5e7eb;color:#6b7280" title="Reference price from '+esc(bo.book)+' — verify in your app">ref '+(bo.price>0?'+':'')+bo.price+'</span>';}
-    var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:'+(l.edge>=0?'#0c7a43':'#b91c1c')+'">'+(l.edge>=0?'+':'')+(l.edge*100).toFixed(1)+'%</span>':'';
+    if(!lk&&bo&&bo.offbook){lk=' <span style="font-size:9px;font-weight:700;padding:1px 7px;border-radius:8px;background:var(--line2);color:#6b7280" title="Reference price from '+esc(bo.book)+' — verify in your app">ref '+(bo.price>0?'+':'')+bo.price+'</span>';}
+    var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:'+(l.edge>=0?'#4ade80':'#f87171')+'">'+(l.edge>=0?'+':'')+(l.edge*100).toFixed(1)+'%</span>':'';
     var gp=l.game?' <span style="font-size:9px;color:#8893a8">'+esc(l.game)+'</span>':'';
-    var storm=l.storm?' <span style="font-size:9px;font-weight:800;color:#b45309" title="PERFECT STORM (R55.1)">⚡</span>':'';
+    var storm=l.storm?' <span style="font-size:9px;font-weight:800;color:#fbbf24" title="PERFECT STORM (R55.1)">⚡</span>':'';
     rows+='<div class="leg"><span class="ln">'+(l.rank||'·')+'</span><span class="ld">💣 '+esc(l.name||'')+' HR'+storm+ep+lk+gp+'</span><span class="tprm" onclick="hpRemove('+ix+',\''+l._id+'\')" title="Remove">✕</span></div>'+hpCtx(l);});
   if(!rows)rows='<div class="empty" style="padding:12px">'+esc(hp.note||'No HR legs right now.')+'</div>';
   var pay=legs.length?'<div class="tppay">'+parlayPayoutHtml(totalDec,parlayDependence(legs),'MIXED')+'</div>':'';
@@ -4226,18 +4297,18 @@ function mlpHtml(){
   if(!_v.valid)return noParlayCard(t.name||'Moneyline parlay',_v,'');
   var n=t.legs.length;
   var legs=t.legs.map(function(l){
-    var last=l.rank===n&&n>1?' <span style="font-size:9px;color:#b45309" title="Lowest-confidence leg — drop this one for the shorter ticket">▾ drop for '+(n-1)+'-leg</span>':'';
+    var last=l.rank===n&&n>1?' <span style="font-size:9px;color:#fbbf24" title="Lowest-confidence leg — drop this one for the shorter ticket">▾ drop for '+(n-1)+'-leg</span>':'';
     var bo=l.bookOdds||{};
-    var px=bo.price!=null?' <span style="font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;background:#dbeafe;color:#1e40af">'+esc(bo.book||'book')+' '+mlpAm(bo.price)+'</span>':' <span style="font-size:9px;color:#b45309" title="No FD/DK price posted yet — model-fair estimate">est '+mlpAm((function(p){p=Math.max(Math.min(p||0.5,0.95),0.05);return p>=0.5?-Math.round(100*p/(1-p)):Math.round(100*(1-p)/p);})(l.prob))+'</span>';
+    var px=bo.price!=null?' <span style="font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;background:#102542;color:#7cb0ff">'+esc(bo.book||'book')+' '+mlpAm(bo.price)+'</span>':' <span style="font-size:9px;color:#fbbf24" title="No FD/DK price posted yet — model-fair estimate">est '+mlpAm((function(p){p=Math.max(Math.min(p||0.5,0.95),0.05);return p>=0.5?-Math.round(100*p/(1-p)):Math.round(100*(1-p)/p);})(l.prob))+'</span>';
     return '<div class="prow"><span class="pnm" style="cursor:default">'+l.rank+'. '+esc(l.desc||((l.team||'')+' ML'))+px+last+'</span><span class="pmetric">'+Math.round((l.prob||0)*100)+'%</span></div>';
   }).join('');
   var c=t.combined||{};
   var hits=(c.hitPct!=null?'~'+c.hitPct+'% ('+n+'-leg)':'')+(c.hitPct4!=null?' · ~'+c.hitPct4+'% ('+(n-1)+'-leg)':'');
   var oddsline=(c.americanOdds!=null?'Combined: <b>'+mlpAm(c.americanOdds)+'</b>':'Combined: <b>est</b>')
     +(c.americanOdds4!=null?' ('+n+'-leg) · <b>'+mlpAm(c.americanOdds4)+'</b> (4-leg)':'')
-    +(c.estimated?' <span style="font-size:9px;color:#b45309">'+(c.pricedLegs||0)+'/'+n+' legs priced — rest model-fair</span>':'');
+    +(c.estimated?' <span style="font-size:9px;color:#fbbf24">'+(c.pricedLegs||0)+'/'+n+' legs priced — rest model-fair</span>':'');
   var calc='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px">'
-    +'<label style="font-size:11px;font-weight:700">Payout calc: $<input type="number" min="0" step="1" value="'+MLP_STAKE+'" oninput="mlpCalc(this.value)" style="width:70px;padding:3px 6px;border:1px solid #cbd5e1;border-radius:6px"></label>'
+    +'<label style="font-size:11px;font-weight:700">Payout calc: $<input type="number" min="0" step="1" value="'+MLP_STAKE+'" oninput="mlpCalc(this.value)" style="width:70px;padding:3px 6px;border:1px solid var(--line);border-radius:6px"></label>'
     +'<span id="mlpPay" style="font-size:11px"></span></div>';
   setTimeout(mlpCalc,0);
   return '<div class="card"><div class="card-h"><span>💰 '+esc(t.name||'Moneyline Parlay')+'</span><span class="t">'+esc(t.strategy||'')+(hits?' · '+hits:'')+'</span></div><div class="card-b">'+legs+'<div class="note" style="margin:8px 0 0;padding:0">'+oddsline+'</div>'+calc+'<div class="note" style="margin-top:8px;padding:0">⚙ '+esc(t.note||'')+'</div></div></div>';
@@ -4449,7 +4520,7 @@ function renderParlay(){
     var groups={},order=[];legs.forEach(function(l){var k=l.gamePk||'x';if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(l);});
     var num=0;
     order.forEach(function(pk){var gl=groups[pk];if(gl.length>=2)legHtml+='<div class="sgptag">▸ '+gl.length+'-leg same-game'+(gl[0].game?' — '+esc(gl[0].game):'')+'</div>';
-      gl.forEach(function(l){num++;var bo=(l.bookOdds&&l.bookOdds.price!=null)?l.bookOdds:null;var a=bo?bo.price:fairAmNum(l.prob);var ti=legTierInfo(l);var ev='ev'+num;var bp=bo?' <span style="font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;background:#dbeafe;color:#1e40af" title="Real book price'+(bo.offbook?' (best available, not FD/DK)':'')+'">'+esc(bo.book)+(bo.offbook?'*':'')+'</span>':(l.playerId?' <span style="font-size:9px;color:#b45309" title="No posted FD/DK price yet — model-fair shown">⚠ no price</span>':'');var gp=(l.game&&gl.length<2)?' <span style="font-size:9px;color:#8893a8">'+esc(l.game)+'</span>':'';var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:#0c7a43" title="Edge: model % minus the book price\'s implied %">+'+(l.edge*100).toFixed(1)+'%</span>':'';var lk='';(function(){var bks=l.books||{};['fanduel','draftkings'].forEach(function(bk){var o=bks[bk];if(!o||o.price==null)return;var lab=(bk==='fanduel'?'FD':'DK')+' '+(o.price>0?'+':'')+o.price;var st='font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;color:#fff;background:'+(bk==='fanduel'?'#1493ff':'#0c7a43');lk+=o.link?' <a href="'+esc(o.link)+'" target="_blank" rel="noopener" style="'+st+';text-decoration:none" title="Open this market at '+bk+' — you confirm the bet there">'+lab+' →</a>':' <span style="'+st+'" title="Posted at '+bk+' (no deep link)">'+lab+'</span>';});if(!lk&&bo&&bo.link){lk=' <a href="'+esc(bo.link)+'" target="_blank" rel="noopener" style="font-size:9px;font-weight:800;text-decoration:none;padding:1px 7px;border-radius:8px;background:#1e40af;color:#fff">Bet '+esc(bo.book)+' →</a>';}})();
+      gl.forEach(function(l){num++;var bo=(l.bookOdds&&l.bookOdds.price!=null)?l.bookOdds:null;var a=bo?bo.price:fairAmNum(l.prob);var ti=legTierInfo(l);var ev='ev'+num;var bp=bo?' <span style="font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;background:#102542;color:#7cb0ff" title="Real book price'+(bo.offbook?' (best available, not FD/DK)':'')+'">'+esc(bo.book)+(bo.offbook?'*':'')+'</span>':(l.playerId?' <span style="font-size:9px;color:#fbbf24" title="No posted FD/DK price yet — model-fair shown">⚠ no price</span>':'');var gp=(l.game&&gl.length<2)?' <span style="font-size:9px;color:#8893a8">'+esc(l.game)+'</span>':'';var ep=(l.edge!=null)?' <span style="font-size:9px;font-weight:800;color:#4ade80" title="Edge: model % minus the book price\'s implied %">+'+(l.edge*100).toFixed(1)+'%</span>':'';var lk='';(function(){var bks=l.books||{};['fanduel','draftkings'].forEach(function(bk){var o=bks[bk];if(!o||o.price==null)return;var lab=(bk==='fanduel'?'FD':'DK')+' '+(o.price>0?'+':'')+o.price;var st='font-size:9px;font-weight:800;padding:1px 7px;border-radius:8px;color:#fff;background:'+(bk==='fanduel'?'#1493ff':'#0c7a43');lk+=o.link?' <a href="'+esc(o.link)+'" target="_blank" rel="noopener" style="'+st+';text-decoration:none" title="Open this market at '+bk+' — you confirm the bet there">'+lab+' →</a>':' <span style="'+st+'" title="Posted at '+bk+' (no deep link)">'+lab+'</span>';});if(!lk&&bo&&bo.link){lk=' <a href="'+esc(bo.link)+'" target="_blank" rel="noopener" style="font-size:9px;font-weight:800;text-decoration:none;padding:1px 7px;border-radius:8px;background:#1e40af;color:#fff">Bet '+esc(bo.book)+' →</a>';}})();
         legHtml+='<div class="leg"><span class="ln">'+(l.rank||num)+'</span><span class="ld">'+esc(legDesc(l))+' <span class="badge '+ti[1]+'">'+ti[0]+'</span>'+bp+ep+lk+gp+' <span id="'+ev+'" class="evf"></span></span><input class="leg-od" data-game="'+pk+'" data-bt="'+esc(l.betType||'')+'" data-team="'+esc(l.team||'')+'" data-pid="'+(l.playerId!=null?l.playerId:'')+'" data-prob="'+l.prob+'" data-ev="'+ev+'" value="'+amStr(a)+'" oninput="tpRecalc()" title="Your book price"><span class="tprm" onclick="tpRemove(\''+l._id+'\')" title="Remove">✕</span></div>';});
     });
   } else { legHtml='<div class="empty" style="padding:14px">No legs — add some below or reset to the model parlay.</div>'; }
@@ -4465,7 +4536,7 @@ function renderParlay(){
   var form='<div class="card"><div class="card-h">🛠 Build Your Own Parlay</div><div class="card-b"><div class="byo">'
     +BYO.map(function(b){return '<label class="byoin">'+b[1]+'<input type="number" id="byo-'+b[0]+'" min="0" max="8" value="'+b[2]+'"></label>';}).join('')
     +'<button class="rf" onclick="buildCustom()">⚡ Generate</button></div><div id="byoResult"><div class="note" style="padding:0">Set how many of each prop type, then Generate. Best available legs from today’s boards (no duplicate players).</div></div></div></div>';
-  var TL=D.ticketsLocked,SP=D.slatePlan||{};var lockBan='';function _hm(s){return esc(String(s||'').slice(11,16));}function _ex(){return (SP.excluded?' <span style="font-weight:600">'+SP.excluded+' game(s) at '+esc((SP.excludedAt||[]).join(', '))+' are NOT in this ticket \u2014 their lineups post after the lock.</span>':'');}if(TL){lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#dcfce7;color:#166534;border-radius:8px;font-weight:700">\ud83d\udd12 LOCKED '+_hm(TL.at)+' ET \u2014 READY TO BET. '+esc(TL.trigger||'')+'. Main slate: '+(SP.games||'?')+' games, first pitch '+_hm(SP.firstPitch)+'. These legs are frozen for the rest of the day.'+_ex()+'</div>';}else if(SP.lockAt){lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#fef3c7;color:#92400e;border-radius:8px;font-weight:700">\u23f3 NOT LOCKED \u2014 locks '+_hm(SP.lockAt)+' ET (15 min before the '+_hm(SP.firstPitch)+' first pitch), or sooner once all lineups post. '+(SP.official||0)+'/'+(SP.games||'?')+' main-slate lineups in. Legs can still change until then.'+_ex()+'</div>';}else{lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#fef3c7;color:#92400e;border-radius:8px;font-weight:700">\u26a0 NOT LOCKED YET \u2014 waiting on the slate. Wait for the green \ud83d\udd12 before betting.</div>';}$('parlay').innerHTML=lockBan+_mpcard+sugg+mlpHtml()+lateHtml()+hpHtml()+form; tpRecalc();
+  var TL=D.ticketsLocked,SP=D.slatePlan||{};var lockBan='';function _hm(s){return esc(String(s||'').slice(11,16));}function _ex(){return (SP.excluded?' <span style="font-weight:600">'+SP.excluded+' game(s) at '+esc((SP.excludedAt||[]).join(', '))+' are NOT in this ticket \u2014 their lineups post after the lock.</span>':'');}if(TL){lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#08351f;color:#4ade80;border-radius:8px;font-weight:700">\ud83d\udd12 LOCKED '+_hm(TL.at)+' ET \u2014 READY TO BET. '+esc(TL.trigger||'')+'. Main slate: '+(SP.games||'?')+' games, first pitch '+_hm(SP.firstPitch)+'. These legs are frozen for the rest of the day.'+_ex()+'</div>';}else if(SP.lockAt){lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#2e2208;color:#fbbf24;border-radius:8px;font-weight:700">\u23f3 NOT LOCKED \u2014 locks '+_hm(SP.lockAt)+' ET (15 min before the '+_hm(SP.firstPitch)+' first pitch), or sooner once all lineups post. '+(SP.official||0)+'/'+(SP.games||'?')+' main-slate lineups in. Legs can still change until then.'+_ex()+'</div>';}else{lockBan='<div class="note" style="margin:0 0 10px;padding:10px 12px;background:#2e2208;color:#fbbf24;border-radius:8px;font-weight:700">\u26a0 NOT LOCKED YET \u2014 waiting on the slate. Wait for the green \ud83d\udd12 before betting.</div>';}$('parlay').innerHTML=lockBan+_mpcard+sugg+mlpHtml()+lateHtml()+hpHtml()+form; tpRecalc();
 }
 function buildCustom(){
   var order=['ml','over','hit','2tb','hrr','hr'];
@@ -4516,7 +4587,7 @@ function libTicketCards(list){
     return '<details class="pl-day"><summary>'+esc(p.date)+' · '+esc(p.name||'Parlay')+oddsTag+' '+badge+' <span style="color:var(--muted)">'+p.wins+'/'+p.n+' legs</span></summary><div class="pl-legs">'+legs+'</div></details>';
   }).join('')||'<div class="empty">Nothing logged here yet.</div>';
 }
-function libSum(html){return '<div class="note" style="margin:0 0 8px;padding:8px 10px;background:var(--panel,#f1f5f9);border-radius:8px">'+html+'</div>';}
+function libSum(html){return '<div class="note" style="margin:0 0 8px;padding:8px 10px;background:var(--panel,var(--panel2));border-radius:8px">'+html+'</div>';}
 function libTicketSummary(list){
   var w=0,l=0,pend=0,u=0,np=0,unpriced=0;
   list.forEach(function(p){
@@ -4566,7 +4637,7 @@ function libPropSummary(bh,cat){
       +(L.mean_clv_pp!=null?' · CLV '+L.mean_clv_pp+'pp':'')
       +' <span style="font-size:9px;color:var(--muted)">from '+L.n_priced+' logged prices</span>';
   }else{
-    money='<b>Units: not measurable yet</b> <span style="font-size:9px;color:#b45309">no logged prices for this market — a units figure would be an assumption, not a measurement</span>';
+    money='<b>Units: not measurable yet</b> <span style="font-size:9px;color:#fbbf24">no logged prices for this market — a units figure would be an assumption, not a measurement</span>';
   }
   return libSum(head+'<br>'+(rec?rec+'<br>':'')+money);
 }
@@ -4611,12 +4682,15 @@ function renderLibrary(){
   $('library').innerHTML=bar+body;
 }
 
-var TABS=[['picks','Picks'],['slate','Slate'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['simulator','Simulator'],['library','Library'],['admin','Admin / Health'],['method','How it works'],['backtests','Backtests']];
+/* Section ids are UNCHANGED. Only the labels and the order of the
+   primary row move, so every existing deep link, cross-link and showTab()
+   call still resolves to the same section. */
+var TABS=[['home','Home'],['slate','Game Predictions'],['props','Player Props'],['parlay','Parlays'],['library','Results'],['picks','Picks'],['matchups','Matchups'],['performance','Performance'],['simulator','Simulator'],['admin','Admin / Health'],['method','How it works'],['backtests','Backtests']];
 /* FIVE THINGS A BETTOR OPENS, AND EVERYTHING ELSE BEHIND ONE BUTTON.
    Eleven equal-weight tabs on two rows made the reader scan a toolbar before
    reading a pick. Nothing is removed: the other six stay in TABS, keep their
    ids, and every deep link and showTab() call still resolves. */
-var NAV_PRIMARY=['picks','slate','props','parlay','performance'];
+var NAV_PRIMARY=['home','slate','props','parlay','library'];
 function buildNav(){
   var by={};TABS.forEach(function(t){by[t[0]]=t[1];});
   function btn(id,cls){
@@ -4642,7 +4716,7 @@ function showTab(id,btn){var ss=document.querySelectorAll('main section');for(va
    worst-first now, and the boundaries are stated in the tooltip. */
 function ageChipHtml(){
   var ageM=agoMin(D.generatedAt);
-  if(ageM==null)return '<span style="font-weight:800;color:#475569" title="No generatedAt in this payload.">data age '+INS+'</span>';
+  if(ageM==null)return '<span style="font-weight:800;color:var(--muted)" title="No generatedAt in this payload.">data age '+INS+'</span>';
   var col=ageM>150?'#b91c1c':ageM>90?'#b45309':'#0c7a43';
   var lvl=ageM>150?'STALE':ageM>90?'AGEING':'FRESH';
   return '<span style="font-weight:800;color:'+col+'" title="How old this page&#39;s data is. Fresh under 90m, ageing 90-150m, stale over 150m. Lineups and starters posted after this moment are not here yet.">data '+durTxt(ageM)+' old · '+lvl+'</span>';
@@ -4689,9 +4763,9 @@ function renderMeta(){
   var n=(D.gameCards||[]).length;
   var upd=D.generatedAt?new Date(D.generatedAt).toLocaleString():INS;
   var lu=D.lineupsProjected
-    ?'<span style="font-weight:800;color:#b45309" title="At least one lineup was still unposted at run time — props and tickets used season stats for those teams.">lineups: PROJECTED</span>'
-    :'<span style="font-weight:800;color:#0c7a43">lineups: OFFICIAL</span>';
-  var pull='<a href="https://github.com/amercado19/mlb-pipeline/actions/workflows/daily-picks.yml" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1.5px solid var(--accent,#0c7a43);border-radius:7px;background:none;color:var(--accent,#0c7a43);font-family:var(--mono);font-weight:700;font-size:11px;cursor:pointer;text-decoration:none" title="Runs the FULL pipeline now — fresh lineups, starting pitchers, odds, weather (~2–3 min). On the GitHub page press the green Run workflow button, wait, then reload this page.">&#128260; Pull fresh lineups</a>';
+    ?'<span style="font-weight:800;color:#fbbf24" title="At least one lineup was still unposted at run time — props and tickets used season stats for those teams.">lineups: PROJECTED</span>'
+    :'<span style="font-weight:800;color:#4ade80">lineups: OFFICIAL</span>';
+  var pull='<a href="https://github.com/amercado19/mlb-pipeline/actions/workflows/daily-picks.yml" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1.5px solid var(--accent,#0c7a43);border-radius:7px;background:none;color:var(--accent,#4ade80);font-family:var(--mono);font-weight:700;font-size:11px;cursor:pointer;text-decoration:none" title="Runs the FULL pipeline now — fresh lineups, starting pitchers, odds, weather (~2–3 min). On the GitHub page press the green Run workflow button, wait, then reload this page.">&#128260; Pull fresh lineups</a>';
   var hs=systemHealth();
   var dhChip='<span style="cursor:pointer" onclick="showTab(\'admin\')" title="Open Admin / Health">system '+statusPill(hs.level)+' '+hs.counts.ok+'/'+hs.counts.total+' sources OK'
     +(hs.top.length?' · '+hs.top.length+' warning(s)':'')+'</span>';
@@ -5011,7 +5085,7 @@ function hrEmptyExplanation(HRD,rows){
     if(v)bits.push('The lineup gate rejected '+nz(v.rejected,0)+' of '+nz(v.checked,0)+' player-rows'
       +(Object.keys(v.reasons||{}).length?' ('+Object.keys(v.reasons).map(function(k){return esc(k)+' '+v.reasons[k];}).join(', ')+')':'')+'.');
   }
-  return '<div class="note" style="background:#fee2e2;color:#7f1d1d;border-radius:8px;padding:9px 11px;margin-bottom:9px">'
+  return '<div class="note" style="background:#361318;color:#f87171;border-radius:8px;padding:9px 11px;margin-bottom:9px">'
     +'<b>No home-run candidates were published today. Why:</b><br>'+bits.join('<br>')+'</div>';
 }
 /* ---- parlay pipeline ---- */
@@ -5481,7 +5555,7 @@ function shCard(o){
   var deep=shKv('Last success',s?shWhen(s.lastSuccessAt):SH_ABSENT)
     +shKv('Last attempt',s?shWhen(s.lastAttemptAt):SH_ABSENT)
     +((s&&isNum(s.consecutiveFailures))?shKv('Consecutive fails',shNum(s.consecutiveFailures)):'')
-    +((s&&s.lastError)?shKv('Last error','<span style="color:#b91c1c">'+esc(String(s.lastError))+'</span>'):'')
+    +((s&&s.lastError)?shKv('Last error','<span style="color:#f87171">'+esc(String(s.lastError))+'</span>'):'')
     +shKv('Codes',s?shCodes(s.codes):SH_ABSENT)
     +((s&&s.measurementWhy)?shKv('Measurement','<span class="sshage">'+esc(s.measurementWhy)+'</span>'):'')
     +((s&&s.integrityWhy)?shKv('Data integrity','<span class="sshage">'+esc(s.integrityWhy)+'</span>'):'');
@@ -6237,13 +6311,13 @@ function renderAdmin(){
     +'</div>');
 
   /* 2. WORKFLOWS */
-  h+=ahs('Workflows, cadence &amp; data age','<a href="https://github.com/amercado19/mlb-pipeline/actions" target="_blank" rel="noopener" style="color:#fdf8ec">GitHub Actions &#8599;</a>',
+  h+=ahs('Workflows, cadence &amp; data age','<a href="https://github.com/amercado19/mlb-pipeline/actions" target="_blank" rel="noopener" style="color:#f2e6c8">GitHub Actions &#8599;</a>',
     '<div class="tblwrap"><table class="aht">'
     +'<tr><th>Fact</th><th>Value</th><th>Meaning</th></tr>'
     +'<tr><td>Configured cadence</td><td>'+esc(nz(SP.cadence,NOT_IN_BUILD))+'</td><td class="wrap">What is scheduled. GitHub Actions fires only some configured cron slots and starts 30&ndash;105 min late.</td></tr>'
     +'<tr><td>Next run</td><td>'+pill('NOT PROMISED','b-unk','Deliberately not shown. There is no exact next execution time that can be honoured, so the page does not invent one.')+'</td><td class="wrap">Removed on purpose. Use cadence + last run + data age instead.</td></tr>'
     +'<tr><td>Last run</td><td>'+esc(stampTxt(SP.lastRunAt))+'</td><td class="wrap">'+(agoMin(SP.lastRunAt)!=null?durTxt(agoMin(SP.lastRunAt))+' ago':INS)+'</td></tr>'
-    +'<tr><td>Last success</td><td>'+esc(stampTxt(SP.lastSuccessAt))+'</td><td class="wrap">'+((SP.lastRunAt&&SP.lastSuccessAt&&SP.lastRunAt!==SP.lastSuccessAt)?'<span style="color:#b91c1c">the last run did not succeed</span>':'last run succeeded')+'</td></tr>'
+    +'<tr><td>Last success</td><td>'+esc(stampTxt(SP.lastSuccessAt))+'</td><td class="wrap">'+((SP.lastRunAt&&SP.lastSuccessAt&&SP.lastRunAt!==SP.lastSuccessAt)?'<span style="color:#f87171">the last run did not succeed</span>':'last run succeeded')+'</td></tr>'
     +'<tr><td>Data age (now)</td><td>'+durTxt(agoMin(D.generatedAt))+'</td><td class="wrap">Measured live from generatedAt. Fresh &lt;90m · ageing 90&ndash;150m · stale &gt;150m.</td></tr>'
     +'<tr><td>Data age (at publish)</td><td>'+(isNum(SP.dataAgeMin)?durTxt(SP.dataAgeMin):INS)+'</td><td class="wrap">slatePlan.dataAgeMin — a snapshot the pipeline recorded when it published. It does not advance while the page is open.</td></tr>'
     +'<tr><td>Observed gap between runs</td><td>'+(isNum(SP.observedGapMin)?durTxt(SP.observedGapMin):INS)+'</td><td class="wrap">Source: '+esc(nz(SP.gapSource,'unknown'))+(isNum(SP.observedGapSamples)?' from '+SP.observedGapSamples+' sample(s)':'')+'. &ldquo;bootstrap&rdquo; means a default, not a measurement.</td></tr>'
@@ -6267,8 +6341,8 @@ function renderAdmin(){
           +'<td class="wrap">'+esc(sv.why)+(s.note?' — '+esc(s.note):'')+'</td></tr>';}).join('')
       +'</table></div>'
       +'<div class="note">Checked '+esc(stampTxt(dh.checkedAt))+' · '
-      +(dh.missing&&dh.missing.length?'<b style="color:#b91c1c">missing:</b> '+esc(dh.missing.join(', '))+' · ':'')
-      +(dh.thin&&dh.thin.length?'<b style="color:#b45309">thin:</b> '+esc(dh.thin.join(', ')):'nothing thin')+'</div>';
+      +(dh.missing&&dh.missing.length?'<b style="color:#f87171">missing:</b> '+esc(dh.missing.join(', '))+' · ':'')
+      +(dh.thin&&dh.thin.length?'<b style="color:#fbbf24">thin:</b> '+esc(dh.thin.join(', ')):'nothing thin')+'</div>';
   }
   h+=ahs('Data sources',srcs?(Object.keys(srcs).length+' sources'):statusPill('UNKNOWN'),srcBody);
 
@@ -6573,8 +6647,8 @@ function renderAdmin(){
       +'</div>'
       +'<div class="note">Rules fired — '+esc(p.away)+': '+esc(((P.sides||{}).away||{}).rules?((P.sides||{}).away.rules.join(' · ')):nz(null,NOT_IN_BUILD))
       +'<br>Rules fired — '+esc(p.home)+': '+esc(((P.sides||{}).home||{}).rules?((P.sides||{}).home.rules.join(' · ')):nz(null,NOT_IN_BUILD))+'</div>'
-      +(p.disagree?'<div class="note" style="color:#92400e">'+esc(p.disagree)+'</div>':'')
-      +(warn.length?'<div class="note" style="color:#92400e"><b>Validation warnings</b><br>'+warn.map(function(i){return esc(i.check+': '+i.message);}).join('<br>')+'</div>'
+      +(p.disagree?'<div class="note" style="color:#fbbf24">'+esc(p.disagree)+'</div>':'')
+      +(warn.length?'<div class="note" style="color:#fbbf24"><b>Validation warnings</b><br>'+warn.map(function(i){return esc(i.check+': '+i.message);}).join('<br>')+'</div>'
         :'<div class="note">No validation warning references this game.</div>')
       +'</details>';
   }).join('');
@@ -7966,12 +8040,237 @@ function renderDiagnosticsPanel(){
       +'padding:4px 0;border-top:1px solid var(--line)"><b>'+esc(d.code)+'</b> · '
       +esc(d.message)+'</div>';}).join('')+'</div></div>';
 }
+/* ==================== HOME ==================== */
+
+/* A LEG'S MARKET MUST BE ALIVE, NOT JUST ITS GAME.
+   `mktDead` answers "has this game started". It says nothing about whether
+   the market the leg sits in has been retired. Today's model parlay carries
+   a 1+ Double leg whose market is KILL ("2B props hit 23.7% over 30 days,
+   unprofitable at any realistic price"), and nothing was stopping it.
+   betType is the leg's own vocabulary; the boards are keyed by family, and
+   these are the pairs that differ. */
+var LEG_FAM={hit:'h1',h1:'h1',hr:'hr',homerun:'hr',h2:'h2','2b':'h2',
+             tb2:'tb2',hrr:'hrr',ou:'ou',total:'ou'};
+function legRetired(l){
+  if(!l)return false;
+  var bt=String(l.betType||l.market||l.fam||'').toLowerCase();
+  var fam=LEG_FAM[bt];
+  /* Unknown or market-less legs (moneyline, run line) are not prop markets
+     and have no retirement state to check. Absence is not a failure here. */
+  return fam ? boardRetired(fam) : false;
+}
+function legsRetired(legs){
+  return (legs||[]).some(legRetired);
+}
+function retiredLegNames(legs){
+  return (legs||[]).filter(legRetired)
+    .map(function(l){return String(l.desc||l.betType||'leg');});
+}
+
+function hmSec(title,sub,body,more){
+  if(!body)return '';
+  /* A DIV, NOT A SECTION. `main section{display:none}` is how the page
+     switches tabs, so a nested <section> inside #home is hidden by the very
+     rule that shows #home. */
+  return '<div class="hmsec"><div class="hmh"><h2>'+esc(title)+'</h2>'
+    +(sub?'<span class="hmsub">'+esc(sub)+'</span>':'')
+    +(more?'<button class="hmmore" onclick="showTab(\''+more[0]+'\')">'
+       +esc(more[1])+' &rsaquo;</button>':'')
+    +'</div>'+body+'</div>';
+}
+
+/* ---- one game, compact. Upcoming first; a started game keeps its
+   prediction but loses its price. ---- */
+function hmGame(r){
+  var g=r.g,m=r.m,p=r.b.pred,st=r.st;
+  var tm={away:p.away||teamsOf(g).away,home:p.home||teamsOf(g).home};
+  var live=st.key==='LIVE',done=st.key==='FINAL',dead=!st.marketOpen;
+  var note=live?'PREGAME PICK &mdash; GAME LIVE':(done?'FINAL':'');
+  return '<button class="hmg'+(live?' hmg-live':'')+(done?' hmg-done':'')+'"'
+    +' onclick="showTab(\'slate\')" title="Open Game Predictions">'
+    +'<div class="hmgt">'+hTeam(tm.away)+'<b>'+esc(tm.away)+'</b>'
+      +'<span class="hmat">@</span>'+hTeam(tm.home)+'<b>'+esc(tm.home)+'</b></div>'
+    +'<div class="hmgm">'+esc(etTime(g.time||m.time||p.pred.time))
+      +(live?'<span class="hmlive">LIVE</span>':(done?'<span class="hmfin">FINAL</span>':''))+'</div>'
+    +'<div class="hmgw">'+(p.winner?'<span class="hmgwl">model</span><b>'+esc(p.winner)+'</b>'
+        +(isNum(p.wp)?'<span class="hmgwp">'+p.wp.toFixed(0)+'%</span>':''):'<span class="hmgwl">no model winner</span>')+'</div>'
+    +(note?'<div class="hmgn">'+note+'</div>':'')
+    +'</button>';
+}
+
+function hmGames(){
+  var gc=(D.gameCards||[]).slice();
+  var mlByPk={};(D.ml||[]).forEach(function(x){mlByPk[x.gamePk]=x;});
+  if(!gc.length)return '<div class="empty">No games in today’s slate.</div>';
+  var rows=gc.map(function(g){
+    var m=mlByPk[g.gamePk]||{};
+    return {g:g,m:m,b:betFor(g,m),st:gameStateOf(g,m),t:tms(g.time||m.time)||0};
+  });
+  var out='',any=false;
+  [['UPCOMING','Upcoming'],['IN PROGRESS','In progress'],
+   ['FINAL','Final'],['POSTPONED','Postponed']].forEach(function(k){
+    var v=rows.filter(function(r){return r.st.group===k[0];})
+              .sort(function(a,b){return a.t-b.t;});
+    if(!v.length)return;
+    any=true;
+    out+='<div class="hmgrp"><span>'+esc(k[1])+'</span><i>'+v.length+'</i></div>'
+      +'<div class="hmgg">'+v.map(hmGame).join('')+'</div>';
+  });
+  /* A finished slate is a state, not an empty page. */
+  if(!any)return '<div class="empty">No games in today’s slate.</div>';
+  return out;
+}
+
+/* ---- the player card. The headshot is the anchor, not a decoration. ---- */
+function hmReason(r,fam){
+  /* Only states a factor whose field is actually present. */
+  var b=[];
+  if(isNum(r.battingOrder)&&r.battingOrder>0)b.push('Batting '+ord2(r.battingOrder));
+  var ls=String(r.lineupStatus||'').toUpperCase();
+  if(ls.indexOf('CONFIRM')>=0)b.push('confirmed');
+  else if(ls.indexOf('PROJECT')>=0)b.push('projected lineup');
+  if(fam==='hr'){
+    if(isNum(r.iso))b.push('.'+String(r.iso.toFixed(3)).slice(2)+' ISO');
+    if(isNum(r.hr))b.push(r.hr+' HR');
+  }else{
+    if(isNum(r.avg))b.push('.'+String(r.avg.toFixed(3)).slice(2)+' AVG');
+    if(isNum(r.hpg))b.push(r.hpg.toFixed(2)+' hits/game');
+  }
+  if(isNum(r.spXera))b.push('vs '+r.spXera.toFixed(2)+' xERA');
+  return b.join(' · ');
+}
+function ord2(n){
+  var s=['th','st','nd','rd'],v=n%100;
+  return n+(s[(v-20)%10]||s[v]||s[0]);
+}
+
+function hmPlayer(r,fam,label){
+  var num=isNum(r.model_prob)?(100*r.model_prob).toFixed(0)+'%'
+        :(isNum(r.metric)?String(r.metric):(isNum(r.score)?String(r.score):SH_ABSENT));
+  var unit=isNum(r.model_prob)?'model probability':label+' score';
+  /* RANKING ONLY is the honest label whenever no probability is published.
+     It is not a softer way of saying the same thing -- a score is not a
+     chance, and the card must not let one read as the other. */
+  var chip=isNum(r.model_prob)
+      ? pill('MODEL PROBABILITY','b-ok','A published, verified probability for this market.')
+      : pill('RANKING ONLY','b-unk','No verified probability is published for this market. The number is a rank within this board, not a chance.');
+  var why=hmReason(r,fam);
+  return '<div class="hmp">'
+    +'<div class="hmpf">'+hFace(r.playerId,r.name)+'</div>'
+    +'<div class="hmpb">'
+      +'<div class="hmpn">'+esc(r.name||SH_ABSENT)+'</div>'
+      +'<div class="hmpt">'+hTeam(r.team)+'<span>'+esc(r.team||'')+'</span>'
+        +'<span class="hmpm">'+esc(label)+'</span></div>'
+      +'<div class="hmpv"><b>'+esc(num)+'</b><span>'+esc(unit)+'</span></div>'
+      +'<div class="hmpc">'+chip+'</div>'
+      +(why?'<div class="hmpw">'+esc(why)+'</div>':'')
+    +'</div></div>';
+}
+
+function hmBoard(fam,label,n){
+  if(boardRetired(fam))return '';
+  var rows=((D.boards||{})[fam]||[]).filter(function(r){return !mktDeadRow(r);});
+  if(!rows.length)return '';
+  return '<div class="hmpg">'+rows.slice(0,n||4).map(function(r){
+    return hmPlayer(r,fam,label);}).join('')+'</div>';
+}
+
+function hmHomeRun(){
+  if(boardRetired('hr'))return '';
+  var rows=((D.hrProps&&D.hrProps.length)?D.hrProps:((D.boards||{}).hr||[]))
+    .filter(function(r){return !mktDeadRow(r);});
+  if(!rows.length)return '';
+  return '<div class="hmpg">'+rows.slice(0,4).map(function(r){
+    return hmPlayer(r,'hr','home run');}).join('')+'</div>';
+}
+
+/* ---- parlay spotlight. The model/priced distinction is the product, so
+   the two are never merged into one card. ---- */
+function hmParlay(){
+  var out=[];
+  var mp=D.modelParlay;
+  if(mp&&(mp.legs||[]).length){
+    var deadleg=(mp.legs||[]).some(function(l){return mktDead(l.gamePk);});
+    var retired=retiredLegNames(mp.legs);
+    /* REFUSED, NOT TRIMMED. A three-leg ticket minus its dead leg is a
+       two-leg bet wearing a three-leg ticket's name and probability. */
+    var why=deadleg
+      ? 'A leg’s game is underway, so this ticket is not current.'
+      : (retired.length
+         ? 'A leg sits in a retired market (' + retired.join(', ')
+           + '), so this ticket is not offered.'
+         : '');
+    out.push('<div class="hmpar"><div class="hmparh">MODEL PARLAY<span>no sportsbook price</span></div>'
+      +(why
+        ? '<div class="hmparn">'+esc(why)+'</div>'
+        : '<ol class="hmparl">'+mp.legs.map(function(l){
+            return '<li>'+esc(l.desc||'leg')+'</li>';}).join('')+'</ol>'
+          +'<div class="hmparf">'+(isNum(mp.combinedProbability)
+              ? (100*mp.combinedProbability).toFixed(1)+'% <span>independence estimate</span>'
+              : '<span>combined chance not measured</span>')+'</div>')
+      +'</div>');
+  }
+  var pp=D.pricedParlay||D.topParlay;
+  if(pp&&(pp.legs||[]).length&&pp.parlayValid!==false
+     &&!legsRetired(pp.legs)&&!(pp.legs||[]).some(function(l){return mktDead(l.gamePk);})){
+    var c=pp.combined||{};
+    out.push('<div class="hmpar"><div class="hmparh">PRICED PARLAY<span>real book price</span></div>'
+      +'<ol class="hmparl">'+pp.legs.slice(0,6).map(function(l){
+          return '<li>'+esc(l.desc||'leg')+'</li>';}).join('')+'</ol>'
+      +'<div class="hmparf">'+(isNum(c.americanOdds)
+          ? (c.americanOdds>0?'+':'')+c.americanOdds+' <span>book price</span>'
+          : '<span>no book price</span>')+'</div></div>');
+  }
+  return out.length?'<div class="hmparg">'+out.join('')+'</div>':'';
+}
+
+/* ---- results. Settled records only, active markets only. ---- */
+function hmResults(){
+  /* boardHistory is published NEWEST FIRST, so slice(-7) took the seven
+     OLDEST days and called them "last 7". Sorted explicitly rather than
+     trusting the producer's array order. */
+  var bh=(D.boardHistory||[]).slice().sort(function(a,b){
+    return String(b.date||'').localeCompare(String(a.date||''));}).slice(0,7);
+  if(!bh.length)return '';
+  var FAM=[['ml','Moneyline'],['h1','1+ Hit'],['hr','Home Run']]
+    .filter(function(f){return !boardRetired(f[0]);});
+  var rows=bh.map(function(d){
+    var tds=FAM.map(function(f){
+      var c=(d.cats||{})[f[0]];
+      if(!c||!isNum(c.n)||!c.n)return '<td class="hmrx">&mdash;</td>';
+      var cls=(c.w*2>=c.n)?'hmrw':'hmrl';
+      return '<td class="'+cls+'">'+c.w+'/'+c.n+'</td>';
+    }).join('');
+    return '<tr><td class="hmrd">'+esc(d.date)+'</td>'+tds+'</tr>';
+  }).join('');
+  /* A day with no settled rows shows an em dash, not a zero. An unresolved
+     outcome is not a loss. */
+  return '<div class="hmrw2"><table class="hmrt"><thead><tr><th>Date</th>'
+    +FAM.map(function(f){return '<th>'+esc(f[1])+'</th>';}).join('')
+    +'</tr></thead><tbody>'+rows+'</tbody></table>'
+    +'<div class="hmrn">Settled prediction outcomes. Wins over graded picks; '
+    +'a market with nothing graded that day shows &mdash;, not a zero. '
+    +'Financial settlement is reported separately under Results.</div></div>';
+}
+
+function renderHome(){
+  var el=$('home');if(!el)return;
+  var out='';
+  out+=hmSec('Today’s featured picks',null,dailyHero(),['picks','All picks']);
+  out+=hmSec('Today’s MLB games',null,hmGames(),['slate','Game predictions']);
+  out+=hmSec('Featured player props','1+ hit',hmBoard('h1','1+ hit',4),['props','All player props']);
+  out+=hmSec('Home run watch',null,hmHomeRun(),['props','All home run props']);
+  out+=hmSec('Parlay spotlight',null,hmParlay(),['parlay','Build a parlay']);
+  out+=hmSec('Recent results','last 7 graded days',hmResults(),['library','Full results']);
+  el.innerHTML=out||'<div class="empty">Nothing published for today yet.</div>';
+}
+
 function renderAll(){
   /* every index below is derived from D — rebuild them all on every render */
   window._LUIX=null;window._PIX=null;window._SPIX=null;
   window.__RENDER_DIAGNOSTICS=[];
   /* Each renderer is isolated: one bad section must not blank the whole page. */
-  [['meta',renderMeta],['slate',renderSlate],['picks',renderPicks],['matchups',renderMatchups],
+  [['meta',renderMeta],['home',renderHome],['slate',renderSlate],['picks',renderPicks],['matchups',renderMatchups],
    ['props',renderProps],['parlay',renderParlay],['performance',renderPerformance],
    ['simulator',renderSimulator],['library',renderLibrary],['admin',renderAdmin],['method',renderMethod],
    ['backtests',renderBacktests]].forEach(function(r){
