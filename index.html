@@ -671,6 +671,32 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
 .s3wok{font-weight:800;color:var(--txt)}
 .s3wco{font-weight:700;color:var(--txt);opacity:.92}
 .s3wev{margin-left:6px;font-weight:600;font-size:10.5px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+.s3envw{display:flex;gap:10px;align-items:center;flex-wrap:nowrap}
+.s3wtx{display:flex;flex-direction:column;gap:1px;min-width:0}
+.g2rose{flex:0 0 auto;color:var(--muted)}
+.s3wto{font-weight:800;color:var(--txt)}
+.s3sps{display:flex;flex-direction:column;gap:3px}
+.s3ps{margin-left:auto;font-size:11.5px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+.s3ps>b{color:var(--txt)}
+.s3drow{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:560px){.s3drow{grid-template-columns:1fr}}
+.s3drow>details>summary{font-size:11.5px;padding:7px 10px}
+.s3st.hs{font-size:9px;padding:1px 6px}
+.g2h{flex-wrap:wrap}
+.g2chips{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.s3wq{margin-left:7px;font-size:10.5px}
+.navmore{position:relative;display:inline-block}
+.navmore>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.navmore>summary::-webkit-details-marker{display:none}
+.navmore>summary::after{content:'\25BE';font-size:9px;opacity:.7}
+.navmore>div{position:absolute;z-index:40;top:calc(100% + 6px);left:0;display:flex;flex-direction:column;gap:4px;padding:8px;border-radius:10px;background:var(--panel);border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.18);min-width:190px}
+.navmore>div>button{width:100%;text-align:left}
+#datastatus{max-width:1100px;margin:6px auto 0}
+#datastatus>summary{cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--muted);padding:4px 0;list-style:none}
+#datastatus>summary::-webkit-details-marker{display:none}
+#datastatus>summary::before{content:'\25B8 ';font-size:9px}
+#datastatus[open]>summary::before{content:'\25BE '}
+.masum{font-size:11px}
 
 .s3win{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
   padding:8px 10px;border-radius:9px;background:var(--soft);border:1px solid var(--line)}
@@ -952,6 +978,14 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
   <h1>MLB <span>2026</span> — DAILY EDGE</h1>
   <div class="meta" id="meta"></div>
   <nav id="nav"></nav>
+  <!-- OPERATOR TELEMETRY, FOLDED.
+       Cron cadence, observed gap and its bootstrap source, API credits left
+       and the run note are how the machine is behaving, not what to bet.
+       They were six lines above the first card on every page load. Folded,
+       not removed: the age and staleness chips a reader actually needs are
+       still in the meta line at the top, and the delay banner still shows
+       itself when it fires. -->
+  <details id="datastatus"><summary>Data status &amp; cadence</summary><div>
   <div id="oddsbar" style="max-width:1100px;margin:6px auto 0;padding:6px 0;font-family:var(--mono);font-size:11px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
     <button onclick="refresh()" title="Reloads the latest published slate + odds in place (same as the slate refresh). The page can't pull new prices itself — for a brand-new pull use 'force fresh pull'." style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1.5px solid #3a8fff;border-radius:7px;background:none;color:#3a8fff;font-family:var(--mono);font-weight:700;font-size:11px;cursor:pointer">&#8635; Refresh odds</button>
     <span id="oddsfresh" style="color:var(--muted)">props post ~3&ndash;4h before first pitch</span>
@@ -959,6 +993,7 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
   </div>
   <div id="runstrip"></div>
   <div id="runnote" style="display:none"></div>
+  </div></details>
 </header>
 <main>
   <section id="slate"></section>
@@ -1808,6 +1843,60 @@ function coarseWedge(c,r,midDeg,halfDeg){
     +'stroke-opacity=".45" stroke-width="1" stroke-dasharray="3 2"/>';
 }
 
+var COMPASS16=['N','NNE','NE','ENE','E','ESE','SE','SSE',
+               'S','SSW','SW','WSW','W','WNW','NW','NNW'];
+function compassOf(deg){
+  return COMPASS16[Math.floor(((deg%360)+360)%360/22.5+0.5)%16];
+}
+
+function compassRose(e,S){
+  /* EVERY GAME GETS AN ARROW, AND THIS IS THE HONEST ONE FOR MOST OF THEM.
+     It is relative to TRUE NORTH, not to the field. The bearing the wind
+     comes from is published for every park at every wind speed and is not
+     in doubt. What IS in doubt at ten of tonight's parks is the rotation
+     from north onto that park's field axis -- which is the whole reason the
+     field arrow is suppressed there. So this draws exactly what is known:
+     N up, arrow pointing the way the air is travelling. */
+  var c=S/2,r=c-8,to=((e.windFromDegrees+180)%360+360)%360;
+  var lab='wind from '+compassOf(e.windFromDegrees)+', blowing toward '
+    +compassOf(to)+'. Compass only — this park has no verified field '
+    +'orientation, so no out/in call is made.';
+  var t='<svg class="g2rose" width="'+S+'" height="'+S+'" viewBox="0 0 '+S+' '+S
+    +'" role="img" aria-label="'+esc(lab)+'"><title>'+esc(lab)+'</title>';
+  t+='<circle cx="'+c+'" cy="'+c+'" r="'+r+'" fill="none" stroke="currentColor" '
+    +'stroke-opacity=".22" stroke-width="1" stroke-dasharray="2 3"/>';
+  t+='<text x="'+c+'" y="8.5" text-anchor="middle" font-size="7.5" '
+    +'fill="currentColor" fill-opacity=".55">N</text>';
+  t+='<g transform="rotate('+to.toFixed(1)+' '+c+' '+c+')">'
+    +'<line x1="'+c+'" y1="'+(c+r*0.55).toFixed(1)+'" x2="'+c+'" y2="'
+    +(c-r*0.40).toFixed(1)+'" stroke="var(--accent)" stroke-width="2.2" '
+    +'stroke-linecap="round"/>'
+    +'<path d="M '+c+' '+(c-r*0.82).toFixed(1)+' l 4.8 7.2 h -9.6 Z" '
+    +'fill="var(--accent)"/></g>';
+  return t+'</svg>';
+}
+
+function windGlyph(e,S){
+  /* Which arrow a game gets is a statement about what is known, so the two
+     never share a shape. A field glyph means "we can say out or in at this
+     park"; a dashed compass rose means "we can only say where the air is
+     going". A reader should be able to tell those apart before reading. */
+  if(!e||!e.available||!isNum(e.windFromDegrees)||!isNum(e.windSpeedMph))
+    return '<svg class="g2rose" width="'+S+'" height="'+S+'" viewBox="0 0 '+S
+      +' '+S+'" role="img" aria-label="no wind reading"><circle cx="'+(S/2)
+      +'" cy="'+(S/2)+'" r="'+(S/2-8)+'" fill="none" stroke="currentColor" '
+      +'stroke-opacity=".15" stroke-dasharray="2 3"/><circle cx="'+(S/2)+'" cy="'
+      +(S/2)+'" r="2.6" fill="currentColor" fill-opacity=".25"/></svg>';
+  if(String(e.roofState||'').toUpperCase().indexOf('CLOSED')>=0)
+    return '<svg class="g2rose" width="'+S+'" height="'+S+'" viewBox="0 0 '+S
+      +' '+S+'" role="img" aria-label="roof closed"><rect x="6" y="'+(S/2-6)
+      +'" width="'+(S-12)+'" height="12" rx="3" fill="none" '
+      +'stroke="currentColor" stroke-opacity=".3"/></svg>';
+  var coarse=e.coarseDirection&&e.coarseDirection.shown;
+  if(e.directionShown||coarse) return windField(e,S);
+  return compassRose(e,S);
+}
+
 function windField(e,size){
   var S=size||76,c=S/2,on=!!(e&&e.directionShown),
       deg=(on&&isNum(e&&e.fieldRelativeDeg))?e.fieldRelativeDeg:null;
@@ -2594,8 +2683,10 @@ function maSummary(){
   if(s.nearTie)bits.push(s.nearTie+' near-even');
   if(s.disagreement)bits.push(s.disagreement+' split');
   if(s.notMeasurable)bits.push(s.notMeasurable+' not measurable');
-  return '<div class="masum"><b>'+esc(s.label)+'</b> &middot; '+esc(bits.join(' · '))
-    +'<br>'+esc(s.why||'')+'</div>';
+  /* One line. This was a two-line bordered panel restating a count that the
+     strip below already carries; the explanation is still here, on hover. */
+  return '<div class="masum" title="'+esc(s.why||'')+'"><b>'+esc(s.label)
+    +'</b> &middot; '+esc(bits.join(' · '))+'</div>';
 }
 function maOf(P){var a=(P||{}).modelAgreement;return (a&&typeof a==='object')?a:null;}
 function maMixed(P){var a=maOf(P);return !!(a&&(a.status==='NEAR_TIE'||a.status==='DISAGREEMENT'));}
@@ -2676,8 +2767,11 @@ function wind3(g,e,shown,wsum){
   /* ONE DECIMAL, DELIBERATELY. Rounding 7.5 to "8 mph" beside "too light to
      call a direction" reads as a contradiction, because 8.0 is exactly where
      the sector gate opens. The payload carries a decimal; print it. */
+  /* "from NE" rather than a bare "NE": the arrow points the other way,
+     and a reader should not have to know the meteorological convention to
+     reconcile the two. */
   if(isNum(e.windSpeedMph))f.push(e.windSpeedMph.toFixed(1)+' mph'
-    +(e.windFromCompass?' '+esc(e.windFromCompass):''));
+    +(e.windFromCompass?' from '+esc(e.windFromCompass):''));
   /* A gust well over the sustained speed is the part a batted ball feels,
      and it has never been on this card. Camden is 7 sustained, 23 gusting.
      Shown only when it is materially higher, so it stays information. */
@@ -2710,15 +2804,26 @@ function wind3(g,e,shown,wsum){
        nothing at 15 mph either. The coarse gate tests orientation first, so
        when it reports ORIENTATION_UNVERIFIED that is the binding
        constraint, and that is the one worth printing. */
-    var why=(c&&c.suppressedReason==='ORIENTATION_UNVERIFIED'
-             &&e.orientationEntitled===false)
-      ?(WIND_SUPPRESS.ORIENTATION_UNVERIFIED||'Park orientation not verified')
-      :windSuppressText(e);
-    claim='<span class="s3sup">'+esc(why)+'</span>';
+    /* WHICH GATE ACTUALLY CLOSED, AND WHAT IS STILL KNOWN.
+       Where the park's orientation is unverified, the compass direction is
+       still a fact, so the card states it instead of stopping at a refusal.
+       "Blowing toward SW" is true at every park; "out to right" is not. */
+    if(c&&c.suppressedReason==='ORIENTATION_UNVERIFIED'
+       &&e.orientationEntitled===false&&isNum(e.windFromDegrees)){
+      claim='<span class="s3wto">toward '
+        +esc(compassOf(e.windFromDegrees+180))+'</span>'
+        +'<span class="s3sup s3wq" title="'
+        +esc(WIND_SUPPRESS.ORIENTATION_UNVERIFIED
+             ||'This park has no verified field orientation, so the wind '
+              +'cannot be resolved onto LF/CF/RF and no out/in call is made.')
+        +'">compass only</span>';
+    }else{
+      claim='<span class="s3sup">'+esc(windSuppressText(e))+'</span>';
+    }
   }
-  return '<div class="s3env s3envw"><i>WIND</i>'
-    +'<span class="s3wf">'+f.join(' &middot; ')+'</span>'
-    +'<span class="'+klass+'">'+claim+'</span></div>';
+  return '<div class="s3env s3envw">'+windGlyph(e,46)
+    +'<div class="s3wtx"><span class="s3wf">'+f.join(' &middot; ')+'</span>'
+    +'<span class="'+klass+'">'+claim+'</span></div></div>';
 }
 
 /* A board row may only reach a recommendation if the lineup gate lets it.
@@ -2939,13 +3044,20 @@ function slateCard2(g,m){
       +'<div class="g2mu">'+teamLogo(tm.away)+'<span>'+esc(tm.away)+'</span>'
         +'<span class="g2at">@</span>'+teamLogo(tm.home)+'<span>'+esc(tm.home)+'</span></div>'
       +'<div class="g2when">'+esc(etTime(g.time||m.time||p.pred.time))+'</div>'
+      /* The lineup state is NOT repeated here. It was a third chip that
+         clipped at the card edge, and the "View lineup CONFIRMED" drawer
+         one row below already carries it. Two places for one fact is the
+         clutter, not the chip. */
       +'<div class="g2chips">'+stateChip(st)+'</div>'
     +'</div>'
     /* ---- THE FIVE FACTS. Everything here is canonical; nothing is
            recomputed. Anything an engineer reads moved to View analysis. */
     +'<div class="s3b">'
-      +sp3(tm.away,g.away_sp,(spxOf(g.gamePk)||{}).away)
-      +sp3(tm.home,g.home_sp,(spxOf(g.gamePk)||{}).home)
+      /* Two starters are one comparison, so they are one block. */
+      +'<div class="s3sps">'
+        +sp3(tm.away,g.away_sp,(spxOf(g.gamePk)||{}).away)
+        +sp3(tm.home,g.home_sp,(spxOf(g.gamePk)||{}).home)
+      +'</div>'
       +wind3(g,e,shown,wsum)
       +'<div class="s3win"><span class="s3wl">MODEL WINNER</span>'
         +'<span class="s3wt">'+esc(p.winner||SH_ABSENT)+'</span>'
@@ -2954,11 +3066,14 @@ function slateCard2(g,m){
         +(isNum(p.wp)?'<span class="s3wp">'+p.wp.toFixed(0)+'%</span>':'')
         +((_ma&&_ma.status==='DISAGREEMENT')
             ?'<span class="s3wmix" title="The moneyline model and the run-projection model point different ways. Two models of two quantities — see View analysis.">Mixed model signal</span>':'')
+      /* The projected score answers a different question from the winner,
+         which is why it keeps its own label -- but it does not need its own
+         row to do that. */
+      +(proj?'<span class="s3ps">Projected <b>'+proj+'</b></span>':'')
       +'</div>'
-      +(proj?'<div class="s3ps">Projected score <b>'+proj+'</b></div>':'')
-      +'<div class="s3lu2"><i>LINEUP</i><span class="s3st '
-        +(gState==='CONFIRMED'?'ok':gState==='PROJECTED'?'pj':'pd')+'">'
-        +lineupWord3(gState)+'</span></div>'
+      /* FOUR DRAWERS, ONE ROW. Same elements, same contents; stacked
+         full-width they were four bars of dead space on sixteen cards. */
+      +'<div class="s3drow">'
       +parlayDrop3(g,m,tm)
       +topPropsDrop3(g)
       +lineupDrop3(g,m,gState,tm)
@@ -3002,6 +3117,7 @@ function slateCard2(g,m){
         +lineupDetails(g,m,gState,tm)
         +detailsBlock(g,m)
       +'</div></details>'
+      +'</div>'
     +'</div>'
     +'</div>';
 }
@@ -4496,8 +4612,30 @@ function renderLibrary(){
 }
 
 var TABS=[['picks','Picks'],['slate','Slate'],['matchups','Matchups'],['props','Props'],['parlay','Parlay'],['performance','Performance'],['simulator','Simulator'],['library','Library'],['admin','Admin / Health'],['method','How it works'],['backtests','Backtests']];
-function buildNav(){$('nav').innerHTML=TABS.map(function(t,i){return '<button class="'+(i===0?'active':'')+'" data-s="'+t[0]+'" onclick="showTab(\''+t[0]+'\',this)">'+esc(t[1])+'</button>';}).join('');}
-function showTab(id,btn){var ss=document.querySelectorAll('main section');for(var i=0;i<ss.length;i++)ss[i].classList.remove('active');var sec=$(id);if(sec)sec.classList.add('active');var bs=document.querySelectorAll('nav button');for(var j=0;j<bs.length;j++){bs[j].classList.remove('active');if(!btn&&bs[j].getAttribute('data-s')===id)bs[j].classList.add('active');}if(btn)btn.classList.add('active');try{window.scrollTo(0,0);}catch(e){}}
+/* FIVE THINGS A BETTOR OPENS, AND EVERYTHING ELSE BEHIND ONE BUTTON.
+   Eleven equal-weight tabs on two rows made the reader scan a toolbar before
+   reading a pick. Nothing is removed: the other six stay in TABS, keep their
+   ids, and every deep link and showTab() call still resolves. */
+var NAV_PRIMARY=['picks','slate','props','parlay','performance'];
+function buildNav(){
+  var by={};TABS.forEach(function(t){by[t[0]]=t[1];});
+  function btn(id,cls){
+    return '<button class="'+(cls||'')+'" data-s="'+id+'" onclick="showTab(\''
+      +id+'\',this)">'+esc(by[id]||id)+'</button>';
+  }
+  var head=NAV_PRIMARY.filter(function(id){return by[id];})
+    .map(function(id,i){return btn(id,i===0?'active':'');}).join('');
+  var rest=TABS.filter(function(t){return NAV_PRIMARY.indexOf(t[0])<0;})
+    .map(function(t){return btn(t[0]);}).join('');
+  $('nav').innerHTML=head+(rest
+    ?'<details class="navmore"><summary>More</summary><div>'+rest+'</div></details>'
+    :'');
+}
+function showTab(id,btn){var ss=document.querySelectorAll('main section');for(var i=0;i<ss.length;i++)ss[i].classList.remove('active');var sec=$(id);if(sec)sec.classList.add('active');var bs=document.querySelectorAll('nav button');for(var j=0;j<bs.length;j++){bs[j].classList.remove('active');if(!btn&&bs[j].getAttribute('data-s')===id)bs[j].classList.add('active');}if(btn)btn.classList.add('active');
+  /* A menu that stays open after you have chosen from it is a menu you then
+     have to close. */
+  try{var _m=document.querySelector('nav details.navmore');if(_m)_m.open=false;}catch(e){}
+  try{window.scrollTo(0,0);}catch(e){}}
 /* ---------- header meta, run cadence and run note ----------
    The age chip used to test ageM>90 before ageM>150, so the red branch was
    unreachable and the page never turned red however stale it got. Ordered
