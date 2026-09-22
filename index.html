@@ -666,6 +666,12 @@ tr.simgrp td{background:#f1f5f9;font:800 9px/1.4 var(--mono);letter-spacing:.08e
 .s3env{display:flex;gap:8px;align-items:baseline;font-size:12px}
 .s3env>i{font-style:normal;min-width:34px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.04em}
 .s3sup{color:var(--muted)}
+.s3envw{flex-wrap:wrap}
+.s3wf{font-family:var(--mono);font-size:11.5px;color:var(--txt)}
+.s3wok{font-weight:800;color:var(--txt)}
+.s3wco{font-weight:700;color:var(--txt);opacity:.92}
+.s3wev{margin-left:6px;font-weight:600;font-size:10.5px;color:var(--muted);font-family:var(--mono);white-space:nowrap}
+
 .s3win{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;
   padding:8px 10px;border-radius:9px;background:var(--soft);border:1px solid var(--line)}
 .s3wl{font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--muted)}
@@ -1785,6 +1791,23 @@ function lineupChipOf(s){
    vector and rotated into field coordinates pipeline-side, where it was
    measured against 526 games. Drawing one arrow per sector would be inventing
    four winds; there is one. */
+/* 0 deg is straight out to centre field, clockwise positive, matching
+   mlb_picks/env/wind.py. Nothing here recomputes a direction -- the family
+   comes from the payload and this only decides where to paint it. */
+var CO_CENTRE={OUT:0,IN:180,CROSS:90};
+
+function coarseWedge(c,r,midDeg,halfDeg){
+  var h=(halfDeg||60)*Math.PI/180,m=midDeg*Math.PI/180,R=r*0.92;
+  function pt(a){/* screen y grows downward; 0 deg must point up */
+    return [(c+R*Math.sin(a)).toFixed(1),(c-R*Math.cos(a)).toFixed(1)];
+  }
+  var a=pt(m-h),b=pt(m+h);
+  return '<path d="M '+c+' '+c+' L '+a[0]+' '+a[1]
+    +' A '+R.toFixed(1)+' '+R.toFixed(1)+' 0 0 1 '+b[0]+' '+b[1]+' Z" '
+    +'fill="var(--accent)" fill-opacity=".18" stroke="var(--accent)" '
+    +'stroke-opacity=".45" stroke-width="1" stroke-dasharray="3 2"/>';
+}
+
 function windField(e,size){
   var S=size||76,c=S/2,on=!!(e&&e.directionShown),
       deg=(on&&isNum(e&&e.fieldRelativeDeg))?e.fieldRelativeDeg:null;
@@ -1805,6 +1828,17 @@ function windField(e,size){
     t+='<g data-arrow-deg="'+deg.toFixed(1)+'" transform="rotate('+deg.toFixed(1)+' '+c+' '+c+')">'
       +'<line x1="'+c+'" y1="'+(c+16)+'" x2="'+c+'" y2="'+(c-13)+'" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/>'
       +'<path d="M '+c+' '+(c-20)+' l 5.6 8.4 h -11.2 Z" fill="var(--accent)"/></g>';
+  }else if(e&&e.coarseDirection&&e.coarseDirection.shown
+           &&isNum(e.coarseDirection.centreDeg||CO_CENTRE[e.coarseDirection.family])){
+    /* A WEDGE, NOT AN ARROW. The coarse call is a 120-degree bin, and the
+       glyph should say so: anything crisp here would claim a precision that
+       was measured NOT to exist below 8 mph. CROSS is two opposite wedges,
+       because the measurement pools them and cannot tell L->R from R->L. */
+    var cd=CO_CENTRE[e.coarseDirection.family];
+    (e.coarseDirection.family==='CROSS'?[90,270]:[cd]).forEach(function(mid){
+      t+=coarseWedge(c,r,mid);
+    });
+    t+='<circle cx="'+c+'" cy="'+c+'" r="2.6" fill="currentColor" fill-opacity=".3"/>';
   }else{
     /* no arrow, and no arrow-shaped placeholder either */
     t+='<circle cx="'+c+'" cy="'+c+'" r="3.2" fill="currentColor" fill-opacity=".28"/>';
@@ -1839,10 +1873,21 @@ function windSuppressWhy(e){
 /* One human line, composed from the same canonical fields the picture uses. */
 function windSummary(e){
   if(!e)return 'No environment entry for this game';
-  if(!e.available)return 'No weather snapshot — this is a missing reading, not calm';
+  if(!e.available)return 'No weather snapshot \u2014 this is a missing reading, not calm';
   var sp=isNum(e.windSpeedMph)?(e.windSpeedMph.toFixed(0)+' mph'):'Wind speed not reported';
-  if(e.directionShown)return sp+' · '+(e.fieldRelativeLabel||'direction unlabelled');
-  return sp+' · '+windSuppressText(e);
+  if(isNum(e.windGustMph)&&isNum(e.windSpeedMph)&&e.windGustMph>=e.windSpeedMph+4)
+    sp+=' (gusts '+e.windGustMph.toFixed(0)+')';
+  if(e.directionShown)return sp+' \u00b7 '+(e.fieldRelativeLabel||'direction unlabelled');
+  /* The coarse call is a weaker claim than a sector, so it is named as one
+     rather than quietly filling the sector's slot. */
+  var c=e.coarseDirection;
+  if(c&&c.shown){
+    var ev=c.evidence||{};
+    return sp+' \u00b7 '+(c.text||c.family)
+      +((isNum(ev.agreePct)&&ev.n)?' (right '+ev.agreePct.toFixed(0)
+        +'% of the time, n='+ev.n+')':'');
+  }
+  return sp+' \u00b7 '+windSuppressText(e);
 }
 /* The spoken sentence is built from the SAME fields as the drawing, so a
    screen reader and a sighted reader cannot be told different things. */
@@ -1922,6 +1967,35 @@ function orientWhy(e){
 /* The same reason, stated in the open rather than hidden in a tooltip. A
    `title` attribute is invisible on the two mobile widths this page is
    verified at, so a suppressed arrow had no visible explanation there. */
+function coarseWhyLine(e){
+  /* Five em-dashes with no explanation reads as a broken card. This says
+     which of the three steps the game is on and why, using only what the
+     pipeline published. */
+  var c=e&&e.coarseDirection;
+  if(!c||!c.suppressedReason&&!c.shown)return '';
+  if(c.shown){
+    var ev=c.evidence||{};
+    return '<div class="g2meta">Sector senses need about 45 degrees of '
+      +'resolution and this wind does not support them, so the card shows a '
+      +'single 120-degree call instead: <b>'+esc(c.text||c.family)+'</b>'
+      +((isNum(ev.agreePct)&&ev.n)
+        ? ', right '+ev.agreePct.toFixed(0)+'% of the time on n='+ev.n
+          +' against a '+ev.baselinePct.toFixed(0)+'% baseline of always '
+          +'guessing the most common answer.'
+        : '.')+'</div>';
+  }
+  var W={BELOW_COARSE_MIN:'Below 5 mph even a three-way OUT/IN/CROSS call was '
+           +'measured at chance, so no direction is offered at all.',
+         FULL_LABEL_SHOWN:'',
+         ORIENTATION_UNVERIFIED:'This park was measured and its orientation '
+           +'failed its thresholds. A coarser bin does not repair that \u2014 it '
+           +'lands in the wrong 120-degree bin instead of the wrong 45-degree '
+           +'one \u2014 so nothing is shown.',
+         ROOF_CLOSED:'',NO_WIND_DATA:''};
+  var w=W[c.suppressedReason];
+  return w?'<div class="g2meta">'+w+'</div>':'';
+}
+
 function orientWhyLine(e){
   if(!e||!e.available)return '';
   if(e.orientationEntitled)return '';
@@ -2580,17 +2654,71 @@ function sp3(team,sp,x){
 /* ONE environmental line. The direction trust gate still owns whether a
    direction may be named -- this only chooses fewer words. */
 function wind3(g,e,shown,wsum){
-  var roof=e&&e.roof?String(e.roof).toUpperCase():'';
-  if(roof.indexOf('CLOSED')>=0)
-    return '<div class="s3env"><i>ROOF</i><span>CLOSED</span></div>';
-  var mph=isNum(g.wind_mph)?g.wind_mph:(e&&isNum(e.mph)?e.mph:null);
-  if(!shown){
+  /* EVERY GAME GETS A WIND LINE.
+     Two defects died here. It read e.roof and e.mph, and neither field has
+     ever existed on the environment object -- the roof branch was dead code
+     and the speed fell through to gameCards.wind_mph, a rounded legacy
+     integer with no provenance, while the provenanced e.windSpeedMph sat
+     unused. Both are now read from the canonical object.
+     Temperature, sustained speed and GUST are measured at every park at
+     every speed. They were never the thing in doubt, so they are not gated.
+     What is gated is the DIRECTION. */
+  if(!e||!e.available)
     return '<div class="s3env"><i>WIND</i><span class="s3sup">'
-      +(isNum(mph)?esc(mph+' mph')+' · ':'')+'direction not shown</span></div>';
+      +esc(e&&e.unavailableReason
+            ?'no weather snapshot \u2014 an absent reading, not calm'
+            :'no environment entry for this game')+'</span></div>';
+  if(String(e.roofState||'').toUpperCase().indexOf('CLOSED')>=0)
+    return '<div class="s3env"><i>ROOF</i><span>CLOSED &mdash; no wind in play</span></div>';
+
+  var f=[];
+  if(isNum(e.temperatureF))f.push(e.temperatureF.toFixed(0)+'&deg;F');
+  /* ONE DECIMAL, DELIBERATELY. Rounding 7.5 to "8 mph" beside "too light to
+     call a direction" reads as a contradiction, because 8.0 is exactly where
+     the sector gate opens. The payload carries a decimal; print it. */
+  if(isNum(e.windSpeedMph))f.push(e.windSpeedMph.toFixed(1)+' mph'
+    +(e.windFromCompass?' '+esc(e.windFromCompass):''));
+  /* A gust well over the sustained speed is the part a batted ball feels,
+     and it has never been on this card. Camden is 7 sustained, 23 gusting.
+     Shown only when it is materially higher, so it stays information. */
+  if(isNum(e.windGustMph)&&isNum(e.windSpeedMph)&&e.windGustMph>=e.windSpeedMph+4)
+    f.push('gusts '+e.windGustMph.toFixed(0));
+  if(!f.length)f.push(SH_ABSENT);
+
+  var c=e.coarseDirection||null,claim,klass='';
+  if(shown&&e.fieldRelativeLabel){
+    claim=esc(e.fieldRelativeLabel);klass='s3wok';
+  }else if(c&&c.shown){
+    var ev=c.evidence||{};
+    /* THE RATE NEVER TRAVELS WITHOUT ITS SAMPLE SIZE. Both come from the
+       payload; the dashboard does not know this number and must not
+       hardcode it. */
+    claim=esc(c.text||c.family||'')+' '
+      +((isNum(ev.agreePct)&&ev.n)
+          ?'<span class="s3wev">right '+ev.agreePct.toFixed(0)
+            +'% of the time, n='+ev.n+'</span>':'');
+    klass='s3wco';
+  }else{
+    /* WHICH GATE ACTUALLY CLOSED.
+       windSuppressText already reads as a complete sentence, so it is not
+       prefixed -- doing that produced "direction not shown - Park
+       orientation not verified - no direction shown".
+       But it can also name the WRONG gate. describe() tests light wind
+       BEFORE orientation and returns there, so a 7.5 mph game at a park
+       with no verified orientation is labelled "too light" -- which tells
+       the reader to wait for a windier night at a park that would show
+       nothing at 15 mph either. The coarse gate tests orientation first, so
+       when it reports ORIENTATION_UNVERIFIED that is the binding
+       constraint, and that is the one worth printing. */
+    var why=(c&&c.suppressedReason==='ORIENTATION_UNVERIFIED'
+             &&e.orientationEntitled===false)
+      ?(WIND_SUPPRESS.ORIENTATION_UNVERIFIED||'Park orientation not verified')
+      :windSuppressText(e);
+    claim='<span class="s3sup">'+esc(why)+'</span>';
   }
-  var txt=wsum||'';
-  if(!txt&&isNum(mph)) txt=mph+' mph';
-  return '<div class="s3env"><i>WIND</i><span>'+esc(txt||SH_ABSENT)+'</span></div>';
+  return '<div class="s3env s3envw"><i>WIND</i>'
+    +'<span class="s3wf">'+f.join(' &middot; ')+'</span>'
+    +'<span class="'+klass+'">'+claim+'</span></div>';
 }
 
 /* A board row may only reach a recommendation if the lineup gate lets it.
@@ -2868,6 +2996,7 @@ function slateCard2(g,m){
             '<div class="g2wind">'+windField(e,92)
             +'<div class="g2wtxt"><div class="g2wsum'+(shown?'':' g2sup')+'">'+esc(wsum)+'</div>'
             +sectorStrip(e,['LF','LCF','CF','RCF','RF'])
+            +coarseWhyLine(e)
             +'<div class="g2meta">'+esc((e&&e.sectorNote)||'')+'</div>'+orientWhyLine(e)+'</div></div>')
         +envCard(g.gamePk)
         +lineupDetails(g,m,gState,tm)
