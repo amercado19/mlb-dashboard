@@ -1,6 +1,6 @@
 {
  "date": "2026-09-22",
- "generated_at": "2026-09-22T19:37:59",
+ "generated_at": "2026-09-22T20:13:45",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "8f614a5"
+  "gitCommit": "b67c286"
  },
  "games": [
   {
@@ -51,15 +51,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 7
+     "mph": 6
     },
     "cf": {
      "dir": "in",
-     "mph": 10
+     "mph": 9
     },
     "rf": {
      "dir": "in",
-     "mph": 7
+     "mph": 6
     },
     "out_mph": 0
    }
@@ -103,7 +103,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 6
     },
     "cf": {
      "dir": "cross",
@@ -111,9 +111,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 6
     },
-    "out_mph": 5
+    "out_mph": 6
    }
   },
   {
@@ -207,15 +207,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 6
     },
     "cf": {
      "dir": "in",
-     "mph": 6
+     "mph": 8
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 6
     },
     "out_mph": 0
    }
@@ -233,15 +233,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "cf": {
      "dir": "in",
-     "mph": 13
+     "mph": 12
     },
     "rf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "out_mph": 0
    }
@@ -284,18 +284,18 @@
    "book_total_line": 11.0,
    "wind": {
     "lf": {
-     "dir": "in",
+     "dir": "out",
      "mph": 4
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 5
     },
     "rf": {
      "dir": "out",
      "mph": 4
     },
-    "out_mph": 4
+    "out_mph": 5
    }
   },
   {
@@ -363,17 +363,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 10
+     "mph": 9
     },
     "cf": {
      "dir": "out",
-     "mph": 14
+     "mph": 13
     },
     "rf": {
      "dir": "out",
-     "mph": 10
+     "mph": 9
     },
-    "out_mph": 14
+    "out_mph": 13
    }
   },
   {
@@ -432,10 +432,10 @@
     "factors": {
      "sp": 1.135,
      "park": 1.175,
-     "temp": 1.072,
+     "temp": 1.06,
      "wind": 0.991
     },
-    "hr_rate_pa": 0.0716
+    "hr_rate_pa": 0.0708
    },
    "edge_score": 74,
    "score_type": "model_score_0_100",
@@ -466,9 +466,10 @@
     "factors": {
      "sp": 1.074,
      "park": 1.2,
-     "temp": 0.976
+     "temp": 0.97,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.037
+    "hr_rate_pa": 0.0368
    },
    "edge_score": 70,
    "score_type": "model_score_0_100",
@@ -499,10 +500,10 @@
     "factors": {
      "sp": 1.135,
      "park": 1.175,
-     "temp": 1.072,
+     "temp": 1.06,
      "wind": 0.991
     },
-    "hr_rate_pa": 0.0551
+    "hr_rate_pa": 0.0544
    },
    "edge_score": 68,
    "score_type": "model_score_0_100",
@@ -533,9 +534,10 @@
     "factors": {
      "sp": 1.074,
      "park": 1.2,
-     "temp": 0.976
+     "temp": 0.97,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0439
+    "hr_rate_pa": 0.0436
    },
    "edge_score": 68,
    "score_type": "model_score_0_100",
@@ -598,10 +600,10 @@
     "factors": {
      "sp": 1.052,
      "park": 1.105,
-     "temp": 1.03,
+     "temp": 1.024,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0522
+    "hr_rate_pa": 0.0519
    },
    "edge_score": 57,
    "score_type": "model_score_0_100",
@@ -633,9 +635,9 @@
      "sp": 0.942,
      "park": 1.175,
      "temp": 0.97,
-     "wind": 0.955
+     "wind": 0.964
     },
-    "hr_rate_pa": 0.0524
+    "hr_rate_pa": 0.0529
    },
    "edge_score": 54,
    "score_type": "model_score_0_100",
@@ -666,10 +668,10 @@
     "factors": {
      "sp": 1.052,
      "park": 1.105,
-     "temp": 1.03,
+     "temp": 1.024,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0477
+    "hr_rate_pa": 0.0474
    },
    "edge_score": 54,
    "score_type": "model_score_0_100",
