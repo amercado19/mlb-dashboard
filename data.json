@@ -1,6 +1,6 @@
 {
  "date": "2026-09-22",
- "generated_at": "2026-09-22T20:13:45",
+ "generated_at": "2026-09-22T21:31:22",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "b67c286"
+  "gitCommit": "51f9891"
  },
  "games": [
   {
@@ -51,15 +51,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "cf": {
      "dir": "in",
-     "mph": 9
+     "mph": 10
     },
     "rf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "out_mph": 0
    }
@@ -181,15 +181,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
      "dir": "in",
-     "mph": 6
+     "mph": 7
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "out_mph": 0
    }
@@ -207,15 +207,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 4
     },
     "cf": {
      "dir": "in",
-     "mph": 8
+     "mph": 6
     },
     "rf": {
      "dir": "in",
-     "mph": 6
+     "mph": 4
     },
     "out_mph": 0
    }
@@ -284,18 +284,18 @@
    "book_total_line": 11.0,
    "wind": {
     "lf": {
-     "dir": "out",
-     "mph": 4
+     "dir": "in",
+     "mph": 13
     },
     "cf": {
-     "dir": "out",
-     "mph": 5
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 13
     },
-    "out_mph": 5
+    "out_mph": 13
    }
   },
   {
@@ -401,15 +401,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "in",
-     "mph": 9
+     "mph": 7
     },
     "rf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "out_mph": 0
    }
@@ -432,10 +432,10 @@
     "factors": {
      "sp": 1.135,
      "park": 1.175,
-     "temp": 1.06,
-     "wind": 0.991
+     "temp": 1.066,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0708
+    "hr_rate_pa": 0.0706
    },
    "edge_score": 74,
    "score_type": "model_score_0_100",
@@ -466,10 +466,9 @@
     "factors": {
      "sp": 1.074,
      "park": 1.2,
-     "temp": 0.97,
-     "wind": 1.0
+     "temp": 0.958
     },
-    "hr_rate_pa": 0.0368
+    "hr_rate_pa": 0.0363
    },
    "edge_score": 70,
    "score_type": "model_score_0_100",
@@ -485,7 +484,7 @@
    ]
   },
   {
-   "player": "Ronald Acu\u00f1a Jr.",
+   "player": "Ronald Acu\u00f1a",
    "team": "atl",
    "game": "cin-atl",
    "stat": "HR",
@@ -500,10 +499,10 @@
     "factors": {
      "sp": 1.135,
      "park": 1.175,
-     "temp": 1.06,
-     "wind": 0.991
+     "temp": 1.066,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0544
+    "hr_rate_pa": 0.0542
    },
    "edge_score": 68,
    "score_type": "model_score_0_100",
@@ -534,10 +533,9 @@
     "factors": {
      "sp": 1.074,
      "park": 1.2,
-     "temp": 0.97,
-     "wind": 1.0
+     "temp": 0.958
     },
-    "hr_rate_pa": 0.0436
+    "hr_rate_pa": 0.0431
    },
    "edge_score": 68,
    "score_type": "model_score_0_100",
@@ -635,9 +633,9 @@
      "sp": 0.942,
      "park": 1.175,
      "temp": 0.97,
-     "wind": 0.964
+     "wind": 0.955
     },
-    "hr_rate_pa": 0.0529
+    "hr_rate_pa": 0.0524
    },
    "edge_score": 54,
    "score_type": "model_score_0_100",
@@ -925,7 +923,7 @@
    "flags": []
   },
   {
-   "player": "Bobby Witt Jr.",
+   "player": "Bobby Witt",
    "team": "kc",
    "game": "cws-kc",
    "stat": "H",
@@ -1012,7 +1010,7 @@
    "flags": []
   },
   {
-   "player": "Luis Garc\u00eda Jr.",
+   "player": "Luis Garc\u00eda",
    "team": "nyy",
    "game": "tb-nyy",
    "stat": "H",
