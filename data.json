@@ -1,6 +1,6 @@
 {
  "date": "2026-09-23",
- "generated_at": "2026-09-23T04:41:50",
+ "generated_at": "2026-09-23T04:50:11",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -377,7 +377,7 @@
   {
    "away": "hou",
    "home": "sea",
-   "away_win_prob": 0.368,
+   "away_win_prob": 0.388,
    "home_win_prob": 0.502,
    "pick": "sea",
    "confidence": 0.502,
@@ -465,6 +465,38 @@
     "avg_exit_velo": 90.2,
     "xiso": 0.18,
     "recent_hr_rate": 0.012
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 424 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Yordan Alvarez",
+   "team": "hou",
+   "game": "hou-sea",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 668,
+    "factors": {
+     "sp": 1.007,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0486
+   },
+   "edge_score": 65,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.9,
+    "hard_hit_pct": 53.3,
+    "avg_exit_velo": 94.2,
+    "xiso": 0.318,
+    "recent_hr_rate": 0.0467
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 424 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -600,38 +632,6 @@
     "avg_exit_velo": 92.4,
     "xiso": 0.257,
     "recent_hr_rate": 0.0351
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 424 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Yordan Alvarez",
-   "team": "hou",
-   "game": "hou-sea",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 668,
-    "factors": {
-     "sp": 1.007,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0486
-   },
-   "edge_score": 60,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.9,
-    "hard_hit_pct": 53.3,
-    "avg_exit_velo": 94.2,
-    "xiso": 0.318,
-    "recent_hr_rate": 0.0467
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 424 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
