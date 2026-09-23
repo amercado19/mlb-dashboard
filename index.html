@@ -997,6 +997,49 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
 .hmgwp{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .hmgn{font-size:10px;font-weight:700;letter-spacing:.04em;color:#ffb066}
 .hmpg{display:grid;grid-template-columns:repeat(auto-fill,minmax(246px,1fr));gap:10px}
+/* ---- Release 2 / Player Props ---- */
+.ppbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.ppseg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:3px;gap:3px}
+.ppseg button{appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.ppseg button.on{background:var(--accent);color:#fff}
+.ppseg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ppctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-left:auto}
+.ppctl label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.ppctl select{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;font-size:12px;max-width:190px}
+.ppck{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted);cursor:pointer}
+.ppnote{font-size:11.5px;color:var(--muted);line-height:1.6;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:10px 12px;margin:0 0 14px}
+.ppnote b{color:var(--txt)}
+.ppgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.ppcard{display:flex;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.ppcard.dead{opacity:.72}
+.ppf{flex:0 0 auto;position:relative}
+.ppf .hpic,.ppf .hini{width:64px;height:64px;border-radius:50%;object-fit:cover;background:var(--panel2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19px;color:var(--muted)}
+.pprk{position:absolute;left:-4px;top:-4px;background:var(--elev);border:1px solid var(--line2);color:var(--muted);font-family:var(--mono);font-size:9.5px;font-weight:800;border-radius:7px;padding:1px 5px}
+.ppb{min-width:0;display:flex;flex-direction:column;gap:3px;flex:1}
+.ppn{font-size:14.5px;font-weight:800;color:var(--txt);line-height:1.15;word-break:break-word}
+.ppt{display:flex;align-items:center;gap:5px;flex-wrap:wrap;font-size:11px;color:var(--muted);font-family:var(--mono)}
+.ppt .hlogo,.ppt .hini{width:16px;height:16px;font-size:9px}
+.ppv{display:flex;align-items:baseline;gap:6px;margin-top:2px}
+.ppv>b{font-size:22px;font-weight:800;color:var(--txt);font-family:var(--mono);line-height:1}
+.ppv>span{font-size:10px;color:var(--muted)}
+.ppchips{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+.ppw{font-size:11px;color:var(--muted);line-height:1.5}
+.pppx{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.pppx b{color:var(--txt)}
+.ppgrp{margin:22px 0 0}
+.ppgrph{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.ppmore{margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
+.ppmore>summary{cursor:pointer;font-size:12px;font-weight:700;color:var(--muted);list-style:none}
+.ppmore>summary::-webkit-details-marker{display:none}
+.ppmore>summary:before{content:'\25B8 ';color:var(--accent)}
+.ppmore[open]>summary:before{content:'\25BE '}
+@media(max-width:430px){
+  .ppgrid{grid-template-columns:1fr}
+  .ppctl{margin-left:0;width:100%}
+  .ppctl select{flex:1;max-width:none}
+  .ppseg{width:100%}
+  .ppseg button{flex:1;padding:8px 6px;font-size:12px}
+}
 .hmp{display:flex;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
 .hmpf{flex:0 0 auto}
 .hmpf .hpic,.hmpf .hini{width:64px;height:64px;border-radius:50%;object-fit:cover;background:var(--panel2);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:var(--muted)}
@@ -3778,10 +3821,297 @@ function renderMatchups(){
 
 var PROP_SQ=[['hr','HR','⚾'],['h1','1+ Hit','🎯'],['tb2','2+ TB','💥'],['hrr','2+ HRR','🔢'],['nrfi','NRFI/YRFI','🅾'],['ml','Moneyline','💰'],['spread','Spread','📏']];
 function propCount(k){var bf=D.boardsFull||D.boards||{};if(k==='nrfi')return (D.nrfi||[]).length;if(k==='ou')return (bf.ou||[]).length;if(k==='ml')return (D.ml||[]).filter(function(p){return (p.tier==='STRONG'||p.tier==='LEAN')&&!mktDead(p.gamePk);}).length;if(k==='spread')return (D.gameCards||[]).length;return (bf[k]||[]).length;}
+/* ======================= PLAYER PROPS (Release 2, Phase 1) ===============
+
+   ONLY TWO MARKETS ARE ALIVE, so only two markets are destinations here.
+   h2, tb2 and ou are retired by governance; hrr is WATCH, not retired, and
+   is not in this product's scope for Release 2. Everything that used to be
+   a square tile is still reachable in the drawer at the bottom of this
+   section -- moved, not deleted, because a market you cannot inspect is a
+   market you cannot audit.
+
+   THE TWO MARKETS DO NOT PUBLISH THE SAME KIND OF NUMBER, and this is the
+   one thing the section must not blur:
+
+     h1  model_prob is CALIBRATED -- an isotonic map fitted on settled
+         results. It is a probability and it is drawn as a percentage.
+     hr  publishes NO probability. probStatus is UNVERIFIED and the market
+         is BLIND (0 CLV-eligible of the 25 needed), so the row ranks on
+         `metric`, a 0-100 score. It is drawn as a score and never as a %.
+
+   Sorting therefore happens WITHIN a market and never across the two. */
+var PP_MKT='h1';
+var PP_SORT='rank';
+var PP_GAME='';
+var PP_CONF=false;
+
+var PP_MARKETS=[
+  {fam:'h1',label:'1+ Hit',unit:'1+ hit'},
+  {fam:'hr',label:'Home Run',unit:'home run'}
+];
+function ppMkt(){
+  for(var i=0;i<PP_MARKETS.length;i++)if(PP_MARKETS[i].fam===PP_MKT)return PP_MARKETS[i];
+  return PP_MARKETS[0];
+}
+function ppSetMkt(f){PP_MKT=f;PP_GAME='';renderProps();}
+function ppSetSort(v){PP_SORT=v;renderProps();}
+function ppSetGame(v){PP_GAME=v;renderProps();}
+function ppSetConf(el){PP_CONF=!!(el&&el.checked);renderProps();}
+
+/* THE WIDEST HONEST SOURCE FOR EACH MARKET.
+   `boards` is a publication cut; `boardsFull` is the same producer's wider
+   ranking. For hr, `hrProps` carries evidence the board rows do not (the
+   park, the wind, the opposing starter, a posted price), so it is merged in
+   by playerId rather than replacing the board -- using hrProps alone would
+   silently apply its 2-per-game cap to the whole destination. */
+function ppRows(fam){
+  var src=((D.boardsFull||{})[fam])||((D.boards||{})[fam])||[];
+  var rows=src.slice();
+  if(fam==='hr'){
+    var by={};((D.hrProps)||[]).forEach(function(h){if(h&&h.playerId!=null)by[h.playerId]=h;});
+    rows=rows.map(function(r){
+      var h=by[r.playerId];
+      if(!h)return r;
+      var m={};for(var k in r)if(Object.prototype.hasOwnProperty.call(r,k))m[k]=r[k];
+      /* the board row wins on rank fields; hrProps only ADDS evidence */
+      ['park','wind','temp','spFaced','spXera','oppPen','batSide','price',
+       'priceBook','bookOdds','betLabel','watchReason','note'].forEach(function(k){
+        if(m[k]==null&&h[k]!=null)m[k]=h[k];});
+      return m;
+    });
+  }
+  return rows;
+}
+function ppNum(r){
+  if(isNum(r.model_prob))return r.model_prob;
+  if(isNum(r.metric))return r.metric;
+  if(isNum(r.score))return r.score;
+  return null;
+}
+function ppGames(rows){
+  var seen={},out=[];
+  rows.forEach(function(r){
+    if(r.gamePk==null||seen[r.gamePk])return;
+    seen[r.gamePk]=1;
+    out.push({pk:r.gamePk,label:(typeof gameLabelByPk==='function'&&gameLabelByPk(r.gamePk))||('game '+r.gamePk)});
+  });
+  out.sort(function(a,b){return String(a.label).localeCompare(String(b.label));});
+  return out;
+}
+/* Sorting is a VIEW, so it is applied to a copy and the board's own rank is
+   kept on the card. A reader who re-sorts can still see where the producer
+   put the row, which is the number the measurement is about. */
+function ppSort(rows){
+  var s=PP_SORT,out=rows.slice();
+  if(s==='rank')return out;
+  out.sort(function(a,b){
+    if(s==='order'){
+      var ao=isNum(a.battingOrder)?a.battingOrder:99,bo=isNum(b.battingOrder)?b.battingOrder:99;
+      if(ao!==bo)return ao-bo;
+    }else if(s==='name'){
+      return String(a.name||'').localeCompare(String(b.name||''));
+    }else if(s==='game'){
+      var ag=String((typeof gameLabelByPk==='function'&&gameLabelByPk(a.gamePk))||''),
+          bg=String((typeof gameLabelByPk==='function'&&gameLabelByPk(b.gamePk))||'');
+      if(ag!==bg)return ag.localeCompare(bg);
+    }
+    var an=ppNum(a),bn=ppNum(b);
+    return (bn==null?-1:bn)-(an==null?-1:an);
+  });
+  return out;
+}
+
+/* WHY THIS ROW, IN THE FIELDS THE PAYLOAD ACTUALLY CARRIES.
+   Nothing here is computed from a missing value and nothing is defaulted to
+   zero: an absent factor is left out of the sentence rather than stated as
+   neutral, because "no wind reported" and "no wind" are different claims. */
+function ppWhy(r,fam){
+  var b=[];
+  if(isNum(r.battingOrder)&&r.battingOrder>0)b.push('bats '+ord2(r.battingOrder));
+  if(fam==='hr'){
+    if(isNum(r.hr))b.push(r.hr+' HR');
+    if(isNum(r.iso))b.push('.'+String(r.iso.toFixed(3)).slice(2)+' ISO');
+  }else{
+    if(isNum(r.avg))b.push('.'+String(r.avg.toFixed(3)).slice(2)+' AVG');
+    if(isNum(r.hpg))b.push(r.hpg.toFixed(2)+' H/G');
+    else if(isNum(r.xbh))b.push(r.xbh.toFixed(2)+' XBH/G');
+  }
+  var sp=r.spFaced||((r.prob_inputs||{}).spName);
+  if(sp&&isNum(r.spXera))b.push('vs '+sp+' ('+r.spXera.toFixed(2)+' xERA)');
+  else if(sp)b.push('vs '+sp);
+  else if(isNum(r.spXera))b.push('vs '+r.spXera.toFixed(2)+' xERA');
+  if(fam==='hr'&&isNum(r.temp))b.push(r.temp+'°F');
+  if(fam==='hr'&&r.park)b.push(String(r.park));
+  return b.join(' · ');
+}
+/* A PRICE IS SHOWN ONLY WHERE ONE WAS CAPTURED, and an edge is shown only
+   where BOTH a price and a published probability exist. hr has the first and
+   not the second, so hr never shows an edge -- there is nothing to subtract
+   the implied probability from. */
+function ppPrice(r){
+  var bo=r.bookOdds||{},px=isNum(r.price)?r.price:(isNum(bo.price)?bo.price:null);
+  if(px==null)return '';
+  var bk=r.priceBook||bo.book||'';
+  var s='<div><span class="pppx"><b>'+(px>0?'+':'')+px+'</b>'+(bk?' '+esc(String(bk)):'')+'</span></div>';
+  if(isNum(r.model_prob)){
+    var imp=px<0?(-px)/(-px+100):100/(px+100);
+    var e=(r.model_prob-imp)*100;
+    s+='<div><span class="pppx" title="Model probability minus this single price’s implied probability. The implied figure is VIG-INCLUSIVE — the book’s two sides sum to more than 100% — so a small positive number is the house margin, not an advantage. Nothing here is de-vigged and nothing here is a recommendation." style="color:'
+      +(e>=0?'var(--win)':'var(--lose)')+'"><b>'+(e>=0?'+':'')+e.toFixed(1)+'pp</b> vs implied price, vig included</span></div>';
+  }
+  return s;
+}
+function ppCard(r,fam,rank,dead){
+  var mk=ppMkt();
+  var p=isNum(r.model_prob);
+  var num=p?(100*r.model_prob).toFixed(0)+'%'
+        :(isNum(ppNum(r))?String(ppNum(r)):SH_ABSENT);
+  var unit=p?'model probability':mk.unit+' score';
+  var chip=p
+    ? pill('MODEL PROBABILITY','b-ok',String(r.probNote||'A calibrated probability fitted on settled results.'))
+    : pill('RANKING ONLY','b-unk',String(r.probReason||'No verified probability is published for this market. The number ranks this row within the board; it is not a chance.'));
+  var gl=(typeof gameLabelByPk==='function'&&gameLabelByPk(r.gamePk))||'';
+  var why=ppWhy(r,fam),px=ppPrice(r);
+  var oc=r.playerId?' style="cursor:pointer" onclick="openMatchupModal('+r.playerId+','+r.gamePk
+        +',&quot;'+esc(String(r.name||'')).replace(/&quot;|"/g,'')+'&quot;,&quot;'+esc(r.team||'')+'&quot;)"':'';
+  return '<div class="ppcard'+(dead?' dead':'')+'">'
+    +'<div class="ppf">'+hFace(r.playerId,r.name)
+      +'<span class="pprk" title="Rank on the board as the producer published it. Re-sorting this view does not change it.">#'+rank+'</span></div>'
+    +'<div class="ppb">'
+      +'<div class="ppn"'+oc+'>'+esc(r.name||SH_ABSENT)+'</div>'
+      +'<div class="ppt">'+hTeam(r.team)+'<span>'+esc(r.team||'')+'</span>'
+        +(gl?'<span>\u00B7</span><span>'+esc(gl)+'</span>':'')+'</div>'
+      +'<div class="ppv"><b>'+num+'</b><span>'+esc(unit)+'</span></div>'
+      +'<div class="ppchips">'+chip+mktPill(r.gamePk)+lineupTag(r,'CONFIRMED')+'</div>'
+      +(why?'<div class="ppw">'+esc(why)+'</div>':'')
+      +(px?'<div class="ppw">'+px+'</div>':'')
+    +'</div></div>';
+}
+
+/* THE MARKET NOTE SAYS WHAT THE NUMBER IS BEFORE ANY NUMBER IS READ, and it
+   is built from the payload's own governance record rather than written into
+   the renderer -- the dashboard does not get to assert a status the pipeline
+   did not publish. */
+function ppMarketNote(fam,rows,live){
+  var mk=boardMarket(fam),bits=[];
+  if(fam==='h1'){
+    bits.push('<b>1+ Hit publishes a probability.</b> The percentage on each card is a calibrated model probability, '
+      +'not a score.');
+  }else{
+    bits.push('<b>Home Run publishes no probability.</b> The market is not measurable yet, so every card shows the '
+      +'0–100 board score it is ranked on. A score is not a chance and must not be compared with a price.');
+  }
+  if(mk.status)bits.push('Governance status <b>'+esc(mk.status)+'</b>'+(mk.reason?' — '+esc(mk.reason):'')+'.');
+  /* THE RANK AND THE NUMBER ARE DIFFERENT QUANTITIES on h1, and the page
+     must not let "Board rank" imply the percentages descend. Measured on
+     the rows actually in hand rather than asserted, so this sentence
+     disappears on a day the two happen to agree. */
+  bits.push('Rows are ordered as the producer ranked them, on the board\u2019s own score.');
+  if(fam==='h1'){
+    var ps=live.map(function(r){return isNum(r.model_prob)?r.model_prob:null;})
+                .filter(function(v){return v!=null;});
+    var mono=true;
+    for(var i=1;i<ps.length;i++)if(ps[i]>ps[i-1]+1e-9){mono=false;break;}
+    if(ps.length>2&&!mono)
+      bits.push('<b>That order is not the order of the percentages.</b> The score and the calibrated '
+        +'probability are separately produced and they disagree here, so a lower percentage can sit '
+        +'above a higher one. Neither has been shown to be the better ordering. Sort by <b>Number</b> '
+        +'to read the board the other way.');
+  }
+  /* CONCENTRATION IS DISCLOSED, NOT CORRECTED. See the module docstring. */
+  var byg={},top=live.slice(0,6),ng=0;
+  top.forEach(function(r){if(r.gamePk!=null&&!byg[r.gamePk]){byg[r.gamePk]=1;ng++;}});
+  if(top.length>=6&&ng<=2)
+    bits.push('The top six rows come from '+ng+' game'+(ng===1?'':'s')+'. Much of this board’s score is '
+      +'game-level — park, weather and the opposing starter — so one favourable game can sweep the top.');
+  return '<div class="ppnote">'+bits.join(' ')+'</div>';
+}
+
 function renderProps(){
-  var sq=PROP_SQ.map(function(d){var n=propCount(d[0]);var sub=boardRetired(d[0])?'retired':d[0]==='ml'?(n+' actionable'):d[0]==='spread'?(n+' games'):(n+' picks');return '<div class="psq" onclick="openProp(\''+d[0]+'\',this)"><div class="ic">'+d[2]+'</div><div class="lb">'+d[1]+'</div><div class="ct">'+sub+'</div></div>';}).join('');
-  $('props').innerHTML='<div class="prop-grid">'+sq+'</div><div class="card"><div id="propPanel"></div></div>';
-  openProp('hr');
+  var mk=ppMkt(),fam=mk.fam;
+  var seg=PP_MARKETS.map(function(m){
+    return '<button class="'+(m.fam===fam?'on':'')+'" onclick="ppSetMkt(\''+m.fam+'\')">'+esc(m.label)+'</button>';
+  }).join('');
+
+  if(boardRetired(fam)){
+    $('props').innerHTML='<div class="ppbar"><div class="ppseg">'+seg+'</div></div>'
+      +'<div class="empty">'+esc(boardWhyText(fam))+'</div>'+ppDrawer();
+    return;
+  }
+
+  var all=ppRows(fam);
+  var live=all.filter(function(r){return !mktDeadRow(r);});
+  var dead=all.filter(function(r){return mktDeadRow(r);});
+  var rankOf={};all.forEach(function(r,i){rankOf[(r.playerId==null?'x'+i:'p'+r.playerId)]=i+1;});
+  function rk(r,i){return rankOf[(r.playerId==null?'x'+i:'p'+r.playerId)]||(i+1);}
+
+  var games=ppGames(all);
+  var gsel='<label for="ppg">Game</label><select id="ppg" onchange="ppSetGame(this.value)">'
+    +'<option value="">All games ('+games.length+')</option>'
+    +games.map(function(g){return '<option value="'+g.pk+'"'+(String(PP_GAME)===String(g.pk)?' selected':'')+'>'+esc(g.label)+'</option>';}).join('')
+    +'</select>';
+  var SORTS=[['rank','Board rank'],['num','Number'],['order','Batting order'],['game','Game'],['name','Name']];
+  var ssel='<label for="pps">Sort</label><select id="pps" onchange="ppSetSort(this.value)">'
+    +SORTS.map(function(s){return '<option value="'+s[0]+'"'+(PP_SORT===s[0]?' selected':'')+'>'+esc(s[1])+'</option>';}).join('')
+    +'</select>';
+  var conf='<label class="ppck"><input type="checkbox" onchange="ppSetConf(this)"'+(PP_CONF?' checked':'')
+    +'> Confirmed starters only</label>';
+
+  function apply(list){
+    var out=list;
+    if(PP_GAME)out=out.filter(function(r){return String(r.gamePk)===String(PP_GAME);});
+    if(PP_CONF)out=out.filter(function(r){return r.eligible===true;});
+    return ppSort(out);
+  }
+  var vlive=apply(live),vdead=apply(dead);
+
+  var body='';
+  if(!all.length){
+    body='<div class="empty">'+esc(boardWhyText(fam))+'</div>';
+  }else if(!vlive.length&&!vdead.length){
+    body='<div class="empty">No candidate on this board matches the current filters. '
+      +'The board has '+all.length+' row'+(all.length===1?'':'s')+'.</div>';
+  }else{
+    if(vlive.length){
+      body+='<div class="ppgrid">'+vlive.map(function(r,i){return ppCard(r,fam,rk(r,i),false);}).join('')+'</div>';
+    }else{
+      /* NOT THE SAME SENTENCE AS AN EMPTY BOARD. */
+      body+='<div class="empty">Every candidate matching these filters is in a game that has already started or '
+        +'finished, so there is no pregame price left to take.</div>';
+    }
+    if(vdead.length){
+      /* SHOWN, NOT HIDDEN -- the rule the started-game work established. A
+         row here keeps its number and loses its actionability, because
+         deleting it would let the page quietly forget what it had said. */
+      body+='<div class="ppgrp"><div class="ppgrph">No longer bettable · '+vdead.length
+        +' row'+(vdead.length===1?'':'s')+' whose game has started or finished</div>'
+        +'<div class="ppgrid">'+vdead.map(function(r,i){return ppCard(r,fam,rk(r,i),true);}).join('')+'</div></div>';
+    }
+  }
+
+  $('props').innerHTML=
+     '<div class="ppbar"><div class="ppseg">'+seg+'</div>'
+       +'<div class="ppctl">'+ssel+gsel+conf+'</div></div>'
+    +ppMarketNote(fam,all,live)
+    +body
+    +ppDrawer();
+}
+
+/* EVERY MARKET THAT USED TO BE A TILE IS STILL HERE. Retired ones included:
+   a retired market that vanishes from the product is a retired market nobody
+   can check. It is a closed drawer rather than a destination because it is
+   not something to bet from. */
+function ppDrawer(){
+  var sq=PROP_SQ.map(function(d){
+    var n=propCount(d[0]);
+    var sub=boardRetired(d[0])?'retired':d[0]==='ml'?(n+' actionable'):d[0]==='spread'?(n+' games'):(n+' picks');
+    return '<div class="psq" onclick="openProp(\''+d[0]+'\',this)"><div class="ic">'+d[2]+'</div><div class="lb">'
+      +esc(d[1])+'</div><div class="ct">'+esc(sub)+'</div></div>';
+  }).join('');
+  return '<details class="ppmore"><summary>All markets, including retired ones</summary>'
+    +'<div class="note" style="margin:10px 0">Kept for inspection. A market marked <b>retired</b> may publish a '
+    +'projection; it may not publish a bet, and nothing here is a recommendation.</div>'
+    +'<div class="prop-grid">'+sq+'</div><div class="card"><div id="propPanel"></div></div></details>';
 }
 /* AN EMPTY BOARD SAYS WHAT EMPTIED IT (2026-09-08).
  * For a month h2 and tb2 rendered "Board posts with confirmed lineups." —
