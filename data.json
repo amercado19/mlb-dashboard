@@ -1,6 +1,6 @@
 {
  "date": "2026-09-24",
- "generated_at": "2026-09-24T18:06:55",
+ "generated_at": "2026-09-24T19:45:06",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,19 +9,19 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "47a3c7f"
+  "gitCommit": "d51ea4f"
  },
  "games": [
   {
    "away": "stl",
    "home": "pit",
    "away_win_prob": 0.436,
-   "home_win_prob": 0.604,
+   "home_win_prob": 0.614,
    "pick": "pit",
-   "confidence": 0.604,
+   "confidence": 0.614,
    "tier": "PASS",
    "total": 8.5,
-   "book_total_line": 5.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
@@ -41,13 +41,13 @@
   {
    "away": "cws",
    "home": "kc",
-   "away_win_prob": 0.562,
-   "home_win_prob": 0.398,
+   "away_win_prob": 0.522,
+   "home_win_prob": 0.458,
    "pick": "cws",
-   "confidence": 0.562,
+   "confidence": 0.522,
    "tier": "PASS",
    "total": 9.1,
-   "book_total_line": 8.5,
+   "book_total_line": 13.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -73,7 +73,7 @@
    "confidence": 0.538,
    "tier": "PASS",
    "total": 9.5,
-   "book_total_line": 7.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -81,7 +81,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 9
+     "mph": 8
     },
     "rf": {
      "dir": "in",
@@ -125,33 +125,7 @@
    "confidence": 0.531,
    "tier": "PASS",
    "total": 10.4,
-   "book_total_line": 10.5,
-   "wind": {
-    "lf": {
-     "dir": "in",
-     "mph": 5
-    },
-    "cf": {
-     "dir": "in",
-     "mph": 7
-    },
-    "rf": {
-     "dir": "in",
-     "mph": 5
-    },
-    "out_mph": 0
-   }
-  },
-  {
-   "away": "mil",
-   "home": "phi",
-   "away_win_prob": 0.537,
-   "home_win_prob": 0.463,
-   "pick": "mil",
-   "confidence": 0.537,
-   "tier": "PASS",
-   "total": 9.0,
-   "book_total_line": 8.0,
+   "book_total_line": 16.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -169,6 +143,32 @@
    }
   },
   {
+   "away": "mil",
+   "home": "phi",
+   "away_win_prob": 0.537,
+   "home_win_prob": 0.463,
+   "pick": "mil",
+   "confidence": 0.537,
+   "tier": "PASS",
+   "total": 9.0,
+   "book_total_line": 8.0,
+   "wind": {
+    "lf": {
+     "dir": "in",
+     "mph": 8
+    },
+    "cf": {
+     "dir": "in",
+     "mph": 11
+    },
+    "rf": {
+     "dir": "in",
+     "mph": 8
+    },
+    "out_mph": 0
+   }
+  },
+  {
    "away": "cle",
    "home": "bos",
    "away_win_prob": 0.308,
@@ -178,7 +178,21 @@
    "tier": "PASS",
    "total": 7.7,
    "book_total_line": 6.5,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "in",
+     "mph": 9
+    },
+    "cf": {
+     "dir": "in",
+     "mph": 13
+    },
+    "rf": {
+     "dir": "in",
+     "mph": 9
+    },
+    "out_mph": 0
+   }
   },
   {
    "away": "tb",
@@ -193,7 +207,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 7
+     "mph": 6
     },
     "cf": {
      "dir": "cross",
@@ -201,9 +215,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
-    "out_mph": 7
+    "out_mph": 6
    }
   },
   {
@@ -219,15 +233,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "rf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "out_mph": 0
    }
@@ -249,13 +263,13 @@
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 9
     },
     "rf": {
      "dir": "out",
      "mph": 6
     },
-    "out_mph": 8
+    "out_mph": 9
    }
   },
   {
@@ -315,9 +329,9 @@
      "sp": 1.077,
      "park": 1.105,
      "temp": 1.06,
-     "wind": 1.03
+     "wind": 1.04
     },
-    "hr_rate_pa": 0.0672
+    "hr_rate_pa": 0.0678
    },
    "edge_score": 84,
    "score_type": "model_score_0_100",
@@ -348,10 +362,10 @@
     "factors": {
      "sp": 1.097,
      "park": 1.175,
-     "temp": 1.0,
-     "wind": 0.973
+     "temp": 0.994,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0642
+    "hr_rate_pa": 0.0644
    },
    "edge_score": 73,
    "score_type": "model_score_0_100",
@@ -383,9 +397,9 @@
      "sp": 1.077,
      "park": 1.105,
      "temp": 1.06,
-     "wind": 1.03
+     "wind": 1.04
     },
-    "hr_rate_pa": 0.0446
+    "hr_rate_pa": 0.045
    },
    "edge_score": 67,
    "score_type": "model_score_0_100",
@@ -412,12 +426,12 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 463,
+    "pa_season": 465,
     "factors": {
      "sp": 1.029,
      "park": 1.0
     },
-    "hr_rate_pa": 0.049
+    "hr_rate_pa": 0.0488
    },
    "edge_score": 66,
    "score_type": "model_score_0_100",
@@ -448,10 +462,10 @@
     "factors": {
      "sp": 1.097,
      "park": 1.175,
-     "temp": 1.0,
-     "wind": 0.973
+     "temp": 0.994,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0464
+    "hr_rate_pa": 0.0465
    },
    "edge_score": 64,
    "score_type": "model_score_0_100",
@@ -499,33 +513,33 @@
    ]
   },
   {
-   "player": "Ben Rice",
-   "team": "nyy",
-   "game": "tb-nyy",
+   "player": "Miguel Vargas",
+   "team": "cws",
+   "game": "cws-kc",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 654,
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 693,
     "factors": {
-     "sp": 0.973,
-     "park": 1.175,
-     "temp": 0.952
+     "sp": 1.031,
+     "park": 0.93,
+     "temp": 1.024
     },
-    "hr_rate_pa": 0.0574
+    "hr_rate_pa": 0.0418
    },
-   "edge_score": 61,
+   "edge_score": 60,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 14.2,
-    "hard_hit_pct": 48.0,
-    "avg_exit_velo": 91.8,
-    "xiso": 0.245,
-    "recent_hr_rate": 0.0593
+    "barrel_pct": 13.2,
+    "hard_hit_pct": 43.8,
+    "avg_exit_velo": 90.1,
+    "xiso": 0.236,
+    "recent_hr_rate": 0.032
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 443 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -543,14 +557,14 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 535,
+    "pa_season": 537,
     "factors": {
      "sp": 1.043,
      "park": 1.2,
-     "temp": 1.006,
-     "wind": 0.982
+     "temp": 1.012,
+     "wind": 0.955
     },
-    "hr_rate_pa": 0.036
+    "hr_rate_pa": 0.0366
    },
    "edge_score": 60,
    "score_type": "model_score_0_100",
@@ -560,6 +574,39 @@
     "avg_exit_velo": 89.1,
     "xiso": 0.161,
     "recent_hr_rate": 0.0463
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 443 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Ben Rice",
+   "team": "nyy",
+   "game": "tb-nyy",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 654,
+    "factors": {
+     "sp": 0.973,
+     "park": 1.175,
+     "temp": 0.952
+    },
+    "hr_rate_pa": 0.0574
+   },
+   "edge_score": 60,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.2,
+    "hard_hit_pct": 48.0,
+    "avg_exit_velo": 91.8,
+    "xiso": 0.245,
+    "recent_hr_rate": 0.0593
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 443 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -577,14 +624,14 @@
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 606,
+    "pa_season": 608,
     "factors": {
      "sp": 1.043,
      "park": 1.2,
-     "temp": 1.006,
-     "wind": 0.982
+     "temp": 1.012,
+     "wind": 0.955
     },
-    "hr_rate_pa": 0.0427
+    "hr_rate_pa": 0.0417
    },
    "edge_score": 59,
    "score_type": "model_score_0_100",
@@ -594,39 +641,6 @@
     "avg_exit_velo": 90.2,
     "xiso": 0.177,
     "recent_hr_rate": 0.0115
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 443 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Miguel Vargas",
-   "team": "cws",
-   "game": "cws-kc",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 689,
-    "factors": {
-     "sp": 1.031,
-     "park": 0.93,
-     "temp": 1.03
-    },
-    "hr_rate_pa": 0.0422
-   },
-   "edge_score": 58,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.2,
-    "hard_hit_pct": 43.8,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.236,
-    "recent_hr_rate": 0.032
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 443 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -813,16 +827,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6755,
+   "model_prob": 0.6756,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 615,
+    "pa_season": 617,
     "factors": {
      "sp": 0.998
     },
-    "hit_rate_pa": 0.2418
+    "hit_rate_pa": 0.2424
    },
    "edge_score": 71,
    "score_type": "model_score_0_100",
@@ -842,16 +856,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6628,
+   "model_prob": 0.6658,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 689,
+    "pa_season": 693,
     "factors": {
      "sp": 1.023
     },
-    "hit_rate_pa": 0.218
+    "hit_rate_pa": 0.2193
    },
    "edge_score": 70,
    "score_type": "model_score_0_100",
@@ -876,11 +890,11 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 636,
+    "pa_season": 638,
     "factors": {
      "sp": 1.022
     },
-    "hit_rate_pa": 0.2487
+    "hit_rate_pa": 0.2493
    },
    "edge_score": 70,
    "score_type": "model_score_0_100",
@@ -900,16 +914,16 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6862,
+   "model_prob": 0.6924,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 439,
+    "pa_season": 441,
     "factors": {
      "sp": 1.023
     },
-    "hit_rate_pa": 0.2569
+    "hit_rate_pa": 0.2593
    },
    "edge_score": 70,
    "score_type": "model_score_0_100",
