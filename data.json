@@ -1,6 +1,6 @@
 {
  "date": "2026-09-27",
- "generated_at": "2026-09-27T05:16:49",
+ "generated_at": "2026-09-27T05:23:08",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -93,12 +93,12 @@
   {
    "away": "hou",
    "home": "ath",
-   "away_win_prob": 0.408,
-   "home_win_prob": 0.372,
+   "away_win_prob": 0.538,
+   "home_win_prob": 0.342,
    "pick": "hou",
-   "confidence": 0.408,
+   "confidence": 0.538,
    "tier": "PASS",
-   "total": 10.3,
+   "total": 9.9,
    "book_total_line": null,
    "wind": {
     "lf": {
@@ -249,12 +249,12 @@
   {
    "away": "az",
    "home": "sd",
-   "away_win_prob": 0.466,
-   "home_win_prob": 0.434,
+   "away_win_prob": 0.551,
+   "home_win_prob": 0.429,
    "pick": "az",
-   "confidence": 0.466,
+   "confidence": 0.551,
    "tier": "PASS",
-   "total": 8.3,
+   "total": 8.9,
    "book_total_line": null,
    "wind": {
     "lf": {
@@ -799,6 +799,35 @@
    "flags": []
   },
   {
+   "player": "Gabriel Moreno",
+   "team": "az",
+   "game": "az-sd",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.7262,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 549,
+    "factors": {
+     "sp": 1.068
+    },
+    "hit_rate_pa": 0.2729
+   },
+   "edge_score": 80,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 7.7,
+    "hard_hit_pct": 42.1,
+    "avg_exit_velo": 89.3,
+    "xiso": 0.162,
+    "recent_hr_rate": 0.0526
+   },
+   "flags": []
+  },
+  {
    "player": "Dominic Canzone",
    "team": "sea",
    "game": "laa-sea",
@@ -944,6 +973,35 @@
    "flags": []
   },
   {
+   "player": "Ketel Marte",
+   "team": "az",
+   "game": "az-sd",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6751,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 620,
+    "factors": {
+     "sp": 1.068
+    },
+    "hit_rate_pa": 0.2389
+   },
+   "edge_score": 78,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.3,
+    "hard_hit_pct": 42.4,
+    "avg_exit_velo": 90.2,
+    "xiso": 0.179,
+    "recent_hr_rate": 0.0099
+   },
+   "flags": []
+  },
+  {
    "player": "Jake McCarthy",
    "team": "col",
    "game": "col-cws",
@@ -969,64 +1027,6 @@
     "avg_exit_velo": 85.2,
     "xiso": 0.137,
     "recent_hr_rate": 0.0159
-   },
-   "flags": []
-  },
-  {
-   "player": "Randal Grichuk",
-   "team": "cws",
-   "game": "col-cws",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6728,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 33,
-    "factors": {
-     "sp": 1.062
-    },
-    "hit_rate_pa": 0.2296
-   },
-   "edge_score": 78,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 10.9,
-    "hard_hit_pct": 49.8,
-    "avg_exit_velo": 91.5,
-    "xiso": 0.198,
-    "recent_hr_rate": 0.0429
-   },
-   "flags": []
-  },
-  {
-   "player": "Bo Bichette",
-   "team": "nym",
-   "game": "nym-wsh",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.7432,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 691,
-    "factors": {
-     "sp": 1.194
-    },
-    "hit_rate_pa": 0.2806
-   },
-   "edge_score": 76,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 6.5,
-    "hard_hit_pct": 41.9,
-    "avg_exit_velo": 89.6,
-    "xiso": 0.143,
-    "recent_hr_rate": 0.0325
    },
    "flags": []
   }
