@@ -1,6 +1,6 @@
 {
  "date": "2026-09-27",
- "generated_at": "2026-09-27T16:58:08",
+ "generated_at": "2026-09-27T18:07:54",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -25,7 +25,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 8
+     "mph": 9
     },
     "cf": {
      "dir": "cross",
@@ -33,9 +33,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 8
+     "mph": 9
     },
-    "out_mph": 8
+    "out_mph": 9
    }
   },
   {
@@ -51,15 +51,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 11
+     "mph": 10
     },
     "cf": {
      "dir": "in",
-     "mph": 16
+     "mph": 14
     },
     "rf": {
      "dir": "in",
-     "mph": 11
+     "mph": 10
     },
     "out_mph": 0
    }
@@ -125,7 +125,7 @@
    "confidence": 0.538,
    "tier": "PASS",
    "total": 9.9,
-   "book_total_line": 10.0,
+   "book_total_line": 10.5,
    "wind": {
     "lf": {
      "dir": "out",
@@ -155,17 +155,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
     "cf": {
      "dir": "out",
-     "mph": 10
+     "mph": 8
     },
     "rf": {
      "dir": "out",
-     "mph": 7
+     "mph": 6
     },
-    "out_mph": 10
+    "out_mph": 8
    }
   },
   {
@@ -254,7 +254,7 @@
    "pick": "az",
    "confidence": 0.551,
    "tier": "PASS",
-   "total": 9.3,
+   "total": 9.0,
    "book_total_line": 8.0,
    "wind": {
     "lf": {
@@ -281,7 +281,7 @@
    "confidence": 0.546,
    "tier": "PASS",
    "total": 9.3,
-   "book_total_line": 7.5,
+   "book_total_line": 7.0,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -310,18 +310,18 @@
    "book_total_line": 8.5,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 2
+     "dir": "cross",
+     "mph": 1
     },
     "cf": {
      "dir": "cross",
      "mph": 0
     },
     "rf": {
-     "dir": "out",
-     "mph": 2
+     "dir": "cross",
+     "mph": 1
     },
-    "out_mph": 2
+    "out_mph": 0
    }
   },
   {
@@ -421,11 +421,11 @@
      "sp": 1.142,
      "park": 0.85,
      "temp": 0.964,
-     "wind": 1.05
+     "wind": 1.03
     },
-    "hr_rate_pa": 0.0422
+    "hr_rate_pa": 0.0414
    },
-   "edge_score": 77,
+   "edge_score": 79,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 16.4,
@@ -487,10 +487,10 @@
     "factors": {
      "sp": 1.035,
      "park": 1.105,
-     "temp": 1.012,
+     "temp": 1.006,
      "wind": 1.01
     },
-    "hr_rate_pa": 0.0608
+    "hr_rate_pa": 0.0604
    },
    "edge_score": 71,
    "score_type": "model_score_0_100",
@@ -521,10 +521,10 @@
     "factors": {
      "sp": 1.082,
      "park": 1.105,
-     "temp": 0.976,
+     "temp": 0.982,
      "wind": 0.955
     },
-    "hr_rate_pa": 0.0582
+    "hr_rate_pa": 0.0585
    },
    "edge_score": 68,
    "score_type": "model_score_0_100",
@@ -555,10 +555,10 @@
     "factors": {
      "sp": 1.089,
      "park": 1.175,
-     "temp": 0.952,
-     "wind": 0.901
+     "temp": 0.958,
+     "wind": 0.919
     },
-    "hr_rate_pa": 0.0574
+    "hr_rate_pa": 0.0589
    },
    "edge_score": 64,
    "score_type": "model_score_0_100",
@@ -585,13 +585,13 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 464,
+    "pa_season": 465,
     "factors": {
      "sp": 1.22,
      "park": 1.0,
      "temp": 0.946
     },
-    "hr_rate_pa": 0.0443
+    "hr_rate_pa": 0.0442
    },
    "edge_score": 63,
    "score_type": "model_score_0_100",
@@ -601,6 +601,40 @@
     "avg_exit_velo": 91.5,
     "xiso": 0.19,
     "recent_hr_rate": 0.0522
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 473 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Max Muncy",
+   "team": "lad",
+   "game": "lad-sf",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.15,
+    "order": 6,
+    "pa_season": 556,
+    "factors": {
+     "sp": 1.142,
+     "park": 0.85,
+     "temp": 0.964,
+     "wind": 1.03
+    },
+    "hr_rate_pa": 0.0431
+   },
+   "edge_score": 63,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 45.7,
+    "avg_exit_velo": 89.9,
+    "xiso": 0.224,
+    "recent_hr_rate": 0.0323
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 473 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -686,10 +720,10 @@
     "factors": {
      "sp": 1.057,
      "park": 1.105,
-     "temp": 0.976,
+     "temp": 0.982,
      "wind": 0.955
     },
-    "hr_rate_pa": 0.0629
+    "hr_rate_pa": 0.0633
    },
    "edge_score": 62,
    "score_type": "model_score_0_100",
@@ -699,40 +733,6 @@
     "avg_exit_velo": 89.7,
     "xiso": 0.229,
     "recent_hr_rate": 0.05
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 473 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Max Muncy",
-   "team": "lad",
-   "game": "lad-sf",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.15,
-    "order": 6,
-    "pa_season": 556,
-    "factors": {
-     "sp": 1.142,
-     "park": 0.85,
-     "temp": 0.964,
-     "wind": 1.05
-    },
-    "hr_rate_pa": 0.044
-   },
-   "edge_score": 61,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.7,
-    "hard_hit_pct": 45.7,
-    "avg_exit_velo": 89.9,
-    "xiso": 0.224,
-    "recent_hr_rate": 0.0323
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 473 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
