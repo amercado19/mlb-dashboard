@@ -1,6 +1,6 @@
 {
  "date": "2026-09-28",
- "generated_at": "2026-09-28T07:09:32",
+ "generated_at": "2026-09-28T19:39:51",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,68 +9,68 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "5036054"
+  "gitCommit": "b1b0146"
  },
  "games": [],
  "props": [],
  "prop_calibration": {
   "hr": {
-   "n": 1021,
+   "n": 1085,
    "status": "ok",
    "buckets": [
     {
      "lo": 0.0,
      "hi": 0.1,
-     "n": 2,
-     "pred": 0.091,
+     "n": 4,
+     "pred": 0.092,
      "actual": 0.0
     },
     {
      "lo": 0.1,
      "hi": 0.2,
-     "n": 691,
-     "pred": 0.164,
-     "actual": 0.21
+     "n": 730,
+     "pred": 0.165,
+     "actual": 0.207
     },
     {
      "lo": 0.2,
      "hi": 0.3,
-     "n": 328,
+     "n": 351,
      "pred": 0.229,
-     "actual": 0.213
+     "actual": 0.214
     }
    ],
-   "oos_brier_raw": 0.1545,
-   "oos_brier_calibrated": 0.1547
+   "oos_brier_raw": 0.1593,
+   "oos_brier_calibrated": 0.1582
   },
   "h1": {
-   "n": 3694,
+   "n": 3913,
    "status": "ok",
    "buckets": [
     {
      "lo": 0.5,
      "hi": 0.6,
-     "n": 20,
-     "pred": 0.582,
-     "actual": 0.55
+     "n": 27,
+     "pred": 0.583,
+     "actual": 0.556
     },
     {
      "lo": 0.6,
      "hi": 0.7,
-     "n": 2221,
+     "n": 2344,
      "pred": 0.67,
-     "actual": 0.666
+     "actual": 0.664
     },
     {
      "lo": 0.7,
      "hi": 0.8,
-     "n": 1453,
+     "n": 1542,
      "pred": 0.722,
-     "actual": 0.674
+     "actual": 0.681
     }
    ],
-   "oos_brier_raw": 0.2185,
-   "oos_brier_calibrated": 0.2188
+   "oos_brier_raw": 0.2152,
+   "oos_brier_calibrated": 0.2162
   },
   "h2": {
    "n": 606,
@@ -166,7 +166,7 @@
    "oos_brier_raw": 0.2602,
    "oos_brier_calibrated": 0.2435
   },
-  "fitted_through": "2026-09-20"
+  "fitted_through": "2026-09-27"
  },
  "notes": [
   "Venue-agnostic model output. No betting-venue logic.",
