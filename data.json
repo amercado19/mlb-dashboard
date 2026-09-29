@@ -1,6 +1,6 @@
 {
  "date": "2026-09-29",
- "generated_at": "2026-09-29T23:08:00",
+ "generated_at": "2026-09-29T23:52:03",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "fdc1376"
+  "gitCommit": "cd4d269"
  },
  "games": [
   {
@@ -47,7 +47,7 @@
    "confidence": 0.483,
    "tier": "PASS",
    "total": 8.6,
-   "book_total_line": 10.5,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -77,7 +77,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 2
     },
     "cf": {
      "dir": "cross",
@@ -85,9 +85,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 2
     },
-    "out_mph": 4
+    "out_mph": 2
    }
   },
   {
@@ -107,7 +107,7 @@
     },
     "cf": {
      "dir": "cross",
-     "mph": 2
+     "mph": 0
     },
     "rf": {
      "dir": "cross",
@@ -137,7 +137,7 @@
     },
     "hr_rate_pa": 0.047
    },
-   "edge_score": 59,
+   "edge_score": 57,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.0,
@@ -169,7 +169,7 @@
     },
     "hr_rate_pa": 0.058
    },
-   "edge_score": 56,
+   "edge_score": 54,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 20.5,
@@ -177,39 +177,6 @@
     "avg_exit_velo": 93.9,
     "xiso": 0.265,
     "recent_hr_rate": 0.0504
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 482 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Ben Rice",
-   "team": "nyy",
-   "game": "bos-nyy",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 667,
-    "factors": {
-     "sp": 0.916,
-     "park": 1.175,
-     "temp": 0.946
-    },
-    "hr_rate_pa": 0.053
-   },
-   "edge_score": 47,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 48.6,
-    "avg_exit_velo": 91.9,
-    "xiso": 0.244,
-    "recent_hr_rate": 0.0531
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 482 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -231,12 +198,11 @@
     "factors": {
      "sp": 1.034,
      "park": 0.86,
-     "temp": 1.018,
-     "wind": 1.0
+     "temp": 1.018
     },
     "hr_rate_pa": 0.0309
    },
-   "edge_score": 46,
+   "edge_score": 51,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.7,
@@ -265,12 +231,11 @@
     "factors": {
      "sp": 1.019,
      "park": 0.86,
-     "temp": 1.018,
-     "wind": 1.0
+     "temp": 1.018
     },
     "hr_rate_pa": 0.0472
    },
-   "edge_score": 45,
+   "edge_score": 50,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.3,
@@ -278,6 +243,39 @@
     "avg_exit_velo": 90.6,
     "xiso": 0.244,
     "recent_hr_rate": 0.0968
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 482 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Ben Rice",
+   "team": "nyy",
+   "game": "bos-nyy",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 667,
+    "factors": {
+     "sp": 0.916,
+     "park": 1.175,
+     "temp": 0.958
+    },
+    "hr_rate_pa": 0.0536
+   },
+   "edge_score": 47,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 48.6,
+    "avg_exit_velo": 91.9,
+    "xiso": 0.244,
+    "recent_hr_rate": 0.0531
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 482 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -367,9 +365,9 @@
     "factors": {
      "sp": 0.916,
      "park": 1.175,
-     "temp": 0.946
+     "temp": 0.958
     },
-    "hr_rate_pa": 0.0409
+    "hr_rate_pa": 0.0414
    },
    "edge_score": 41,
    "score_type": "model_score_0_100",
