@@ -1,6 +1,6 @@
 {
  "date": "2026-09-30",
- "generated_at": "2026-09-30T04:03:57",
+ "generated_at": "2026-09-30T05:38:03",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -46,7 +46,7 @@
    "pick": "hou",
    "confidence": 0.558,
    "tier": "PASS",
-   "total": 8.8,
+   "total": 9.0,
    "book_total_line": 7.5,
    "wind": {
     "lf": {
@@ -93,13 +93,13 @@
   {
    "away": "chc",
    "home": "sd",
-   "away_win_prob": 0.298,
-   "home_win_prob": 0.562,
+   "away_win_prob": 0.417,
+   "home_win_prob": 0.543,
    "pick": "sd",
-   "confidence": 0.562,
+   "confidence": 0.543,
    "tier": "PASS",
-   "total": 7.8,
-   "book_total_line": null,
+   "total": 7.6,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "cross",
@@ -315,6 +315,40 @@
    ]
   },
   {
+   "player": "Fernando Tatis Jr.",
+   "team": "sd",
+   "game": "chc-sd",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 704,
+    "factors": {
+     "sp": 0.996,
+     "park": 0.86,
+     "temp": 0.994,
+     "wind": 1.0
+    },
+    "hr_rate_pa": 0.0291
+   },
+   "edge_score": 40,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 53.9,
+    "avg_exit_velo": 92.9,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.0708
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 482 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Ty France",
    "team": "sd",
    "game": "chc-sd",
@@ -324,18 +358,18 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
+    "epa": 4.35,
+    "order": 4,
     "pa_season": 500,
     "factors": {
-     "sp": 1.024,
+     "sp": 0.996,
      "park": 0.86,
      "temp": 0.994,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0332
+    "hr_rate_pa": 0.0322
    },
-   "edge_score": 43,
+   "edge_score": 40,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 9.1,
@@ -349,94 +383,60 @@
    ]
   },
   {
-   "player": "Pete Crow-Armstrong",
-   "team": "chc",
-   "game": "chc-sd",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 726,
-    "factors": {
-     "sp": 0.946,
-     "park": 0.86,
-     "temp": 0.994,
-     "wind": 1.0
-    },
-    "hr_rate_pa": 0.0428
-   },
-   "edge_score": 38,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.3,
-    "hard_hit_pct": 48.6,
-    "avg_exit_velo": 90.6,
-    "xiso": 0.244,
-    "recent_hr_rate": 0.0763
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 482 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Dustin Harris",
+   "player": "Fernando Tatis Jr.",
    "team": "sd",
    "game": "chc-sd",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6762,
+   "model_prob": 0.6937,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 16,
+    "pa_season": 704,
     "factors": {
-     "sp": 1.018
+     "sp": 0.997
     },
-    "hit_rate_pa": 0.2234
+    "hit_rate_pa": 0.2486
    },
    "edge_score": 65,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 1.7,
-    "hard_hit_pct": 19.5,
-    "avg_exit_velo": 85.2,
-    "xiso": 0.082,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 53.9,
+    "avg_exit_velo": 92.9,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.0708
    },
    "flags": []
   },
   {
-   "player": "Manny Machado",
+   "player": "Ty France",
    "team": "sd",
    "game": "chc-sd",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6446,
+   "model_prob": 0.6793,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 677,
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 500,
     "factors": {
-     "sp": 1.018
+     "sp": 0.997
     },
-    "hit_rate_pa": 0.2001
+    "hit_rate_pa": 0.2484
    },
-   "edge_score": 65,
+   "edge_score": 64,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 9.6,
-    "hard_hit_pct": 43.6,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.177,
-    "recent_hr_rate": 0.055
+    "barrel_pct": 9.1,
+    "hard_hit_pct": 47.4,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.173,
+    "recent_hr_rate": 0.02
    },
    "flags": []
   },
