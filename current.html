@@ -4150,8 +4150,10 @@ function poWhy(g){
   var pr=(D.predictions||[]).filter(function(p){return p.gamePk===pk;})[0]||{};
   var aw=(g.away||{}).abbreviation||pr.awayTeam||'AWAY';
   var hm=(g.home||{}).abbreviation||pr.homeTeam||'HOME';
-  var out=[];
+  var out=[],drv=[];
   function row(k,v){if(v)out.push('<li><b>'+esc(k)+'</b><span>'+v+'</span></li>');}
+  /* mrow = something this model produced. row = an input or a surrounding. */
+  function mrow(k,v){if(v)drv.push('<li><b>'+esc(k)+'</b><span>'+v+'</span></li>');}
 
   var asp=gc.away_sp||{},hsp=gc.home_sp||{};
   if(asp.name||hsp.name){
@@ -4167,7 +4169,7 @@ function poWhy(g){
     row('Starters',bits.join(' vs ')+tail);
   }
   if(isNum(gc.away_runs)&&isNum(gc.home_runs)){
-    row('Projected runs',esc(aw)+' '+gc.away_runs.toFixed(1)+' · '+esc(hm)+' '+gc.home_runs.toFixed(1)
+    mrow('Projected runs',esc(aw)+' '+gc.away_runs.toFixed(1)+' · '+esc(hm)+' '+gc.home_runs.toFixed(1)
       +(isNum(gc.total)?' (total '+gc.total.toFixed(1)+')':''));
   }
   if(isNum(gc.away_pen)&&isNum(gc.home_pen)){
@@ -4192,15 +4194,25 @@ function poWhy(g){
     if(ma.moneylineWinner&&ma.runProjectionWinner&&ma.moneylineWinner!==ma.runProjectionWinner)
       t+=' — the win-probability model says '+esc(ma.moneylineWinner)
         +' and the run projection says '+esc(ma.runProjectionWinner);
-    row('Model agreement',t);
+    mrow('Model agreement',t);
   }
   if(isNum(pr.homeWinProb)&&isNum(pr.awayWinProb)){
-    row('Win probability',esc(hm)+' '+(100*pr.homeWinProb).toFixed(1)+'% · '
+    mrow('Win probability',esc(hm)+' '+(100*pr.homeWinProb).toFixed(1)+'% · '
       +esc(aw)+' '+(100*pr.awayWinProb).toFixed(1)+'%');
   }
-  if(!out.length)return '';
-  return '<div class="powhy"><div class="powhyh">Why the model leans this way</div>'
-    +'<ul>'+out.join('')+'</ul></div>';
+  if(!out.length&&!drv.length)return '';
+  /* MODEL OUTPUT AND MATCHUP CONTEXT ARE NOT THE SAME CLAIM. A win
+     probability and a projected run total are things this model produced. A
+     starter's xERA, a bullpen's season ERA and a park's HR factor are inputs
+     and surroundings -- true and useful, and NOT evidence that the model
+     weighed them. Under one heading the context impersonates attribution. */
+  return '<div class="powhy">'
+    +(drv.length?'<div class="powhyh">What the model produced</div><ul>'
+        +drv.join('')+'</ul>':'')
+    +(out.length?'<div class="powhyh"'+(drv.length?' style="margin-top:10px"':'')
+        +'>Matchup context \u2014 inputs and surroundings, not model attribution</div>'
+        +'<ul>'+out.join('')+'</ul>':'')
+    +'</div>';
 }
 
 function poGameCard(g){
@@ -4247,8 +4259,10 @@ function poGameCard(g){
     +sp
     +poWhy(g)
     +'<div class="pomk">'+poChips(g)+'</div>'
-    +(dead?'<div class="poempty">This game is underway or final. The states above are '
-      +'the record of what was published before first pitch; nothing here is current.</div>':'')
+    +(dead?'<div class="poempty">This game is underway or final, so nothing here is '
+      +'actionable. These are the market states as of <b>this publish</b> \u2014 not a '
+      +'frozen pre-first-pitch record. What was recommended before first pitch is kept '
+      +'by the pick snapshots, and this card is not that record.</div>':'')
     +'</div>';
 }
 
