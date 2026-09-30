@@ -1,6 +1,6 @@
 {
  "date": "2026-09-30",
- "generated_at": "2026-09-30T17:59:23",
+ "generated_at": "2026-09-30T18:39:18",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "060ae7d"
+  "gitCommit": "db715a0"
  },
  "games": [
   {
@@ -21,7 +21,7 @@
    "confidence": 0.518,
    "tier": "PASS",
    "total": 8.9,
-   "book_total_line": 7.5,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -151,38 +151,6 @@
    ]
   },
   {
-   "player": "Munetaka Murakami",
-   "team": "cws",
-   "game": "cws-hou",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 553,
-    "factors": {
-     "sp": 0.953,
-     "park": 1.105
-    },
-    "hr_rate_pa": 0.0547
-   },
-   "edge_score": 53,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 20.5,
-    "hard_hit_pct": 56.8,
-    "avg_exit_velo": 93.9,
-    "xiso": 0.265,
-    "recent_hr_rate": 0.0522
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Kyle Schwarber",
    "team": "phi",
    "game": "phi-atl",
@@ -202,7 +170,7 @@
     },
     "hr_rate_pa": 0.0677
    },
-   "edge_score": 52,
+   "edge_score": 54,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 15.5,
@@ -235,7 +203,7 @@
     },
     "hr_rate_pa": 0.0481
    },
-   "edge_score": 52,
+   "edge_score": 54,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 10.3,
@@ -243,6 +211,38 @@
     "avg_exit_velo": 90.0,
     "xiso": 0.21,
     "recent_hr_rate": 0.0179
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Munetaka Murakami",
+   "team": "cws",
+   "game": "cws-hou",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 553,
+    "factors": {
+     "sp": 0.953,
+     "park": 1.105
+    },
+    "hr_rate_pa": 0.0547
+   },
+   "edge_score": 53,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 20.5,
+    "hard_hit_pct": 56.8,
+    "avg_exit_velo": 93.9,
+    "xiso": 0.265,
+    "recent_hr_rate": 0.0522
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
