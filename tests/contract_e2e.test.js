@@ -126,7 +126,20 @@ async function render(browser, payload, widths) {
         hasWind: !!c.querySelector('.s3env'),
         winner: (c.querySelector('.s3wt') || {}).textContent || '',
         winProb: (c.querySelector('.s3wp') || {}).textContent || '',
-        lineupWord: (c.querySelector('.s3st') || {}).textContent || '',
+        /* The lineup word moved when the Slate card was redesigned: it is
+           no longer a chip in the card head and now lives on the View-lineup
+           drawer's own badge. `.s3n` is shared with the parlay drawer's leg
+           count, so find the lineup drawer by its summary and read only its
+           badge. The assertion this feeds is unchanged. */
+        lineupWord: (function () {
+          var ds = [].slice.call(c.querySelectorAll('details.s3d'));
+          for (var i = 0; i < ds.length; i++) {
+            var sm = ds[i].querySelector('summary');
+            if (sm && /view lineup/i.test(sm.textContent || ''))
+              return (ds[i].querySelector('.s3n') || {}).textContent || '';
+          }
+          return '';
+        })(),
         drawers: [...c.querySelectorAll('details.s3d > summary')]
           .map(s => s.textContent.trim()),
         lineupRows: c.querySelectorAll('.s3lr').length,

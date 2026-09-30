@@ -28,6 +28,33 @@ eval('var IDBYABBR={}; for (var k in TEAMS) IDBYABBR[TEAMS[k][0]]=k;');
 eval(grab(/function etStamp\([\s\S]*?\n\}/, 'etStamp'));
 eval(grab(/function tms\([\s\S]*?\n\}/, 'tms'));
 eval(grab(/function fmtTime\([\s\S]*?\n\}/, 'fmtTime'));
+/* THE HERO NOW ASKS WHETHER THE MARKET IS STILL OPEN, and this harness never
+ * brought that machinery across. hProp() and hMoneyline() route every row
+ * through mktDeadRow/mktDead; without them the call throws, hTileSafe catches
+ * it, files a diagnostic and renders an empty card -- and eleven assertions
+ * about what a Hero card may CLAIM fail because no card was ever built. They
+ * were not testing the product, they were testing an omission here. */
+global.window = global.window || {};
+eval(grab(/var DEAD_MARKET=\{[\s\S]*?\};/, 'DEAD_MARKET'));
+eval(grab(/function predIndex\(\)\{[\s\S]*?\n\}/, 'predIndex'));
+eval(grab(/function mktState\(pk\)\{[\s\S]*?\n\}/, 'mktState'));
+eval(grab(/function mktDead\(pk\)\{.*?\}/, 'mktDead'));
+eval(grab(/function mktDeadRow\(r\)\{[\s\S]*?\n\}/, 'mktDeadRow'));
+/* hMoneyline() sorts by the canonical recommendation rather than re-deriving
+ * one, so recFor and the predOf it reads have to come across too. */
+eval(grab(/function predOf\(g,m\)\{[\s\S]*?\n\}/, 'predOf'));
+eval(grab(/function recFor\(g,m\)\{[\s\S]*?\n\}/, 'recFor'));
+/* predIndex() memoises into window._PIX. A scenario that assigns a new D
+ * would otherwise be scored against the PREVIOUS scenario's predictions --
+ * a harness bug that would make a market-state assertion pass for the wrong
+ * reason. Every assignment to D busts the memo, which keeps the existing
+ * `global.D = ...` lines correct without editing any of them. */
+var _HERO_D = null;
+Object.defineProperty(global, 'D', {
+  configurable: true,
+  get: function () { return _HERO_D; },
+  set: function (v) { _HERO_D = v; global.window._PIX = null; }
+});
 eval(grab(/function legDesc\([\s\S]*?\n\}/, 'legDesc'));
 /* Direct eval keeps these in module scope, where the helpers above already
    live. An indirect eval would put them in global scope and they would no
