@@ -1,6 +1,6 @@
 {
  "date": "2026-09-29",
- "generated_at": "2026-09-30T01:28:29",
+ "generated_at": "2026-09-30T02:12:21",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "dacf7d8"
+  "gitCommit": "1a9b5d3"
  },
  "games": [
   {
@@ -25,15 +25,15 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "cf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "rf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "out_mph": 0
    }
@@ -73,7 +73,7 @@
    "confidence": 0.434,
    "tier": "PASS",
    "total": 7.2,
-   "book_total_line": 5.5,
+   "book_total_line": 3.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -102,18 +102,18 @@
    "book_total_line": 7.5,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 2
+     "dir": "out",
+     "mph": 3
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 4
     },
     "rf": {
      "dir": "out",
-     "mph": 2
+     "mph": 3
     },
-    "out_mph": 2
+    "out_mph": 4
    }
   }
  ],
@@ -198,7 +198,8 @@
     "factors": {
      "sp": 1.034,
      "park": 0.86,
-     "temp": 1.012
+     "temp": 1.012,
+     "wind": 1.0
     },
     "hr_rate_pa": 0.0307
    },
@@ -231,7 +232,8 @@
     "factors": {
      "sp": 1.019,
      "park": 0.86,
-     "temp": 1.012
+     "temp": 1.012,
+     "wind": 1.0
     },
     "hr_rate_pa": 0.0469
    },
@@ -264,9 +266,9 @@
     "factors": {
      "sp": 0.916,
      "park": 1.175,
-     "temp": 0.952
+     "temp": 0.958
     },
-    "hr_rate_pa": 0.0533
+    "hr_rate_pa": 0.0536
    },
    "edge_score": 47,
    "score_type": "model_score_0_100",
@@ -297,10 +299,10 @@
     "factors": {
      "sp": 0.932,
      "park": 1.175,
-     "temp": 1.024,
+     "temp": 1.012,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0433
+    "hr_rate_pa": 0.0428
    },
    "edge_score": 42,
    "score_type": "model_score_0_100",
@@ -331,10 +333,10 @@
     "factors": {
      "sp": 0.924,
      "park": 1.175,
-     "temp": 1.024,
+     "temp": 1.012,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.056
+    "hr_rate_pa": 0.0554
    },
    "edge_score": 42,
    "score_type": "model_score_0_100",
@@ -365,9 +367,9 @@
     "factors": {
      "sp": 0.916,
      "park": 1.175,
-     "temp": 0.952
+     "temp": 0.958
     },
-    "hr_rate_pa": 0.0411
+    "hr_rate_pa": 0.0414
    },
    "edge_score": 41,
    "score_type": "model_score_0_100",
