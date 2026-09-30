@@ -999,6 +999,70 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
 .hmpg{display:grid;grid-template-columns:repeat(auto-fill,minmax(246px,1fr));gap:10px}
 /* ---- Release 2 / Player Props ---- */
 .ppbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+/* ---- Playoffs ---- */
+.pocov{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--mono);font-size:11px;
+  background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--win);
+  border-radius:10px;padding:9px 12px;margin:0 0 14px}
+.pocov.bad{border-left-color:var(--lose)}
+.pocov b{color:var(--txt)}
+.pocov span{color:var(--muted)}
+.pogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.pog{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 14px;min-width:0}
+.pog.dead{opacity:.75}
+.pogh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:3px}
+.pogt{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:800;color:var(--txt);min-width:0}
+.pogt .hlogo,.pogt .hini{width:22px;height:22px;font-size:10px}
+.pogt i{font-style:normal;color:var(--muted);font-weight:600;font-size:12px}
+.pogm{font-family:var(--mono);font-size:10px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.poser{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;font-weight:800;
+  background:var(--elev);border:1px solid var(--line2);color:var(--gold);border-radius:7px;padding:2px 8px}
+.posp{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:9px 0 2px}
+.posp>div{background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:7px 9px;min-width:0}
+.posp .lb{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800}
+.posp .nm{font-size:12px;font-weight:700;color:var(--txt);margin:1px 0;overflow-wrap:anywhere}
+.posp .st{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.powhy{margin:10px 0 0;border-top:1px solid var(--line);padding-top:9px}
+.powhyh{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:5px}
+.powhy ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.powhy li{font-size:11px;color:var(--muted);line-height:1.45;display:flex;gap:7px}
+.powhy li b{color:var(--txt);font-weight:700;min-width:74px;flex:0 0 74px;font-size:9.5px;
+  text-transform:uppercase;letter-spacing:.05em;padding-top:1px}
+.pomk{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px;border-top:1px solid var(--line);padding-top:9px}
+.pomkc{font-family:var(--mono);font-size:9.5px;font-weight:800;border-radius:7px;padding:2px 7px;
+  border:1px solid var(--line2);background:var(--elev);color:var(--muted);cursor:help;white-space:nowrap}
+.pomkc.s-PICK{background:#0b2e1e;color:#4ade80;border-color:#166a3f}
+.pomkc.s-LEAN{background:#0a2038;color:#7bb8ff;border-color:#1d4f86}
+.pomkc.s-PASS{background:var(--panel2);color:var(--muted)}
+.pomkc.s-WATCH{background:#2a2206;color:#e3b341;border-color:#7a6112}
+.pomkc.s-AWAITING_LINEUP{background:#2a1c06;color:#d99a3a;border-color:#7a5312}
+.pomkc.s-UNAVAILABLE{background:var(--panel2);color:#6b7686}
+.pobr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.pobrr{min-width:0}
+.pobrh{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);
+  margin:0 0 7px;padding-bottom:5px;border-bottom:1px solid var(--line)}
+.pobs{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+.pobs.win{border-color:#166a3f}
+.pobsr{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:12px}
+.pobsr+.pobsr{margin-top:3px}
+.pobsr .t{display:flex;align-items:center;gap:5px;min-width:0;color:var(--muted);font-weight:700}
+.pobsr .t .hlogo,.pobsr .t .hini{width:17px;height:17px;font-size:9px}
+.pobsr.adv .t{color:var(--txt)}
+.pobsr .w{font-family:var(--mono);font-weight:800;color:var(--txt)}
+.pobsl{font-family:var(--mono);font-size:9.5px;color:var(--muted);margin-top:5px;
+  border-top:1px solid var(--line);padding-top:5px}
+.pobsl.clinched{color:var(--win)}
+.poempty{font-size:11px;color:var(--muted);font-family:var(--mono);padding:8px 2px}
+.pormk{font-size:11px;color:var(--muted);line-height:1.6;background:var(--panel);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:10px;padding:10px 12px;margin:0 0 12px}
+.pormk b{color:var(--txt)}
+@media(max-width:860px){.pobr{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:430px){
+  .pogrid{grid-template-columns:1fr}
+  .pobr{grid-template-columns:1fr}
+  .posp{grid-template-columns:1fr}
+  .powhy li{flex-direction:column;gap:1px}
+  .powhy li b{flex:none;min-width:0}
+}
 .ppseg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:3px;gap:3px}
 .ppseg button{appearance:none;border:0;background:transparent;color:var(--muted);font:inherit;font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;white-space:nowrap}
 .ppseg button.on{background:var(--accent);color:#fff}
@@ -1098,7 +1162,8 @@ table.lab-mx td.lab-lim{color:var(--muted);font-size:11px;min-width:280px}
 </header>
 <main>
   <section id="home" class="active"></section>
-  <section id="slate"></section>
+  <section id="playoffs"></section>
+<section id="slate"></section>
   <section id="picks"></section>
   <section id="matchups"></section>
   <section id="props"></section>
@@ -4027,6 +4092,284 @@ function ppMarketNote(fam,rows,live){
   return '<div class="ppnote">'+bits.join(' ')+'</div>';
 }
 
+/* ====================== PLAYOFFS ======================================
+
+   Everything here reads `D.postseason`, the single block the pipeline
+   publishes (schema POSTSEASON-PRODUCT-1). This surface derives no
+   baseball: the series scores are the producer's, the market states are
+   the producer's adapter's, and each chip's tooltip is the producer's own
+   reason string. Where the block says UNAVAILABLE, this says UNAVAILABLE.
+
+   THE ACTUAL BRACKET USES NO BROWSER STORAGE. It is a pure function of
+   games that already happened, so a fresh device three rounds in shows the
+   same thing. MY BRACKET, when it lands, is the only part that persists
+   anything client-side, and it will be kept strictly separate. */
+
+function poBlock(){
+  var b=D.postseason;
+  return (b&&typeof b==='object')?b:null;
+}
+function poActive(){var b=poBlock();return !!(b&&b.active);}
+
+/* A started playoff game keeps its card and loses its actionability, the
+   same rule the rest of the page uses. The predicate is the page's
+   existing one -- not a second reading of the clock. */
+function poDead(g){
+  if(!g)return false;
+  var s=String(g.abstractState||'').toLowerCase();
+  if(s==='live'||s==='final')return true;
+  return mktDead(g.gamePk);
+}
+
+var PO_MARKET_LABEL={moneyline:'ML',runLine:'RUN LINE',h1:'1+ HIT',hr:'HR',
+  hrr:'H+R+RBI',nrfiYrfi:'NRFI/YRFI',modelParlayEligibility:'MODEL PARLAY',
+  pricedParlayEligibility:'PRICED PARLAY'};
+var PO_MARKET_ORDER=['moneyline','runLine','nrfiYrfi','h1','hr','hrr',
+  'modelParlayEligibility','pricedParlayEligibility'];
+
+function poChips(g){
+  var mk=g.markets||{},rs=g.markets_reason||{},sr=g.markets_source||{};
+  return PO_MARKET_ORDER.filter(function(k){return mk[k];}).map(function(k){
+    var st=String(mk[k]);
+    var tip=(rs[k]||'')+(sr[k]?('  ['+sr[k]+']'):'');
+    return '<span class="pomkc s-'+esc(st)+'" title="'+esc(tip)+'">'
+      +esc(PO_MARKET_LABEL[k]||k)+' '+esc(st.replace('AWAITING_LINEUP','AWAITING LINEUP'))
+      +'</span>';
+  }).join('');
+}
+
+/* THE MATCHUP, FROM FIELDS THAT EXIST.
+   Every line names the two real numbers it compares. Nothing is called an
+   "edge" -- the model publishes no starter-edge or bullpen-edge quantity,
+   so inventing one here would be this page asserting a measurement the
+   pipeline never made. A field the payload does not carry produces no
+   line at all, because absent is not zero. */
+function poWhy(g){
+  var pk=g.gamePk;
+  var gc=(D.gameCards||[]).filter(function(c){return c.gamePk===pk;})[0]||{};
+  var pr=(D.predictions||[]).filter(function(p){return p.gamePk===pk;})[0]||{};
+  var aw=(g.away||{}).abbreviation||pr.awayTeam||'AWAY';
+  var hm=(g.home||{}).abbreviation||pr.homeTeam||'HOME';
+  var out=[];
+  function row(k,v){if(v)out.push('<li><b>'+esc(k)+'</b><span>'+v+'</span></li>');}
+
+  var asp=gc.away_sp||{},hsp=gc.home_sp||{};
+  if(asp.name||hsp.name){
+    var bits=[];
+    if(asp.name)bits.push(esc(aw)+' '+esc(asp.name)+(isNum(asp.xera)?' ('+asp.xera.toFixed(2)+' xERA)':''));
+    if(hsp.name)bits.push(esc(hm)+' '+esc(hsp.name)+(isNum(hsp.xera)?' ('+hsp.xera.toFixed(2)+' xERA)':''));
+    var tail='';
+    if(isNum(asp.xera)&&isNum(hsp.xera)){
+      var d=Math.abs(asp.xera-hsp.xera);
+      tail=' — '+(d<0.25?'effectively level on xERA'
+        :('the '+esc(asp.xera<hsp.xera?aw:hm)+' starter is '+d.toFixed(2)+' better on xERA'));
+    }
+    row('Starters',bits.join(' vs ')+tail);
+  }
+  if(isNum(gc.away_runs)&&isNum(gc.home_runs)){
+    row('Projected runs',esc(aw)+' '+gc.away_runs.toFixed(1)+' · '+esc(hm)+' '+gc.home_runs.toFixed(1)
+      +(isNum(gc.total)?' (total '+gc.total.toFixed(1)+')':''));
+  }
+  if(isNum(gc.away_pen)&&isNum(gc.home_pen)){
+    row('Bullpens',esc(aw)+' '+gc.away_pen.toFixed(2)+' · '+esc(hm)+' '+gc.home_pen.toFixed(2)+' season pen ERA');
+  }
+  var park=[];
+  if(gc.venue)park.push(esc(gc.venue));
+  if(isNum(gc.park_hr))park.push(gc.park_hr+' park HR factor');
+  if(gc.temp!=null)park.push(esc(String(gc.temp))+'°F');
+  if(isNum(gc.wind_mph))park.push(gc.wind_mph+' mph wind');
+  if(park.length)row('Park & air',park.join(' · '));
+
+  var ls=String(g.lineupState||'');
+  if(gc.lineups_official===true)row('Lineups','both official');
+  else if(ls==='CONFIRMED')row('Lineups','confirmed');
+  else if(gc.lineups_projected===true||ls==='PROJECTED')row('Lineups','projected — official not posted, so player markets are awaiting');
+  else if(ls)row('Lineups',esc(ls.toLowerCase()));
+
+  var ma=pr.modelAgreement||{};
+  if(ma.status){
+    var t=esc(String(ma.status).replace(/_/g,' ').toLowerCase());
+    if(ma.moneylineWinner&&ma.runProjectionWinner&&ma.moneylineWinner!==ma.runProjectionWinner)
+      t+=' — the win-probability model says '+esc(ma.moneylineWinner)
+        +' and the run projection says '+esc(ma.runProjectionWinner);
+    row('Model agreement',t);
+  }
+  if(isNum(pr.homeWinProb)&&isNum(pr.awayWinProb)){
+    row('Win probability',esc(hm)+' '+(100*pr.homeWinProb).toFixed(1)+'% · '
+      +esc(aw)+' '+(100*pr.awayWinProb).toFixed(1)+'%');
+  }
+  if(!out.length)return '';
+  return '<div class="powhy"><div class="powhyh">Why the model leans this way</div>'
+    +'<ul>'+out.join('')+'</ul></div>';
+}
+
+function poGameCard(g){
+  var s=g.series||{},dead=poDead(g);
+  var aw=(g.away||{}).abbreviation,hm=(g.home||{}).abbreviation;
+  var t=g.gameDate?fmtTime(g.gameDate):'';
+  var meta=[];
+  if(t)meta.push('<span>'+esc(t)+'</span>');
+  if(g.detailedState)meta.push('<span>'+esc(g.detailedState)+'</span>');
+  if(g.venue)meta.push('<span>'+esc(g.venue)+'</span>');
+  /* A SCORE ONLY ONCE THERE IS ONE. statsapi publishes 0-0 for a game in
+     Warmup, and `isNum(0)` is true, so an unstarted game rendered
+     "PHI 0 - ATL 0" as though it were a result. Gated on the game actually
+     being under way or over. */
+  var _st=String(g.abstractState||'').toLowerCase();
+  if((_st==='live'||_st==='final')
+     &&isNum(g.away&&g.away.score)&&isNum(g.home&&g.home.score))
+    meta.push('<span>'+esc(aw)+' '+g.away.score+' \u2014 '+esc(hm)+' '+g.home.score+'</span>');
+  var gc=(D.gameCards||[]).filter(function(c){return c.gamePk===g.gamePk;})[0]||{};
+  var asp=gc.away_sp||{},hsp=gc.home_sp||{};
+  var sp='';
+  if(asp.name||hsp.name){
+    sp='<div class="posp">'
+      +'<div><div class="lb">'+esc(aw||'AWAY')+' starter</div><div class="nm">'
+        +esc(asp.name||SH_ABSENT)+'</div><div class="st">'
+        +(isNum(asp.xera)?asp.xera.toFixed(2)+' xERA':'')
+        +(isNum(asp.era)?' · '+asp.era.toFixed(2)+' ERA':'')
+        +(asp.throws?' · '+esc(asp.throws)+'HP':'')+'</div></div>'
+      +'<div><div class="lb">'+esc(hm||'HOME')+' starter</div><div class="nm">'
+        +esc(hsp.name||SH_ABSENT)+'</div><div class="st">'
+        +(isNum(hsp.xera)?hsp.xera.toFixed(2)+' xERA':'')
+        +(isNum(hsp.era)?' · '+hsp.era.toFixed(2)+' ERA':'')
+        +(hsp.throws?' · '+esc(hsp.throws)+'HP':'')+'</div></div></div>';
+  }
+  return '<div class="pog'+(dead?' dead':'')+'">'
+    +'<div class="pogh"><div class="pogt">'+hTeam(aw)+'<span>'+esc(aw||'')+'</span>'
+      +'<i>@</i>'+hTeam(hm)+'<span>'+esc(hm||'')+'</span></div>'
+      +(s.seriesScoreLine?'<span class="poser">'+esc(s.seriesScoreLine)+'</span>':'')+'</div>'
+    +'<div class="pogm">'
+      +(s.roundLabel?'<span>'+esc(s.roundLabel)+'</span>':'')
+      +(isNum(s.gameNumberInSeries)?'<span>Game '+s.gameNumberInSeries
+        +(isNum(s.bestOf)?' of '+s.bestOf:'')+'</span>':'')
+      +meta.join('')+'</div>'
+    +sp
+    +poWhy(g)
+    +'<div class="pomk">'+poChips(g)+'</div>'
+    +(dead?'<div class="poempty">This game is underway or final. The states above are '
+      +'the record of what was published before first pitch; nothing here is current.</div>':'')
+    +'</div>';
+}
+
+/* ---- the ACTUAL bracket: canonical results, no browser storage ---- */
+var PO_ROUND_LABEL={WILD_CARD:'Wild Card',DIVISION:'Division Series',
+  LCS:'League Championship',WORLD_SERIES:'World Series'};
+var PO_ROUNDS=['WILD_CARD','DIVISION','LCS','WORLD_SERIES'];
+
+function poSeriesCard(s){
+  var done=s.seriesStatus==='CLINCHED';
+  var aWin=done&&s.winnerTeamId===s.teamAId;
+  var bWin=done&&s.winnerTeamId===s.teamBId;
+  function row(ab,w,adv){
+    return '<div class="pobsr'+(adv?' adv':'')+'"><span class="t">'+hTeam(ab)
+      +'<span>'+esc(ab||'TBD')+'</span></span><span class="w">'+(isNum(w)?w:'—')+'</span></div>';
+  }
+  return '<div class="pobs'+(done?' win':'')+'">'
+    +row(s.teamAAbbrev,s.winsA,!done||aWin)
+    +row(s.teamBAbbrev,s.winsB,!done||bWin)
+    +'<div class="pobsl'+(done?' clinched':'')+'">'
+      +esc(s.seriesScoreLine||'SERIES STATE UNKNOWN')
+      +(done&&s.advancesToRound?' → '+esc(PO_ROUND_LABEL[s.advancesToRound]||s.advancesToRound):'')
+      +'</div></div>';
+}
+
+function poBracket(){
+  var b=poBlock()||{},br=b.bracket||{},ser=b.series||{};
+  var cols=PO_ROUNDS.map(function(r){
+    var ids=br[r]||[];
+    var body=ids.length
+      ? ids.map(function(id){return ser[id]?poSeriesCard(ser[id]):'';}).join('')
+      : '<div class="poempty">not reached</div>';
+    return '<div class="pobrr"><div class="pobrh">'+esc(PO_ROUND_LABEL[r]||r)+'</div>'+body+'</div>';
+  }).join('');
+  return '<div class="pobr">'+cols+'</div>';
+}
+
+/* ---- the MODEL bracket: the existing simulator, and its real status ---- */
+function poModelBracket(){
+  var sv=D.simulator||{};
+  var head='<div class="pormk"><b>This is a simulation estimate, not a calibrated '
+    +'probability.</b> The postseason simulator’s format is verified against '
+    +'MLB’s published rules; whether its probabilities are well calibrated has '
+    +'not been measured, so nothing here may be read as a measured chance. '
+    +'Monte Carlo convergence is numerical stability, not predictive accuracy.';
+  if(sv.status)head+=' Simulator status <b>'+esc(String(sv.status))+'</b>.';
+  if(sv.showProbabilities===false)
+    head+=' It is currently withholding probabilities'
+      +((sv.blockingReasons&&sv.blockingReasons.length)
+        ?' ('+esc(sv.blockingReasons.join('; '))+')':'')+'.';
+  if(isNum(sv.simulationCount))head+=' '+sv.simulationCount.toLocaleString()+' simulations.';
+  head+='</div>';
+  var body;
+  if(sv.publicationEligible===false||sv.showProbabilities===false){
+    body='<div class="poempty">No model bracket is published while the simulator is '
+      +'withholding output. That is the honest state, not an error — a bracket drawn '
+      +'from a source that declines to publish its numbers would be a picture of nothing.</div>';
+  }else{
+    body='<div class="poempty">The simulator artifact is published under the '
+      +'Simulator section. Its season-long bracket projection is rendered there; '
+      +'this release does not duplicate it here.</div>';
+  }
+  return head+body;
+}
+
+function poCoverage(){
+  var b=poBlock()||{};
+  var c=b.coverageSummary||{};
+  var raw=b.coverage||{};
+  var complete=c.coverageComplete===true;
+  var diag=[].concat(raw.missing||[],raw.duplicate||[],raw.unknown||[]);
+  var w=b.windows||{};
+  return '<div class="pocov'+(complete?'':' bad')+'">'
+    +'<b>'+(isNum(c.publishedGameCount)?c.publishedGameCount:'?')+' of '
+    +(isNum(c.expectedGameCount)?c.expectedGameCount:'?')+'</b>'
+    +'<span>canonical playoff games analysed</span>'
+    +'<b>'+(complete?'COVERAGE COMPLETE':'COVERAGE INCOMPLETE')+'</b>'
+    +(isNum(c.missingGameCount)&&c.missingGameCount?'<span>missing '+c.missingGameCount+'</span>':'')
+    +(isNum(c.duplicateGameCount)&&c.duplicateGameCount?'<span>duplicate '+c.duplicateGameCount+'</span>':'')
+    +(isNum(c.unknownGameCount)&&c.unknownGameCount?'<span>unknown '+c.unknownGameCount+'</span>':'')
+    +(diag.length?'<span title="'+esc(JSON.stringify(diag))+'">'+diag.length+' diagnostic(s)</span>':'')
+    +((w.excludedUnresolved&&w.excludedUnresolved.games)
+      ?'<span title="'+esc(w.excludedUnresolved.note||'')+'">'
+        +w.excludedUnresolved.games+' future game(s) still awaiting participants</span>':'')
+    +'</div>';
+}
+
+function renderPlayoffs(){
+  var el=$('playoffs');
+  if(!el)return;
+  var b=poBlock();
+  if(!b){
+    el.innerHTML=hmSec('Playoffs','no postseason block in this payload',
+      '<div class="poempty">This build of the dashboard reads a <code>postseason</code> '
+      +'block from the payload and the current payload does not carry one. Nothing is '
+      +'inferred from the regular-season slate — a playoff surface assembled out of '
+      +'guesses would be worse than an empty one.</div>');
+    return;
+  }
+  if(!b.active){
+    el.innerHTML=hmSec('Playoffs','no postseason games',
+      '<div class="poempty">'+esc(b.reason==='no_postseason_games_in_schedule'
+        ? 'The canonical schedule has no postseason game for this date.'
+        : ('Postseason block inactive: '+(b.reason||'no reason recorded')+'.'))+'</div>');
+    return;
+  }
+  var games=(b.games||[]).slice().sort(function(x,y){
+    return String(x.gameDate||'').localeCompare(String(y.gameDate||''));});
+  var out=poCoverage();
+  out+=hmSec("Today’s playoff games",
+    games.length+' game'+(games.length===1?'':'s')+' · every canonical game gets a record',
+    games.length?('<div class="pogrid">'+games.map(poGameCard).join('')+'</div>')
+      :'<div class="poempty">No playoff game is scheduled for this slate date.</div>');
+  out+=hmSec('Live bracket — actual results',
+    'reconstructed from the canonical schedule; uses no browser storage',
+    poBracket());
+  out+=hmSec('Model bracket','simulation estimate, calibration not measured',
+    poModelBracket());
+  el.innerHTML=out;
+}
+
 function renderProps(){
   var mk=ppMkt(),fam=mk.fam;
   var seg=PP_MARKETS.map(function(m){
@@ -5015,12 +5358,14 @@ function renderLibrary(){
 /* Section ids are UNCHANGED. Only the labels and the order of the
    primary row move, so every existing deep link, cross-link and showTab()
    call still resolves to the same section. */
-var TABS=[['home','Home'],['slate','Game Predictions'],['props','Player Props'],['parlay','Parlays'],['library','Results'],['picks','Picks'],['matchups','Matchups'],['performance','Performance'],['simulator','Simulator'],['admin','Admin / Health'],['method','How it works'],['backtests','Backtests']];
+var TABS=[['home','Home'],['playoffs','Playoffs'],['slate','Game Predictions'],['props','Player Props'],['parlay','Parlays'],['library','Results'],['picks','Picks'],['matchups','Matchups'],['performance','Performance'],['simulator','Simulator'],['admin','Admin / Health'],['method','How it works'],['backtests','Backtests']];
 /* FIVE THINGS A BETTOR OPENS, AND EVERYTHING ELSE BEHIND ONE BUTTON.
    Eleven equal-weight tabs on two rows made the reader scan a toolbar before
    reading a pick. Nothing is removed: the other six stay in TABS, keep their
    ids, and every deep link and showTab() call still resolves. */
-var NAV_PRIMARY=['home','slate','props','parlay','library'];
+/* PLAYOFFS IS SECOND, not tucked under More. In October it is the
+   product; in April it renders its own explicit inactive state. */
+var NAV_PRIMARY=['home','playoffs','slate','props','parlay','library'];
 function buildNav(){
   var by={};TABS.forEach(function(t){by[t[0]]=t[1];});
   function btn(id,cls){
@@ -8600,7 +8945,7 @@ function renderAll(){
   window._LUIX=null;window._PIX=null;window._SPIX=null;
   window.__RENDER_DIAGNOSTICS=[];
   /* Each renderer is isolated: one bad section must not blank the whole page. */
-  [['meta',renderMeta],['home',renderHome],['slate',renderSlate],['picks',renderPicks],['matchups',renderMatchups],
+  [['meta',renderMeta],['home',renderHome],['playoffs',renderPlayoffs],['slate',renderSlate],['picks',renderPicks],['matchups',renderMatchups],
    ['props',renderProps],['parlay',renderParlay],['performance',renderPerformance],
    ['simulator',renderSimulator],['library',renderLibrary],['admin',renderAdmin],['method',renderMethod],
    ['backtests',renderBacktests]].forEach(function(r){
