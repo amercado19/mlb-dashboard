@@ -1,6 +1,6 @@
 {
  "date": "2026-09-29",
- "generated_at": "2026-09-29T23:52:03",
+ "generated_at": "2026-09-30T01:28:29",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "cd4d269"
+  "gitCommit": "dacf7d8"
  },
  "games": [
   {
@@ -24,16 +24,16 @@
    "book_total_line": null,
    "wind": {
     "lf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "in",
+     "mph": 4
     },
     "cf": {
-     "dir": "cross",
-     "mph": 2
+     "dir": "in",
+     "mph": 5
     },
     "rf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "in",
+     "mph": 4
     },
     "out_mph": 0
    }
@@ -46,8 +46,8 @@
    "pick": "cws",
    "confidence": 0.483,
    "tier": "PASS",
-   "total": 8.6,
-   "book_total_line": 8.5,
+   "total": 8.3,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -73,11 +73,11 @@
    "confidence": 0.434,
    "tier": "PASS",
    "total": 7.2,
-   "book_total_line": 6.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 2
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -85,9 +85,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 2
+     "mph": 4
     },
-    "out_mph": 2
+    "out_mph": 4
    }
   },
   {
@@ -102,18 +102,18 @@
    "book_total_line": 7.5,
    "wind": {
     "lf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "in",
+     "mph": 2
     },
     "cf": {
      "dir": "cross",
      "mph": 0
     },
     "rf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "out",
+     "mph": 2
     },
-    "out_mph": 0
+    "out_mph": 2
    }
   }
  ],
@@ -198,9 +198,9 @@
     "factors": {
      "sp": 1.034,
      "park": 0.86,
-     "temp": 1.018
+     "temp": 1.012
     },
-    "hr_rate_pa": 0.0309
+    "hr_rate_pa": 0.0307
    },
    "edge_score": 51,
    "score_type": "model_score_0_100",
@@ -231,9 +231,9 @@
     "factors": {
      "sp": 1.019,
      "park": 0.86,
-     "temp": 1.018
+     "temp": 1.012
     },
-    "hr_rate_pa": 0.0472
+    "hr_rate_pa": 0.0469
    },
    "edge_score": 50,
    "score_type": "model_score_0_100",
@@ -264,9 +264,9 @@
     "factors": {
      "sp": 0.916,
      "park": 1.175,
-     "temp": 0.958
+     "temp": 0.952
     },
-    "hr_rate_pa": 0.0536
+    "hr_rate_pa": 0.0533
    },
    "edge_score": 47,
    "score_type": "model_score_0_100",
@@ -297,10 +297,10 @@
     "factors": {
      "sp": 0.932,
      "park": 1.175,
-     "temp": 1.072,
+     "temp": 1.024,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0453
+    "hr_rate_pa": 0.0433
    },
    "edge_score": 42,
    "score_type": "model_score_0_100",
@@ -331,10 +331,10 @@
     "factors": {
      "sp": 0.924,
      "park": 1.175,
-     "temp": 1.072,
+     "temp": 1.024,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0586
+    "hr_rate_pa": 0.056
    },
    "edge_score": 42,
    "score_type": "model_score_0_100",
@@ -365,9 +365,9 @@
     "factors": {
      "sp": 0.916,
      "park": 1.175,
-     "temp": 0.958
+     "temp": 0.952
     },
-    "hr_rate_pa": 0.0414
+    "hr_rate_pa": 0.0411
    },
    "edge_score": 41,
    "score_type": "model_score_0_100",
