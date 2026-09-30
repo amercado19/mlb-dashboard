@@ -1,6 +1,6 @@
 {
  "date": "2026-09-30",
- "generated_at": "2026-09-30T19:05:38",
+ "generated_at": "2026-09-30T19:39:27",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "67a8eeb"
+  "gitCommit": "ed03229"
  },
  "games": [
   {
@@ -21,7 +21,7 @@
    "confidence": 0.518,
    "tier": "PASS",
    "total": 8.9,
-   "book_total_line": 7.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -151,6 +151,39 @@
    ]
   },
   {
+   "player": "Ben Rice",
+   "team": "nyy",
+   "game": "bos-nyy",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 667,
+    "factors": {
+     "sp": 0.986,
+     "park": 1.175,
+     "temp": 0.97
+    },
+    "hr_rate_pa": 0.0585
+   },
+   "edge_score": 53,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 48.6,
+    "avg_exit_velo": 91.9,
+    "xiso": 0.244,
+    "recent_hr_rate": 0.0577
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Kyle Schwarber",
    "team": "phi",
    "game": "phi-atl",
@@ -217,39 +250,6 @@
    ]
   },
   {
-   "player": "Ben Rice",
-   "team": "nyy",
-   "game": "bos-nyy",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 667,
-    "factors": {
-     "sp": 0.986,
-     "park": 1.175,
-     "temp": 0.97
-    },
-    "hr_rate_pa": 0.0585
-   },
-   "edge_score": 52,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 48.6,
-    "avg_exit_velo": 91.9,
-    "xiso": 0.244,
-    "recent_hr_rate": 0.0577
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Munetaka Murakami",
    "team": "cws",
    "game": "cws-hou",
@@ -282,7 +282,7 @@
    ]
   },
   {
-   "player": "Heliot Ramos",
+   "player": "Luis Garc\u00eda Jr.",
    "team": "nyy",
    "game": "bos-nyy",
    "stat": "HR",
@@ -293,22 +293,22 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 136,
+    "pa_season": 169,
     "factors": {
      "sp": 0.986,
      "park": 1.175,
      "temp": 0.97
     },
-    "hr_rate_pa": 0.0343
+    "hr_rate_pa": 0.0391
    },
-   "edge_score": 47,
+   "edge_score": 50,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.7,
-    "hard_hit_pct": 48.4,
-    "avg_exit_velo": 92.2,
-    "xiso": 0.19,
-    "recent_hr_rate": 0.0606
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 46.1,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0247
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -470,6 +470,35 @@
    "flags": []
   },
   {
+   "player": "Luis Garc\u00eda Jr.",
+   "team": "nyy",
+   "game": "bos-nyy",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6759,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 169,
+    "factors": {
+     "sp": 0.99
+    },
+    "hit_rate_pa": 0.2317
+   },
+   "edge_score": 61,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 46.1,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0247
+   },
+   "flags": []
+  },
+  {
    "player": "Sam Antonacci",
    "team": "cws",
    "game": "cws-hou",
@@ -495,6 +524,35 @@
     "avg_exit_velo": 87.5,
     "xiso": 0.115,
     "recent_hr_rate": 0.0
+   },
+   "flags": []
+  },
+  {
+   "player": "Spencer Jones",
+   "team": "nyy",
+   "game": "bos-nyy",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6531,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 289,
+    "factors": {
+     "sp": 0.99
+    },
+    "hit_rate_pa": 0.2194
+   },
+   "edge_score": 59,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.9,
+    "hard_hit_pct": 55.1,
+    "avg_exit_velo": 94.1,
+    "xiso": 0.217,
+    "recent_hr_rate": 0.0435
    },
    "flags": []
   },
@@ -528,35 +586,6 @@
    "flags": []
   },
   {
-   "player": "Ben Rice",
-   "team": "nyy",
-   "game": "bos-nyy",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6719,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 667,
-    "factors": {
-     "sp": 0.99
-    },
-    "hit_rate_pa": 0.223
-   },
-   "edge_score": 58,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 14.3,
-    "hard_hit_pct": 48.6,
-    "avg_exit_velo": 91.9,
-    "xiso": 0.244,
-    "recent_hr_rate": 0.0577
-   },
-   "flags": []
-  },
-  {
    "player": "Ronald Acu\u00f1a Jr.",
    "team": "atl",
    "game": "phi-atl",
@@ -582,35 +611,6 @@
     "avg_exit_velo": 89.6,
     "xiso": 0.234,
     "recent_hr_rate": 0.0673
-   },
-   "flags": []
-  },
-  {
-   "player": "Cody Bellinger",
-   "team": "nyy",
-   "game": "bos-nyy",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6673,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 562,
-    "factors": {
-     "sp": 0.99
-    },
-    "hit_rate_pa": 0.2278
-   },
-   "edge_score": 57,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 6.5,
-    "hard_hit_pct": 37.8,
-    "avg_exit_velo": 89.2,
-    "xiso": 0.14,
-    "recent_hr_rate": 0.0495
    },
    "flags": []
   }
