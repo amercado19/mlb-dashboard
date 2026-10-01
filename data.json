@@ -1,6 +1,6 @@
 {
  "date": "2026-09-30",
- "generated_at": "2026-10-01T01:27:31",
+ "generated_at": "2026-10-01T02:11:13",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "8d7eda1"
+  "gitCommit": "b70f00c"
  },
  "games": [
   {
@@ -25,17 +25,17 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 2
     },
     "cf": {
-     "dir": "in",
-     "mph": 4
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
-     "dir": "in",
-     "mph": 3
+     "dir": "out",
+     "mph": 2
     },
-    "out_mph": 0
+    "out_mph": 2
    }
   },
   {
@@ -73,21 +73,21 @@
    "confidence": 0.494,
    "tier": "PASS",
    "total": 7.7,
-   "book_total_line": 4.5,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "in",
      "mph": 3
     },
     "cf": {
-     "dir": "in",
-     "mph": 4
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
-     "dir": "in",
+     "dir": "out",
      "mph": 3
     },
-    "out_mph": 0
+    "out_mph": 3
    }
   },
   {
@@ -103,17 +103,17 @@
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 2
+     "mph": 3
     },
     "cf": {
      "dir": "out",
-     "mph": 3
+     "mph": 4
     },
     "rf": {
      "dir": "out",
-     "mph": 2
+     "mph": 3
     },
-    "out_mph": 3
+    "out_mph": 4
    }
   }
  ],
@@ -145,6 +145,72 @@
     "avg_exit_velo": 94.4,
     "xiso": 0.318,
     "recent_hr_rate": 0.0481
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Kyle Schwarber",
+   "team": "phi",
+   "game": "phi-atl",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 701,
+    "factors": {
+     "sp": 0.991,
+     "park": 1.175,
+     "temp": 1.024
+    },
+    "hr_rate_pa": 0.0647
+   },
+   "edge_score": 54,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 15.5,
+    "hard_hit_pct": 49.3,
+    "avg_exit_velo": 92.3,
+    "xiso": 0.251,
+    "recent_hr_rate": 0.0424
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Bryce Harper",
+   "team": "phi",
+   "game": "phi-atl",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 693,
+    "factors": {
+     "sp": 0.991,
+     "park": 1.175,
+     "temp": 1.024
+    },
+    "hr_rate_pa": 0.046
+   },
+   "edge_score": 54,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 10.3,
+    "hard_hit_pct": 42.8,
+    "avg_exit_velo": 90.0,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0179
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -183,74 +249,6 @@
    ]
   },
   {
-   "player": "Kyle Schwarber",
-   "team": "phi",
-   "game": "phi-atl",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 701,
-    "factors": {
-     "sp": 0.991,
-     "park": 1.175,
-     "temp": 1.03,
-     "wind": 1.0
-    },
-    "hr_rate_pa": 0.0651
-   },
-   "edge_score": 49,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.5,
-    "hard_hit_pct": 49.3,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.251,
-    "recent_hr_rate": 0.0424
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Bryce Harper",
-   "team": "phi",
-   "game": "phi-atl",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 693,
-    "factors": {
-     "sp": 0.991,
-     "park": 1.175,
-     "temp": 1.03,
-     "wind": 1.0
-    },
-    "hr_rate_pa": 0.0463
-   },
-   "edge_score": 49,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 10.3,
-    "hard_hit_pct": 42.8,
-    "avg_exit_velo": 90.0,
-    "xiso": 0.21,
-    "recent_hr_rate": 0.0179
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 490 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Ben Rice",
    "team": "nyy",
    "game": "bos-nyy",
@@ -266,12 +264,11 @@
     "factors": {
      "sp": 0.986,
      "park": 1.175,
-     "temp": 0.976,
-     "wind": 1.0
+     "temp": 0.976
     },
     "hr_rate_pa": 0.0588
    },
-   "edge_score": 48,
+   "edge_score": 53,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.3,
@@ -300,12 +297,11 @@
     "factors": {
      "sp": 0.986,
      "park": 1.175,
-     "temp": 0.976,
-     "wind": 1.0
+     "temp": 0.976
     },
     "hr_rate_pa": 0.0393
    },
-   "edge_score": 45,
+   "edge_score": 50,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.1,
@@ -334,12 +330,12 @@
     "factors": {
      "sp": 0.996,
      "park": 0.86,
-     "temp": 0.988,
+     "temp": 0.994,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0289
+    "hr_rate_pa": 0.0291
    },
-   "edge_score": 43,
+   "edge_score": 40,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.7,
@@ -368,12 +364,12 @@
     "factors": {
      "sp": 0.996,
      "park": 0.86,
-     "temp": 0.988,
+     "temp": 0.994,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.032
+    "hr_rate_pa": 0.0322
    },
-   "edge_score": 43,
+   "edge_score": 40,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 9.1,
