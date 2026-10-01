@@ -1,6 +1,6 @@
 {
  "date": "2026-09-30",
- "generated_at": "2026-09-30T23:05:10",
+ "generated_at": "2026-10-01T00:04:47",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "bbf7412"
+  "gitCommit": "8d7eda1"
  },
  "games": [
   {
@@ -28,14 +28,14 @@
      "mph": 4
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 5
     },
     "rf": {
-     "dir": "out",
+     "dir": "in",
      "mph": 4
     },
-    "out_mph": 4
+    "out_mph": 0
    }
   },
   {
@@ -46,7 +46,7 @@
    "pick": "hou",
    "confidence": 0.558,
    "tier": "LEAN",
-   "total": 8.8,
+   "total": 8.5,
    "book_total_line": 10.5,
    "wind": {
     "lf": {
@@ -73,21 +73,21 @@
    "confidence": 0.494,
    "tier": "PASS",
    "total": 7.7,
-   "book_total_line": 6.5,
+   "book_total_line": 7.0,
    "wind": {
     "lf": {
      "dir": "in",
      "mph": 2
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 3
     },
     "rf": {
-     "dir": "out",
+     "dir": "in",
      "mph": 2
     },
-    "out_mph": 2
+    "out_mph": 0
    }
   },
   {
@@ -137,7 +137,7 @@
     },
     "hr_rate_pa": 0.056
    },
-   "edge_score": 69,
+   "edge_score": 71,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 15.9,
@@ -169,7 +169,7 @@
     },
     "hr_rate_pa": 0.0433
    },
-   "edge_score": 58,
+   "edge_score": 60,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 7.2,
@@ -198,11 +198,12 @@
     "factors": {
      "sp": 0.991,
      "park": 1.175,
-     "temp": 1.084
+     "temp": 1.03,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0685
+    "hr_rate_pa": 0.0651
    },
-   "edge_score": 54,
+   "edge_score": 49,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 15.5,
@@ -231,11 +232,12 @@
     "factors": {
      "sp": 0.991,
      "park": 1.175,
-     "temp": 1.084
+     "temp": 1.03,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0487
+    "hr_rate_pa": 0.0463
    },
-   "edge_score": 54,
+   "edge_score": 49,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 10.3,
@@ -264,11 +266,12 @@
     "factors": {
      "sp": 0.986,
      "park": 1.175,
-     "temp": 0.97
+     "temp": 0.97,
+     "wind": 1.0
     },
     "hr_rate_pa": 0.0585
    },
-   "edge_score": 53,
+   "edge_score": 48,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.3,
@@ -297,11 +300,12 @@
     "factors": {
      "sp": 0.986,
      "park": 1.175,
-     "temp": 0.97
+     "temp": 0.97,
+     "wind": 1.0
     },
     "hr_rate_pa": 0.0391
    },
-   "edge_score": 50,
+   "edge_score": 45,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.1,
@@ -335,7 +339,7 @@
     },
     "hr_rate_pa": 0.0291
    },
-   "edge_score": 43,
+   "edge_score": 40,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.7,
@@ -369,7 +373,7 @@
     },
     "hr_rate_pa": 0.0322
    },
-   "edge_score": 43,
+   "edge_score": 40,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 9.1,
