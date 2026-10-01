@@ -1,6 +1,6 @@
 {
  "date": "2026-10-01",
- "generated_at": "2026-10-01T19:13:07",
+ "generated_at": "2026-10-01T20:45:16",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "12df565"
+  "gitCommit": "28e6002"
  },
  "games": [
   {
@@ -28,14 +28,14 @@
      "mph": 4
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 5
     },
     "rf": {
-     "dir": "out",
+     "dir": "in",
      "mph": 4
     },
-    "out_mph": 4
+    "out_mph": 0
    }
   }
  ],
@@ -50,17 +50,18 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
+    "epa": 4.45,
+    "order": 3,
     "pa_season": 698,
     "factors": {
      "sp": 1.005,
      "park": 1.175,
-     "temp": 1.048
+     "temp": 1.036,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0624
+    "hr_rate_pa": 0.0616
    },
-   "edge_score": 60,
+   "edge_score": 57,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.1,
@@ -74,7 +75,7 @@
    ]
   },
   {
-   "player": "Ronald Acu\u00f1a",
+   "player": "Drake Baldwin",
    "team": "atl",
    "game": "phi-atl",
    "stat": "HR",
@@ -85,22 +86,23 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 469,
+    "pa_season": 615,
     "factors": {
      "sp": 1.005,
      "park": 1.175,
-     "temp": 1.048
+     "temp": 1.036,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0471
+    "hr_rate_pa": 0.0459
    },
-   "edge_score": 59,
+   "edge_score": 53,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.0,
-    "hard_hit_pct": 43.5,
-    "avg_exit_velo": 89.6,
-    "xiso": 0.234,
-    "recent_hr_rate": 0.0707
+    "barrel_pct": 12.9,
+    "hard_hit_pct": 50.6,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.226,
+    "recent_hr_rate": 0.0273
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 498 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -113,11 +115,11 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6801,
+   "model_prob": 0.6888,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
+    "epa": 4.65,
+    "order": 1,
     "pa_season": 615,
     "factors": {
      "sp": 1.004
@@ -136,17 +138,17 @@
    "flags": []
   },
   {
-   "player": "Ronald Acu\u00f1a",
+   "player": "Ronald Acu\u00f1a Jr.",
    "team": "atl",
    "game": "phi-atl",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6757,
+   "model_prob": 0.6714,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
+    "epa": 4.55,
+    "order": 2,
     "pa_season": 469,
     "factors": {
      "sp": 1.004
