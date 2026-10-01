@@ -1,6 +1,6 @@
 {
  "date": "2026-10-01",
- "generated_at": "2026-10-01T07:24:16",
+ "generated_at": "2026-10-01T18:24:39",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,18 +9,18 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "0177ab2"
+  "gitCommit": "12df565"
  },
  "games": [
   {
    "away": "phi",
    "home": "atl",
-   "away_win_prob": 0.3,
-   "home_win_prob": 0.44,
+   "away_win_prob": 0.405,
+   "home_win_prob": 0.415,
    "pick": "atl",
-   "confidence": 0.44,
+   "confidence": 0.415,
    "tier": "PASS",
-   "total": 9.8,
+   "total": 9.0,
    "book_total_line": 7.5,
    "wind": {
     "lf": {
@@ -41,39 +41,6 @@
  ],
  "props": [
   {
-   "player": "Kyle Schwarber",
-   "team": "phi",
-   "game": "phi-atl",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 701,
-    "factors": {
-     "sp": 1.024,
-     "park": 1.175,
-     "temp": 1.06
-    },
-    "hr_rate_pa": 0.0692
-   },
-   "edge_score": 53,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 15.5,
-    "hard_hit_pct": 49.3,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.251,
-    "recent_hr_rate": 0.0442
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 498 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Matt Olson",
    "team": "atl",
    "game": "phi-atl",
@@ -87,13 +54,13 @@
     "order": 4,
     "pa_season": 698,
     "factors": {
-     "sp": 1.024,
+     "sp": 1.005,
      "park": 1.175,
-     "temp": 1.06
+     "temp": 1.048
     },
-    "hr_rate_pa": 0.0643
+    "hr_rate_pa": 0.0624
    },
-   "edge_score": 53,
+   "edge_score": 60,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.1,
@@ -107,60 +74,93 @@
    ]
   },
   {
-   "player": "Trea Turner",
-   "team": "phi",
+   "player": "Ronald Acu\u00f1a",
+   "team": "atl",
    "game": "phi-atl",
-   "stat": "H",
+   "stat": "HR",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6784,
+   "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 700,
+    "pa_season": 469,
     "factors": {
-     "sp": 1.018
+     "sp": 1.005,
+     "park": 1.175,
+     "temp": 1.048
     },
-    "hit_rate_pa": 0.2267
+    "hr_rate_pa": 0.0471
    },
-   "edge_score": 65,
+   "edge_score": 59,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 6.0,
-    "hard_hit_pct": 39.3,
-    "avg_exit_velo": 88.5,
-    "xiso": 0.121,
-    "recent_hr_rate": 0.018
+    "barrel_pct": 13.0,
+    "hard_hit_pct": 43.5,
+    "avg_exit_velo": 89.6,
+    "xiso": 0.234,
+    "recent_hr_rate": 0.0707
    },
-   "flags": []
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 498 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
   },
   {
-   "player": "Kyle Schwarber",
-   "team": "phi",
+   "player": "Drake Baldwin",
+   "team": "atl",
    "game": "phi-atl",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.646,
+   "model_prob": 0.6801,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 701,
+    "pa_season": 615,
     "factors": {
-     "sp": 1.018
+     "sp": 1.004
     },
-    "hit_rate_pa": 0.2027
+    "hit_rate_pa": 0.2468
    },
-   "edge_score": 65,
+   "edge_score": 68,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 15.5,
-    "hard_hit_pct": 49.3,
-    "avg_exit_velo": 92.3,
-    "xiso": 0.251,
-    "recent_hr_rate": 0.0442
+    "barrel_pct": 12.9,
+    "hard_hit_pct": 50.6,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.226,
+    "recent_hr_rate": 0.0273
+   },
+   "flags": []
+  },
+  {
+   "player": "Ronald Acu\u00f1a",
+   "team": "atl",
+   "game": "phi-atl",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6757,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 469,
+    "factors": {
+     "sp": 1.004
+    },
+    "hit_rate_pa": 0.2226
+   },
+   "edge_score": 67,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.0,
+    "hard_hit_pct": 43.5,
+    "avg_exit_velo": 89.6,
+    "xiso": 0.234,
+    "recent_hr_rate": 0.0707
    },
    "flags": []
   }
