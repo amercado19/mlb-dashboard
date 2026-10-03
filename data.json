@@ -1,6 +1,6 @@
 {
  "date": "2026-10-03",
- "generated_at": "2026-10-03T06:47:52",
+ "generated_at": "2026-10-03T16:15:21",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "e949f2e"
+  "gitCommit": "40b6812"
  },
  "games": [
   {
@@ -21,7 +21,7 @@
    "confidence": 0.522,
    "tier": "PASS",
    "total": 7.1,
-   "book_total_line": 7.0,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -120,9 +120,9 @@
     "factors": {
      "sp": 0.943,
      "park": 1.0,
-     "temp": 0.958
+     "temp": 0.964
     },
-    "hr_rate_pa": 0.0469
+    "hr_rate_pa": 0.0472
    },
    "edge_score": 46,
    "score_type": "model_score_0_100",
@@ -153,9 +153,9 @@
     "factors": {
      "sp": 0.943,
      "park": 1.0,
-     "temp": 0.958
+     "temp": 0.964
     },
-    "hr_rate_pa": 0.0381
+    "hr_rate_pa": 0.0383
    },
    "edge_score": 44,
    "score_type": "model_score_0_100",
@@ -220,7 +220,7 @@
     },
     "hr_rate_pa": 0.0454
    },
-   "edge_score": 41,
+   "edge_score": 43,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.3,
@@ -228,6 +228,38 @@
     "avg_exit_velo": 91.9,
     "xiso": 0.244,
     "recent_hr_rate": 0.0632
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Luis Garc\u00eda",
+   "team": "nyy",
+   "game": "nyy-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 169,
+    "factors": {
+     "sp": 0.938,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0303
+   },
+   "edge_score": 37,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 46.1,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0299
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -259,38 +291,6 @@
     "avg_exit_velo": 91.5,
     "xiso": 0.226,
     "recent_hr_rate": 0.0294
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Luis Garc\u00eda",
-   "team": "nyy",
-   "game": "nyy-tb",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 169,
-    "factors": {
-     "sp": 0.938,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0303
-   },
-   "edge_score": 35,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.1,
-    "hard_hit_pct": 46.1,
-    "avg_exit_velo": 91.4,
-    "xiso": 0.21,
-    "recent_hr_rate": 0.0299
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -390,60 +390,60 @@
    "flags": []
   },
   {
-   "player": "Sam Antonacci",
-   "team": "cws",
-   "game": "cws-cle",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6768,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 557,
-    "factors": {
-     "sp": 0.957
-    },
-    "hit_rate_pa": 0.2243
-   },
-   "edge_score": 59,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 5.0,
-    "hard_hit_pct": 33.6,
-    "avg_exit_velo": 87.5,
-    "xiso": 0.115,
-    "recent_hr_rate": 0.0
-   },
-   "flags": []
-  },
-  {
-   "player": "Cody Bellinger",
+   "player": "Luis Garc\u00eda",
    "team": "nyy",
    "game": "nyy-tb",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6678,
+   "model_prob": 0.6671,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 169,
+    "factors": {
+     "sp": 0.953
+    },
+    "hit_rate_pa": 0.2232
+   },
+   "edge_score": 60,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 46.1,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0299
+   },
+   "flags": []
+  },
+  {
+   "player": "Randal Grichuk",
+   "team": "cws",
+   "game": "cws-cle",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6482,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 562,
+    "pa_season": 33,
     "factors": {
-     "sp": 0.953
+     "sp": 0.957
     },
-    "hit_rate_pa": 0.2194
+    "hit_rate_pa": 0.2071
    },
-   "edge_score": 59,
+   "edge_score": 58,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 6.5,
-    "hard_hit_pct": 37.8,
-    "avg_exit_velo": 89.2,
-    "xiso": 0.14,
-    "recent_hr_rate": 0.0581
+    "barrel_pct": 11.1,
+    "hard_hit_pct": 49.8,
+    "avg_exit_velo": 91.3,
+    "xiso": 0.2,
+    "recent_hr_rate": 0.0615
    },
    "flags": []
   },
