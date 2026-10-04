@@ -1,6 +1,6 @@
 {
  "date": "2026-10-04",
- "generated_at": "2026-10-04T18:59:20",
+ "generated_at": "2026-10-04T22:13:48",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "595624d"
+  "gitCommit": "6d11b29"
  },
  "games": [
   {
@@ -19,9 +19,9 @@
    "home_win_prob": 0.577,
    "pick": "mil",
    "confidence": 0.577,
-   "tier": "PASS",
+   "tier": "LEAN",
    "total": 8.0,
-   "book_total_line": 7.5,
+   "book_total_line": 4.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -46,9 +46,23 @@
    "pick": "lad",
    "confidence": 0.545,
    "tier": "PASS",
-   "total": 7.0,
-   "book_total_line": 8.5,
-   "wind": null
+   "total": 7.3,
+   "book_total_line": 7.5,
+   "wind": {
+    "lf": {
+     "dir": "out",
+     "mph": 3
+    },
+    "cf": {
+     "dir": "out",
+     "mph": 4
+    },
+    "rf": {
+     "dir": "out",
+     "mph": 3
+    },
+    "out_mph": 4
+   }
   }
  ],
  "props": [
@@ -71,7 +85,7 @@
     },
     "hr_rate_pa": 0.0438
    },
-   "edge_score": 54,
+   "edge_score": 59,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.9,
@@ -79,37 +93,6 @@
     "avg_exit_velo": 92.1,
     "xiso": 0.214,
     "recent_hr_rate": 0.04
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "atl-lad",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 618,
-    "factors": {
-     "sp": 0.952
-    },
-    "hr_rate_pa": 0.0408
-   },
-   "edge_score": 51,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 16.2,
-    "hard_hit_pct": 52.1,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.266,
-    "recent_hr_rate": 0.0
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -134,7 +117,7 @@
     },
     "hr_rate_pa": 0.0428
    },
-   "edge_score": 48,
+   "edge_score": 53,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.3,
@@ -142,6 +125,38 @@
     "avg_exit_velo": 91.6,
     "xiso": 0.21,
     "recent_hr_rate": 0.0412
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Shohei Ohtani",
+   "team": "lad",
+   "game": "atl-lad",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 618,
+    "factors": {
+     "sp": 0.952,
+     "temp": 1.108
+    },
+    "hr_rate_pa": 0.0452
+   },
+   "edge_score": 49,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 16.2,
+    "hard_hit_pct": 52.1,
+    "avg_exit_velo": 93.3,
+    "xiso": 0.266,
+    "recent_hr_rate": 0.0
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -161,11 +176,12 @@
     "order": 3,
     "pa_season": 276,
     "factors": {
-     "sp": 0.952
+     "sp": 0.952,
+     "temp": 1.108
     },
-    "hr_rate_pa": 0.0319
+    "hr_rate_pa": 0.0353
    },
-   "edge_score": 42,
+   "edge_score": 40,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.4,
