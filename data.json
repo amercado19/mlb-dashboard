@@ -1,6 +1,6 @@
 {
  "date": "2026-10-04",
- "generated_at": "2026-10-04T17:45:17",
+ "generated_at": "2026-10-04T18:59:20",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "7bc765f"
+  "gitCommit": "595624d"
  },
  "games": [
   {
@@ -41,13 +41,13 @@
   {
    "away": "atl",
    "home": "lad",
-   "away_win_prob": 0.257,
-   "home_win_prob": 0.553,
+   "away_win_prob": 0.245,
+   "home_win_prob": 0.545,
    "pick": "lad",
-   "confidence": 0.553,
+   "confidence": 0.545,
    "tier": "PASS",
-   "total": 7.6,
-   "book_total_line": 7.5,
+   "total": 7.0,
+   "book_total_line": 8.5,
    "wind": null
   }
  ],
@@ -98,11 +98,11 @@
     "order": 2,
     "pa_season": 618,
     "factors": {
-     "sp": 1.024
+     "sp": 0.952
     },
-    "hr_rate_pa": 0.0438
+    "hr_rate_pa": 0.0408
    },
-   "edge_score": 50,
+   "edge_score": 51,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 16.2,
@@ -161,11 +161,11 @@
     "order": 3,
     "pa_season": 276,
     "factors": {
-     "sp": 1.024
+     "sp": 0.952
     },
-    "hr_rate_pa": 0.0343
+    "hr_rate_pa": 0.0319
    },
-   "edge_score": 44,
+   "edge_score": 42,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.4,
@@ -237,59 +237,59 @@
    "flags": []
   },
   {
-   "player": "Mookie Betts",
-   "team": "lad",
-   "game": "atl-lad",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6793,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 528,
-    "factors": {
-     "sp": 1.018
-    },
-    "hit_rate_pa": 0.2341
-   },
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 7.8,
-    "hard_hit_pct": 38.0,
-    "avg_exit_velo": 90.2,
-    "xiso": 0.157,
-    "recent_hr_rate": 0.0638
-   },
-   "flags": []
-  },
-  {
    "player": "Shohei Ohtani",
    "team": "lad",
    "game": "atl-lad",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.679,
+   "model_prob": 0.6708,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
     "pa_season": 618,
     "factors": {
-     "sp": 1.018
+     "sp": 0.964
     },
-    "hit_rate_pa": 0.2345
+    "hit_rate_pa": 0.222
    },
-   "edge_score": 65,
+   "edge_score": 59,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 16.2,
     "hard_hit_pct": 52.1,
     "avg_exit_velo": 93.3,
     "xiso": 0.266,
+    "recent_hr_rate": 0.0
+   },
+   "flags": []
+  },
+  {
+   "player": "Freddie Freeman",
+   "team": "lad",
+   "game": "atl-lad",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6768,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 657,
+    "factors": {
+     "sp": 0.964
+    },
+    "hit_rate_pa": 0.2378
+   },
+   "edge_score": 59,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 8.1,
+    "hard_hit_pct": 41.3,
+    "avg_exit_velo": 89.5,
+    "xiso": 0.173,
     "recent_hr_rate": 0.0
    },
    "flags": []
