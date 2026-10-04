@@ -1,6 +1,6 @@
 {
  "date": "2026-10-03",
- "generated_at": "2026-10-03T22:17:43",
+ "generated_at": "2026-10-04T00:38:46",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "ef6d068"
+  "gitCommit": "7e6cdcc"
  },
  "games": [
   {
@@ -25,7 +25,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -33,9 +33,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 5
+    "out_mph": 4
    }
   },
   {
@@ -47,7 +47,7 @@
    "confidence": 0.466,
    "tier": "PASS",
    "total": 7.8,
-   "book_total_line": 7.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "cross",
@@ -72,8 +72,8 @@
    "pick": "tb",
    "confidence": 0.469,
    "tier": "PASS",
-   "total": 7.8,
-   "book_total_line": 7.0,
+   "total": 7.5,
+   "book_total_line": 2.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -151,6 +151,38 @@
    ]
   },
   {
+   "player": "Shohei Ohtani",
+   "team": "lad",
+   "game": "atl-lad",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 618,
+    "factors": {
+     "sp": 0.94,
+     "temp": 1.12
+    },
+    "hr_rate_pa": 0.0451
+   },
+   "edge_score": 51,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 16.2,
+    "hard_hit_pct": 52.1,
+    "avg_exit_velo": 93.3,
+    "xiso": 0.266,
+    "recent_hr_rate": 0.0
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Junior Caminero",
    "team": "tb",
    "game": "nyy-tb",
@@ -169,7 +201,7 @@
     },
     "hr_rate_pa": 0.0467
    },
-   "edge_score": 52,
+   "edge_score": 50,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.1,
@@ -215,38 +247,6 @@
    ]
   },
   {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "atl-lad",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 618,
-    "factors": {
-     "sp": 0.94,
-     "temp": 1.12
-    },
-    "hr_rate_pa": 0.0451
-   },
-   "edge_score": 49,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 16.2,
-    "hard_hit_pct": 52.1,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.266,
-    "recent_hr_rate": 0.0
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Munetaka Murakami",
    "team": "cws",
    "game": "cws-cle",
@@ -262,9 +262,9 @@
     "factors": {
      "sp": 0.943,
      "park": 1.0,
-     "temp": 0.964
+     "temp": 0.922
     },
-    "hr_rate_pa": 0.0472
+    "hr_rate_pa": 0.0452
    },
    "edge_score": 48,
    "score_type": "model_score_0_100",
@@ -295,9 +295,9 @@
     "factors": {
      "sp": 0.943,
      "park": 1.0,
-     "temp": 0.964
+     "temp": 0.922
     },
-    "hr_rate_pa": 0.0383
+    "hr_rate_pa": 0.0366
    },
    "edge_score": 46,
    "score_type": "model_score_0_100",
@@ -307,38 +307,6 @@
     "avg_exit_velo": 90.1,
     "xiso": 0.233,
     "recent_hr_rate": 0.0388
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Yandy D\u00edaz",
-   "team": "tb",
-   "game": "nyy-tb",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 686,
-    "factors": {
-     "sp": 0.981,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.029
-   },
-   "edge_score": 44,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 7.1,
-    "hard_hit_pct": 48.1,
-    "avg_exit_velo": 90.9,
-    "xiso": 0.158,
-    "recent_hr_rate": 0.0106
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -363,7 +331,7 @@
     },
     "hr_rate_pa": 0.0353
    },
-   "edge_score": 43,
+   "edge_score": 45,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.4,
@@ -371,6 +339,38 @@
     "avg_exit_velo": 89.1,
     "xiso": 0.223,
     "recent_hr_rate": 0.0571
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Yandy D\u00edaz",
+   "team": "tb",
+   "game": "nyy-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 686,
+    "factors": {
+     "sp": 0.981,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.029
+   },
+   "edge_score": 42,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 7.1,
+    "hard_hit_pct": 48.1,
+    "avg_exit_velo": 90.9,
+    "xiso": 0.158,
+    "recent_hr_rate": 0.0106
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 500 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
