@@ -1,6 +1,6 @@
 {
- "date": "2026-10-04",
- "generated_at": "2026-10-05T01:21:44",
+ "date": "2026-10-05",
+ "generated_at": "2026-10-05T04:09:06",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,19 +9,45 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "017185f"
+  "gitCommit": "22c795d"
  },
  "games": [
   {
-   "away": "sd",
-   "home": "mil",
-   "away_win_prob": 0.403,
-   "home_win_prob": 0.577,
-   "pick": "mil",
-   "confidence": 0.577,
+   "away": "cws",
+   "home": "cle",
+   "away_win_prob": 0.462,
+   "home_win_prob": 0.598,
+   "pick": "cle",
+   "confidence": 0.598,
    "tier": "PASS",
-   "total": 8.0,
-   "book_total_line": null,
+   "total": 8.9,
+   "book_total_line": 6.5,
+   "wind": {
+    "lf": {
+     "dir": "in",
+     "mph": 8
+    },
+    "cf": {
+     "dir": "in",
+     "mph": 12
+    },
+    "rf": {
+     "dir": "in",
+     "mph": 8
+    },
+    "out_mph": 0
+   }
+  },
+  {
+   "away": "nyy",
+   "home": "tb",
+   "away_win_prob": 0.49,
+   "home_win_prob": 0.4,
+   "pick": "nyy",
+   "confidence": 0.49,
+   "tier": "PASS",
+   "total": 7.4,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -37,39 +63,13 @@
     },
     "out_mph": 0
    }
-  },
-  {
-   "away": "atl",
-   "home": "lad",
-   "away_win_prob": 0.245,
-   "home_win_prob": 0.545,
-   "pick": "lad",
-   "confidence": 0.545,
-   "tier": "PASS",
-   "total": 7.5,
-   "book_total_line": 6.5,
-   "wind": {
-    "lf": {
-     "dir": "out",
-     "mph": 3
-    },
-    "cf": {
-     "dir": "out",
-     "mph": 4
-    },
-    "rf": {
-     "dir": "out",
-     "mph": 3
-    },
-    "out_mph": 4
-   }
   }
  ],
  "props": [
   {
-   "player": "Jake Bauers",
-   "team": "mil",
-   "game": "sd-mil",
+   "player": "Chase DeLauter",
+   "team": "cle",
+   "game": "cws-cle",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -78,235 +78,239 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 578,
+    "pa_season": 559,
     "factors": {
-     "sp": 1.019,
-     "park": 1.07
+     "sp": 1.057,
+     "park": 1.0,
+     "temp": 0.934,
+     "wind": 0.937
     },
-    "hr_rate_pa": 0.0438
+    "hr_rate_pa": 0.0272
    },
-   "edge_score": 56,
+   "edge_score": 48,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 51.9,
-    "avg_exit_velo": 92.1,
-    "xiso": 0.214,
-    "recent_hr_rate": 0.04
+    "barrel_pct": 6.3,
+    "hard_hit_pct": 46.3,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.15,
+    "recent_hr_rate": 0.0455
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
-   "player": "Jackson Chourio",
-   "team": "mil",
-   "game": "sd-mil",
+   "player": "Jo Adell",
+   "team": "cle",
+   "game": "cws-cle",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 573,
-    "factors": {
-     "sp": 1.019,
-     "park": 1.07
-    },
-    "hr_rate_pa": 0.0428
-   },
-   "edge_score": 50,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 47.0,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.21,
-    "recent_hr_rate": 0.0412
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "atl-lad",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 618,
-    "factors": {
-     "sp": 0.952,
-     "temp": 1.12
-    },
-    "hr_rate_pa": 0.0456
-   },
-   "edge_score": 49,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 16.2,
-    "hard_hit_pct": 52.1,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.266,
-    "recent_hr_rate": 0.0
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Will Smith",
-   "team": "lad",
-   "game": "atl-lad",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 276,
-    "factors": {
-     "sp": 0.952,
-     "temp": 1.12
-    },
-    "hr_rate_pa": 0.0357
-   },
-   "edge_score": 40,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.4,
-    "hard_hit_pct": 41.2,
-    "avg_exit_velo": 89.1,
-    "xiso": 0.223,
-    "recent_hr_rate": 0.058
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Jake Bauers",
-   "team": "mil",
-   "game": "sd-mil",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6675,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 578,
-    "factors": {
-     "sp": 1.014
-    },
-    "hit_rate_pa": 0.2235
-   },
-   "edge_score": 67,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 51.9,
-    "avg_exit_velo": 92.1,
-    "xiso": 0.214,
-    "recent_hr_rate": 0.04
-   },
-   "flags": []
-  },
-  {
-   "player": "Jackson Chourio",
-   "team": "mil",
-   "game": "sd-mil",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.7183,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 573,
-    "factors": {
-     "sp": 1.014
-    },
-    "hit_rate_pa": 0.2577
-   },
-   "edge_score": 66,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 47.0,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.21,
-    "recent_hr_rate": 0.0412
-   },
-   "flags": []
-  },
-  {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "atl-lad",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6708,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 618,
-    "factors": {
-     "sp": 0.964
-    },
-    "hit_rate_pa": 0.222
-   },
-   "edge_score": 59,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 16.2,
-    "hard_hit_pct": 52.1,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.266,
-    "recent_hr_rate": 0.0
-   },
-   "flags": []
-  },
-  {
-   "player": "Freddie Freeman",
-   "team": "lad",
-   "game": "atl-lad",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6768,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 657,
+    "pa_season": 204,
     "factors": {
-     "sp": 0.964
+     "sp": 1.057,
+     "park": 1.0,
+     "temp": 0.934,
+     "wind": 0.937
     },
-    "hit_rate_pa": 0.2378
+    "hr_rate_pa": 0.0299
+   },
+   "edge_score": 48,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 8.9,
+    "hard_hit_pct": 44.9,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.187,
+    "recent_hr_rate": 0.0319
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Ben Rice",
+   "team": "nyy",
+   "game": "nyy-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 667,
+    "factors": {
+     "sp": 0.984,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0476
+   },
+   "edge_score": 48,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 48.6,
+    "avg_exit_velo": 91.9,
+    "xiso": 0.244,
+    "recent_hr_rate": 0.0667
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Luis Garc\u00eda",
+   "team": "nyy",
+   "game": "nyy-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 169,
+    "factors": {
+     "sp": 0.984,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0318
+   },
+   "edge_score": 43,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 46.1,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0308
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 508 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Steven Kwan",
+   "team": "cle",
+   "game": "cws-cle",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.683,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 637,
+    "factors": {
+     "sp": 1.043
+    },
+    "hit_rate_pa": 0.2447
+   },
+   "edge_score": 78,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 0.4,
+    "hard_hit_pct": 10.5,
+    "avg_exit_velo": 83.9,
+    "xiso": 0.065,
+    "recent_hr_rate": 0.0105
+   },
+   "flags": []
+  },
+  {
+   "player": "Jos\u00e9 Ram\u00edrez",
+   "team": "cle",
+   "game": "cws-cle",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6659,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 544,
+    "factors": {
+     "sp": 1.043
+    },
+    "hit_rate_pa": 0.2178
+   },
+   "edge_score": 77,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 4.1,
+    "hard_hit_pct": 38.8,
+    "avg_exit_velo": 88.6,
+    "xiso": 0.125,
+    "recent_hr_rate": 0.0118
+   },
+   "flags": []
+  },
+  {
+   "player": "Luis Garc\u00eda",
+   "team": "nyy",
+   "game": "nyy-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6757,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 169,
+    "factors": {
+     "sp": 0.988
+    },
+    "hit_rate_pa": 0.2314
    },
    "edge_score": 59,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 8.1,
-    "hard_hit_pct": 41.3,
-    "avg_exit_velo": 89.5,
-    "xiso": 0.173,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 46.1,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0308
+   },
+   "flags": []
+  },
+  {
+   "player": "Ben Rice",
+   "team": "nyy",
+   "game": "nyy-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6757,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 667,
+    "factors": {
+     "sp": 0.988
+    },
+    "hit_rate_pa": 0.2227
+   },
+   "edge_score": 58,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.3,
+    "hard_hit_pct": 48.6,
+    "avg_exit_velo": 91.9,
+    "xiso": 0.244,
+    "recent_hr_rate": 0.0667
    },
    "flags": []
   }
