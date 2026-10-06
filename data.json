@@ -1,6 +1,6 @@
 {
  "date": "2026-10-06",
- "generated_at": "2026-10-06T20:45:07",
+ "generated_at": "2026-10-06T22:45:27",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "f2f52ff"
+  "gitCommit": "6d6e5e7"
  },
  "games": [
   {
@@ -21,19 +21,19 @@
    "confidence": 0.489,
    "tier": "PASS",
    "total": 7.8,
-   "book_total_line": 6.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "rf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "out_mph": 0
    }
@@ -51,7 +51,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 5
     },
     "cf": {
      "dir": "cross",
@@ -59,15 +59,15 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 5
     },
-    "out_mph": 4
+    "out_mph": 5
    }
   }
  ],
  "props": [
   {
-   "player": "Fernando Tatis",
+   "player": "Fernando Tatis Jr.",
    "team": "sd",
    "game": "mil-sd",
    "stat": "HR",
@@ -82,9 +82,9 @@
     "factors": {
      "sp": 1.021,
      "park": 0.86,
-     "temp": 1.072
+     "temp": 1.084
     },
-    "hr_rate_pa": 0.0322
+    "hr_rate_pa": 0.0325
    },
    "edge_score": 48,
    "score_type": "model_score_0_100",
@@ -100,7 +100,7 @@
    ]
   },
   {
-   "player": "Manny Machado",
+   "player": "Jackson Merrill",
    "team": "sd",
    "game": "mil-sd",
    "stat": "HR",
@@ -109,24 +109,24 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 677,
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 664,
     "factors": {
      "sp": 1.021,
      "park": 0.86,
-     "temp": 1.072
+     "temp": 1.084
     },
-    "hr_rate_pa": 0.0379
+    "hr_rate_pa": 0.0349
    },
-   "edge_score": 46,
+   "edge_score": 47,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 9.6,
-    "hard_hit_pct": 43.6,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.177,
-    "recent_hr_rate": 0.0659
+    "barrel_pct": 12.4,
+    "hard_hit_pct": 48.7,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.0476
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -148,10 +148,10 @@
     "factors": {
      "sp": 0.93,
      "park": 1.175,
-     "temp": 1.03,
-     "wind": 0.973
+     "temp": 1.036,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0552
+    "hr_rate_pa": 0.0561
    },
    "edge_score": 43,
    "score_type": "model_score_0_100",
@@ -182,10 +182,10 @@
     "factors": {
      "sp": 0.932,
      "park": 1.175,
-     "temp": 1.03,
-     "wind": 0.973
+     "temp": 1.036,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.047
+    "hr_rate_pa": 0.0477
    },
    "edge_score": 39,
    "score_type": "model_score_0_100",
@@ -201,7 +201,7 @@
    ]
   },
   {
-   "player": "Fernando Tatis",
+   "player": "Fernando Tatis Jr.",
    "team": "sd",
    "game": "mil-sd",
    "stat": "H",
@@ -230,31 +230,31 @@
    "flags": []
   },
   {
-   "player": "Dustin Harris",
+   "player": "Jackson Merrill",
    "team": "sd",
    "game": "mil-sd",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6717,
+   "model_prob": 0.6791,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 16,
+    "pa_season": 664,
     "factors": {
      "sp": 1.016
     },
-    "hit_rate_pa": 0.2229
+    "hit_rate_pa": 0.2356
    },
-   "edge_score": 68,
+   "edge_score": 69,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 1.7,
-    "hard_hit_pct": 19.5,
-    "avg_exit_velo": 85.2,
-    "xiso": 0.082,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 12.4,
+    "hard_hit_pct": 48.7,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.0476
    },
    "flags": []
   },
