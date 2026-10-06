@@ -1,6 +1,6 @@
 {
  "date": "2026-10-06",
- "generated_at": "2026-10-06T07:46:16",
+ "generated_at": "2026-10-06T18:19:58",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "fea0538"
+  "gitCommit": "37a6f33"
  },
  "games": [
   {
@@ -29,7 +29,7 @@
     },
     "cf": {
      "dir": "in",
-     "mph": 5
+     "mph": 6
     },
     "rf": {
      "dir": "in",
@@ -46,20 +46,20 @@
    "pick": "sd",
    "confidence": 0.56,
    "tier": "PASS",
-   "total": 7.9,
+   "total": 7.6,
    "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 6
     },
     "cf": {
      "dir": "in",
-     "mph": 7
+     "mph": 8
     },
     "rf": {
      "dir": "in",
-     "mph": 5
+     "mph": 6
     },
     "out_mph": 0
    }
@@ -82,10 +82,10 @@
     "factors": {
      "sp": 0.93,
      "park": 1.175,
-     "temp": 1.018,
-     "wind": 1.0
+     "temp": 1.024,
+     "wind": 0.991
     },
-    "hr_rate_pa": 0.0561
+    "hr_rate_pa": 0.0559
    },
    "edge_score": 43,
    "score_type": "model_score_0_100",
@@ -95,6 +95,40 @@
     "avg_exit_velo": 92.5,
     "xiso": 0.256,
     "recent_hr_rate": 0.0471
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Fernando Tatis",
+   "team": "sd",
+   "game": "mil-sd",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 704,
+    "factors": {
+     "sp": 1.021,
+     "park": 0.86,
+     "temp": 1.084,
+     "wind": 0.973
+    },
+    "hr_rate_pa": 0.0316
+   },
+   "edge_score": 43,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 53.9,
+    "avg_exit_velo": 92.9,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.0659
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -116,10 +150,10 @@
     "factors": {
      "sp": 0.932,
      "park": 1.175,
-     "temp": 1.018,
-     "wind": 1.0
+     "temp": 1.024,
+     "wind": 0.991
     },
-    "hr_rate_pa": 0.0477
+    "hr_rate_pa": 0.0476
    },
    "edge_score": 41,
    "score_type": "model_score_0_100",
@@ -129,40 +163,6 @@
     "avg_exit_velo": 93.3,
     "xiso": 0.266,
     "recent_hr_rate": 0.0
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Fernando Tatis Jr.",
-   "team": "sd",
-   "game": "mil-sd",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 704,
-    "factors": {
-     "sp": 1.021,
-     "park": 0.86,
-     "temp": 1.09,
-     "wind": 0.982
-    },
-    "hr_rate_pa": 0.0321
-   },
-   "edge_score": 40,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.7,
-    "hard_hit_pct": 53.9,
-    "avg_exit_velo": 92.9,
-    "xiso": 0.204,
-    "recent_hr_rate": 0.0659
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -184,12 +184,12 @@
     "factors": {
      "sp": 1.021,
      "park": 0.86,
-     "temp": 1.09,
-     "wind": 0.982
+     "temp": 1.084,
+     "wind": 0.973
     },
-    "hr_rate_pa": 0.0378
+    "hr_rate_pa": 0.0373
    },
-   "edge_score": 38,
+   "edge_score": 41,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 9.6,
@@ -203,7 +203,7 @@
    ]
   },
   {
-   "player": "Fernando Tatis Jr.",
+   "player": "Fernando Tatis",
    "team": "sd",
    "game": "mil-sd",
    "stat": "H",
