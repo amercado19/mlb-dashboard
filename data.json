@@ -1,6 +1,6 @@
 {
  "date": "2026-10-06",
- "generated_at": "2026-10-06T23:10:13",
+ "generated_at": "2026-10-07T00:19:38",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "26595b3"
+  "gitCommit": "b027e33"
  },
  "games": [
   {
@@ -19,21 +19,21 @@
    "home_win_prob": 0.489,
    "pick": "atl",
    "confidence": 0.489,
-   "tier": "PASS",
+   "tier": "LEAN",
    "total": 7.8,
-   "book_total_line": 4.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 3
     },
     "cf": {
      "dir": "in",
-     "mph": 7
+     "mph": 4
     },
     "rf": {
      "dir": "in",
-     "mph": 5
+     "mph": 3
     },
     "out_mph": 0
    }
@@ -51,7 +51,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "cross",
@@ -59,13 +59,47 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 5
+     "mph": 4
     },
-    "out_mph": 5
+    "out_mph": 4
    }
   }
  ],
  "props": [
+  {
+   "player": "Matt Olson",
+   "team": "atl",
+   "game": "lad-atl",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 698,
+    "factors": {
+     "sp": 0.93,
+     "park": 1.175,
+     "temp": 0.994,
+     "wind": 1.0
+    },
+    "hr_rate_pa": 0.0548
+   },
+   "edge_score": 48,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 14.1,
+    "hard_hit_pct": 52.0,
+    "avg_exit_velo": 92.5,
+    "xiso": 0.256,
+    "recent_hr_rate": 0.0471
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
   {
    "player": "Fernando Tatis Jr.",
    "team": "sd",
@@ -133,7 +167,7 @@
    ]
   },
   {
-   "player": "Matt Olson",
+   "player": "Drake Baldwin",
    "team": "atl",
    "game": "lad-atl",
    "stat": "HR",
@@ -142,59 +176,25 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 698,
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 615,
     "factors": {
      "sp": 0.93,
      "park": 1.175,
-     "temp": 1.036,
-     "wind": 0.982
+     "temp": 0.994,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0561
+    "hr_rate_pa": 0.0407
    },
    "edge_score": 43,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 14.1,
-    "hard_hit_pct": 52.0,
-    "avg_exit_velo": 92.5,
-    "xiso": 0.256,
-    "recent_hr_rate": 0.0471
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "lad-atl",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.25,
-    "order": 5,
-    "pa_season": 618,
-    "factors": {
-     "sp": 0.932,
-     "park": 1.175,
-     "temp": 1.036,
-     "wind": 0.982
-    },
-    "hr_rate_pa": 0.0477
-   },
-   "edge_score": 39,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 16.2,
-    "hard_hit_pct": 52.1,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.266,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 12.9,
+    "hard_hit_pct": 50.6,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.226,
+    "recent_hr_rate": 0.0326
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
