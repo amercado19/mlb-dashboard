@@ -1,6 +1,6 @@
 {
  "date": "2026-10-07",
- "generated_at": "2026-10-07T20:57:44",
+ "generated_at": "2026-10-07T23:34:56",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "de08cdf"
+  "gitCommit": "74f5c08"
  },
  "games": [
   {
@@ -21,19 +21,19 @@
    "confidence": 0.565,
    "tier": "PASS",
    "total": 8.3,
-   "book_total_line": 8.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "cf": {
      "dir": "in",
-     "mph": 7
+     "mph": 6
     },
     "rf": {
      "dir": "in",
-     "mph": 5
+     "mph": 4
     },
     "out_mph": 0
    }
@@ -47,7 +47,7 @@
    "confidence": 0.463,
    "tier": "PASS",
    "total": 8.3,
-   "book_total_line": 7.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -93,12 +93,12 @@
   {
    "away": "mil",
    "home": "sd",
-   "away_win_prob": 0.361,
-   "home_win_prob": 0.519,
+   "away_win_prob": 0.47,
+   "home_win_prob": 0.51,
    "pick": "sd",
-   "confidence": 0.519,
+   "confidence": 0.51,
    "tier": "PASS",
-   "total": 8.2,
+   "total": 8.1,
    "book_total_line": 7.5,
    "wind": {
     "lf": {
@@ -134,9 +134,9 @@
     "factors": {
      "sp": 0.991,
      "park": 1.175,
-     "temp": 1.042
+     "temp": 1.048
     },
-    "hr_rate_pa": 0.0519
+    "hr_rate_pa": 0.0522
    },
    "edge_score": 55,
    "score_type": "model_score_0_100",
@@ -167,9 +167,9 @@
     "factors": {
      "sp": 0.993,
      "park": 1.175,
-     "temp": 0.928
+     "temp": 0.922
     },
-    "hr_rate_pa": 0.0563
+    "hr_rate_pa": 0.0559
    },
    "edge_score": 53,
    "score_type": "model_score_0_100",
@@ -200,9 +200,9 @@
     "factors": {
      "sp": 0.991,
      "park": 1.175,
-     "temp": 1.042
+     "temp": 1.048
     },
-    "hr_rate_pa": 0.0407
+    "hr_rate_pa": 0.0409
    },
    "edge_score": 52,
    "score_type": "model_score_0_100",
@@ -233,9 +233,9 @@
     "factors": {
      "sp": 0.993,
      "park": 1.175,
-     "temp": 0.928
+     "temp": 0.922
     },
-    "hr_rate_pa": 0.0376
+    "hr_rate_pa": 0.0374
    },
    "edge_score": 47,
    "score_type": "model_score_0_100",
@@ -266,10 +266,10 @@
     "factors": {
      "sp": 0.928,
      "park": 1.105,
-     "temp": 0.988,
-     "wind": 0.982
+     "temp": 1.0,
+     "wind": 0.991
     },
-    "hr_rate_pa": 0.0517
+    "hr_rate_pa": 0.0528
    },
    "edge_score": 46,
    "score_type": "model_score_0_100",
@@ -300,10 +300,10 @@
     "factors": {
      "sp": 1.01,
      "park": 1.105,
-     "temp": 0.988,
-     "wind": 0.982
+     "temp": 1.0,
+     "wind": 0.991
     },
-    "hr_rate_pa": 0.0319
+    "hr_rate_pa": 0.0326
    },
    "edge_score": 42,
    "score_type": "model_score_0_100",
@@ -319,42 +319,8 @@
    ]
   },
   {
-   "player": "Jake Bauers",
-   "team": "mil",
-   "game": "mil-sd",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 578,
-    "factors": {
-     "sp": 1.01,
-     "park": 0.86,
-     "temp": 1.048,
-     "wind": 1.0
-    },
-    "hr_rate_pa": 0.0366
-   },
-   "edge_score": 40,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 51.9,
-    "avg_exit_velo": 92.1,
-    "xiso": 0.214,
-    "recent_hr_rate": 0.0462
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 520 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Jackson Chourio",
-   "team": "mil",
+   "player": "Fernando Tatis Jr.",
+   "team": "sd",
    "game": "mil-sd",
    "stat": "HR",
    "line": 0.5,
@@ -364,27 +330,90 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 573,
+    "pa_season": 704,
     "factors": {
      "sp": 1.01,
      "park": 0.86,
-     "temp": 1.048,
+     "temp": 1.054,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0358
+    "hr_rate_pa": 0.0313
    },
-   "edge_score": 38,
+   "edge_score": 39,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 47.0,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.21,
-    "recent_hr_rate": 0.0482
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 53.9,
+    "avg_exit_velo": 92.9,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.069
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 520 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
+  },
+  {
+   "player": "Jackson Merrill",
+   "team": "sd",
+   "game": "mil-sd",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 664,
+    "factors": {
+     "sp": 1.01,
+     "park": 0.86,
+     "temp": 1.054,
+     "wind": 1.0
+    },
+    "hr_rate_pa": 0.0335
+   },
+   "edge_score": 39,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.4,
+    "hard_hit_pct": 48.7,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.05
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 520 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Fernando Tatis Jr.",
+   "team": "sd",
+   "game": "mil-sd",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.701,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 704,
+    "factors": {
+     "sp": 1.008
+    },
+    "hit_rate_pa": 0.2512
+   },
+   "edge_score": 70,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.7,
+    "hard_hit_pct": 53.9,
+    "avg_exit_velo": 92.9,
+    "xiso": 0.204,
+    "recent_hr_rate": 0.069
+   },
+   "flags": []
   },
   {
    "player": "Steven Kwan",
@@ -445,60 +474,31 @@
    "flags": []
   },
   {
-   "player": "Jackson Chourio",
-   "team": "mil",
+   "player": "Jackson Merrill",
+   "team": "sd",
    "game": "mil-sd",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7138,
+   "model_prob": 0.679,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 573,
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 664,
     "factors": {
      "sp": 1.008
     },
-    "hit_rate_pa": 0.256
+    "hit_rate_pa": 0.2337
    },
-   "edge_score": 67,
+   "edge_score": 68,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 47.0,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.21,
-    "recent_hr_rate": 0.0482
-   },
-   "flags": []
-  },
-  {
-   "player": "William Contreras",
-   "team": "mil",
-   "game": "mil-sd",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6789,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 640,
-    "factors": {
-     "sp": 1.008
-    },
-    "hit_rate_pa": 0.2368
-   },
-   "edge_score": 67,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 8.5,
-    "hard_hit_pct": 44.1,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.18,
-    "recent_hr_rate": 0.0597
+    "barrel_pct": 12.4,
+    "hard_hit_pct": 48.7,
+    "avg_exit_velo": 91.5,
+    "xiso": 0.221,
+    "recent_hr_rate": 0.05
    },
    "flags": []
   },
