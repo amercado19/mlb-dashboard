@@ -1,6 +1,6 @@
 {
  "date": "2026-10-06",
- "generated_at": "2026-10-07T00:19:38",
+ "generated_at": "2026-10-07T02:26:54",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "b027e33"
+  "gitCommit": "7f99129"
  },
  "games": [
   {
@@ -19,21 +19,21 @@
    "home_win_prob": 0.489,
    "pick": "atl",
    "confidence": 0.489,
-   "tier": "LEAN",
+   "tier": "PASS",
    "total": 7.8,
-   "book_total_line": 5.5,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 3
+     "mph": 2
     },
     "cf": {
      "dir": "in",
-     "mph": 4
+     "mph": 3
     },
     "rf": {
      "dir": "in",
-     "mph": 3
+     "mph": 2
     },
     "out_mph": 0
    }
@@ -46,22 +46,22 @@
    "pick": "sd",
    "confidence": 0.56,
    "tier": "PASS",
-   "total": 7.6,
-   "book_total_line": 7.5,
+   "total": 7.9,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 4
+     "mph": 7
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 10
     },
     "rf": {
-     "dir": "out",
-     "mph": 4
+     "dir": "in",
+     "mph": 7
     },
-    "out_mph": 4
+    "out_mph": 0
    }
   }
  ],
@@ -87,7 +87,7 @@
     },
     "hr_rate_pa": 0.0548
    },
-   "edge_score": 48,
+   "edge_score": 45,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.1,
@@ -116,11 +116,12 @@
     "factors": {
      "sp": 1.021,
      "park": 0.86,
-     "temp": 1.084
+     "temp": 1.096,
+     "wind": 0.955
     },
-    "hr_rate_pa": 0.0325
+    "hr_rate_pa": 0.0314
    },
-   "edge_score": 48,
+   "edge_score": 43,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.7,
@@ -149,11 +150,12 @@
     "factors": {
      "sp": 1.021,
      "park": 0.86,
-     "temp": 1.084
+     "temp": 1.096,
+     "wind": 0.955
     },
-    "hr_rate_pa": 0.0349
+    "hr_rate_pa": 0.0337
    },
-   "edge_score": 47,
+   "edge_score": 42,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 12.4,
@@ -167,8 +169,8 @@
    ]
   },
   {
-   "player": "Drake Baldwin",
-   "team": "atl",
+   "player": "Shohei Ohtani",
+   "team": "lad",
    "game": "lad-atl",
    "stat": "HR",
    "line": 0.5,
@@ -176,25 +178,25 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 615,
+    "epa": 4.25,
+    "order": 5,
+    "pa_season": 618,
     "factors": {
-     "sp": 0.93,
+     "sp": 0.932,
      "park": 1.175,
      "temp": 0.994,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0407
+    "hr_rate_pa": 0.0466
    },
-   "edge_score": 43,
+   "edge_score": 41,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 12.9,
-    "hard_hit_pct": 50.6,
-    "avg_exit_velo": 91.5,
-    "xiso": 0.226,
-    "recent_hr_rate": 0.0326
+    "barrel_pct": 16.2,
+    "hard_hit_pct": 52.1,
+    "avg_exit_velo": 93.3,
+    "xiso": 0.266,
+    "recent_hr_rate": 0.0
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
