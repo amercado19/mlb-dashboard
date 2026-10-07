@@ -1,6 +1,6 @@
 {
  "date": "2026-10-07",
- "generated_at": "2026-10-07T04:24:59",
+ "generated_at": "2026-10-07T06:02:38",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -25,17 +25,17 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 5
+     "mph": 3
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "in",
+     "mph": 4
     },
     "rf": {
-     "dir": "out",
-     "mph": 5
+     "dir": "in",
+     "mph": 3
     },
-    "out_mph": 5
+    "out_mph": 0
    }
   },
   {
@@ -51,7 +51,7 @@
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 2
+     "mph": 3
     },
     "cf": {
      "dir": "cross",
@@ -59,9 +59,9 @@
     },
     "rf": {
      "dir": "out",
-     "mph": 2
+     "mph": 3
     },
-    "out_mph": 2
+    "out_mph": 3
    }
   },
   {
@@ -99,7 +99,7 @@
    "confidence": 0.41,
    "tier": "PASS",
    "total": 8.3,
-   "book_total_line": null,
+   "book_total_line": 7.5,
    "wind": {
     "lf": {
      "dir": "in",
@@ -167,9 +167,9 @@
     "factors": {
      "sp": 0.991,
      "park": 1.175,
-     "temp": 1.054
+     "temp": 1.042
     },
-    "hr_rate_pa": 0.0525
+    "hr_rate_pa": 0.0519
    },
    "edge_score": 53,
    "score_type": "model_score_0_100",
@@ -179,39 +179,6 @@
     "avg_exit_velo": 93.3,
     "xiso": 0.266,
     "recent_hr_rate": 0.0
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Munetaka Murakami",
-   "team": "cws",
-   "game": "cle-cws",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 553,
-    "factors": {
-     "sp": 0.928,
-     "park": 1.105,
-     "temp": 1.036
-    },
-    "hr_rate_pa": 0.0552
-   },
-   "edge_score": 51,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 20.5,
-    "hard_hit_pct": 56.8,
-    "avg_exit_velo": 93.9,
-    "xiso": 0.265,
-    "recent_hr_rate": 0.0588
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -233,9 +200,9 @@
     "factors": {
      "sp": 0.991,
      "park": 1.175,
-     "temp": 1.054
+     "temp": 1.042
     },
-    "hr_rate_pa": 0.0411
+    "hr_rate_pa": 0.0407
    },
    "edge_score": 50,
    "score_type": "model_score_0_100",
@@ -251,8 +218,8 @@
    ]
   },
   {
-   "player": "Chase DeLauter",
-   "team": "cle",
+   "player": "Munetaka Murakami",
+   "team": "cws",
    "game": "cle-cws",
    "stat": "HR",
    "line": 0.5,
@@ -260,24 +227,25 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 559,
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 553,
     "factors": {
-     "sp": 1.01,
+     "sp": 0.928,
      "park": 1.105,
-     "temp": 1.036
+     "temp": 1.03,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0341
+    "hr_rate_pa": 0.0549
    },
    "edge_score": 49,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 6.3,
-    "hard_hit_pct": 46.3,
-    "avg_exit_velo": 91.4,
-    "xiso": 0.15,
-    "recent_hr_rate": 0.05
+    "barrel_pct": 20.5,
+    "hard_hit_pct": 56.8,
+    "avg_exit_velo": 93.9,
+    "xiso": 0.265,
+    "recent_hr_rate": 0.0588
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -317,6 +285,40 @@
    ]
   },
   {
+   "player": "Chase DeLauter",
+   "team": "cle",
+   "game": "cle-cws",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 559,
+    "factors": {
+     "sp": 1.01,
+     "park": 1.105,
+     "temp": 1.03,
+     "wind": 1.0
+    },
+    "hr_rate_pa": 0.0339
+   },
+   "edge_score": 47,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 6.3,
+    "hard_hit_pct": 46.3,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.15,
+    "recent_hr_rate": 0.05
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 516 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
    "player": "Jake Bauers",
    "team": "mil",
    "game": "mil-sd",
@@ -326,8 +328,8 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
+    "epa": 4.55,
+    "order": 2,
     "pa_season": 578,
     "factors": {
      "sp": 1.024,
@@ -337,7 +339,7 @@
     },
     "hr_rate_pa": 0.0371
    },
-   "edge_score": 40,
+   "edge_score": 36,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.9,
@@ -371,7 +373,7 @@
     },
     "hr_rate_pa": 0.035
    },
-   "edge_score": 38,
+   "edge_score": 36,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 9.1,
@@ -472,31 +474,31 @@
    "flags": []
   },
   {
-   "player": "Brice Turang",
+   "player": "Jake Bauers",
    "team": "mil",
    "game": "mil-sd",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6789,
+   "model_prob": 0.6733,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
-    "pa_season": 680,
+    "pa_season": 578,
     "factors": {
      "sp": 1.018
     },
-    "hit_rate_pa": 0.2318
+    "hit_rate_pa": 0.2243
    },
    "edge_score": 65,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 7.7,
-    "hard_hit_pct": 41.6,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.173,
-    "recent_hr_rate": 0.0494
+    "barrel_pct": 13.9,
+    "hard_hit_pct": 51.9,
+    "avg_exit_velo": 92.1,
+    "xiso": 0.214,
+    "recent_hr_rate": 0.0462
    },
    "flags": []
   },
