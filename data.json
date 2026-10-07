@@ -1,6 +1,6 @@
 {
  "date": "2026-10-07",
- "generated_at": "2026-10-07T19:35:48",
+ "generated_at": "2026-10-07T20:57:44",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "9a6af9c"
+  "gitCommit": "de08cdf"
  },
  "games": [
   {
@@ -21,19 +21,19 @@
    "confidence": 0.565,
    "tier": "PASS",
    "total": 8.3,
-   "book_total_line": 8.0,
+   "book_total_line": 8.5,
    "wind": {
     "lf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "cf": {
      "dir": "in",
-     "mph": 8
+     "mph": 7
     },
     "rf": {
      "dir": "in",
-     "mph": 6
+     "mph": 5
     },
     "out_mph": 0
    }
@@ -161,8 +161,8 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
+    "epa": 4.55,
+    "order": 2,
     "pa_season": 667,
     "factors": {
      "sp": 0.993,
@@ -171,7 +171,7 @@
     },
     "hr_rate_pa": 0.0563
    },
-   "edge_score": 54,
+   "edge_score": 53,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 14.3,
@@ -218,7 +218,7 @@
    ]
   },
   {
-   "player": "Spencer Jones",
+   "player": "Luis Garc\u00eda Jr.",
    "team": "nyy",
    "game": "tb-nyy",
    "stat": "HR",
@@ -227,24 +227,24 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 289,
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 169,
     "factors": {
      "sp": 0.993,
      "park": 1.175,
      "temp": 0.928
     },
-    "hr_rate_pa": 0.0373
+    "hr_rate_pa": 0.0376
    },
-   "edge_score": 48,
+   "edge_score": 47,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 15.9,
-    "hard_hit_pct": 55.1,
-    "avg_exit_velo": 94.1,
-    "xiso": 0.217,
-    "recent_hr_rate": 0.0286
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 46.1,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0333
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 520 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -266,10 +266,10 @@
     "factors": {
      "sp": 0.928,
      "park": 1.105,
-     "temp": 0.994,
-     "wind": 0.973
+     "temp": 0.988,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0515
+    "hr_rate_pa": 0.0517
    },
    "edge_score": 46,
    "score_type": "model_score_0_100",
@@ -300,10 +300,10 @@
     "factors": {
      "sp": 1.01,
      "park": 1.105,
-     "temp": 0.994,
-     "wind": 0.973
+     "temp": 0.988,
+     "wind": 0.982
     },
-    "hr_rate_pa": 0.0318
+    "hr_rate_pa": 0.0319
    },
    "edge_score": 42,
    "score_type": "model_score_0_100",
@@ -334,10 +334,10 @@
     "factors": {
      "sp": 1.01,
      "park": 0.86,
-     "temp": 1.054,
+     "temp": 1.048,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.0368
+    "hr_rate_pa": 0.0366
    },
    "edge_score": 40,
    "score_type": "model_score_0_100",
@@ -368,10 +368,10 @@
     "factors": {
      "sp": 1.01,
      "park": 0.86,
-     "temp": 1.054,
+     "temp": 1.048,
      "wind": 1.0
     },
-    "hr_rate_pa": 0.036
+    "hr_rate_pa": 0.0358
    },
    "edge_score": 38,
    "score_type": "model_score_0_100",
@@ -538,11 +538,11 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6767,
+   "model_prob": 0.6732,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
+    "epa": 4.55,
+    "order": 2,
     "pa_season": 667,
     "factors": {
      "sp": 0.995
@@ -561,31 +561,31 @@
    "flags": []
   },
   {
-   "player": "Cody Bellinger",
+   "player": "Luis Garc\u00eda Jr.",
    "team": "nyy",
    "game": "tb-nyy",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.677,
+   "model_prob": 0.6766,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 562,
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 169,
     "factors": {
      "sp": 0.995
     },
-    "hit_rate_pa": 0.2289
+    "hit_rate_pa": 0.2329
    },
    "edge_score": 59,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 6.5,
-    "hard_hit_pct": 37.8,
-    "avg_exit_velo": 89.2,
-    "xiso": 0.14,
-    "recent_hr_rate": 0.0694
+    "barrel_pct": 12.1,
+    "hard_hit_pct": 46.1,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.0333
    },
    "flags": []
   },
