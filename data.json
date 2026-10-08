@@ -1,6 +1,6 @@
 {
  "date": "2026-10-08",
- "generated_at": "2026-10-08T19:31:37",
+ "generated_at": "2026-10-08T20:59:16",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "73b8a23"
+  "gitCommit": "88c8288"
  },
  "games": [
   {
@@ -24,18 +24,18 @@
    "book_total_line": 7.5,
    "wind": {
     "lf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "in",
+     "mph": 3
     },
     "cf": {
      "dir": "cross",
      "mph": 0
     },
     "rf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "out",
+     "mph": 3
     },
-    "out_mph": 0
+    "out_mph": 3
    }
   }
  ],
@@ -50,17 +50,17 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
+    "epa": 4.35,
+    "order": 4,
     "pa_season": 553,
     "factors": {
      "sp": 0.943,
      "park": 1.105,
-     "temp": 0.934
+     "temp": 0.94
     },
-    "hr_rate_pa": 0.0505
+    "hr_rate_pa": 0.0509
    },
-   "edge_score": 51,
+   "edge_score": 49,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 20.5,
@@ -83,17 +83,17 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
+    "epa": 4.45,
+    "order": 3,
     "pa_season": 704,
     "factors": {
      "sp": 0.943,
      "park": 1.105,
-     "temp": 0.934
+     "temp": 0.94
     },
-    "hr_rate_pa": 0.041
+    "hr_rate_pa": 0.0413
    },
-   "edge_score": 45,
+   "edge_score": 47,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.0,
@@ -107,31 +107,31 @@
    ]
   },
   {
-   "player": "Sam Antonacci",
+   "player": "Randal Grichuk",
    "team": "cws",
    "game": "cle-cws",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6768,
+   "model_prob": 0.6482,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 557,
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 33,
     "factors": {
      "sp": 0.957
     },
-    "hit_rate_pa": 0.2243
+    "hit_rate_pa": 0.2071
    },
-   "edge_score": 59,
+   "edge_score": 58,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 5.0,
-    "hard_hit_pct": 33.6,
-    "avg_exit_velo": 87.5,
-    "xiso": 0.115,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 11.1,
+    "hard_hit_pct": 49.8,
+    "avg_exit_velo": 91.3,
+    "xiso": 0.2,
+    "recent_hr_rate": 0.0545
    },
    "flags": []
   },
@@ -142,11 +142,11 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.646,
+   "model_prob": 0.6439,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
+    "epa": 4.45,
+    "order": 3,
     "pa_season": 704,
     "factors": {
      "sp": 0.957
