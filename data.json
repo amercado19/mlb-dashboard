@@ -1,6 +1,6 @@
 {
- "date": "2026-10-08",
- "generated_at": "2026-10-09T03:09:15",
+ "date": "2026-10-09",
+ "generated_at": "2026-10-09T04:39:38",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,162 +9,10 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "6c5c5bf"
+  "gitCommit": "cca47d9"
  },
- "games": [
-  {
-   "away": "cle",
-   "home": "cws",
-   "away_win_prob": 0.482,
-   "home_win_prob": 0.478,
-   "pick": "cle",
-   "confidence": 0.482,
-   "tier": "PASS",
-   "total": 7.4,
-   "book_total_line": 13.5,
-   "wind": {
-    "lf": {
-     "dir": "in",
-     "mph": 4
-    },
-    "cf": {
-     "dir": "cross",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "out",
-     "mph": 4
-    },
-    "out_mph": 4
-   }
-  }
- ],
- "props": [
-  {
-   "player": "Munetaka Murakami",
-   "team": "cws",
-   "game": "cle-cws",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 553,
-    "factors": {
-     "sp": 0.943,
-     "park": 1.105,
-     "temp": 0.934
-    },
-    "hr_rate_pa": 0.0505
-   },
-   "edge_score": 51,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 20.5,
-    "hard_hit_pct": 56.8,
-    "avg_exit_velo": 93.9,
-    "xiso": 0.265,
-    "recent_hr_rate": 0.0633
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 528 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Miguel Vargas",
-   "team": "cws",
-   "game": "cle-cws",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 704,
-    "factors": {
-     "sp": 0.943,
-     "park": 1.105,
-     "temp": 0.934
-    },
-    "hr_rate_pa": 0.041
-   },
-   "edge_score": 49,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.0,
-    "hard_hit_pct": 43.8,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.233,
-    "recent_hr_rate": 0.037
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 528 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Randal Grichuk",
-   "team": "cws",
-   "game": "cle-cws",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6482,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 33,
-    "factors": {
-     "sp": 0.957
-    },
-    "hit_rate_pa": 0.2071
-   },
-   "edge_score": 58,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.1,
-    "hard_hit_pct": 49.8,
-    "avg_exit_velo": 91.3,
-    "xiso": 0.2,
-    "recent_hr_rate": 0.0545
-   },
-   "flags": []
-  },
-  {
-   "player": "Miguel Vargas",
-   "team": "cws",
-   "game": "cle-cws",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6439,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 704,
-    "factors": {
-     "sp": 0.957
-    },
-    "hit_rate_pa": 0.2027
-   },
-   "edge_score": 57,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.0,
-    "hard_hit_pct": 43.8,
-    "avg_exit_velo": 90.1,
-    "xiso": 0.233,
-    "recent_hr_rate": 0.037
-   },
-   "flags": []
-  }
- ],
+ "games": [],
+ "props": [],
  "prop_calibration": {
   "hr": {
    "n": 1085,
