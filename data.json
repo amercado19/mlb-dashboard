@@ -1,6 +1,6 @@
 {
  "date": "2026-10-10",
- "generated_at": "2026-10-10T19:41:06",
+ "generated_at": "2026-10-10T20:39:34",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -56,10 +56,10 @@
     "factors": {
      "sp": 0.984,
      "park": 1.0,
-     "temp": 0.982,
+     "temp": 0.976,
      "wind": 1.03
     },
-    "hr_rate_pa": 0.0517
+    "hr_rate_pa": 0.0514
    },
    "edge_score": 55,
    "score_type": "model_score_0_100",
@@ -90,10 +90,10 @@
     "factors": {
      "sp": 0.984,
      "park": 1.0,
-     "temp": 0.982,
+     "temp": 0.976,
      "wind": 1.03
     },
-    "hr_rate_pa": 0.0419
+    "hr_rate_pa": 0.0417
    },
    "edge_score": 54,
    "score_type": "model_score_0_100",
@@ -107,35 +107,6 @@
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 530 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
-  },
-  {
-   "player": "Randal Grichuk",
-   "team": "cws",
-   "game": "cws-cle",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6572,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 33,
-    "factors": {
-     "sp": 0.988
-    },
-    "hit_rate_pa": 0.2138
-   },
-   "edge_score": 59,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 11.1,
-    "hard_hit_pct": 49.8,
-    "avg_exit_velo": 91.3,
-    "xiso": 0.2,
-    "recent_hr_rate": 0.0545
-   },
-   "flags": []
   },
   {
    "player": "Steven Kwan",
@@ -163,6 +134,35 @@
     "avg_exit_velo": 83.9,
     "xiso": 0.066,
     "recent_hr_rate": 0.0145
+   },
+   "flags": []
+  },
+  {
+   "player": "Chase DeLauter",
+   "team": "cle",
+   "game": "cws-cle",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6792,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 559,
+    "factors": {
+     "sp": 0.986
+    },
+    "hit_rate_pa": 0.242
+   },
+   "edge_score": 58,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 6.3,
+    "hard_hit_pct": 46.3,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.15,
+    "recent_hr_rate": 0.05
    },
    "flags": []
   }
