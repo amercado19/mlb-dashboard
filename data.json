@@ -1,6 +1,6 @@
 {
  "date": "2026-10-11",
- "generated_at": "2026-10-11T19:52:38",
+ "generated_at": "2026-10-11T21:05:51",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -39,7 +39,130 @@
    }
   }
  ],
- "props": [],
+ "props": [
+  {
+   "player": "Shohei Ohtani",
+   "team": "lad",
+   "game": "lad-mil",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 618,
+    "factors": {
+     "sp": 0.882,
+     "park": 1.07
+    },
+    "hr_rate_pa": 0.0404
+   },
+   "edge_score": 39,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 16.2,
+    "hard_hit_pct": 52.1,
+    "avg_exit_velo": 93.3,
+    "xiso": 0.266,
+    "recent_hr_rate": 0.0
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 532 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Jake Bauers",
+   "team": "mil",
+   "game": "lad-mil",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 578,
+    "factors": {
+     "sp": 0.93,
+     "park": 1.07
+    },
+    "hr_rate_pa": 0.04
+   },
+   "edge_score": 36,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.9,
+    "hard_hit_pct": 51.9,
+    "avg_exit_velo": 92.1,
+    "xiso": 0.214,
+    "recent_hr_rate": 0.0357
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 532 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Freddie Freeman",
+   "team": "lad",
+   "game": "lad-mil",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6739,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 657,
+    "factors": {
+     "sp": 0.911
+    },
+    "hit_rate_pa": 0.2248
+   },
+   "edge_score": 47,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 8.1,
+    "hard_hit_pct": 41.3,
+    "avg_exit_velo": 89.5,
+    "xiso": 0.173,
+    "recent_hr_rate": 0.0
+   },
+   "flags": []
+  },
+  {
+   "player": "Jake Bauers",
+   "team": "mil",
+   "game": "lad-mil",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6449,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 578,
+    "factors": {
+     "sp": 0.948
+    },
+    "hit_rate_pa": 0.2088
+   },
+   "edge_score": 46,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.9,
+    "hard_hit_pct": 51.9,
+    "avg_exit_velo": 92.1,
+    "xiso": 0.214,
+    "recent_hr_rate": 0.0357
+   },
+   "flags": []
+  }
+ ],
  "prop_calibration": {
   "hr": {
    "n": 1085,
