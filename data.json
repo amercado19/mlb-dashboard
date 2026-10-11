@@ -1,6 +1,6 @@
 {
  "date": "2026-10-10",
- "generated_at": "2026-10-10T23:08:38",
+ "generated_at": "2026-10-11T01:21:54",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -17,25 +17,25 @@
    "home": "cle",
    "away_win_prob": 0.512,
    "home_win_prob": 0.548,
-   "pick": "cle",
-   "confidence": 0.548,
-   "tier": "PASS",
+   "pick": "cws",
+   "confidence": 0.512,
+   "tier": "LEAN",
    "total": 8.2,
-   "book_total_line": 7.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 4
+     "dir": "out",
+     "mph": 6
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 9
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 6
     },
-    "out_mph": 4
+    "out_mph": 9
    }
   }
  ],
@@ -56,11 +56,12 @@
     "factors": {
      "sp": 0.984,
      "park": 1.0,
-     "temp": 0.964
+     "temp": 0.976,
+     "wind": 1.04
     },
-    "hr_rate_pa": 0.0493
+    "hr_rate_pa": 0.0519
    },
-   "edge_score": 50,
+   "edge_score": 60,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 20.5,
@@ -89,11 +90,12 @@
     "factors": {
      "sp": 0.984,
      "park": 1.0,
-     "temp": 0.964
+     "temp": 0.976,
+     "wind": 1.04
     },
-    "hr_rate_pa": 0.04
+    "hr_rate_pa": 0.0421
    },
-   "edge_score": 49,
+   "edge_score": 59,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.0,
