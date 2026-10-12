@@ -1,6 +1,6 @@
 {
- "date": "2026-10-11",
- "generated_at": "2026-10-12T02:28:25",
+ "date": "2026-10-12",
+ "generated_at": "2026-10-12T04:25:13",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,19 +9,45 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "47a903a"
+  "gitCommit": "5f96bcf"
  },
  "games": [
   {
    "away": "lad",
    "home": "mil",
-   "away_win_prob": 0.438,
-   "home_win_prob": 0.542,
+   "away_win_prob": 0.462,
+   "home_win_prob": 0.518,
    "pick": "mil",
-   "confidence": 0.542,
+   "confidence": 0.518,
    "tier": "PASS",
-   "total": 7.0,
-   "book_total_line": 4.5,
+   "total": 7.3,
+   "book_total_line": 7.0,
+   "wind": {
+    "lf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "cf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "rf": {
+     "dir": "neutral",
+     "mph": 0
+    },
+    "out_mph": 0
+   }
+  },
+  {
+   "away": "cle",
+   "home": "tb",
+   "away_win_prob": 0.408,
+   "home_win_prob": 0.592,
+   "pick": "tb",
+   "confidence": 0.592,
+   "tier": "PASS",
+   "total": 7.9,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -54,12 +80,12 @@
     "order": 4,
     "pa_season": 618,
     "factors": {
-     "sp": 0.882,
+     "sp": 0.918,
      "park": 1.07
     },
-    "hr_rate_pa": 0.0404
+    "hr_rate_pa": 0.0421
    },
-   "edge_score": 39,
+   "edge_score": 51,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 16.2,
@@ -73,9 +99,41 @@
    ]
   },
   {
-   "player": "Jake Bauers",
-   "team": "mil",
+   "player": "Will Smith",
+   "team": "lad",
    "game": "lad-mil",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 276,
+    "factors": {
+     "sp": 0.918,
+     "park": 1.07
+    },
+    "hr_rate_pa": 0.0329
+   },
+   "edge_score": 45,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.4,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 89.1,
+    "xiso": 0.223,
+    "recent_hr_rate": 0.0652
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 532 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Jo Adell",
+   "team": "cle",
+   "game": "cle-tb",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -84,25 +142,144 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 578,
+    "pa_season": 204,
     "factors": {
-     "sp": 0.93,
-     "park": 1.07
+     "sp": 0.938,
+     "park": 0.93
     },
-    "hr_rate_pa": 0.04
+    "hr_rate_pa": 0.0282
    },
-   "edge_score": 36,
+   "edge_score": 32,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 51.9,
-    "avg_exit_velo": 92.1,
-    "xiso": 0.214,
-    "recent_hr_rate": 0.0357
+    "barrel_pct": 8.9,
+    "hard_hit_pct": 44.9,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.187,
+    "recent_hr_rate": 0.0462
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 532 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
+  },
+  {
+   "player": "Chase DeLauter",
+   "team": "cle",
+   "game": "cle-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 559,
+    "factors": {
+     "sp": 0.938,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0257
+   },
+   "edge_score": 31,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 6.3,
+    "hard_hit_pct": 46.3,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.15,
+    "recent_hr_rate": 0.0364
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 532 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Steven Kwan",
+   "team": "cle",
+   "game": "cle-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6764,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 637,
+    "factors": {
+     "sp": 0.953
+    },
+    "hit_rate_pa": 0.2237
+   },
+   "edge_score": 61,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 0.4,
+    "hard_hit_pct": 10.5,
+    "avg_exit_velo": 83.9,
+    "xiso": 0.066,
+    "recent_hr_rate": 0.0156
+   },
+   "flags": []
+  },
+  {
+   "player": "Jos\u00e9 Ram\u00edrez",
+   "team": "cle",
+   "game": "cle-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6441,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 544,
+    "factors": {
+     "sp": 0.953
+    },
+    "hit_rate_pa": 0.1991
+   },
+   "edge_score": 58,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 4.1,
+    "hard_hit_pct": 38.8,
+    "avg_exit_velo": 88.6,
+    "xiso": 0.125,
+    "recent_hr_rate": 0.0169
+   },
+   "flags": []
+  },
+  {
+   "player": "Will Smith",
+   "team": "lad",
+   "game": "lad-mil",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6466,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 276,
+    "factors": {
+     "sp": 0.939
+    },
+    "hit_rate_pa": 0.2079
+   },
+   "edge_score": 51,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.4,
+    "hard_hit_pct": 41.2,
+    "avg_exit_velo": 89.1,
+    "xiso": 0.223,
+    "recent_hr_rate": 0.0652
+   },
+   "flags": []
   },
   {
    "player": "Freddie Freeman",
@@ -111,18 +288,18 @@
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6739,
+   "model_prob": 0.6787,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
     "pa_season": 657,
     "factors": {
-     "sp": 0.911
+     "sp": 0.939
     },
-    "hit_rate_pa": 0.2248
+    "hit_rate_pa": 0.2316
    },
-   "edge_score": 47,
+   "edge_score": 50,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 8.1,
@@ -130,35 +307,6 @@
     "avg_exit_velo": 89.5,
     "xiso": 0.173,
     "recent_hr_rate": 0.0
-   },
-   "flags": []
-  },
-  {
-   "player": "Jake Bauers",
-   "team": "mil",
-   "game": "lad-mil",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6449,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 578,
-    "factors": {
-     "sp": 0.948
-    },
-    "hit_rate_pa": 0.2088
-   },
-   "edge_score": 46,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 51.9,
-    "avg_exit_velo": 92.1,
-    "xiso": 0.214,
-    "recent_hr_rate": 0.0357
    },
    "flags": []
   }
