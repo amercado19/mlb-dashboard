@@ -1,6 +1,6 @@
 {
- "date": "2026-10-12",
- "generated_at": "2026-10-13T01:21:06",
+ "date": "2026-10-13",
+ "generated_at": "2026-10-13T05:33:34",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,45 +9,19 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "45f8a93"
+  "gitCommit": "45d4eb8"
  },
  "games": [
   {
-   "away": "lad",
-   "home": "mil",
-   "away_win_prob": 0.462,
-   "home_win_prob": 0.518,
-   "pick": "mil",
-   "confidence": 0.518,
-   "tier": "PASS",
-   "total": 7.3,
-   "book_total_line": null,
-   "wind": {
-    "lf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "cf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "out_mph": 0
-   }
-  },
-  {
    "away": "cle",
    "home": "tb",
-   "away_win_prob": 0.408,
-   "home_win_prob": 0.592,
+   "away_win_prob": 0.488,
+   "home_win_prob": 0.512,
    "pick": "tb",
-   "confidence": 0.592,
+   "confidence": 0.512,
    "tier": "PASS",
-   "total": 7.9,
-   "book_total_line": 5.5,
+   "total": 7.7,
+   "book_total_line": 7.0,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -67,38 +41,6 @@
  ],
  "props": [
   {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "lad-mil",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 618,
-    "factors": {
-     "sp": 0.918,
-     "park": 1.07
-    },
-    "hr_rate_pa": 0.0421
-   },
-   "edge_score": 53,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 16.2,
-    "hard_hit_pct": 52.1,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.266,
-    "recent_hr_rate": 0.0
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 534 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Junior Caminero",
    "team": "tb",
    "game": "cle-tb",
@@ -112,201 +54,111 @@
     "order": 3,
     "pa_season": 702,
     "factors": {
-     "sp": 1.015,
+     "sp": 0.943,
      "park": 0.93
     },
-    "hr_rate_pa": 0.0483
+    "hr_rate_pa": 0.0449
    },
-   "edge_score": 48,
+   "edge_score": 42,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.1,
     "hard_hit_pct": 49.7,
     "avg_exit_velo": 92.7,
     "xiso": 0.226,
-    "recent_hr_rate": 0.0476
+    "recent_hr_rate": 0.0339
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 534 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
-   "player": "Teoscar Hern\u00e1ndez",
-   "team": "lad",
-   "game": "lad-mil",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 491,
-    "factors": {
-     "sp": 0.918,
-     "park": 1.07
-    },
-    "hr_rate_pa": 0.0314
-   },
-   "edge_score": 45,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 10.6,
-    "hard_hit_pct": 44.8,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.181,
-    "recent_hr_rate": 0.0484
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 534 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Jonathan Aranda",
-   "team": "tb",
+   "player": "Jo Adell",
+   "team": "cle",
    "game": "cle-tb",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 668,
-    "factors": {
-     "sp": 1.015,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0305
-   },
-   "edge_score": 42,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 9.9,
-    "hard_hit_pct": 46.0,
-    "avg_exit_velo": 91.1,
-    "xiso": 0.184,
-    "recent_hr_rate": 0.0588
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 534 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Yandy D\u00edaz",
-   "team": "tb",
-   "game": "cle-tb",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.719,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 686,
-    "factors": {
-     "sp": 1.011
-    },
-    "hit_rate_pa": 0.2561
-   },
-   "edge_score": 68,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 7.1,
-    "hard_hit_pct": 48.1,
-    "avg_exit_velo": 90.9,
-    "xiso": 0.158,
-    "recent_hr_rate": 0.0
-   },
-   "flags": []
-  },
-  {
-   "player": "Jonathan Aranda",
-   "team": "tb",
-   "game": "cle-tb",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.677,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 668,
-    "factors": {
-     "sp": 1.011
-    },
-    "hit_rate_pa": 0.237
-   },
-   "edge_score": 68,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 9.9,
-    "hard_hit_pct": 46.0,
-    "avg_exit_velo": 91.1,
-    "xiso": 0.184,
-    "recent_hr_rate": 0.0588
-   },
-   "flags": []
-  },
-  {
-   "player": "Freddie Freeman",
-   "team": "lad",
-   "game": "lad-mil",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6761,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 657,
-    "factors": {
-     "sp": 0.939
-    },
-    "hit_rate_pa": 0.2316
-   },
-   "edge_score": 50,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 8.1,
-    "hard_hit_pct": 41.3,
-    "avg_exit_velo": 89.5,
-    "xiso": 0.173,
-    "recent_hr_rate": 0.0
-   },
-   "flags": []
-  },
-  {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "lad-mil",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6472,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 618,
+    "pa_season": 204,
     "factors": {
-     "sp": 0.939
+     "sp": 0.984,
+     "park": 0.93
     },
-    "hit_rate_pa": 0.2162
+    "hr_rate_pa": 0.0296
    },
-   "edge_score": 49,
+   "edge_score": 39,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 16.2,
-    "hard_hit_pct": 52.1,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.266,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 8.9,
+    "hard_hit_pct": 44.9,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.187,
+    "recent_hr_rate": 0.0492
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 534 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Junior Caminero",
+   "team": "tb",
+   "game": "cle-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6713,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 702,
+    "factors": {
+     "sp": 0.957
+    },
+    "hit_rate_pa": 0.2275
+   },
+   "edge_score": 58,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.1,
+    "hard_hit_pct": 49.7,
+    "avg_exit_velo": 92.7,
+    "xiso": 0.226,
+    "recent_hr_rate": 0.0339
+   },
+   "flags": []
+  },
+  {
+   "player": "Steven Kwan",
+   "team": "cle",
+   "game": "cle-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6769,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 637,
+    "factors": {
+     "sp": 0.988
+    },
+    "hit_rate_pa": 0.2319
+   },
+   "edge_score": 57,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 0.4,
+    "hard_hit_pct": 10.5,
+    "avg_exit_velo": 83.9,
+    "xiso": 0.066,
+    "recent_hr_rate": 0.0169
    },
    "flags": []
   }
