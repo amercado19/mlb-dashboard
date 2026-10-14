@@ -1,6 +1,6 @@
 {
  "date": "2026-10-14",
- "generated_at": "2026-10-14T19:56:36",
+ "generated_at": "2026-10-14T22:29:54",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -22,7 +22,21 @@
    "tier": "PASS",
    "total": 7.5,
    "book_total_line": 7.5,
-   "wind": null
+   "wind": {
+    "lf": {
+     "dir": "cross",
+     "mph": 1
+    },
+    "cf": {
+     "dir": "cross",
+     "mph": 1
+    },
+    "rf": {
+     "dir": "cross",
+     "mph": 1
+    },
+    "out_mph": 0
+   }
   }
  ],
  "props": [
@@ -36,15 +50,16 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
+    "epa": 4.15,
+    "order": 6,
     "pa_season": 618,
     "factors": {
-     "sp": 1.01
+     "sp": 1.01,
+     "temp": 1.084
     },
-    "hr_rate_pa": 0.0432
+    "hr_rate_pa": 0.0469
    },
-   "edge_score": 57,
+   "edge_score": 52,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 16.2,
@@ -71,9 +86,10 @@
     "order": 1,
     "pa_season": 528,
     "factors": {
-     "sp": 1.01
+     "sp": 1.01,
+     "temp": 1.084
     },
-    "hr_rate_pa": 0.0394
+    "hr_rate_pa": 0.0427
    },
    "edge_score": 47,
    "score_type": "model_score_0_100",
@@ -87,35 +103,6 @@
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 540 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
-  },
-  {
-   "player": "Shohei Ohtani",
-   "team": "lad",
-   "game": "mil-lad",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6712,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 618,
-    "factors": {
-     "sp": 1.008
-    },
-    "hit_rate_pa": 0.2321
-   },
-   "edge_score": 71,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 16.2,
-    "hard_hit_pct": 52.1,
-    "avg_exit_velo": 93.3,
-    "xiso": 0.266,
-    "recent_hr_rate": 0.0
-   },
-   "flags": []
   },
   {
    "player": "Mookie Betts",
@@ -143,6 +130,35 @@
     "avg_exit_velo": 90.2,
     "xiso": 0.157,
     "recent_hr_rate": 0.0517
+   },
+   "flags": []
+  },
+  {
+   "player": "Freddie Freeman",
+   "team": "lad",
+   "game": "mil-lad",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6913,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 657,
+    "factors": {
+     "sp": 1.008
+    },
+    "hit_rate_pa": 0.2486
+   },
+   "edge_score": 69,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 8.1,
+    "hard_hit_pct": 41.3,
+    "avg_exit_velo": 89.5,
+    "xiso": 0.173,
+    "recent_hr_rate": 0.0
    },
    "flags": []
   }
