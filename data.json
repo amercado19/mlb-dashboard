@@ -1,6 +1,6 @@
 {
- "date": "2026-10-13",
- "generated_at": "2026-10-14T02:21:32",
+ "date": "2026-10-14",
+ "generated_at": "2026-10-14T04:47:02",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,41 +9,27 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "4954645"
+  "gitCommit": "a823534"
  },
  "games": [
   {
-   "away": "cle",
-   "home": "tb",
-   "away_win_prob": 0.488,
-   "home_win_prob": 0.512,
-   "pick": "cle",
-   "confidence": 0.488,
-   "tier": "LEAN",
-   "total": 7.7,
-   "book_total_line": 4.5,
-   "wind": {
-    "lf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "cf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "out_mph": 0
-   }
+   "away": "mil",
+   "home": "lad",
+   "away_win_prob": 0.386,
+   "home_win_prob": 0.594,
+   "pick": "lad",
+   "confidence": 0.594,
+   "tier": "PASS",
+   "total": 7.5,
+   "book_total_line": 7.5,
+   "wind": null
   }
  ],
  "props": [
   {
-   "player": "Jo Adell",
-   "team": "cle",
-   "game": "cle-tb",
+   "player": "Shohei Ohtani",
+   "team": "lad",
+   "game": "mil-lad",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
@@ -52,91 +38,89 @@
    "prob_inputs": {
     "epa": 4.35,
     "order": 4,
-    "pa_season": 204,
+    "pa_season": 618,
     "factors": {
-     "sp": 0.984,
-     "park": 0.93
+     "sp": 1.01
     },
-    "hr_rate_pa": 0.0296
+    "hr_rate_pa": 0.0432
    },
-   "edge_score": 44,
+   "edge_score": 57,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 8.9,
-    "hard_hit_pct": 44.9,
-    "avg_exit_velo": 90.4,
-    "xiso": 0.187,
-    "recent_hr_rate": 0.0492
+    "barrel_pct": 16.2,
+    "hard_hit_pct": 52.1,
+    "avg_exit_velo": 93.3,
+    "xiso": 0.266,
+    "recent_hr_rate": 0.0
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 538 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
-   "player": "Chase DeLauter",
-   "team": "cle",
-   "game": "cle-tb",
+   "player": "Mookie Betts",
+   "team": "lad",
+   "game": "mil-lad",
    "stat": "HR",
    "line": 0.5,
    "side": "over",
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 559,
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 528,
     "factors": {
-     "sp": 0.984,
-     "park": 0.93
+     "sp": 1.01
     },
-    "hr_rate_pa": 0.027
+    "hr_rate_pa": 0.0394
    },
-   "edge_score": 43,
+   "edge_score": 47,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 6.3,
-    "hard_hit_pct": 46.3,
-    "avg_exit_velo": 91.4,
-    "xiso": 0.15,
-    "recent_hr_rate": 0.04
+    "barrel_pct": 7.8,
+    "hard_hit_pct": 38.0,
+    "avg_exit_velo": 90.2,
+    "xiso": 0.157,
+    "recent_hr_rate": 0.0517
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 538 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
    ]
   },
   {
-   "player": "Junior Caminero",
-   "team": "tb",
-   "game": "cle-tb",
+   "player": "Shohei Ohtani",
+   "team": "lad",
+   "game": "mil-lad",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6713,
+   "model_prob": 0.6712,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 702,
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 618,
     "factors": {
-     "sp": 0.957
+     "sp": 1.008
     },
-    "hit_rate_pa": 0.2275
+    "hit_rate_pa": 0.2321
    },
-   "edge_score": 58,
+   "edge_score": 71,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.1,
-    "hard_hit_pct": 49.7,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.226,
-    "recent_hr_rate": 0.0339
+    "barrel_pct": 16.2,
+    "hard_hit_pct": 52.1,
+    "avg_exit_velo": 93.3,
+    "xiso": 0.266,
+    "recent_hr_rate": 0.0
    },
    "flags": []
   },
   {
-   "player": "Steven Kwan",
-   "team": "cle",
-   "game": "cle-tb",
+   "player": "Mookie Betts",
+   "team": "lad",
+   "game": "mil-lad",
    "stat": "H",
    "line": 0.5,
    "side": "over",
@@ -145,20 +129,20 @@
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
-    "pa_season": 637,
+    "pa_season": 528,
     "factors": {
-     "sp": 0.988
+     "sp": 1.008
     },
-    "hit_rate_pa": 0.2319
+    "hit_rate_pa": 0.2317
    },
-   "edge_score": 57,
+   "edge_score": 70,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 0.4,
-    "hard_hit_pct": 10.5,
-    "avg_exit_velo": 83.9,
-    "xiso": 0.066,
-    "recent_hr_rate": 0.0169
+    "barrel_pct": 7.8,
+    "hard_hit_pct": 38.0,
+    "avg_exit_velo": 90.2,
+    "xiso": 0.157,
+    "recent_hr_rate": 0.0517
    },
    "flags": []
   }
