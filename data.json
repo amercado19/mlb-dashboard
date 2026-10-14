@@ -1,6 +1,6 @@
 {
  "date": "2026-10-13",
- "generated_at": "2026-10-13T23:33:02",
+ "generated_at": "2026-10-14T02:21:32",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "8353a69"
+  "gitCommit": "4954645"
  },
  "games": [
   {
@@ -17,11 +17,11 @@
    "home": "tb",
    "away_win_prob": 0.488,
    "home_win_prob": 0.512,
-   "pick": "tb",
-   "confidence": 0.512,
-   "tier": "PASS",
+   "pick": "cle",
+   "confidence": 0.488,
+   "tier": "LEAN",
    "total": 7.7,
-   "book_total_line": 6.5,
+   "book_total_line": 4.5,
    "wind": {
     "lf": {
      "dir": "neutral",
@@ -41,38 +41,6 @@
  ],
  "props": [
   {
-   "player": "Junior Caminero",
-   "team": "tb",
-   "game": "cle-tb",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
-    "pa_season": 702,
-    "factors": {
-     "sp": 0.943,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0449
-   },
-   "edge_score": 42,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.1,
-    "hard_hit_pct": 49.7,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.226,
-    "recent_hr_rate": 0.0339
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 538 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
    "player": "Jo Adell",
    "team": "cle",
    "game": "cle-tb",
@@ -91,7 +59,7 @@
     },
     "hr_rate_pa": 0.0296
    },
-   "edge_score": 39,
+   "edge_score": 44,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 8.9,
@@ -99,6 +67,38 @@
     "avg_exit_velo": 90.4,
     "xiso": 0.187,
     "recent_hr_rate": 0.0492
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 538 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Chase DeLauter",
+   "team": "cle",
+   "game": "cle-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 559,
+    "factors": {
+     "sp": 0.984,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.027
+   },
+   "edge_score": 43,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 6.3,
+    "hard_hit_pct": 46.3,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.15,
+    "recent_hr_rate": 0.04
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 538 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
