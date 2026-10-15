@@ -1,6 +1,6 @@
 {
  "date": "2026-10-15",
- "generated_at": "2026-10-15T16:57:45",
+ "generated_at": "2026-10-15T18:19:16",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -19,42 +19,76 @@
    "home_win_prob": 0.517,
    "pick": "cle",
    "confidence": 0.517,
-   "tier": "PASS",
+   "tier": "LEAN",
    "total": 8.6,
    "book_total_line": 6.5,
    "wind": {
     "lf": {
-     "dir": "in",
+     "dir": "out",
      "mph": 4
     },
     "cf": {
-     "dir": "cross",
-     "mph": 0
+     "dir": "out",
+     "mph": 6
     },
     "rf": {
      "dir": "out",
      "mph": 4
     },
-    "out_mph": 4
+    "out_mph": 6
    }
   },
   {
    "away": "mil",
    "home": "lad",
-   "away_win_prob": 0.305,
-   "home_win_prob": 0.575,
+   "away_win_prob": 0.433,
+   "home_win_prob": 0.547,
    "pick": "lad",
-   "confidence": 0.575,
+   "confidence": 0.547,
    "tier": "PASS",
-   "total": 8.0,
+   "total": 7.6,
    "book_total_line": 7.5,
    "wind": null
   }
  ],
  "props": [
   {
-   "player": "Junior Caminero",
-   "team": "tb",
+   "player": "Jo Adell",
+   "team": "cle",
+   "game": "tb-cle",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 204,
+    "factors": {
+     "sp": 1.01,
+     "park": 1.0,
+     "temp": 0.958,
+     "wind": 1.01
+    },
+    "hr_rate_pa": 0.0316
+   },
+   "edge_score": 51,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 8.9,
+    "hard_hit_pct": 44.9,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.187,
+    "recent_hr_rate": 0.0385
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 542 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Chase DeLauter",
+   "team": "cle",
    "game": "tb-cle",
    "stat": "HR",
    "line": 0.5,
@@ -64,22 +98,23 @@
    "prob_inputs": {
     "epa": 4.45,
     "order": 3,
-    "pa_season": 702,
+    "pa_season": 559,
     "factors": {
-     "sp": 0.984,
+     "sp": 1.01,
      "park": 1.0,
-     "temp": 0.958
+     "temp": 0.958,
+     "wind": 1.01
     },
-    "hr_rate_pa": 0.0483
+    "hr_rate_pa": 0.0288
    },
-   "edge_score": 46,
+   "edge_score": 49,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 13.1,
-    "hard_hit_pct": 49.7,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.226,
-    "recent_hr_rate": 0.0392
+    "barrel_pct": 6.3,
+    "hard_hit_pct": 46.3,
+    "avg_exit_velo": 91.4,
+    "xiso": 0.15,
+    "recent_hr_rate": 0.0488
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 542 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -99,11 +134,11 @@
     "order": 6,
     "pa_season": 618,
     "factors": {
-     "sp": 1.024
+     "sp": 0.983
     },
-    "hr_rate_pa": 0.0438
+    "hr_rate_pa": 0.0421
    },
-   "edge_score": 45,
+   "edge_score": 48,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 16.2,
@@ -111,39 +146,6 @@
     "avg_exit_velo": 93.3,
     "xiso": 0.266,
     "recent_hr_rate": 0.0
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 542 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Jo Adell",
-   "team": "cle",
-   "game": "tb-cle",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 204,
-    "factors": {
-     "sp": 1.01,
-     "park": 1.0,
-     "temp": 0.958
-    },
-    "hr_rate_pa": 0.0313
-   },
-   "edge_score": 44,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 8.9,
-    "hard_hit_pct": 44.9,
-    "avg_exit_velo": 90.4,
-    "xiso": 0.187,
-    "recent_hr_rate": 0.0385
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 542 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -163,11 +165,11 @@
     "order": 3,
     "pa_season": 491,
     "factors": {
-     "sp": 1.024
+     "sp": 0.983
     },
-    "hr_rate_pa": 0.0328
+    "hr_rate_pa": 0.0314
    },
-   "edge_score": 44,
+   "edge_score": 43,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 10.6,
@@ -239,53 +241,24 @@
    "flags": []
   },
   {
-   "player": "Mookie Betts",
-   "team": "lad",
-   "game": "mil-lad",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6773,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 528,
-    "factors": {
-     "sp": 1.018
-    },
-    "hit_rate_pa": 0.2341
-   },
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 7.8,
-    "hard_hit_pct": 38.0,
-    "avg_exit_velo": 90.2,
-    "xiso": 0.157,
-    "recent_hr_rate": 0.0566
-   },
-   "flags": []
-  },
-  {
    "player": "Freddie Freeman",
    "team": "lad",
    "game": "mil-lad",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.6972,
+   "model_prob": 0.6794,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.55,
     "order": 2,
     "pa_season": 657,
     "factors": {
-     "sp": 1.018
+     "sp": 0.987
     },
-    "hit_rate_pa": 0.2511
+    "hit_rate_pa": 0.2435
    },
-   "edge_score": 65,
+   "edge_score": 59,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 8.1,
@@ -293,6 +266,35 @@
     "avg_exit_velo": 89.5,
     "xiso": 0.173,
     "recent_hr_rate": 0.0
+   },
+   "flags": []
+  },
+  {
+   "player": "Mookie Betts",
+   "team": "lad",
+   "game": "mil-lad",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6761,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 528,
+    "factors": {
+     "sp": 0.987
+    },
+    "hit_rate_pa": 0.2269
+   },
+   "edge_score": 57,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 7.8,
+    "hard_hit_pct": 38.0,
+    "avg_exit_velo": 90.2,
+    "xiso": 0.157,
+    "recent_hr_rate": 0.0566
    },
    "flags": []
   }
