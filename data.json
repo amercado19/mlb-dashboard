@@ -1,6 +1,6 @@
 {
  "date": "2026-10-14",
- "generated_at": "2026-10-14T23:30:28",
+ "generated_at": "2026-10-15T01:01:42",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -21,21 +21,21 @@
    "confidence": 0.594,
    "tier": "PASS",
    "total": 7.5,
-   "book_total_line": 7.5,
+   "book_total_line": 5.5,
    "wind": {
     "lf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "out",
+     "mph": 3
     },
     "cf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "out",
+     "mph": 4
     },
     "rf": {
-     "dir": "cross",
-     "mph": 1
+     "dir": "out",
+     "mph": 3
     },
-    "out_mph": 0
+    "out_mph": 4
    }
   }
  ],
@@ -55,9 +55,10 @@
     "pa_season": 618,
     "factors": {
      "sp": 1.01,
-     "temp": 1.084
+     "temp": 1.054,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0469
+    "hr_rate_pa": 0.0456
    },
    "edge_score": 52,
    "score_type": "model_score_0_100",
@@ -87,9 +88,10 @@
     "pa_season": 528,
     "factors": {
      "sp": 1.01,
-     "temp": 1.084
+     "temp": 1.054,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0427
+    "hr_rate_pa": 0.0415
    },
    "edge_score": 47,
    "score_type": "model_score_0_100",
