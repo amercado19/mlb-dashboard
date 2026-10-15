@@ -1,6 +1,6 @@
 {
  "date": "2026-10-15",
- "generated_at": "2026-10-15T06:08:50",
+ "generated_at": "2026-10-15T16:57:45",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "4cff1e9"
+  "gitCommit": "2184952"
  },
  "games": [
   {
@@ -24,18 +24,18 @@
    "book_total_line": 6.5,
    "wind": {
     "lf": {
-     "dir": "out",
-     "mph": 2
+     "dir": "in",
+     "mph": 4
     },
     "cf": {
-     "dir": "out",
-     "mph": 3
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
      "dir": "out",
-     "mph": 2
+     "mph": 4
     },
-    "out_mph": 3
+    "out_mph": 4
    }
   },
   {
@@ -68,10 +68,9 @@
     "factors": {
      "sp": 0.984,
      "park": 1.0,
-     "temp": 0.934,
-     "wind": 1.0
+     "temp": 0.958
     },
-    "hr_rate_pa": 0.0471
+    "hr_rate_pa": 0.0483
    },
    "edge_score": 46,
    "score_type": "model_score_0_100",
@@ -133,10 +132,9 @@
     "factors": {
      "sp": 1.01,
      "park": 1.0,
-     "temp": 0.934,
-     "wind": 1.0
+     "temp": 0.958
     },
-    "hr_rate_pa": 0.0305
+    "hr_rate_pa": 0.0313
    },
    "edge_score": 44,
    "score_type": "model_score_0_100",
