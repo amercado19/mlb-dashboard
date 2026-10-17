@@ -1,6 +1,6 @@
 {
  "date": "2026-10-17",
- "generated_at": "2026-10-17T19:34:30",
+ "generated_at": "2026-10-17T21:32:42",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "c88d7be"
+  "gitCommit": "ed80a66"
  },
  "games": [
   {
@@ -24,18 +24,18 @@
    "book_total_line": 6.5,
    "wind": {
     "lf": {
-     "dir": "out",
-     "mph": 4
+     "dir": "in",
+     "mph": 3
     },
     "cf": {
-     "dir": "out",
-     "mph": 5
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 3
     },
-    "out_mph": 5
+    "out_mph": 3
    }
   }
  ],
@@ -50,18 +50,17 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.45,
-    "order": 3,
+    "epa": 4.35,
+    "order": 4,
     "pa_season": 702,
     "factors": {
      "sp": 1.007,
      "park": 1.0,
-     "temp": 0.88,
-     "wind": 1.0
+     "temp": 0.88
     },
     "hr_rate_pa": 0.0454
    },
-   "edge_score": 51,
+   "edge_score": 49,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.1,
@@ -90,8 +89,7 @@
     "factors": {
      "sp": 1.007,
      "park": 1.0,
-     "temp": 0.88,
-     "wind": 1.0
+     "temp": 0.88
     },
     "hr_rate_pa": 0.0286
    },
