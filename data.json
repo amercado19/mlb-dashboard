@@ -1,6 +1,6 @@
 {
  "date": "2026-10-17",
- "generated_at": "2026-10-17T05:45:33",
+ "generated_at": "2026-10-17T15:30:42",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "2d6d1e8"
+  "gitCommit": "ea4e1aa"
  },
  "games": [
   {
@@ -21,21 +21,21 @@
    "confidence": 0.509,
    "tier": "PASS",
    "total": 8.3,
-   "book_total_line": 7.0,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
-     "dir": "out",
-     "mph": 4
+     "dir": "in",
+     "mph": 3
     },
     "cf": {
-     "dir": "out",
-     "mph": 5
+     "dir": "cross",
+     "mph": 0
     },
     "rf": {
      "dir": "out",
-     "mph": 4
+     "mph": 3
     },
-    "out_mph": 5
+    "out_mph": 3
    }
   }
  ],
@@ -56,8 +56,7 @@
     "factors": {
      "sp": 1.007,
      "park": 1.0,
-     "temp": 0.88,
-     "wind": 1.0
+     "temp": 0.88
     },
     "hr_rate_pa": 0.0454
    },
@@ -90,8 +89,7 @@
     "factors": {
      "sp": 1.007,
      "park": 1.0,
-     "temp": 0.88,
-     "wind": 1.0
+     "temp": 0.88
     },
     "hr_rate_pa": 0.0286
    },
