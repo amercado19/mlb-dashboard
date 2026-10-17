@@ -1,6 +1,6 @@
 {
- "date": "2026-10-16",
- "generated_at": "2026-10-17T00:28:54",
+ "date": "2026-10-17",
+ "generated_at": "2026-10-17T04:18:13",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "5c5bf62"
+  "gitCommit": "94fdbc9"
  },
  "games": [
   {
@@ -21,21 +21,21 @@
    "confidence": 0.509,
    "tier": "PASS",
    "total": 8.3,
-   "book_total_line": 6.5,
+   "book_total_line": 7.0,
    "wind": {
     "lf": {
-     "dir": "in",
-     "mph": 11
+     "dir": "out",
+     "mph": 4
     },
     "cf": {
-     "dir": "in",
-     "mph": 16
+     "dir": "out",
+     "mph": 5
     },
     "rf": {
-     "dir": "in",
-     "mph": 11
+     "dir": "out",
+     "mph": 4
     },
-    "out_mph": 0
+    "out_mph": 5
    }
   }
  ],
@@ -50,25 +50,25 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
+    "epa": 4.45,
+    "order": 3,
     "pa_season": 702,
     "factors": {
      "sp": 1.007,
      "park": 1.0,
-     "temp": 0.892,
-     "wind": 0.901
+     "temp": 0.88,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0414
+    "hr_rate_pa": 0.0454
    },
-   "edge_score": 44,
+   "edge_score": 51,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.1,
     "hard_hit_pct": 49.7,
     "avg_exit_velo": 92.7,
     "xiso": 0.226,
-    "recent_hr_rate": 0.0392
+    "recent_hr_rate": 0.0213
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 546 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -90,19 +90,19 @@
     "factors": {
      "sp": 1.007,
      "park": 1.0,
-     "temp": 0.892,
-     "wind": 0.901
+     "temp": 0.88,
+     "wind": 1.0
     },
-    "hr_rate_pa": 0.0262
+    "hr_rate_pa": 0.0286
    },
-   "edge_score": 40,
+   "edge_score": 45,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 9.9,
     "hard_hit_pct": 46.0,
     "avg_exit_velo": 91.1,
     "xiso": 0.184,
-    "recent_hr_rate": 0.0263
+    "recent_hr_rate": 0.0294
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 546 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
@@ -162,7 +162,7 @@
     "hard_hit_pct": 46.0,
     "avg_exit_velo": 91.1,
     "xiso": 0.184,
-    "recent_hr_rate": 0.0263
+    "recent_hr_rate": 0.0294
    },
    "flags": []
   }
