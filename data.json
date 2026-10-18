@@ -1,6 +1,6 @@
 {
  "date": "2026-10-18",
- "generated_at": "2026-10-18T19:41:57",
+ "generated_at": "2026-10-18T21:30:06",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "9b6f1b9"
+  "gitCommit": "a36cbcb"
  },
  "games": [
   {
@@ -17,9 +17,9 @@
    "home": "cle",
    "away_win_prob": 0.504,
    "home_win_prob": 0.496,
-   "pick": "tb",
-   "confidence": 0.504,
-   "tier": "PASS",
+   "pick": "cle",
+   "confidence": 0.496,
+   "tier": "LEAN",
    "total": 7.5,
    "book_total_line": 6.5,
    "wind": {
@@ -56,12 +56,12 @@
     "factors": {
      "sp": 0.943,
      "park": 1.0,
-     "temp": 0.946,
+     "temp": 0.952,
      "wind": 1.05
     },
-    "hr_rate_pa": 0.048
+    "hr_rate_pa": 0.0483
    },
-   "edge_score": 49,
+   "edge_score": 51,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.1,
@@ -75,8 +75,8 @@
    ]
   },
   {
-   "player": "Yandy D\u00edaz",
-   "team": "tb",
+   "player": "Jo Adell",
+   "team": "cle",
    "game": "tb-cle",
    "stat": "HR",
    "line": 0.5,
@@ -84,25 +84,25 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 686,
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 204,
     "factors": {
-     "sp": 0.943,
+     "sp": 0.938,
      "park": 1.0,
-     "temp": 0.946,
+     "temp": 0.952,
      "wind": 1.05
     },
-    "hr_rate_pa": 0.0297
+    "hr_rate_pa": 0.0303
    },
-   "edge_score": 42,
+   "edge_score": 48,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 7.1,
-    "hard_hit_pct": 48.1,
-    "avg_exit_velo": 90.9,
-    "xiso": 0.158,
-    "recent_hr_rate": 0.0
+    "barrel_pct": 8.9,
+    "hard_hit_pct": 44.9,
+    "avg_exit_velo": 90.4,
+    "xiso": 0.187,
+    "recent_hr_rate": 0.025
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 548 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
