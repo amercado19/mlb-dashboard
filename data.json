@@ -1,6 +1,6 @@
 {
  "date": "2026-10-19",
- "generated_at": "2026-10-19T19:32:09",
+ "generated_at": "2026-10-19T22:58:39",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "0cf3cec"
+  "gitCommit": "04958ef"
  },
  "games": [
   {
@@ -39,7 +39,130 @@
    }
   }
  ],
- "props": [],
+ "props": [
+  {
+   "player": "Junior Caminero",
+   "team": "tb",
+   "game": "cle-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 702,
+    "factors": {
+     "sp": 1.007,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0479
+   },
+   "edge_score": 49,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.1,
+    "hard_hit_pct": 49.7,
+    "avg_exit_velo": 92.7,
+    "xiso": 0.226,
+    "recent_hr_rate": 0.0263
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 548 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Jonathan Aranda",
+   "team": "tb",
+   "game": "cle-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 668,
+    "factors": {
+     "sp": 1.007,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0303
+   },
+   "edge_score": 45,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.9,
+    "hard_hit_pct": 46.0,
+    "avg_exit_velo": 91.1,
+    "xiso": 0.184,
+    "recent_hr_rate": 0.0345
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 548 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Yandy D\u00edaz",
+   "team": "tb",
+   "game": "cle-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.7154,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 686,
+    "factors": {
+     "sp": 1.005
+    },
+    "hit_rate_pa": 0.2545
+   },
+   "edge_score": 68,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 7.1,
+    "hard_hit_pct": 48.1,
+    "avg_exit_velo": 90.9,
+    "xiso": 0.158,
+    "recent_hr_rate": 0.0
+   },
+   "flags": []
+  },
+  {
+   "player": "Jonathan Aranda",
+   "team": "tb",
+   "game": "cle-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6764,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 668,
+    "factors": {
+     "sp": 1.005
+    },
+    "hit_rate_pa": 0.2355
+   },
+   "edge_score": 68,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.9,
+    "hard_hit_pct": 46.0,
+    "avg_exit_velo": 91.1,
+    "xiso": 0.184,
+    "recent_hr_rate": 0.0345
+   },
+   "flags": []
+  }
+ ],
  "prop_calibration": {
   "hr": {
    "n": 1153,
