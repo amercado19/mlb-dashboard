@@ -1,6 +1,6 @@
 {
- "date": "2026-10-18",
- "generated_at": "2026-10-19T01:43:39",
+ "date": "2026-10-19",
+ "generated_at": "2026-10-19T04:32:51",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,164 +9,37 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "27aacf8"
+  "gitCommit": "097d70b"
  },
  "games": [
   {
-   "away": "tb",
-   "home": "cle",
-   "away_win_prob": 0.504,
-   "home_win_prob": 0.496,
+   "away": "cle",
+   "home": "tb",
+   "away_win_prob": 0.334,
+   "home_win_prob": 0.566,
    "pick": "tb",
-   "confidence": 0.504,
+   "confidence": 0.566,
    "tier": "PASS",
-   "total": 7.2,
-   "book_total_line": null,
+   "total": 8.4,
+   "book_total_line": 6.5,
    "wind": {
     "lf": {
-     "dir": "out",
-     "mph": 4
+     "dir": "neutral",
+     "mph": 0
     },
     "cf": {
-     "dir": "out",
-     "mph": 6
+     "dir": "neutral",
+     "mph": 0
     },
     "rf": {
-     "dir": "out",
-     "mph": 4
+     "dir": "neutral",
+     "mph": 0
     },
-    "out_mph": 6
+    "out_mph": 0
    }
   }
  ],
- "props": [
-  {
-   "player": "Junior Caminero",
-   "team": "tb",
-   "game": "tb-cle",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 702,
-    "factors": {
-     "sp": 0.943,
-     "park": 1.0,
-     "temp": 0.892,
-     "wind": 1.01
-    },
-    "hr_rate_pa": 0.0435
-   },
-   "edge_score": 46,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.1,
-    "hard_hit_pct": 49.7,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.226,
-    "recent_hr_rate": 0.0233
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 548 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Yandy D\u00edaz",
-   "team": "tb",
-   "game": "tb-cle",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 686,
-    "factors": {
-     "sp": 0.943,
-     "park": 1.0,
-     "temp": 0.892,
-     "wind": 1.01
-    },
-    "hr_rate_pa": 0.027
-   },
-   "edge_score": 39,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 7.1,
-    "hard_hit_pct": 48.1,
-    "avg_exit_velo": 90.9,
-    "xiso": 0.158,
-    "recent_hr_rate": 0.0
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 548 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Steven Kwan",
-   "team": "cle",
-   "game": "tb-cle",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6755,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 637,
-    "factors": {
-     "sp": 0.953
-    },
-    "hit_rate_pa": 0.2237
-   },
-   "edge_score": 61,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 0.4,
-    "hard_hit_pct": 10.5,
-    "avg_exit_velo": 83.9,
-    "xiso": 0.066,
-    "recent_hr_rate": 0.0
-   },
-   "flags": []
-  },
-  {
-   "player": "Junior Caminero",
-   "team": "tb",
-   "game": "tb-cle",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.6644,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 702,
-    "factors": {
-     "sp": 0.957
-    },
-    "hit_rate_pa": 0.2275
-   },
-   "edge_score": 58,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.1,
-    "hard_hit_pct": 49.7,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.226,
-    "recent_hr_rate": 0.0233
-   },
-   "flags": []
-  }
- ],
+ "props": [],
  "prop_calibration": {
   "hr": {
    "n": 1137,
