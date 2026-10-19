@@ -1,6 +1,6 @@
 {
  "date": "2026-10-18",
- "generated_at": "2026-10-18T23:42:07",
+ "generated_at": "2026-10-19T01:43:39",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,7 +9,7 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "c6625fd"
+  "gitCommit": "27aacf8"
  },
  "games": [
   {
@@ -17,25 +17,25 @@
    "home": "cle",
    "away_win_prob": 0.504,
    "home_win_prob": 0.496,
-   "pick": "cle",
-   "confidence": 0.496,
-   "tier": "LEAN",
-   "total": 7.5,
-   "book_total_line": 4.5,
+   "pick": "tb",
+   "confidence": 0.504,
+   "tier": "PASS",
+   "total": 7.2,
+   "book_total_line": null,
    "wind": {
     "lf": {
      "dir": "out",
-     "mph": 6
+     "mph": 4
     },
     "cf": {
      "dir": "out",
-     "mph": 8
+     "mph": 6
     },
     "rf": {
      "dir": "out",
-     "mph": 6
+     "mph": 4
     },
-    "out_mph": 8
+    "out_mph": 6
    }
   }
  ],
@@ -56,12 +56,12 @@
     "factors": {
      "sp": 0.943,
      "park": 1.0,
-     "temp": 0.964,
-     "wind": 1.03
+     "temp": 0.892,
+     "wind": 1.01
     },
-    "hr_rate_pa": 0.0479
+    "hr_rate_pa": 0.0435
    },
-   "edge_score": 51,
+   "edge_score": 46,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 13.1,
@@ -75,8 +75,8 @@
    ]
   },
   {
-   "player": "Jo Adell",
-   "team": "cle",
+   "player": "Yandy D\u00edaz",
+   "team": "tb",
    "game": "tb-cle",
    "stat": "HR",
    "line": 0.5,
@@ -84,25 +84,25 @@
    "model_prob": null,
    "method": "binomial_over_PA",
    "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 204,
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 686,
     "factors": {
-     "sp": 0.938,
+     "sp": 0.943,
      "park": 1.0,
-     "temp": 0.964,
-     "wind": 1.03
+     "temp": 0.892,
+     "wind": 1.01
     },
-    "hr_rate_pa": 0.0301
+    "hr_rate_pa": 0.027
    },
-   "edge_score": 48,
+   "edge_score": 39,
    "score_type": "model_score_0_100",
    "statcast": {
-    "barrel_pct": 8.9,
-    "hard_hit_pct": 44.9,
-    "avg_exit_velo": 90.4,
-    "xiso": 0.187,
-    "recent_hr_rate": 0.025
+    "barrel_pct": 7.1,
+    "hard_hit_pct": 48.1,
+    "avg_exit_velo": 90.9,
+    "xiso": 0.158,
+    "recent_hr_rate": 0.0
    },
    "flags": [
     "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 548 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
