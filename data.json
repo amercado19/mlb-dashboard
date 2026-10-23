@@ -1,6 +1,6 @@
 {
  "date": "2026-10-23",
- "generated_at": "2026-10-23T19:43:50",
+ "generated_at": "2026-10-23T20:26:28",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -20,7 +20,7 @@
    "pick": "mil",
    "confidence": 0.584,
    "tier": "PASS",
-   "total": 7.6,
+   "total": 7.3,
    "book_total_line": 6.5,
    "wind": {
     "lf": {
@@ -39,7 +39,130 @@
    }
   }
  ],
- "props": [],
+ "props": [
+  {
+   "player": "Jake Bauers",
+   "team": "mil",
+   "game": "tb-mil",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 578,
+    "factors": {
+     "sp": 0.993,
+     "park": 1.07
+    },
+    "hr_rate_pa": 0.0427
+   },
+   "edge_score": 45,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.9,
+    "hard_hit_pct": 51.9,
+    "avg_exit_velo": 92.1,
+    "xiso": 0.214,
+    "recent_hr_rate": 0.0
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 550 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "Jackson Chourio",
+   "team": "mil",
+   "game": "tb-mil",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 573,
+    "factors": {
+     "sp": 0.993,
+     "park": 1.07
+    },
+    "hr_rate_pa": 0.0417
+   },
+   "edge_score": 42,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.3,
+    "hard_hit_pct": 47.0,
+    "avg_exit_velo": 91.6,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.05
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 550 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
+  {
+   "player": "William Contreras",
+   "team": "mil",
+   "game": "tb-mil",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6733,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.35,
+    "order": 4,
+    "pa_season": 640,
+    "factors": {
+     "sp": 0.995
+    },
+    "hit_rate_pa": 0.2337
+   },
+   "edge_score": 58,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 8.5,
+    "hard_hit_pct": 44.1,
+    "avg_exit_velo": 90.3,
+    "xiso": 0.18,
+    "recent_hr_rate": 0.0
+   },
+   "flags": []
+  },
+  {
+   "player": "Jackson Chourio",
+   "team": "mil",
+   "game": "tb-mil",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.7113,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.65,
+    "order": 1,
+    "pa_season": 573,
+    "factors": {
+     "sp": 0.995
+    },
+    "hit_rate_pa": 0.2527
+   },
+   "edge_score": 57,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 12.3,
+    "hard_hit_pct": 47.0,
+    "avg_exit_velo": 91.6,
+    "xiso": 0.21,
+    "recent_hr_rate": 0.05
+   },
+   "flags": []
+  }
+ ],
  "prop_calibration": {
   "hr": {
    "n": 1153,
