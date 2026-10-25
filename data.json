@@ -1,6 +1,6 @@
 {
- "date": "2026-10-24",
- "generated_at": "2026-10-25T01:44:51",
+ "date": "2026-10-25",
+ "generated_at": "2026-10-25T04:34:12",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -9,160 +9,10 @@
   "featureVersion": "F1",
   "rulebookVersion": "V3.3",
   "rulebookFingerprint": "dc18fa1c7c65e4618e2d71324f47bd6ddf550decc11125450d97ed7e50c143a4",
-  "gitCommit": "a94dc6d"
+  "gitCommit": "1b1c7ae"
  },
- "games": [
-  {
-   "away": "tb",
-   "home": "mil",
-   "away_win_prob": 0.437,
-   "home_win_prob": 0.523,
-   "pick": "mil",
-   "confidence": 0.523,
-   "tier": "PASS",
-   "total": 7.5,
-   "book_total_line": 11.5,
-   "wind": {
-    "lf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "cf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "rf": {
-     "dir": "neutral",
-     "mph": 0
-    },
-    "out_mph": 0
-   }
-  }
- ],
- "props": [
-  {
-   "player": "Junior Caminero",
-   "team": "tb",
-   "game": "tb-mil",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 702,
-    "factors": {
-     "sp": 0.918,
-     "park": 1.07
-    },
-    "hr_rate_pa": 0.0503
-   },
-   "edge_score": 45,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.1,
-    "hard_hit_pct": 49.7,
-    "avg_exit_velo": 92.7,
-    "xiso": 0.226,
-    "recent_hr_rate": 0.0588
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 552 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Jake Bauers",
-   "team": "mil",
-   "game": "tb-mil",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.55,
-    "order": 2,
-    "pa_season": 578,
-    "factors": {
-     "sp": 0.938,
-     "park": 1.07
-    },
-    "hr_rate_pa": 0.0403
-   },
-   "edge_score": 43,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 13.9,
-    "hard_hit_pct": 51.9,
-    "avg_exit_velo": 92.1,
-    "xiso": 0.214,
-    "recent_hr_rate": 0.0
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 552 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Jackson Chourio",
-   "team": "mil",
-   "game": "tb-mil",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.687,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 573,
-    "factors": {
-     "sp": 0.953
-    },
-    "hit_rate_pa": 0.2422
-   },
-   "edge_score": 58,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 47.0,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.21,
-    "recent_hr_rate": 0.0625
-   },
-   "flags": []
-  },
-  {
-   "player": "William Contreras",
-   "team": "mil",
-   "game": "tb-mil",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.659,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.35,
-    "order": 4,
-    "pa_season": 640,
-    "factors": {
-     "sp": 0.953
-    },
-    "hit_rate_pa": 0.224
-   },
-   "edge_score": 58,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 8.5,
-    "hard_hit_pct": 44.1,
-    "avg_exit_velo": 90.3,
-    "xiso": 0.18,
-    "recent_hr_rate": 0.0
-   },
-   "flags": []
-  }
- ],
+ "games": [],
+ "props": [],
  "prop_calibration": {
   "hr": {
    "n": 1153,
