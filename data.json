@@ -1,6 +1,6 @@
 {
  "date": "2026-10-27",
- "generated_at": "2026-10-27T20:22:37",
+ "generated_at": "2026-10-27T22:10:36",
  "version": "V3.4",
  "provenance": {
   "packageVersion": "0.1.0",
@@ -15,10 +15,10 @@
   {
    "away": "mil",
    "home": "tb",
-   "away_win_prob": 0.361,
-   "home_win_prob": 0.499,
+   "away_win_prob": 0.463,
+   "home_win_prob": 0.497,
    "pick": "tb",
-   "confidence": 0.499,
+   "confidence": 0.497,
    "tier": "PASS",
    "total": 8.6,
    "book_total_line": 7.5,
@@ -40,6 +40,38 @@
   }
  ],
  "props": [
+  {
+   "player": "Junior Caminero",
+   "team": "tb",
+   "game": "mil-tb",
+   "stat": "HR",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": null,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.45,
+    "order": 3,
+    "pa_season": 702,
+    "factors": {
+     "sp": 1.021,
+     "park": 0.93
+    },
+    "hr_rate_pa": 0.0486
+   },
+   "edge_score": 51,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 13.1,
+    "hard_hit_pct": 49.7,
+    "avg_exit_velo": 92.7,
+    "xiso": 0.226,
+    "recent_hr_rate": null
+   },
+   "flags": [
+    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 556 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
+   ]
+  },
   {
    "player": "Jake Bauers",
    "team": "mil",
@@ -73,91 +105,59 @@
    ]
   },
   {
-   "player": "Jackson Chourio",
-   "team": "mil",
-   "game": "mil-tb",
-   "stat": "HR",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": null,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 573,
-    "factors": {
-     "sp": 1.01,
-     "park": 0.93
-    },
-    "hr_rate_pa": 0.0369
-   },
-   "edge_score": 45,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 47.0,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.21,
-    "recent_hr_rate": null
-   },
-   "flags": [
-    "UNVERIFIED_PROB (UNVERIFIED): a calibration map is fitted, but the hr market is BLIND (not measurable yet \u2014 556 settled (need 40), 0 CLV-eligible (need 25)) \u2014 treat the number as unverified and rank on score. No probability is published for this row \u2014 rank on edge_score."
-   ]
-  },
-  {
-   "player": "Jackson Chourio",
-   "team": "mil",
-   "game": "mil-tb",
-   "stat": "H",
-   "line": 0.5,
-   "side": "over",
-   "model_prob": 0.7188,
-   "method": "binomial_over_PA",
-   "prob_inputs": {
-    "epa": 4.65,
-    "order": 1,
-    "pa_season": 573,
-    "factors": {
-     "sp": 1.008
-    },
-    "hit_rate_pa": 0.256
-   },
-   "edge_score": 65,
-   "score_type": "model_score_0_100",
-   "statcast": {
-    "barrel_pct": 12.3,
-    "hard_hit_pct": 47.0,
-    "avg_exit_velo": 91.6,
-    "xiso": 0.21,
-    "recent_hr_rate": null
-   },
-   "flags": []
-  },
-  {
    "player": "Yandy D\u00edaz",
    "team": "tb",
    "game": "mil-tb",
    "stat": "H",
    "line": 0.5,
    "side": "over",
-   "model_prob": 0.7227,
+   "model_prob": 0.7215,
    "method": "binomial_over_PA",
    "prob_inputs": {
     "epa": 4.65,
     "order": 1,
     "pa_season": 686,
     "factors": {
-     "sp": 1.018
+     "sp": 1.016
     },
-    "hit_rate_pa": 0.2578
+    "hit_rate_pa": 0.2573
    },
-   "edge_score": 65,
+   "edge_score": 68,
    "score_type": "model_score_0_100",
    "statcast": {
     "barrel_pct": 7.1,
     "hard_hit_pct": 48.1,
     "avg_exit_velo": 90.9,
     "xiso": 0.158,
+    "recent_hr_rate": null
+   },
+   "flags": []
+  },
+  {
+   "player": "Jonathan Aranda",
+   "team": "tb",
+   "game": "mil-tb",
+   "stat": "H",
+   "line": 0.5,
+   "side": "over",
+   "model_prob": 0.6772,
+   "method": "binomial_over_PA",
+   "prob_inputs": {
+    "epa": 4.55,
+    "order": 2,
+    "pa_season": 668,
+    "factors": {
+     "sp": 1.016
+    },
+    "hit_rate_pa": 0.238
+   },
+   "edge_score": 68,
+   "score_type": "model_score_0_100",
+   "statcast": {
+    "barrel_pct": 9.9,
+    "hard_hit_pct": 46.0,
+    "avg_exit_velo": 91.1,
+    "xiso": 0.184,
     "recent_hr_rate": null
    },
    "flags": []
